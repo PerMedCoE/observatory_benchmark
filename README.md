@@ -42,7 +42,7 @@ PhysiCell is an off-lattice, centre-based, agent-based simulation tool for cell 
 |**Use case library**|Y|Y|Y|Y|Y|Y|N|Y|
 |**Initial conditions from file**|Y|N|?|Y|Y|Y|Y|Y|
 |**Repository**|<https://github.com/MathCancer/PhysiCell>|<https://github.com/Chaste/Chaste>|<https://biocellion.com/>|<https://github.com/FLAMEGPU/FLAMEGPU2/>|<https://github.com/BioDynaMo/biodynamo>|<https://www.hoehme.com/software/tisim>|<https://github.com/tissuemodelling/timothy>|[https://gitlab.bsc.es/gsaxena/PhysiCell_x](https://gitlab.bsc.es/gsaxena/physicell_x)|
-|**Publication IDs**|(Ghaffarizadeh et al., 2018)|(Cooper et al., 2020)|(Kang et al., 2014)|(Richmond et al., 2010)|(Breitwieser et al., 2021)|(Hoehme and Drasdo, 2010)|(Cytowski and Szymanska, 2014)|NA|
+|**Publication**|(Ghaffarizadeh et al., 2018)|(Cooper et al., 2020)|(Kang et al., 2014)|(Richmond et al., 2010)|(Breitwieser et al., 2021)|(Hoehme and Drasdo, 2010)|(Cytowski and Szymanska, 2014)|NA|
 |**Save and Load simulation**|N|Y|?|?|N|N|Y|N|
 |**Compilation tool**|make|cmake|?|cmake|cmake|?|make|make|
 |**Operative systems**|Linux, MacOS, Windows|Linux, Docker|Linux|Linux, Windows|Linux, macOS|Linux, Windows|Linux|Linux|
@@ -79,7 +79,7 @@ In this benchmark, we are mainly interested in Boolean simulators using asynchro
 |**License**|BSD 3-clause|Artistic License 2.0|MIT license|GPLv3|GPLv2|
 |**Dependencies**|libSBML (optional)|Many||bioLQM||
 |**Repository**|<https://github.com/sysbio-curie/MaBoSS-env-2.0>|https://cran.r-project.org/package=BoolNet|https://github.com/ialbert/booleannet|http://ginsim.org/|http://www.bioinformatics.org/chemchains/wiki/|
-|**Publication IDs**|(Stoll *et al.*, 2017)|(Müssel *et al.*, 2010)|(Albert *et al.*, 2008)|(Mendes *et al.*, 2018)|(Helikar and Rogers, 2009)|
+|**Publication**|(Stoll *et al.*, 2017)|(Müssel *et al.*, 2010)|(Albert *et al.*, 2008)|(Mendes *et al.*, 2018)|(Helikar and Rogers, 2009)|
 |**Operative systems**|Linux, MacOS, Windows|Linux, MacOS, Windows|Linux, MacOS, Windows|Linux, MacOS, Windows|Linux, Windows|
 
 BoolNet (Müssel *et al.*, 2010) is an R package with efficient integration methods for synchronous, asynchronous and probabilistic Boolean networks. It allows one to perform multiple kinds of analyses, including perturbations, Markov chain simulations and identification/visualisation of attractors. Written by Hans Kestler's lab at Ulm University Hospital and published in 2010, it uses its own proprietary file format, Bnet, which is a simple and popular textual way of describing Boolean networks.
@@ -104,7 +104,7 @@ Thus, a preliminary feature-wise toolbox comparison was done internally for sele
 
 **Table 3. Characteristics of constraint-based modelling tools to benchmark.**
 
-|**Software**|**Repository**|`     `**Publication**|**Programming environment**|**Type**|
+|**Software**|**Repository**|**Publication**|**Programming environment**|**Type**|
 | :-: | :-: | :-: | :-: | :-: |
 |**RAVEN Toolbox**|<https://github.com/SysBioChalmers/RAVEN>|(Wang *et al.*, 2018)|MATLAB|General toolbox|
 |**COBRA.jl**|<https://github.com/opencobra/COBRA.jl>|(Heirendt *et al.*, 2017)|Julia|General toolbox|
@@ -139,7 +139,7 @@ For CARNIVAL, we have identified two tools that are similar in terms of inputs/o
 |**Open Source**|Y|No|
 |**License**|GPL >= 2|Unknown|
 |**Repository**|<https://bioconductor.org/packages/release/bioc/html/CausalR.html>|<https://clarivate.com/cortellis/cbdd>|
-|**Publication IDs**|(Bradley and Barrett, 2017)|(Jaeger *et al.*, 2014)|
+|**Publication**|(Bradley and Barrett, 2017)|(Jaeger *et al.*, 2014)|
 
 ## **3. Benchmarking strategy**
 
