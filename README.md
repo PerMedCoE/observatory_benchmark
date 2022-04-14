@@ -28,7 +28,7 @@ PhysiCell is an off-lattice, centre-based, agent-based simulation tool for cell 
 
 **Table 1. Characteristics of tools for cell population modelling to benchmark. CBM stands for centre-based models. For entries represented by question marks, no evidence was found to the best of our efforts.**
 
-|**Tool**|**PhysiCell**|**Chaste**|**BioCellion**|<p>**FLAME** </p><p>**GPU 2**</p>|**BioDynaMo**|**CellSys**|**Timothy**|**PhysiCell-X**|
+|**Tool**|**PhysiCell**|**Chaste**|**BioCellion**|**FLAME GPU 2**|**BioDynaMo**|**CellSys**|**Timothy**|**PhysiCell-X**|
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 |**Scope**|CBM|CBM, others|CBM|CBM|CBM|CBM|CBM|CBM|
 |**Shared memory (OpenMP)**|Y|Y|Y|Y|Y|Y|Y|Y|
@@ -213,6 +213,7 @@ Due to time constraints, we decided to focus on technical metrics that we could 
 For each software we utilised for this benchmark, we start with the same number of cells (5). Furthermore, we have performed a 2-hour execution time, for three replicates of each one (Figures 1 and 2 and Table 5).
 
 ![Figure 1. Cell counts for the three cell populations tools after 120 minutes of simulation](/figures/Fig1.png)
+
 **Figure 1. Cell counts for the three cell populations tools after 120 minutes of simulation.**
 
 In terms of the final number of cells, one can observe that Chaste and PhysiCell produce similar cell populations, whereas Timothy outperforms the two latter in number of cells (15x) and in simulated time (60x). This can be explained by the way Timothy deals with the diffusion of chemical entities by considering a continuous field or by other factors that need a more in-depth look.
@@ -232,6 +233,7 @@ In terms of the final number of cells, one can observe that Chaste and PhysiCell
 |**Timothy**|1 h, 59 m, 26 s|48|76.00684211|20.29634454|263.2521008|14870|5|179541|
 
 ![Figure 2. Average CPU, memory, power and total cell counts](/figures/Fig2.png)
+
 **Figure 2. Average CPU, memory, power and total cell counts.** 
 
 b)  COBRA toolboxes preliminary benchmark
@@ -241,6 +243,7 @@ As mentioned in Section 3, a preliminary benchmark was conducted to compare COBR
 We will re-use the prepared automated HPC-compatible benchmark tooling and scripts for later benchmarking; probably using FVA, production envelopes and flux sampling algorithm as the cornerstones for “general” performance evaluation. The collected data will additionally serve as base material for discussions with other tool authors, providing better explanation and illustration of the purpose and scope of the benchmarks. An example output of the benchmarks can be seen in Figure 3, showing an aggregation of collected benchmark measurements for 2 implementations of the production envelope computation. We plan to provide similar scaling plots (comparing time, task size, available resources and energy efficiency) for all parallelizable algorithms and methods.
 
 ![Figure 3. Example benchmark output for COBRA methods](/figures/Fig3.png)
+
 **Figure 3. Example benchmark output for COBRA methods (performance and efficiency of production envelope computations).**
 
 c)  CARNIVAL preliminary benchmark
@@ -250,11 +253,13 @@ Preliminary discussions were carried out to establish the common grounds for the
 During initial discussions around the first approach for benchmarking, a preprint comparing CARNIVAL, SigNet and CausalR was published (Hosseini-Gerami *et al.*, 2022). In this work, the authors compare CARNIVAL, SignNet and CausalR using the LINCS L1000 dataset to predict known direct drug targets and altered pathways from perturbational data (Table 6). 
 
 ![Table 6. Algorithm outputs and metrics, from Hosseini-Gerami et al., 2022](/figures/Table6.png)
+
 **Table 6. Algorithm outputs and metrics, from Hosseini-Gerami *et al.*, 2022.**
 
 The benchmark was designed to consider different metrics that fall under the *direct* approach discussed above, from which two metrics are applicable for the three methods: 1) Target recovery and 2) Pathway recovery. Target recovery refers to the ability to recover known drug targets, and it is measured using the one-sided Fisher’s exact test. Pathway recovery was designed to measure the enrichment on the set of recovered nodes from the subnetwork, to test whether the perturbed pathway is detected (enriched) in the solution.
 
 ![Figure 4. Result for the ANOVA Post Hoc test on the network/algorithm interaction effect on performance for pathway recovery, using 4 different scaffold base networks](/figures/Fig4.png)
+
 **Figure 4. Result for the ANOVA Post Hoc test on the network/algorithm interaction effect on performance for pathway recovery, using 4 different scaffold base networks (*x* axis). The *y* axis shows the average estimated effect of the evaluated metric, in this case, larger values indicate more enrichment of the perturbed pathway for a given base network and method.**
 
 Figure 4 shows the results of a post-hoc analysis of the Network:Algorithm interaction effect using ANOVA, that captures the ability of each algorithm to recover pathways containing direct perturbed targets. All methods show better performance than the use of differentially expressed genes alone (orange dashed line). The method that achieves the best performance is SigNet using the Omnipath network, being CausalR using top ranked compounds output produced by the method.
