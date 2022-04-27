@@ -67,7 +67,7 @@ MaBoSS is a stochastic Boolean model simulator (Stoll *et al.*, 2012, 2017). It 
 
 In this benchmark, we are mainly interested in Boolean simulators using asynchronous updates, and producing estimated trajectories of model dynamics. Below is a list of other tools which perform similar simulations (Table 2).
 
-**Table 2. Characteristics of tools for stochastic Boolean simulator to benchmark.**
+**Table 2. Characteristics of tools for stochastic Boolean simulator to benchmark. For entries represented by question marks, no evidence was found to the best of our efforts.**
 
 |**Tool**|**MaBoSS**|**BoolNet**|**BooleanNet**|**AVATAR**|**ChemChain**|
 | :-: | :-: | :-: | :-: | :-: | :-: |
@@ -77,7 +77,7 @@ In this benchmark, we are mainly interested in Boolean simulators using asynchro
 |**Open source**|Y|Y|Y|Y|Y|
 |**Format**|Executable, Python package|R Package|Python package|Java package|Executable|
 |**License**|BSD 3-clause|Artistic License 2.0|MIT license|GPLv3|GPLv2|
-|**Dependencies**|libSBML (optional)|Many||bioLQM||
+|**Dependencies**|libSBML (optional)|Many|?|bioLQM|?|
 |**Repository**|<https://github.com/sysbio-curie/MaBoSS-env-2.0>|https://cran.r-project.org/package=BoolNet|https://github.com/ialbert/booleannet|http://ginsim.org/|http://www.bioinformatics.org/chemchains/wiki/|
 |**Publication**|(Stoll *et al.*, 2017)|(Müssel *et al.*, 2010)|(Albert *et al.*, 2008)|(Mendes *et al.*, 2018)|(Helikar and Rogers, 2009)|
 |**Operative systems**|Linux, MacOS, Windows|Linux, MacOS, Windows|Linux, MacOS, Windows|Linux, MacOS, Windows|Linux, Windows|
