@@ -1,5 +1,7 @@
 # First technology observatory release and preliminary benchmarks
 
+[[_TOC_]]
+
 ## **Executive Summary**
 
 PerMedCoE is a Centre of Excellence who, as one of its objectives, focuses on five different tools aimed at cell-based modelling: PhysiCell, MaBoSS, COBREXA, CellNOpt and CARNIVAL. Nevertheless, these tools, that we call “core tools” in the present document, are part of a scientific field that is changing regularly. Thus, one of the tasks of PerMedCoE was to establish an observatory of tools to remain aware of software, algorithms and standards developed around cell-based modelling. Further, PerMedCoE aimed to contact the tools’ developers responsible for these developments and to involve them to have community-driven benchmarks with their tools and the tools from PerMedCoE. Thus, Task 3.1 connects efforts directed towards having the observatory of tools and the efforts directed towards having benchmark activities among these tools and PerMedCoE’s own.
