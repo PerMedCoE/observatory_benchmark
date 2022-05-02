@@ -60,7 +60,7 @@ After exhaustive literature review and feature-wise comparison, we ended up with
 |**Shared memory (OpenMP)**|Y|Y|Y|Y|Y|Y|Y|Y|
 |**Distributed memory (MPI)**|N|Y|Y|Y|Y|N|Y|Y|
 |**Language**|C++|C++|C++|C++, CUDA, python|C++|C++|C|C++|
-|**Open source**|Y|Y|<p>Source-</p><p>available software</p>|Y|Y|<p>Source-</p><p>available software</p>|Y|Y|
+|**Open source**|Y|Y|Source-available software|Y|Y|Source-available software|Y|Y|
 |**Format**|Executable|CTest Executable|Executable|Executable|Executable|Executable|Executable|Executable|
 |**License**|BSD 3-clause|BSD 3-clause|Proprietary|MIT license|Apache 2.0|Proprietary|GPL 2.0|BSD 3-clause|
 |**Dependencies**|1 (pugixml)|Many|?|Many (11)|Few (7)|Few|3 (MPI, Zoltan, Hypre)|2 (pugixml, MPI)|
