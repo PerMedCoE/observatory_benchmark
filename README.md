@@ -283,7 +283,7 @@ An example output of the benchmarks can be seen in Figure 3, showing an aggregat
 
 We aim to re-use the prepared automated HPC-compatible benchmark tooling and scripts for the community benchmarking; probably using FVA, production envelopes and flux sampling algorithm as the cornerstones for “general” performance evaluation. The collected data of this preliminary benchmark will additionally serve as base material for discussions with other tool authors, providing better explanation and illustration of the purpose and scope of the benchmarks.
 
-![Figure 3. Example benchmark output for COBRA methods](https://github.com/PerMedCoE/observatory_benchmark/raw/main/figures/Fig3.png)
+![Figure 3. Example benchmark output for COBRA methods](https://github.com/PerMedCoE/observatory_benchmark/raw/main/figures/Fig3.svg)
 
 **Figure 3. Example benchmark output for COBRA methods (performance and efficiency of production envelope computations).**
 
