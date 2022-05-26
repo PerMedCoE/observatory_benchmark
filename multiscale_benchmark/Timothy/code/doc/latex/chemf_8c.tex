@@ -1,0 +1,962 @@
+\hypertarget{chemf_8c}{\section{chemf.\-c File Reference}
+\label{chemf_8c}\index{chemf.\-c@{chemf.\-c}}
+}
+
+
+contains functions used for solving chemical global fields  
+
+
+{\ttfamily \#include $<$float.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}\-\_\-hypre\-\_\-utilities.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}H\-Y\-P\-R\-E\-\_\-sstruct\-\_\-ls.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}H\-Y\-P\-R\-E\-\_\-parcsr\-\_\-ls.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}H\-Y\-P\-R\-E\-\_\-krylov.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}global.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}fields.\-h\char`\"{}}\\*
+Include dependency graph for chemf.\-c\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{chemf_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{chemf_8c_afb692f34ea05262db93f9bf9590b06a7}{chem\-Set\-Boundary} (int coord, int boundary)
+\item 
+void \hyperlink{chemf_8c_abc9d0a6b17feeff2a62eb6bb38c17ff4}{chem\-Env\-Init\-System} (int nch)
+\item 
+void \hyperlink{chemf_8c_a5ca738b55b36899ceaa4fe1e6ff38b9f}{chem\-Env\-Cell\-P\-C} (int nch)
+\item 
+void \hyperlink{chemf_8c_ae67d4d36ecee14805a0b6b0b134b0800}{chem\-Env\-Init\-B\-C} (int nch)
+\item 
+void \hyperlink{chemf_8c_ad1be1b100191d6ffbd5c3cb0c42549d6}{chem\-Env\-Init\-Solver} (int nch)
+\item 
+void \hyperlink{chemf_8c_a1f8f7d186d46aafcd792aaf3bee655a7}{chem\-Env\-Solve} (int nch)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+H\-Y\-P\-R\-E\-\_\-\-S\-Struct\-Grid \hyperlink{chemf_8c_ad7a28a5fc279e8b757bdc6a4b57c25be}{chem\-Grid} \mbox{[}\hyperlink{fields_8h_af4afd37668ae33da6377a17adff33029}{N\-C\-H\-E\-M}\mbox{]}
+\item 
+H\-Y\-P\-R\-E\-\_\-\-S\-Struct\-Graph \hyperlink{chemf_8c_aaac58de32c5dda56ce31654ec3e19337}{chem\-Graph} \mbox{[}\hyperlink{fields_8h_af4afd37668ae33da6377a17adff33029}{N\-C\-H\-E\-M}\mbox{]}
+\item 
+H\-Y\-P\-R\-E\-\_\-\-S\-Struct\-Stencil \hyperlink{chemf_8c_ae8a36b5c7c6256a7d248a08c71944c73}{chem\-Stencil} \mbox{[}\hyperlink{fields_8h_af4afd37668ae33da6377a17adff33029}{N\-C\-H\-E\-M}\mbox{]}
+\item 
+H\-Y\-P\-R\-E\-\_\-\-S\-Struct\-Matrix \hyperlink{chemf_8c_ad634e858729e0c04e8b9a4b0a1144b10}{chem\-A} \mbox{[}\hyperlink{fields_8h_af4afd37668ae33da6377a17adff33029}{N\-C\-H\-E\-M}\mbox{]}
+\item 
+H\-Y\-P\-R\-E\-\_\-\-S\-Struct\-Vector \hyperlink{chemf_8c_afb43e9c9d8160250a03e1b41902473fd}{chemb} \mbox{[}\hyperlink{fields_8h_af4afd37668ae33da6377a17adff33029}{N\-C\-H\-E\-M}\mbox{]}
+\item 
+H\-Y\-P\-R\-E\-\_\-\-S\-Struct\-Vector \hyperlink{chemf_8c_a48c5bcbe8787c6a6be2a6d5bcdae101f}{chemx} \mbox{[}\hyperlink{fields_8h_af4afd37668ae33da6377a17adff33029}{N\-C\-H\-E\-M}\mbox{]}
+\item 
+H\-Y\-P\-R\-E\-\_\-\-Par\-C\-S\-R\-Matrix \hyperlink{chemf_8c_a998a7ebb65eb001abcee46c1ea1b1756}{chem\-Par\-A} \mbox{[}\hyperlink{fields_8h_af4afd37668ae33da6377a17adff33029}{N\-C\-H\-E\-M}\mbox{]}
+\item 
+H\-Y\-P\-R\-E\-\_\-\-Par\-Vector \hyperlink{chemf_8c_af74b7f36ec77fb8e0638db98dd2ee47a}{chem\-Parb} \mbox{[}\hyperlink{fields_8h_af4afd37668ae33da6377a17adff33029}{N\-C\-H\-E\-M}\mbox{]}
+\item 
+H\-Y\-P\-R\-E\-\_\-\-Par\-Vector \hyperlink{chemf_8c_aae118f98b57f3dda9f036d39db247bb1}{chem\-Parx} \mbox{[}\hyperlink{fields_8h_af4afd37668ae33da6377a17adff33029}{N\-C\-H\-E\-M}\mbox{]}
+\item 
+H\-Y\-P\-R\-E\-\_\-\-Solver \hyperlink{chemf_8c_a99bbb7b0352d9c850e98287fa45b42c0}{chem\-Solver} \mbox{[}\hyperlink{fields_8h_af4afd37668ae33da6377a17adff33029}{N\-C\-H\-E\-M}\mbox{]}
+\item 
+H\-Y\-P\-R\-E\-\_\-\-Solver \hyperlink{chemf_8c_a91747632f47bf551e8915e343439777f}{chem\-Precond} \mbox{[}\hyperlink{fields_8h_af4afd37668ae33da6377a17adff33029}{N\-C\-H\-E\-M}\mbox{]}
+\item 
+int \hyperlink{chemf_8c_a242fb3ba38fb1c6054fd05507394f08b}{chem\-Object\-Type}
+\item 
+long long \hyperlink{chemf_8c_a14199fec6ea96fe4a4c57bccaff2dfe7}{chem\-Lower} \mbox{[}3\mbox{]}
+\item 
+long long \hyperlink{chemf_8c_a019f631b2e2795023bf22abef7d9f80e}{chem\-Upper} \mbox{[}3\mbox{]}
+\item 
+long long \hyperlink{chemf_8c_a397798166a570960b5d468b6df8bf02c}{bc\-Lower} \mbox{[}3\mbox{]}
+\item 
+long long \hyperlink{chemf_8c_aaea99b8c85fcedb15091dcac991999fd}{bc\-Upper} \mbox{[}3\mbox{]}
+\item 
+double \hyperlink{chemf_8c_a881c8c944ac83a5c022ee0e236f35e52}{dt} \mbox{[}\hyperlink{fields_8h_af4afd37668ae33da6377a17adff33029}{N\-C\-H\-E\-M}\mbox{]}
+\item 
+double \hyperlink{chemf_8c_ab35147d777155659aaad43553e3378f4}{chem\-Lambda} = 0.\-25
+\item 
+char \hyperlink{chemf_8c_a27dc1f70b41e3739d1629663a1d3d0a6}{chfname} \mbox{[}256\mbox{]}
+\item 
+int \hyperlink{chemf_8c_a26adfe146e722023d7f81bf278bde9e7}{chem\-Iter} \mbox{[}\hyperlink{fields_8h_af4afd37668ae33da6377a17adff33029}{N\-C\-H\-E\-M}\mbox{]}
+\item 
+double \hyperlink{chemf_8c_ad1178dce1f62833a078c63e911e2e023}{chem\-Z} \mbox{[}\hyperlink{fields_8h_af4afd37668ae33da6377a17adff33029}{N\-C\-H\-E\-M}\mbox{]}
+\item 
+H\-Y\-P\-R\-E\-\_\-\-S\-Struct\-Variable \hyperlink{chemf_8c_aa73fdbffdd3d43dd503718011b98e41f}{chem\-Vartypes} \mbox{[}1\mbox{]} = \{ H\-Y\-P\-R\-E\-\_\-\-S\-S\-T\-R\-U\-C\-T\-\_\-\-V\-A\-R\-I\-A\-B\-L\-E\-\_\-\-N\-O\-D\-E \}
+\item 
+int \hyperlink{chemf_8c_a07fef4b421caa5300b13b2ba89422841}{number\-Of\-Iters}
+\item 
+double $\ast$ \hyperlink{chemf_8c_a614434a804d9a302d1db9603c22b60a7}{chem\-P\-C}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+contains functions used for solving chemical global fields 
+
+Definition in file \hyperlink{chemf_8c_source}{chemf.\-c}.
+
+
+
+\subsection{Function Documentation}
+\hypertarget{chemf_8c_a5ca738b55b36899ceaa4fe1e6ff38b9f}{\index{chemf.\-c@{chemf.\-c}!chem\-Env\-Cell\-P\-C@{chem\-Env\-Cell\-P\-C}}
+\index{chem\-Env\-Cell\-P\-C@{chem\-Env\-Cell\-P\-C}!chemf.c@{chemf.\-c}}
+\subsubsection[{chem\-Env\-Cell\-P\-C}]{\setlength{\rightskip}{0pt plus 5cm}void chem\-Env\-Cell\-P\-C (
+\begin{DoxyParamCaption}
+\item[{int}]{nch}
+\end{DoxyParamCaption}
+)}}\label{chemf_8c_a5ca738b55b36899ceaa4fe1e6ff38b9f}
+This function computes cell production/consumption function based on the interpolated cell density field. 
+
+Definition at line 241 of file chemf.\-c.
+
+
+
+References chem\-P\-C, density\-Field, dt, field\-Consumption, field\-Production, grid\-Size, N\-G\-L\-O\-B, step, int64\-Vector3d\-::x, int64\-Vector3d\-::y, and int64\-Vector3d\-::z.
+
+
+\begin{DoxyCode}
+242 \{
+243   \textcolor{keywordtype}{int} ch, i, j, k;
+244   \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} nvalues = \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.
+      \hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z};
+245 
+246   \textcolor{keywordflow}{if} (\hyperlink{global_8h_abc16e65f240ed0c8f3e876e8732c0a33}{step} == 0)
+247     \textcolor{keywordflow}{return};
+248 
+249   \textcolor{keywordtype}{int} idx = 0;
+250   \textcolor{keywordflow}{for} (k = 0; k < \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z}; k++)
+251     \textcolor{keywordflow}{for} (j = 0; j < \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y}; j++)
+252       \textcolor{keywordflow}{for} (i = 0; i < \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x}; i++, idx++) \{
+253     \hyperlink{chemf_8c_a614434a804d9a302d1db9603c22b60a7}{chemPC}[idx] = (-\hyperlink{fields_8h_aa36e8f59ad94c5b7629ce29e6d3edc7e}{fieldConsumption}[nch + \hyperlink{fields_8h_aa40ca56600c708a797a77c1db484958d}{NGLOB}] + 
+      \hyperlink{fields_8h_a7bef183ed63be648c7c1f4a63652cb41}{fieldProduction}[nch + \hyperlink{fields_8h_aa40ca56600c708a797a77c1db484958d}{NGLOB}]) * \hyperlink{fields_8h_ab5fe38cf4811c34fa9d1c8e4aa6340c2}{densityField}[
+      \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} * i + \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} * j + k] * 
+      \hyperlink{chemf_8c_a881c8c944ac83a5c022ee0e236f35e52}{dt}[nch];  \textcolor{comment}{//*(cellVolume/boxVolume);//*(1.0/cellVolume);//*dt[nch];//*dt[nch];}
+254       \}
+255 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{chemf_8c_a5ca738b55b36899ceaa4fe1e6ff38b9f_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{chemf_8c_ae67d4d36ecee14805a0b6b0b134b0800}{\index{chemf.\-c@{chemf.\-c}!chem\-Env\-Init\-B\-C@{chem\-Env\-Init\-B\-C}}
+\index{chem\-Env\-Init\-B\-C@{chem\-Env\-Init\-B\-C}!chemf.c@{chemf.\-c}}
+\subsubsection[{chem\-Env\-Init\-B\-C}]{\setlength{\rightskip}{0pt plus 5cm}void chem\-Env\-Init\-B\-C (
+\begin{DoxyParamCaption}
+\item[{int}]{nch}
+\end{DoxyParamCaption}
+)}}\label{chemf_8c_ae67d4d36ecee14805a0b6b0b134b0800}
+This function initializes boundary conditions for a given chemical field. 
+
+Definition at line 260 of file chemf.\-c.
+
+
+
+References bc\-Lower, bc\-Upper, chem\-A, chemb, chem\-Env\-Cell\-P\-C(), chem\-Grid, chem\-Lower, chem\-Object\-Type, chem\-P\-C, chem\-Set\-Boundary(), chem\-Upper, chemx, chem\-Z, chfname, field\-B\-C, field\-I\-C\-Mean, grid\-Size, m, M\-P\-I\-\_\-\-C\-A\-R\-T\-\_\-\-C\-O\-M\-M, M\-P\-Icoords, M\-P\-Idim, M\-P\-Irank, N\-G\-L\-O\-B, revert\-Std\-Out(), switch\-Std\-Out(), int64\-Vector3d\-::x, int64\-Vector3d\-::y, and int64\-Vector3d\-::z.
+
+
+\begin{DoxyCode}
+261 \{
+262   \textcolor{keywordtype}{int} i, j, k;
+263   \textcolor{keywordtype}{int} \hyperlink{global_8h_ac51334f57ef8b81c0629c9421798c344}{m};
+264   \textcolor{keywordtype}{int} nentries = 1;
+265   \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} stencil\_indices[1];
+266   \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} nvalues = \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.
+      \hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z};
+267   \textcolor{keywordtype}{double} *values, *bvalues;
+268   \textcolor{comment}{/* stdout redirected to file */}
+269   \hyperlink{io_8c_a62f5074e9f833de4cbf65a82dbb2f81b}{switchStdOut}(\hyperlink{chemf_8c_a27dc1f70b41e3739d1629663a1d3d0a6}{chfname});
+270 
+271   \hyperlink{chemf_8c_a614434a804d9a302d1db9603c22b60a7}{chemPC} = (\textcolor{keywordtype}{double} *) calloc(nvalues, \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double}));
+272   values = calloc(nvalues, \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double}));
+273   bvalues = calloc(nvalues, \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double}));
+274 
+275   \hyperlink{chemf_8c_a5ca738b55b36899ceaa4fe1e6ff38b9f}{chemEnvCellPC}(nch);
+276 
+277   \textcolor{comment}{/* 5. SETUP STRUCT VECTORS FOR B AND X */}
+278 
+279   \textcolor{comment}{/* create an empty vector object */}
+280   HYPRE\_SStructVectorCreate(\hyperlink{global_8h_a34ac355617a6a906e1f3e7832aeb0073}{MPI\_CART\_COMM}, \hyperlink{chemf_8c_ad7a28a5fc279e8b757bdc6a4b57c25be}{chemGrid}[nch], &
+      \hyperlink{chemf_8c_afb43e9c9d8160250a03e1b41902473fd}{chemb}[nch]);
+281   HYPRE\_SStructVectorCreate(\hyperlink{global_8h_a34ac355617a6a906e1f3e7832aeb0073}{MPI\_CART\_COMM}, \hyperlink{chemf_8c_ad7a28a5fc279e8b757bdc6a4b57c25be}{chemGrid}[nch], &
+      \hyperlink{chemf_8c_a48c5bcbe8787c6a6be2a6d5bcdae101f}{chemx}[nch]);
+282 
+283   \textcolor{comment}{/* as with the matrix, set the appropriate object type for the vectors */}
+284   HYPRE\_SStructVectorSetObjectType(\hyperlink{chemf_8c_afb43e9c9d8160250a03e1b41902473fd}{chemb}[nch], \hyperlink{chemf_8c_a242fb3ba38fb1c6054fd05507394f08b}{chemObjectType});
+285   HYPRE\_SStructVectorSetObjectType(\hyperlink{chemf_8c_a48c5bcbe8787c6a6be2a6d5bcdae101f}{chemx}[nch], \hyperlink{chemf_8c_a242fb3ba38fb1c6054fd05507394f08b}{chemObjectType});
+286 
+287   \textcolor{comment}{/* indicate that the vector coefficients are ready to be set */}
+288   HYPRE\_SStructVectorInitialize(\hyperlink{chemf_8c_afb43e9c9d8160250a03e1b41902473fd}{chemb}[nch]);
+289   HYPRE\_SStructVectorInitialize(\hyperlink{chemf_8c_a48c5bcbe8787c6a6be2a6d5bcdae101f}{chemx}[nch]);
+290 
+291   \textcolor{comment}{/* set the values */}
+292   m = 0;
+293   \textcolor{keywordflow}{for} (k = \hyperlink{chemf_8c_a14199fec6ea96fe4a4c57bccaff2dfe7}{chemLower}[2]; k <= \hyperlink{chemf_8c_a019f631b2e2795023bf22abef7d9f80e}{chemUpper}[2]; k++)
+294     \textcolor{keywordflow}{for} (j = \hyperlink{chemf_8c_a14199fec6ea96fe4a4c57bccaff2dfe7}{chemLower}[1]; j <= \hyperlink{chemf_8c_a019f631b2e2795023bf22abef7d9f80e}{chemUpper}[1]; j++)
+295       \textcolor{keywordflow}{for} (i = \hyperlink{chemf_8c_a14199fec6ea96fe4a4c57bccaff2dfe7}{chemLower}[0]; i <= \hyperlink{chemf_8c_a019f631b2e2795023bf22abef7d9f80e}{chemUpper}[0]; i++) \{
+296     values[\hyperlink{global_8h_ac51334f57ef8b81c0629c9421798c344}{m}] = \hyperlink{fields_8h_ad0fb86debb3e1b138683ff94a2f51f5b}{fieldICMean}[nch + \hyperlink{fields_8h_aa40ca56600c708a797a77c1db484958d}{NGLOB}];
+297     m++;
+298       \}
+299 
+300   HYPRE\_SStructVectorSetBoxValues(\hyperlink{chemf_8c_afb43e9c9d8160250a03e1b41902473fd}{chemb}[nch], 0, \hyperlink{chemf_8c_a14199fec6ea96fe4a4c57bccaff2dfe7}{chemLower}, 
+      \hyperlink{chemf_8c_a019f631b2e2795023bf22abef7d9f80e}{chemUpper}, 0,
+301                   values);
+302 
+303   m = 0;
+304   \textcolor{keywordflow}{for} (k = \hyperlink{chemf_8c_a14199fec6ea96fe4a4c57bccaff2dfe7}{chemLower}[2]; k <= \hyperlink{chemf_8c_a019f631b2e2795023bf22abef7d9f80e}{chemUpper}[2]; k++)
+305     \textcolor{keywordflow}{for} (j = \hyperlink{chemf_8c_a14199fec6ea96fe4a4c57bccaff2dfe7}{chemLower}[1]; j <= \hyperlink{chemf_8c_a019f631b2e2795023bf22abef7d9f80e}{chemUpper}[1]; j++)
+306       \textcolor{keywordflow}{for} (i = \hyperlink{chemf_8c_a14199fec6ea96fe4a4c57bccaff2dfe7}{chemLower}[0]; i <= \hyperlink{chemf_8c_a019f631b2e2795023bf22abef7d9f80e}{chemUpper}[0]; i++) \{
+307     values[\hyperlink{global_8h_ac51334f57ef8b81c0629c9421798c344}{m}] = \hyperlink{fields_8h_ad0fb86debb3e1b138683ff94a2f51f5b}{fieldICMean}[nch + \hyperlink{fields_8h_aa40ca56600c708a797a77c1db484958d}{NGLOB}];
+308     m++;
+309       \}
+310 
+311   HYPRE\_SStructVectorSetBoxValues(\hyperlink{chemf_8c_a48c5bcbe8787c6a6be2a6d5bcdae101f}{chemx}[nch], 0, \hyperlink{chemf_8c_a14199fec6ea96fe4a4c57bccaff2dfe7}{chemLower}, 
+      \hyperlink{chemf_8c_a019f631b2e2795023bf22abef7d9f80e}{chemUpper}, 0,
+312                   values);
+313 
+314   \textcolor{comment}{/* incorporate boundary conditions; Dirichlet on 6 faces */}
+315 
+316   \textcolor{keywordflow}{for} (i = 0; i < nvalues; i++)
+317     values[i] = \hyperlink{chemf_8c_ad1178dce1f62833a078c63e911e2e023}{chemZ}[nch];
+318   \textcolor{keywordflow}{for} (i = 0; i < nvalues; i++)
+319     bvalues[i] = \hyperlink{chemf_8c_ad1178dce1f62833a078c63e911e2e023}{chemZ}[nch] * \hyperlink{fields_8h_a80c6ee80e0f056adba2430ab0d21e58f}{fieldBC}[nch + \hyperlink{fields_8h_aa40ca56600c708a797a77c1db484958d}{NGLOB}];
+320 
+321   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a8220294108e39b58632993a50a7dc4ca}{MPIcoords}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}][0] == 0) \{
+322     nvalues = nentries * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z};
+323     \hyperlink{chemf_8c_afb692f34ea05262db93f9bf9590b06a7}{chemSetBoundary}(0, -1);
+324     stencil\_indices[0] = 1;
+325     HYPRE\_SStructMatrixAddToBoxValues(\hyperlink{chemf_8c_ad634e858729e0c04e8b9a4b0a1144b10}{chemA}[nch], 0, \hyperlink{chemf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}, 
+      \hyperlink{chemf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}, 0,
+326                       nentries, stencil\_indices, values);
+327     HYPRE\_SStructVectorAddToBoxValues(\hyperlink{chemf_8c_afb43e9c9d8160250a03e1b41902473fd}{chemb}[nch], 0, \hyperlink{chemf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}, 
+      \hyperlink{chemf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}, 0,
+328                       bvalues);
+329   \}
+330   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a8220294108e39b58632993a50a7dc4ca}{MPIcoords}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}][0] == \hyperlink{global_8h_a633835398408aaee46fd56809af73e6c}{MPIdim}[0] - 1) \{
+331     nvalues = nentries * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z};
+332     \hyperlink{chemf_8c_afb692f34ea05262db93f9bf9590b06a7}{chemSetBoundary}(0, 1);
+333     stencil\_indices[0] = 2;
+334     HYPRE\_SStructMatrixAddToBoxValues(\hyperlink{chemf_8c_ad634e858729e0c04e8b9a4b0a1144b10}{chemA}[nch], 0, \hyperlink{chemf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}, 
+      \hyperlink{chemf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}, 0,
+335                       nentries, stencil\_indices, values);
+336     HYPRE\_SStructVectorAddToBoxValues(\hyperlink{chemf_8c_afb43e9c9d8160250a03e1b41902473fd}{chemb}[nch], 0, \hyperlink{chemf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}, 
+      \hyperlink{chemf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}, 0,
+337                       bvalues);
+338   \}
+339   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a8220294108e39b58632993a50a7dc4ca}{MPIcoords}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}][1] == 0) \{
+340     nvalues = nentries * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z};
+341     \hyperlink{chemf_8c_afb692f34ea05262db93f9bf9590b06a7}{chemSetBoundary}(1, -1);
+342     stencil\_indices[0] = 3;
+343     HYPRE\_SStructMatrixAddToBoxValues(\hyperlink{chemf_8c_ad634e858729e0c04e8b9a4b0a1144b10}{chemA}[nch], 0, \hyperlink{chemf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}, 
+      \hyperlink{chemf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}, 0,
+344                       nentries, stencil\_indices, values);
+345     HYPRE\_SStructVectorAddToBoxValues(\hyperlink{chemf_8c_afb43e9c9d8160250a03e1b41902473fd}{chemb}[nch], 0, \hyperlink{chemf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}, 
+      \hyperlink{chemf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}, 0,
+346                       bvalues);
+347   \}
+348   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a8220294108e39b58632993a50a7dc4ca}{MPIcoords}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}][1] == \hyperlink{global_8h_a633835398408aaee46fd56809af73e6c}{MPIdim}[1] - 1) \{
+349     nvalues = nentries * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z};
+350     \hyperlink{chemf_8c_afb692f34ea05262db93f9bf9590b06a7}{chemSetBoundary}(1, 1);
+351     stencil\_indices[0] = 4;
+352     HYPRE\_SStructMatrixAddToBoxValues(\hyperlink{chemf_8c_ad634e858729e0c04e8b9a4b0a1144b10}{chemA}[nch], 0, \hyperlink{chemf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}, 
+      \hyperlink{chemf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}, 0,
+353                       nentries, stencil\_indices, values);
+354     HYPRE\_SStructVectorAddToBoxValues(\hyperlink{chemf_8c_afb43e9c9d8160250a03e1b41902473fd}{chemb}[nch], 0, \hyperlink{chemf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}, 
+      \hyperlink{chemf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}, 0,
+355                       bvalues);
+356   \}
+357   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a8220294108e39b58632993a50a7dc4ca}{MPIcoords}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}][2] == 0) \{
+358     nvalues = nentries * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y};
+359     \hyperlink{chemf_8c_afb692f34ea05262db93f9bf9590b06a7}{chemSetBoundary}(2, -1);
+360     stencil\_indices[0] = 5;
+361     HYPRE\_SStructMatrixAddToBoxValues(\hyperlink{chemf_8c_ad634e858729e0c04e8b9a4b0a1144b10}{chemA}[nch], 0, \hyperlink{chemf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}, 
+      \hyperlink{chemf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}, 0,
+362                       nentries, stencil\_indices, values);
+363     HYPRE\_SStructVectorAddToBoxValues(\hyperlink{chemf_8c_afb43e9c9d8160250a03e1b41902473fd}{chemb}[nch], 0, \hyperlink{chemf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}, 
+      \hyperlink{chemf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}, 0,
+364                       bvalues);
+365   \}
+366   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a8220294108e39b58632993a50a7dc4ca}{MPIcoords}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}][2] == \hyperlink{global_8h_a633835398408aaee46fd56809af73e6c}{MPIdim}[2] - 1) \{
+367     nvalues = nentries * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y};
+368     \hyperlink{chemf_8c_afb692f34ea05262db93f9bf9590b06a7}{chemSetBoundary}(2, 1);
+369     stencil\_indices[0] = 6;
+370     HYPRE\_SStructMatrixAddToBoxValues(\hyperlink{chemf_8c_ad634e858729e0c04e8b9a4b0a1144b10}{chemA}[nch], 0, \hyperlink{chemf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}, 
+      \hyperlink{chemf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}, 0,
+371                       nentries, stencil\_indices, values);
+372     HYPRE\_SStructVectorAddToBoxValues(\hyperlink{chemf_8c_afb43e9c9d8160250a03e1b41902473fd}{chemb}[nch], 0, \hyperlink{chemf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}, 
+      \hyperlink{chemf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}, 0,
+373                       bvalues);
+374   \}
+375 
+376   \textcolor{comment}{/* add production consumption function to the right side */}
+377   HYPRE\_SStructVectorAddToBoxValues(\hyperlink{chemf_8c_afb43e9c9d8160250a03e1b41902473fd}{chemb}[nch], 0, \hyperlink{chemf_8c_a14199fec6ea96fe4a4c57bccaff2dfe7}{chemLower}, 
+      \hyperlink{chemf_8c_a019f631b2e2795023bf22abef7d9f80e}{chemUpper}, 0,
+378                     \hyperlink{chemf_8c_a614434a804d9a302d1db9603c22b60a7}{chemPC});
+379 
+380   free(\hyperlink{chemf_8c_a614434a804d9a302d1db9603c22b60a7}{chemPC});
+381   free(values);
+382   free(bvalues);
+383   \textcolor{comment}{/* stdout brought back */}
+384   \hyperlink{io_8c_affa00173da9bea48973a6ac887d505bb}{revertStdOut}();
+385 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=300pt]{chemf_8c_ae67d4d36ecee14805a0b6b0b134b0800_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{chemf_8c_ae67d4d36ecee14805a0b6b0b134b0800_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{chemf_8c_ad1be1b100191d6ffbd5c3cb0c42549d6}{\index{chemf.\-c@{chemf.\-c}!chem\-Env\-Init\-Solver@{chem\-Env\-Init\-Solver}}
+\index{chem\-Env\-Init\-Solver@{chem\-Env\-Init\-Solver}!chemf.c@{chemf.\-c}}
+\subsubsection[{chem\-Env\-Init\-Solver}]{\setlength{\rightskip}{0pt plus 5cm}void chem\-Env\-Init\-Solver (
+\begin{DoxyParamCaption}
+\item[{int}]{nch}
+\end{DoxyParamCaption}
+)}}\label{chemf_8c_ad1be1b100191d6ffbd5c3cb0c42549d6}
+This function initializes Hypre for solving a given chemical field. 
+
+Definition at line 390 of file chemf.\-c.
+
+
+
+References chem\-A, chemb, chem\-Par\-A, chem\-Parb, chem\-Parx, chem\-Precond, chem\-Solver, chemx, chfname, M\-P\-I\-\_\-\-C\-A\-R\-T\-\_\-\-C\-O\-M\-M, revert\-Std\-Out(), and switch\-Std\-Out().
+
+
+\begin{DoxyCode}
+391 \{
+392   \textcolor{comment}{/* stdout redirected to file */}
+393   \hyperlink{io_8c_a62f5074e9f833de4cbf65a82dbb2f81b}{switchStdOut}(\hyperlink{chemf_8c_a27dc1f70b41e3739d1629663a1d3d0a6}{chfname});
+394 
+395   HYPRE\_SStructMatrixAssemble(\hyperlink{chemf_8c_ad634e858729e0c04e8b9a4b0a1144b10}{chemA}[nch]);
+396   \textcolor{comment}{/* This is a collective call finalizing the vector assembly.}
+397 \textcolor{comment}{     The vector is now ``ready to be used'' */}
+398   HYPRE\_SStructVectorAssemble(\hyperlink{chemf_8c_afb43e9c9d8160250a03e1b41902473fd}{chemb}[nch]);
+399   HYPRE\_SStructVectorAssemble(\hyperlink{chemf_8c_a48c5bcbe8787c6a6be2a6d5bcdae101f}{chemx}[nch]);
+400 
+401   HYPRE\_SStructMatrixGetObject(\hyperlink{chemf_8c_ad634e858729e0c04e8b9a4b0a1144b10}{chemA}[nch], (\textcolor{keywordtype}{void} **) &\hyperlink{chemf_8c_a998a7ebb65eb001abcee46c1ea1b1756}{chemParA}[nch]);
+402   HYPRE\_SStructVectorGetObject(\hyperlink{chemf_8c_afb43e9c9d8160250a03e1b41902473fd}{chemb}[nch], (\textcolor{keywordtype}{void} **) &\hyperlink{chemf_8c_af74b7f36ec77fb8e0638db98dd2ee47a}{chemParb}[nch]);
+403   HYPRE\_SStructVectorGetObject(\hyperlink{chemf_8c_a48c5bcbe8787c6a6be2a6d5bcdae101f}{chemx}[nch], (\textcolor{keywordtype}{void} **) &\hyperlink{chemf_8c_aae118f98b57f3dda9f036d39db247bb1}{chemParx}[nch]);
+404 
+405   HYPRE\_ParCSRPCGCreate(\hyperlink{global_8h_a34ac355617a6a906e1f3e7832aeb0073}{MPI\_CART\_COMM}, &\hyperlink{chemf_8c_a99bbb7b0352d9c850e98287fa45b42c0}{chemSolver}[nch]);
+406   HYPRE\_ParCSRPCGSetTol(\hyperlink{chemf_8c_a99bbb7b0352d9c850e98287fa45b42c0}{chemSolver}[nch], 1.0e-12);
+407   HYPRE\_ParCSRPCGSetPrintLevel(\hyperlink{chemf_8c_a99bbb7b0352d9c850e98287fa45b42c0}{chemSolver}[nch], 2);
+408   HYPRE\_ParCSRPCGSetMaxIter(\hyperlink{chemf_8c_a99bbb7b0352d9c850e98287fa45b42c0}{chemSolver}[nch], 50);
+409 
+410   HYPRE\_BoomerAMGCreate(&\hyperlink{chemf_8c_a91747632f47bf551e8915e343439777f}{chemPrecond}[nch]);
+411   HYPRE\_BoomerAMGSetMaxIter(\hyperlink{chemf_8c_a91747632f47bf551e8915e343439777f}{chemPrecond}[nch], 1);
+412   HYPRE\_BoomerAMGSetTol(\hyperlink{chemf_8c_a91747632f47bf551e8915e343439777f}{chemPrecond}[nch], 0.0);
+413   HYPRE\_BoomerAMGSetPrintLevel(\hyperlink{chemf_8c_a91747632f47bf551e8915e343439777f}{chemPrecond}[nch], 2);
+414   HYPRE\_BoomerAMGSetCoarsenType(\hyperlink{chemf_8c_a91747632f47bf551e8915e343439777f}{chemPrecond}[nch], 6);
+415   HYPRE\_BoomerAMGSetRelaxType(\hyperlink{chemf_8c_a91747632f47bf551e8915e343439777f}{chemPrecond}[nch], 6);
+416   HYPRE\_BoomerAMGSetNumSweeps(\hyperlink{chemf_8c_a91747632f47bf551e8915e343439777f}{chemPrecond}[nch], 1);
+417 
+418   HYPRE\_ParCSRPCGSetPrecond(\hyperlink{chemf_8c_a99bbb7b0352d9c850e98287fa45b42c0}{chemSolver}[nch], HYPRE\_BoomerAMGSolve,
+419                 HYPRE\_BoomerAMGSetup, \hyperlink{chemf_8c_a91747632f47bf551e8915e343439777f}{chemPrecond}[nch]);
+420   HYPRE\_ParCSRPCGSetup(\hyperlink{chemf_8c_a99bbb7b0352d9c850e98287fa45b42c0}{chemSolver}[nch], \hyperlink{chemf_8c_a998a7ebb65eb001abcee46c1ea1b1756}{chemParA}[nch], 
+      \hyperlink{chemf_8c_af74b7f36ec77fb8e0638db98dd2ee47a}{chemParb}[nch],
+421                \hyperlink{chemf_8c_aae118f98b57f3dda9f036d39db247bb1}{chemParx}[nch]);
+422 
+423   \textcolor{comment}{/* stdout brought back */}
+424   \hyperlink{io_8c_affa00173da9bea48973a6ac887d505bb}{revertStdOut}();
+425 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=292pt]{chemf_8c_ad1be1b100191d6ffbd5c3cb0c42549d6_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{chemf_8c_ad1be1b100191d6ffbd5c3cb0c42549d6_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{chemf_8c_abc9d0a6b17feeff2a62eb6bb38c17ff4}{\index{chemf.\-c@{chemf.\-c}!chem\-Env\-Init\-System@{chem\-Env\-Init\-System}}
+\index{chem\-Env\-Init\-System@{chem\-Env\-Init\-System}!chemf.c@{chemf.\-c}}
+\subsubsection[{chem\-Env\-Init\-System}]{\setlength{\rightskip}{0pt plus 5cm}void chem\-Env\-Init\-System (
+\begin{DoxyParamCaption}
+\item[{int}]{nch}
+\end{DoxyParamCaption}
+)}}\label{chemf_8c_abc9d0a6b17feeff2a62eb6bb38c17ff4}
+This function initializes grid, stencil and matrix for a given chemical field. 
+
+Definition at line 130 of file chemf.\-c.
+
+
+
+References cell\-Fields, chem\-A, chem\-Field, chem\-Graph, chem\-Grid, chem\-Iter, chem\-Lower, chem\-Object\-Type, chem\-Stencil, chem\-Upper, chem\-Vartypes, chem\-Z, chfname, csize, csize\-In\-Units, dt, field\-Diff\-Coef, field\-Dt, field\-I\-C\-Mean, field\-Lambda, field\-Max, field\-Min, grid\-End\-Idx, grid\-Resolution, grid\-Size, grid\-Start\-Idx, logdir, max\-Cells\-Per\-Proc, M\-P\-I\-\_\-\-C\-A\-R\-T\-\_\-\-C\-O\-M\-M, M\-P\-Irank, N\-G\-L\-O\-B, number\-Of\-Iters, revert\-Std\-Out(), switch\-Std\-Out(), int64\-Vector3d\-::x, int64\-Vector3d\-::y, and int64\-Vector3d\-::z.
+
+
+\begin{DoxyCode}
+131 \{
+132   \textcolor{keywordtype}{int} i, j, k, c;
+133   \textcolor{keywordtype}{int} entry;
+134   \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} offsets[7][3] =
+135       \{ \{0, 0, 0\}, \{-1, 0, 0\}, \{1, 0, 0\}, \{0, -1, 0\}, \{0, 1, 0\}, \{0, 0,
+136                                   -1\}, \{0,
+137                                     0,
+138                                     1\}
+139   \};
+140   \textcolor{keywordtype}{double} gridResolutionInUnits; \textcolor{comment}{/* grid resolution in centimeters */}
+141 
+142   \hyperlink{chemf_8c_a881c8c944ac83a5c022ee0e236f35e52}{dt}[nch] = \hyperlink{fields_8h_ae21d99cc23aefdfc02fbe62cd28784fb}{fieldDt}[nch + \hyperlink{fields_8h_aa40ca56600c708a797a77c1db484958d}{NGLOB}];
+143   \hyperlink{chemf_8c_a07fef4b421caa5300b13b2ba89422841}{numberOfIters} = 1;
+144   \hyperlink{chemf_8c_a26adfe146e722023d7f81bf278bde9e7}{chemIter}[nch] = 0;
+145 
+146   sprintf(\hyperlink{chemf_8c_a27dc1f70b41e3739d1629663a1d3d0a6}{chfname}, \textcolor{stringliteral}{"%s/chemSolver.log"}, \hyperlink{global_8h_a58bd7d9996cba89c834ae9ec41bbc075}{logdir});
+147   \textcolor{comment}{/* stdout will go to the file */}
+148   \hyperlink{io_8c_a62f5074e9f833de4cbf65a82dbb2f81b}{switchStdOut}(\hyperlink{chemf_8c_a27dc1f70b41e3739d1629663a1d3d0a6}{chfname});
+149 
+150   \textcolor{comment}{/* 1. INIT GRID */}
+151 
+152   \textcolor{comment}{/* create an empty 3D grid object */}
+153   HYPRE\_SStructGridCreate(\hyperlink{global_8h_a34ac355617a6a906e1f3e7832aeb0073}{MPI\_CART\_COMM}, 3, 1, &\hyperlink{chemf_8c_ad7a28a5fc279e8b757bdc6a4b57c25be}{chemGrid}[nch]);
+154 
+155   \textcolor{comment}{/* set this process box */}
+156   \hyperlink{chemf_8c_a14199fec6ea96fe4a4c57bccaff2dfe7}{chemLower}[0] = \hyperlink{fields_8h_a9154f33f7786c05c61f4d519da14d501}{gridStartIdx}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}].\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x};
+157   \hyperlink{chemf_8c_a14199fec6ea96fe4a4c57bccaff2dfe7}{chemLower}[1] = \hyperlink{fields_8h_a9154f33f7786c05c61f4d519da14d501}{gridStartIdx}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y};
+158   \hyperlink{chemf_8c_a14199fec6ea96fe4a4c57bccaff2dfe7}{chemLower}[2] = \hyperlink{fields_8h_a9154f33f7786c05c61f4d519da14d501}{gridStartIdx}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z};
+159 
+160   \hyperlink{chemf_8c_a019f631b2e2795023bf22abef7d9f80e}{chemUpper}[0] = \hyperlink{fields_8h_a1d13a1c43b1a6eb6ca088b79ee681b48}{gridEndIdx}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}].\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x};
+161   \hyperlink{chemf_8c_a019f631b2e2795023bf22abef7d9f80e}{chemUpper}[1] = \hyperlink{fields_8h_a1d13a1c43b1a6eb6ca088b79ee681b48}{gridEndIdx}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y};
+162   \hyperlink{chemf_8c_a019f631b2e2795023bf22abef7d9f80e}{chemUpper}[2] = \hyperlink{fields_8h_a1d13a1c43b1a6eb6ca088b79ee681b48}{gridEndIdx}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z};
+163 
+164   \textcolor{comment}{/* add a new box to the grid */}
+165   HYPRE\_SStructGridSetExtents(\hyperlink{chemf_8c_ad7a28a5fc279e8b757bdc6a4b57c25be}{chemGrid}[nch], 0, \hyperlink{chemf_8c_a14199fec6ea96fe4a4c57bccaff2dfe7}{chemLower}, 
+      \hyperlink{chemf_8c_a019f631b2e2795023bf22abef7d9f80e}{chemUpper});
+166 
+167   HYPRE\_SStructGridSetVariables(\hyperlink{chemf_8c_ad7a28a5fc279e8b757bdc6a4b57c25be}{chemGrid}[nch], 0, 1, \hyperlink{chemf_8c_aa73fdbffdd3d43dd503718011b98e41f}{chemVartypes});
+168   HYPRE\_SStructGridAssemble(\hyperlink{chemf_8c_ad7a28a5fc279e8b757bdc6a4b57c25be}{chemGrid}[nch]);
+169 
+170   \textcolor{comment}{/*  2. INIT STENCIL */}
+171   HYPRE\_SStructStencilCreate(3, 7, &\hyperlink{chemf_8c_ae8a36b5c7c6256a7d248a08c71944c73}{chemStencil}[nch]);
+172   \textcolor{keywordflow}{for} (entry = 0; entry < 7; entry++)
+173     HYPRE\_SStructStencilSetEntry(\hyperlink{chemf_8c_ae8a36b5c7c6256a7d248a08c71944c73}{chemStencil}[nch], entry, offsets[entry],
+174                  0);
+175 
+176   \textcolor{comment}{/* 3. SET UP THE GRAPH */}
+177   \hyperlink{chemf_8c_a242fb3ba38fb1c6054fd05507394f08b}{chemObjectType} = HYPRE\_PARCSR;
+178   HYPRE\_SStructGraphCreate(\hyperlink{global_8h_a34ac355617a6a906e1f3e7832aeb0073}{MPI\_CART\_COMM}, \hyperlink{chemf_8c_ad7a28a5fc279e8b757bdc6a4b57c25be}{chemGrid}[nch], &
+      \hyperlink{chemf_8c_aaac58de32c5dda56ce31654ec3e19337}{chemGraph}[nch]);
+179   HYPRE\_SStructGraphSetObjectType(\hyperlink{chemf_8c_aaac58de32c5dda56ce31654ec3e19337}{chemGraph}[nch], \hyperlink{chemf_8c_a242fb3ba38fb1c6054fd05507394f08b}{chemObjectType});
+180   HYPRE\_SStructGraphSetStencil(\hyperlink{chemf_8c_aaac58de32c5dda56ce31654ec3e19337}{chemGraph}[nch], 0, 0, \hyperlink{chemf_8c_ae8a36b5c7c6256a7d248a08c71944c73}{chemStencil}[nch]);
+181   HYPRE\_SStructGraphAssemble(\hyperlink{chemf_8c_aaac58de32c5dda56ce31654ec3e19337}{chemGraph}[nch]);
+182 
+183   \textcolor{comment}{/* 4. SET UP MATRIX */}
+184   \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} nentries = 7;
+185   \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} nvalues;
+186   \textcolor{keywordtype}{double} *values;
+187   \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} stencil\_indices[7];
+188 
+189   nvalues = nentries * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.
+      \hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z};
+190   \textcolor{comment}{/* create an empty matrix object */}
+191   HYPRE\_SStructMatrixCreate(\hyperlink{global_8h_a34ac355617a6a906e1f3e7832aeb0073}{MPI\_CART\_COMM}, \hyperlink{chemf_8c_aaac58de32c5dda56ce31654ec3e19337}{chemGraph}[nch], &
+      \hyperlink{chemf_8c_ad634e858729e0c04e8b9a4b0a1144b10}{chemA}[nch]);
+192   HYPRE\_SStructMatrixSetObjectType(\hyperlink{chemf_8c_ad634e858729e0c04e8b9a4b0a1144b10}{chemA}[nch], \hyperlink{chemf_8c_a242fb3ba38fb1c6054fd05507394f08b}{chemObjectType});
+193   \textcolor{comment}{/* indicate that the matrix coefficients are ready to be set */}
+194   HYPRE\_SStructMatrixInitialize(\hyperlink{chemf_8c_ad634e858729e0c04e8b9a4b0a1144b10}{chemA}[nch]);
+195 
+196   values = calloc(nvalues, \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double}));
+197 
+198   \textcolor{keywordflow}{for} (j = 0; j < nentries; j++)
+199     stencil\_indices[j] = j;
+200 
+201   gridResolutionInUnits = (\hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution} / \hyperlink{global_8h_a3b735e8520f1816ee73ee50daa3ef756}{csize}) * 
+      \hyperlink{global_8h_a5618d8682d7245e8770f85fbf8c2fda5}{csizeInUnits} * 0.0001;
+202 
+203   \hyperlink{chemf_8c_ad1178dce1f62833a078c63e911e2e023}{chemZ}[nch] =
+204       \hyperlink{fields_8h_ad4870e0beb9744bd643b6501c4505d81}{fieldDiffCoef}[nch +
+205             \hyperlink{fields_8h_aa40ca56600c708a797a77c1db484958d}{NGLOB}] * \hyperlink{chemf_8c_a881c8c944ac83a5c022ee0e236f35e52}{dt}[nch] / (gridResolutionInUnits *
+206                     gridResolutionInUnits);
+207 
+208   \textcolor{comment}{/* set the standard stencil at each grid point,}
+209 \textcolor{comment}{   * we will fix the boundaries later */}
+210   \textcolor{keywordflow}{for} (i = 0; i < nvalues; i += nentries) \{
+211     values[i] = 1 + 6.0 * \hyperlink{chemf_8c_ad1178dce1f62833a078c63e911e2e023}{chemZ}[nch] + \hyperlink{fields_8h_a2fe4102c6ceed6e01ff5b2f47eb0828d}{fieldLambda}[nch + \hyperlink{fields_8h_aa40ca56600c708a797a77c1db484958d}{NGLOB}] * 
+      \hyperlink{chemf_8c_a881c8c944ac83a5c022ee0e236f35e52}{dt}[nch];
+212     \textcolor{keywordflow}{for} (j = 1; j < nentries; j++)
+213       values[i + j] = -\hyperlink{chemf_8c_ad1178dce1f62833a078c63e911e2e023}{chemZ}[nch];
+214   \}
+215 
+216   HYPRE\_SStructMatrixSetBoxValues(\hyperlink{chemf_8c_ad634e858729e0c04e8b9a4b0a1144b10}{chemA}[nch], 0, \hyperlink{chemf_8c_a14199fec6ea96fe4a4c57bccaff2dfe7}{chemLower}, 
+      \hyperlink{chemf_8c_a019f631b2e2795023bf22abef7d9f80e}{chemUpper}, 0,
+217                   nentries, stencil\_indices, values);
+218 
+219   \textcolor{keywordflow}{for} (k = 0; k < \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z}; k++)
+220     \textcolor{keywordflow}{for} (j = 0; j < \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y}; j++)
+221       \textcolor{keywordflow}{for} (i = 0; i < \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x}; i++) \{
+222     \hyperlink{fields_8h_adb9b18c97bd0384bf977ee57e604626a}{chemField}[nch][\hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} * i + 
+      \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} * j + k] =
+223         \hyperlink{fields_8h_ad0fb86debb3e1b138683ff94a2f51f5b}{fieldICMean}[nch + \hyperlink{fields_8h_aa40ca56600c708a797a77c1db484958d}{NGLOB}];
+224       \}
+225   \hyperlink{fields_8h_afa26584ead914a9e160c467308ed156a}{fieldMax}[nch + \hyperlink{fields_8h_aa40ca56600c708a797a77c1db484958d}{NGLOB}] = \hyperlink{fields_8h_ad0fb86debb3e1b138683ff94a2f51f5b}{fieldICMean}[nch + \hyperlink{fields_8h_aa40ca56600c708a797a77c1db484958d}{NGLOB}];
+226   \hyperlink{fields_8h_adc4b9b908fa47243451f8725e6210e34}{fieldMin}[nch + \hyperlink{fields_8h_aa40ca56600c708a797a77c1db484958d}{NGLOB}] = \hyperlink{fields_8h_ad0fb86debb3e1b138683ff94a2f51f5b}{fieldICMean}[nch + \hyperlink{fields_8h_aa40ca56600c708a797a77c1db484958d}{NGLOB}];
+227 
+228   \textcolor{keywordflow}{for} (c = 0; c < \hyperlink{global_8h_a2de426dd266cfdaaf6fb52ba3dc2740a}{maxCellsPerProc}; c++) \{
+229     \hyperlink{global_8h_a25e4317a1b5bb95a8e71e0e8c4e11f2b}{cellFields}[nch + \hyperlink{fields_8h_aa40ca56600c708a797a77c1db484958d}{NGLOB}][c] = \hyperlink{fields_8h_ad0fb86debb3e1b138683ff94a2f51f5b}{fieldICMean}[nch + 
+      \hyperlink{fields_8h_aa40ca56600c708a797a77c1db484958d}{NGLOB}];
+230   \}
+231 
+232   free(values);
+233   \textcolor{comment}{/* stdout brought back */}
+234   \hyperlink{io_8c_affa00173da9bea48973a6ac887d505bb}{revertStdOut}();
+235 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=298pt]{chemf_8c_abc9d0a6b17feeff2a62eb6bb38c17ff4_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{chemf_8c_abc9d0a6b17feeff2a62eb6bb38c17ff4_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{chemf_8c_a1f8f7d186d46aafcd792aaf3bee655a7}{\index{chemf.\-c@{chemf.\-c}!chem\-Env\-Solve@{chem\-Env\-Solve}}
+\index{chem\-Env\-Solve@{chem\-Env\-Solve}!chemf.c@{chemf.\-c}}
+\subsubsection[{chem\-Env\-Solve}]{\setlength{\rightskip}{0pt plus 5cm}void chem\-Env\-Solve (
+\begin{DoxyParamCaption}
+\item[{int}]{nch}
+\end{DoxyParamCaption}
+)}}\label{chemf_8c_a1f8f7d186d46aafcd792aaf3bee655a7}
+This is a driving function for solving next time step of a given chemical field. 
+
+Definition at line 431 of file chemf.\-c.
+
+
+
+References bc\-Lower, bc\-Upper, chemb, chem\-Env\-Cell\-P\-C(), chem\-Field, chem\-Iter, chem\-Lower, chem\-Par\-A, chem\-Parb, chem\-Parx, chem\-P\-C, chem\-Set\-Boundary(), chem\-Solver, chem\-Upper, chemx, chem\-Z, chfname, field\-B\-C, field\-Max, field\-Min, field\-Name, gf\-Iter, gf\-Iter\-Per\-Step, grid\-Size, M\-P\-Icoords, M\-P\-Idim, M\-P\-Irank, N\-G\-L\-O\-B, number\-Of\-Iters, revert\-Std\-Out(), stat\-Out\-Step, step, switch\-Std\-Out(), int64\-Vector3d\-::x, int64\-Vector3d\-::y, and int64\-Vector3d\-::z.
+
+
+\begin{DoxyCode}
+432 \{
+433   \textcolor{keywordtype}{int} i, j, k;
+434   \textcolor{keywordtype}{int} idx;
+435   \textcolor{keywordtype}{double} *values;
+436   \textcolor{keywordtype}{int} stepIter = 0;
+437   \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} nvalues = \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.
+      \hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z};
+438 \textcolor{preprocessor}{#ifdef DEBUG}
+439 \textcolor{preprocessor}{}  \textcolor{keywordflow}{if} (\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank} == 0 && !(\hyperlink{global_8h_abc16e65f240ed0c8f3e876e8732c0a33}{step} % \hyperlink{global_8h_aab9700fe12cc303ff43e1a35a210128e}{statOutStep}) && \hyperlink{global_8h_ab2e483b60cc15741bd6281688f31edbc}{gfIter} == 0) \{
+440     printf(\textcolor{stringliteral}{" Solving field: %s..."}, \hyperlink{fields_8h_a1a12b04329495ce82cf21a9d42b71f1c}{fieldName}[nch + \hyperlink{fields_8h_aa40ca56600c708a797a77c1db484958d}{NGLOB}]);
+441     fflush(stdout);
+442   \}
+443 \textcolor{preprocessor}{#endif}
+444 \textcolor{preprocessor}{}  \textcolor{comment}{/* redirecting stdout to log file */}
+445   \hyperlink{io_8c_a62f5074e9f833de4cbf65a82dbb2f81b}{switchStdOut}(\hyperlink{chemf_8c_a27dc1f70b41e3739d1629663a1d3d0a6}{chfname});
+446 
+447   values = (\textcolor{keywordtype}{double} *) calloc(nvalues, \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double}));
+448   \hyperlink{chemf_8c_a614434a804d9a302d1db9603c22b60a7}{chemPC} = (\textcolor{keywordtype}{double} *) calloc(nvalues, \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double}));
+449   \hyperlink{chemf_8c_a5ca738b55b36899ceaa4fe1e6ff38b9f}{chemEnvCellPC}(nch);
+450 
+451   \hyperlink{fields_8h_adc4b9b908fa47243451f8725e6210e34}{fieldMin}[nch + \hyperlink{fields_8h_aa40ca56600c708a797a77c1db484958d}{NGLOB}] = DBL\_MAX;
+452   \hyperlink{fields_8h_afa26584ead914a9e160c467308ed156a}{fieldMax}[nch + \hyperlink{fields_8h_aa40ca56600c708a797a77c1db484958d}{NGLOB}] = DBL\_MIN;
+453 
+454   \textcolor{keywordflow}{while} (stepIter < \hyperlink{chemf_8c_a07fef4b421caa5300b13b2ba89422841}{numberOfIters}) \{
+455     \textcolor{keywordflow}{if} (\hyperlink{chemf_8c_a26adfe146e722023d7f81bf278bde9e7}{chemIter}[nch] > 0) \{
+456       \textcolor{comment}{/* update right hand side */}
+457       HYPRE\_SStructVectorGetBoxValues(\hyperlink{chemf_8c_a48c5bcbe8787c6a6be2a6d5bcdae101f}{chemx}[nch], 0, \hyperlink{chemf_8c_a14199fec6ea96fe4a4c57bccaff2dfe7}{chemLower}, 
+      \hyperlink{chemf_8c_a019f631b2e2795023bf22abef7d9f80e}{chemUpper},
+458                       0, values);
+459       HYPRE\_SStructVectorSetBoxValues(\hyperlink{chemf_8c_afb43e9c9d8160250a03e1b41902473fd}{chemb}[nch], 0, \hyperlink{chemf_8c_a14199fec6ea96fe4a4c57bccaff2dfe7}{chemLower}, 
+      \hyperlink{chemf_8c_a019f631b2e2795023bf22abef7d9f80e}{chemUpper},
+460                       0, values);
+461       \textcolor{keywordflow}{for} (i = 0; i < nvalues; i++)
+462     values[i] = \hyperlink{chemf_8c_ad1178dce1f62833a078c63e911e2e023}{chemZ}[nch] * \hyperlink{fields_8h_a80c6ee80e0f056adba2430ab0d21e58f}{fieldBC}[nch + \hyperlink{fields_8h_aa40ca56600c708a797a77c1db484958d}{NGLOB}];
+463       \textcolor{keywordflow}{if} (\hyperlink{global_8h_a8220294108e39b58632993a50a7dc4ca}{MPIcoords}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}][0] == 0) \{
+464     \hyperlink{chemf_8c_afb692f34ea05262db93f9bf9590b06a7}{chemSetBoundary}(0, -1);
+465     HYPRE\_SStructVectorAddToBoxValues(\hyperlink{chemf_8c_afb43e9c9d8160250a03e1b41902473fd}{chemb}[nch], 0, \hyperlink{chemf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}, 
+      \hyperlink{chemf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper},
+466                       0, values);
+467       \}
+468       \textcolor{keywordflow}{if} (\hyperlink{global_8h_a8220294108e39b58632993a50a7dc4ca}{MPIcoords}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}][0] == \hyperlink{global_8h_a633835398408aaee46fd56809af73e6c}{MPIdim}[0] - 1) \{
+469     \hyperlink{chemf_8c_afb692f34ea05262db93f9bf9590b06a7}{chemSetBoundary}(0, 1);
+470     HYPRE\_SStructVectorAddToBoxValues(\hyperlink{chemf_8c_afb43e9c9d8160250a03e1b41902473fd}{chemb}[nch], 0, \hyperlink{chemf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}, 
+      \hyperlink{chemf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper},
+471                       0, values);
+472       \}
+473       \textcolor{keywordflow}{if} (\hyperlink{global_8h_a8220294108e39b58632993a50a7dc4ca}{MPIcoords}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}][1] == 0) \{
+474     \hyperlink{chemf_8c_afb692f34ea05262db93f9bf9590b06a7}{chemSetBoundary}(1, -1);
+475     HYPRE\_SStructVectorAddToBoxValues(\hyperlink{chemf_8c_afb43e9c9d8160250a03e1b41902473fd}{chemb}[nch], 0, \hyperlink{chemf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}, 
+      \hyperlink{chemf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper},
+476                       0, values);
+477       \}
+478       \textcolor{keywordflow}{if} (\hyperlink{global_8h_a8220294108e39b58632993a50a7dc4ca}{MPIcoords}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}][1] == \hyperlink{global_8h_a633835398408aaee46fd56809af73e6c}{MPIdim}[1] - 1) \{
+479     \hyperlink{chemf_8c_afb692f34ea05262db93f9bf9590b06a7}{chemSetBoundary}(1, 1);
+480     HYPRE\_SStructVectorAddToBoxValues(\hyperlink{chemf_8c_afb43e9c9d8160250a03e1b41902473fd}{chemb}[nch], 0, \hyperlink{chemf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}, 
+      \hyperlink{chemf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper},
+481                       0, values);
+482       \}
+483       \textcolor{keywordflow}{if} (\hyperlink{global_8h_a8220294108e39b58632993a50a7dc4ca}{MPIcoords}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}][2] == 0) \{
+484     \hyperlink{chemf_8c_afb692f34ea05262db93f9bf9590b06a7}{chemSetBoundary}(2, -1);
+485     HYPRE\_SStructVectorAddToBoxValues(\hyperlink{chemf_8c_afb43e9c9d8160250a03e1b41902473fd}{chemb}[nch], 0, \hyperlink{chemf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}, 
+      \hyperlink{chemf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper},
+486                       0, values);
+487       \}
+488       \textcolor{keywordflow}{if} (\hyperlink{global_8h_a8220294108e39b58632993a50a7dc4ca}{MPIcoords}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}][2] == \hyperlink{global_8h_a633835398408aaee46fd56809af73e6c}{MPIdim}[2] - 1) \{
+489     \hyperlink{chemf_8c_afb692f34ea05262db93f9bf9590b06a7}{chemSetBoundary}(2, 1);
+490     HYPRE\_SStructVectorAddToBoxValues(\hyperlink{chemf_8c_afb43e9c9d8160250a03e1b41902473fd}{chemb}[nch], 0, \hyperlink{chemf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}, 
+      \hyperlink{chemf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper},
+491                       0, values);
+492       \}
+493       HYPRE\_SStructVectorAddToBoxValues(\hyperlink{chemf_8c_afb43e9c9d8160250a03e1b41902473fd}{chemb}[nch], 0, \hyperlink{chemf_8c_a14199fec6ea96fe4a4c57bccaff2dfe7}{chemLower},
+494                     \hyperlink{chemf_8c_a019f631b2e2795023bf22abef7d9f80e}{chemUpper}, 0, \hyperlink{chemf_8c_a614434a804d9a302d1db9603c22b60a7}{chemPC});
+495       HYPRE\_SStructVectorAssemble(\hyperlink{chemf_8c_afb43e9c9d8160250a03e1b41902473fd}{chemb}[nch]);
+496       HYPRE\_SStructVectorAssemble(\hyperlink{chemf_8c_a48c5bcbe8787c6a6be2a6d5bcdae101f}{chemx}[nch]);
+497     \}
+498 
+499     HYPRE\_ParCSRPCGSolve(\hyperlink{chemf_8c_a99bbb7b0352d9c850e98287fa45b42c0}{chemSolver}[nch], \hyperlink{chemf_8c_a998a7ebb65eb001abcee46c1ea1b1756}{chemParA}[nch], 
+      \hyperlink{chemf_8c_af74b7f36ec77fb8e0638db98dd2ee47a}{chemParb}[nch],
+500              \hyperlink{chemf_8c_aae118f98b57f3dda9f036d39db247bb1}{chemParx}[nch]);
+501 
+502     \textcolor{comment}{/* copy solution to field buffer */}
+503     HYPRE\_SStructVectorGather(\hyperlink{chemf_8c_a48c5bcbe8787c6a6be2a6d5bcdae101f}{chemx}[nch]);
+504     HYPRE\_SStructVectorGetBoxValues(\hyperlink{chemf_8c_a48c5bcbe8787c6a6be2a6d5bcdae101f}{chemx}[nch], 0, \hyperlink{chemf_8c_a14199fec6ea96fe4a4c57bccaff2dfe7}{chemLower}, 
+      \hyperlink{chemf_8c_a019f631b2e2795023bf22abef7d9f80e}{chemUpper}, 0,
+505                     values);
+506     idx = 0;
+507     \textcolor{keywordflow}{for} (k = 0; k < \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z}; k++)
+508       \textcolor{keywordflow}{for} (j = 0; j < \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y}; j++)
+509     \textcolor{keywordflow}{for} (i = 0; i < \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x}; i++, idx++) \{
+510       \hyperlink{fields_8h_adb9b18c97bd0384bf977ee57e604626a}{chemField}[nch][\hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} * i + 
+      \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} * j +
+511              k] = values[idx];
+512       \textcolor{keywordflow}{if} (values[idx] > \hyperlink{fields_8h_afa26584ead914a9e160c467308ed156a}{fieldMax}[nch + \hyperlink{fields_8h_aa40ca56600c708a797a77c1db484958d}{NGLOB}])
+513         \hyperlink{fields_8h_afa26584ead914a9e160c467308ed156a}{fieldMax}[nch + \hyperlink{fields_8h_aa40ca56600c708a797a77c1db484958d}{NGLOB}] = values[idx];
+514       \textcolor{keywordflow}{if} (values[idx] < \hyperlink{fields_8h_adc4b9b908fa47243451f8725e6210e34}{fieldMin}[nch + \hyperlink{fields_8h_aa40ca56600c708a797a77c1db484958d}{NGLOB}])
+515         \hyperlink{fields_8h_adc4b9b908fa47243451f8725e6210e34}{fieldMin}[nch + \hyperlink{fields_8h_aa40ca56600c708a797a77c1db484958d}{NGLOB}] = values[idx];
+516     \}
+517     \hyperlink{chemf_8c_a26adfe146e722023d7f81bf278bde9e7}{chemIter}[nch]++;
+518     stepIter++;
+519   \}
+520 
+521   free(values);
+522   free(\hyperlink{chemf_8c_a614434a804d9a302d1db9603c22b60a7}{chemPC});
+523   \textcolor{comment}{/* stdout brought back */}
+524   \hyperlink{io_8c_affa00173da9bea48973a6ac887d505bb}{revertStdOut}();
+525 \textcolor{preprocessor}{#ifdef DEBUG}
+526 \textcolor{preprocessor}{}  \textcolor{keywordflow}{if} (\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank} == 0 && !(\hyperlink{global_8h_abc16e65f240ed0c8f3e876e8732c0a33}{step} % statOutStep) && \hyperlink{global_8h_ab2e483b60cc15741bd6281688f31edbc}{gfIter} == 
+      \hyperlink{global_8h_a4b76c15679db05e32f70c9804e186557}{gfIterPerStep} - 1) \{
+527     printf(\textcolor{stringliteral}{"done\(\backslash\)n"});
+528     fflush(stdout);
+529   \}
+530 \textcolor{preprocessor}{#endif}
+531 \textcolor{preprocessor}{}\}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=298pt]{chemf_8c_a1f8f7d186d46aafcd792aaf3bee655a7_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=340pt]{chemf_8c_a1f8f7d186d46aafcd792aaf3bee655a7_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{chemf_8c_afb692f34ea05262db93f9bf9590b06a7}{\index{chemf.\-c@{chemf.\-c}!chem\-Set\-Boundary@{chem\-Set\-Boundary}}
+\index{chem\-Set\-Boundary@{chem\-Set\-Boundary}!chemf.c@{chemf.\-c}}
+\subsubsection[{chem\-Set\-Boundary}]{\setlength{\rightskip}{0pt plus 5cm}void chem\-Set\-Boundary (
+\begin{DoxyParamCaption}
+\item[{int}]{coord, }
+\item[{int}]{boundary}
+\end{DoxyParamCaption}
+)}}\label{chemf_8c_afb692f34ea05262db93f9bf9590b06a7}
+This function sets boundary conditions for domain faces. 
+
+Definition at line 75 of file chemf.\-c.
+
+
+
+References bc\-Lower, bc\-Upper, chem\-Lower, and chem\-Upper.
+
+
+\begin{DoxyCode}
+76 \{
+77   \textcolor{keywordflow}{if} (coord == 0 && boundary == -1) \{
+78     \hyperlink{chemf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}[0] = \hyperlink{chemf_8c_a14199fec6ea96fe4a4c57bccaff2dfe7}{chemLower}[0];
+79     \hyperlink{chemf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}[0] = \hyperlink{chemf_8c_a14199fec6ea96fe4a4c57bccaff2dfe7}{chemLower}[0];
+80     \hyperlink{chemf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}[1] = \hyperlink{chemf_8c_a14199fec6ea96fe4a4c57bccaff2dfe7}{chemLower}[1];
+81     \hyperlink{chemf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}[1] = \hyperlink{chemf_8c_a019f631b2e2795023bf22abef7d9f80e}{chemUpper}[1];
+82     \hyperlink{chemf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}[2] = \hyperlink{chemf_8c_a14199fec6ea96fe4a4c57bccaff2dfe7}{chemLower}[2];
+83     \hyperlink{chemf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}[2] = \hyperlink{chemf_8c_a019f631b2e2795023bf22abef7d9f80e}{chemUpper}[2];
+84   \}
+85   \textcolor{keywordflow}{if} (coord == 0 && boundary == 1) \{
+86     \hyperlink{chemf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}[0] = \hyperlink{chemf_8c_a019f631b2e2795023bf22abef7d9f80e}{chemUpper}[0];
+87     \hyperlink{chemf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}[0] = \hyperlink{chemf_8c_a019f631b2e2795023bf22abef7d9f80e}{chemUpper}[0];
+88     \hyperlink{chemf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}[1] = \hyperlink{chemf_8c_a14199fec6ea96fe4a4c57bccaff2dfe7}{chemLower}[1];
+89     \hyperlink{chemf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}[1] = \hyperlink{chemf_8c_a019f631b2e2795023bf22abef7d9f80e}{chemUpper}[1];
+90     \hyperlink{chemf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}[2] = \hyperlink{chemf_8c_a14199fec6ea96fe4a4c57bccaff2dfe7}{chemLower}[2];
+91     \hyperlink{chemf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}[2] = \hyperlink{chemf_8c_a019f631b2e2795023bf22abef7d9f80e}{chemUpper}[2];
+92   \}
+93   \textcolor{keywordflow}{if} (coord == 1 && boundary == -1) \{
+94     \hyperlink{chemf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}[0] = \hyperlink{chemf_8c_a14199fec6ea96fe4a4c57bccaff2dfe7}{chemLower}[0];
+95     \hyperlink{chemf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}[0] = \hyperlink{chemf_8c_a019f631b2e2795023bf22abef7d9f80e}{chemUpper}[0];
+96     \hyperlink{chemf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}[1] = \hyperlink{chemf_8c_a14199fec6ea96fe4a4c57bccaff2dfe7}{chemLower}[1];
+97     \hyperlink{chemf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}[1] = \hyperlink{chemf_8c_a14199fec6ea96fe4a4c57bccaff2dfe7}{chemLower}[1];
+98     \hyperlink{chemf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}[2] = \hyperlink{chemf_8c_a14199fec6ea96fe4a4c57bccaff2dfe7}{chemLower}[2];
+99     \hyperlink{chemf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}[2] = \hyperlink{chemf_8c_a019f631b2e2795023bf22abef7d9f80e}{chemUpper}[2];
+100   \}
+101   \textcolor{keywordflow}{if} (coord == 1 && boundary == 1) \{
+102     \hyperlink{chemf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}[0] = \hyperlink{chemf_8c_a14199fec6ea96fe4a4c57bccaff2dfe7}{chemLower}[0];
+103     \hyperlink{chemf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}[0] = \hyperlink{chemf_8c_a019f631b2e2795023bf22abef7d9f80e}{chemUpper}[0];
+104     \hyperlink{chemf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}[1] = \hyperlink{chemf_8c_a019f631b2e2795023bf22abef7d9f80e}{chemUpper}[1];
+105     \hyperlink{chemf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}[1] = \hyperlink{chemf_8c_a019f631b2e2795023bf22abef7d9f80e}{chemUpper}[1];
+106     \hyperlink{chemf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}[2] = \hyperlink{chemf_8c_a14199fec6ea96fe4a4c57bccaff2dfe7}{chemLower}[2];
+107     \hyperlink{chemf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}[2] = \hyperlink{chemf_8c_a019f631b2e2795023bf22abef7d9f80e}{chemUpper}[2];
+108   \}
+109   \textcolor{keywordflow}{if} (coord == 2 && boundary == -1) \{
+110     \hyperlink{chemf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}[0] = \hyperlink{chemf_8c_a14199fec6ea96fe4a4c57bccaff2dfe7}{chemLower}[0];
+111     \hyperlink{chemf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}[0] = \hyperlink{chemf_8c_a019f631b2e2795023bf22abef7d9f80e}{chemUpper}[0];
+112     \hyperlink{chemf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}[1] = \hyperlink{chemf_8c_a14199fec6ea96fe4a4c57bccaff2dfe7}{chemLower}[1];
+113     \hyperlink{chemf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}[1] = \hyperlink{chemf_8c_a019f631b2e2795023bf22abef7d9f80e}{chemUpper}[1];
+114     \hyperlink{chemf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}[2] = \hyperlink{chemf_8c_a14199fec6ea96fe4a4c57bccaff2dfe7}{chemLower}[2];
+115     \hyperlink{chemf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}[2] = \hyperlink{chemf_8c_a14199fec6ea96fe4a4c57bccaff2dfe7}{chemLower}[2];
+116   \}
+117   \textcolor{keywordflow}{if} (coord == 2 && boundary == 1) \{
+118     \hyperlink{chemf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}[0] = \hyperlink{chemf_8c_a14199fec6ea96fe4a4c57bccaff2dfe7}{chemLower}[0];
+119     \hyperlink{chemf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}[0] = \hyperlink{chemf_8c_a019f631b2e2795023bf22abef7d9f80e}{chemUpper}[0];
+120     \hyperlink{chemf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}[1] = \hyperlink{chemf_8c_a14199fec6ea96fe4a4c57bccaff2dfe7}{chemLower}[1];
+121     \hyperlink{chemf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}[1] = \hyperlink{chemf_8c_a019f631b2e2795023bf22abef7d9f80e}{chemUpper}[1];
+122     \hyperlink{chemf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}[2] = \hyperlink{chemf_8c_a019f631b2e2795023bf22abef7d9f80e}{chemUpper}[2];
+123     \hyperlink{chemf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}[2] = \hyperlink{chemf_8c_a019f631b2e2795023bf22abef7d9f80e}{chemUpper}[2];
+124   \}
+125 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{chemf_8c_afb692f34ea05262db93f9bf9590b06a7_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Variable Documentation}
+\hypertarget{chemf_8c_a397798166a570960b5d468b6df8bf02c}{\index{chemf.\-c@{chemf.\-c}!bc\-Lower@{bc\-Lower}}
+\index{bc\-Lower@{bc\-Lower}!chemf.c@{chemf.\-c}}
+\subsubsection[{bc\-Lower}]{\setlength{\rightskip}{0pt plus 5cm}long long bc\-Lower\mbox{[}3\mbox{]}}}\label{chemf_8c_a397798166a570960b5d468b6df8bf02c}
+
+
+Definition at line 54 of file chemf.\-c.
+
+\hypertarget{chemf_8c_aaea99b8c85fcedb15091dcac991999fd}{\index{chemf.\-c@{chemf.\-c}!bc\-Upper@{bc\-Upper}}
+\index{bc\-Upper@{bc\-Upper}!chemf.c@{chemf.\-c}}
+\subsubsection[{bc\-Upper}]{\setlength{\rightskip}{0pt plus 5cm}long long bc\-Upper\mbox{[}3\mbox{]}}}\label{chemf_8c_aaea99b8c85fcedb15091dcac991999fd}
+
+
+Definition at line 55 of file chemf.\-c.
+
+\hypertarget{chemf_8c_ad634e858729e0c04e8b9a4b0a1144b10}{\index{chemf.\-c@{chemf.\-c}!chem\-A@{chem\-A}}
+\index{chem\-A@{chem\-A}!chemf.c@{chemf.\-c}}
+\subsubsection[{chem\-A}]{\setlength{\rightskip}{0pt plus 5cm}H\-Y\-P\-R\-E\-\_\-\-S\-Struct\-Matrix chem\-A\mbox{[}{\bf N\-C\-H\-E\-M}\mbox{]}}}\label{chemf_8c_ad634e858729e0c04e8b9a4b0a1144b10}
+
+
+Definition at line 40 of file chemf.\-c.
+
+\hypertarget{chemf_8c_afb43e9c9d8160250a03e1b41902473fd}{\index{chemf.\-c@{chemf.\-c}!chemb@{chemb}}
+\index{chemb@{chemb}!chemf.c@{chemf.\-c}}
+\subsubsection[{chemb}]{\setlength{\rightskip}{0pt plus 5cm}H\-Y\-P\-R\-E\-\_\-\-S\-Struct\-Vector chemb\mbox{[}{\bf N\-C\-H\-E\-M}\mbox{]}}}\label{chemf_8c_afb43e9c9d8160250a03e1b41902473fd}
+
+
+Definition at line 41 of file chemf.\-c.
+
+\hypertarget{chemf_8c_aaac58de32c5dda56ce31654ec3e19337}{\index{chemf.\-c@{chemf.\-c}!chem\-Graph@{chem\-Graph}}
+\index{chem\-Graph@{chem\-Graph}!chemf.c@{chemf.\-c}}
+\subsubsection[{chem\-Graph}]{\setlength{\rightskip}{0pt plus 5cm}H\-Y\-P\-R\-E\-\_\-\-S\-Struct\-Graph chem\-Graph\mbox{[}{\bf N\-C\-H\-E\-M}\mbox{]}}}\label{chemf_8c_aaac58de32c5dda56ce31654ec3e19337}
+
+
+Definition at line 37 of file chemf.\-c.
+
+\hypertarget{chemf_8c_ad7a28a5fc279e8b757bdc6a4b57c25be}{\index{chemf.\-c@{chemf.\-c}!chem\-Grid@{chem\-Grid}}
+\index{chem\-Grid@{chem\-Grid}!chemf.c@{chemf.\-c}}
+\subsubsection[{chem\-Grid}]{\setlength{\rightskip}{0pt plus 5cm}H\-Y\-P\-R\-E\-\_\-\-S\-Struct\-Grid chem\-Grid\mbox{[}{\bf N\-C\-H\-E\-M}\mbox{]}}}\label{chemf_8c_ad7a28a5fc279e8b757bdc6a4b57c25be}
+
+
+Definition at line 36 of file chemf.\-c.
+
+\hypertarget{chemf_8c_a26adfe146e722023d7f81bf278bde9e7}{\index{chemf.\-c@{chemf.\-c}!chem\-Iter@{chem\-Iter}}
+\index{chem\-Iter@{chem\-Iter}!chemf.c@{chemf.\-c}}
+\subsubsection[{chem\-Iter}]{\setlength{\rightskip}{0pt plus 5cm}int chem\-Iter\mbox{[}{\bf N\-C\-H\-E\-M}\mbox{]}}}\label{chemf_8c_a26adfe146e722023d7f81bf278bde9e7}
+
+
+Definition at line 62 of file chemf.\-c.
+
+\hypertarget{chemf_8c_ab35147d777155659aaad43553e3378f4}{\index{chemf.\-c@{chemf.\-c}!chem\-Lambda@{chem\-Lambda}}
+\index{chem\-Lambda@{chem\-Lambda}!chemf.c@{chemf.\-c}}
+\subsubsection[{chem\-Lambda}]{\setlength{\rightskip}{0pt plus 5cm}double chem\-Lambda = 0.\-25}}\label{chemf_8c_ab35147d777155659aaad43553e3378f4}
+
+
+Definition at line 58 of file chemf.\-c.
+
+\hypertarget{chemf_8c_a14199fec6ea96fe4a4c57bccaff2dfe7}{\index{chemf.\-c@{chemf.\-c}!chem\-Lower@{chem\-Lower}}
+\index{chem\-Lower@{chem\-Lower}!chemf.c@{chemf.\-c}}
+\subsubsection[{chem\-Lower}]{\setlength{\rightskip}{0pt plus 5cm}long long chem\-Lower\mbox{[}3\mbox{]}}}\label{chemf_8c_a14199fec6ea96fe4a4c57bccaff2dfe7}
+
+
+Definition at line 53 of file chemf.\-c.
+
+\hypertarget{chemf_8c_a242fb3ba38fb1c6054fd05507394f08b}{\index{chemf.\-c@{chemf.\-c}!chem\-Object\-Type@{chem\-Object\-Type}}
+\index{chem\-Object\-Type@{chem\-Object\-Type}!chemf.c@{chemf.\-c}}
+\subsubsection[{chem\-Object\-Type}]{\setlength{\rightskip}{0pt plus 5cm}int chem\-Object\-Type}}\label{chemf_8c_a242fb3ba38fb1c6054fd05507394f08b}
+
+
+Definition at line 51 of file chemf.\-c.
+
+\hypertarget{chemf_8c_a998a7ebb65eb001abcee46c1ea1b1756}{\index{chemf.\-c@{chemf.\-c}!chem\-Par\-A@{chem\-Par\-A}}
+\index{chem\-Par\-A@{chem\-Par\-A}!chemf.c@{chemf.\-c}}
+\subsubsection[{chem\-Par\-A}]{\setlength{\rightskip}{0pt plus 5cm}H\-Y\-P\-R\-E\-\_\-\-Par\-C\-S\-R\-Matrix chem\-Par\-A\mbox{[}{\bf N\-C\-H\-E\-M}\mbox{]}}}\label{chemf_8c_a998a7ebb65eb001abcee46c1ea1b1756}
+
+
+Definition at line 44 of file chemf.\-c.
+
+\hypertarget{chemf_8c_af74b7f36ec77fb8e0638db98dd2ee47a}{\index{chemf.\-c@{chemf.\-c}!chem\-Parb@{chem\-Parb}}
+\index{chem\-Parb@{chem\-Parb}!chemf.c@{chemf.\-c}}
+\subsubsection[{chem\-Parb}]{\setlength{\rightskip}{0pt plus 5cm}H\-Y\-P\-R\-E\-\_\-\-Par\-Vector chem\-Parb\mbox{[}{\bf N\-C\-H\-E\-M}\mbox{]}}}\label{chemf_8c_af74b7f36ec77fb8e0638db98dd2ee47a}
+
+
+Definition at line 45 of file chemf.\-c.
+
+\hypertarget{chemf_8c_aae118f98b57f3dda9f036d39db247bb1}{\index{chemf.\-c@{chemf.\-c}!chem\-Parx@{chem\-Parx}}
+\index{chem\-Parx@{chem\-Parx}!chemf.c@{chemf.\-c}}
+\subsubsection[{chem\-Parx}]{\setlength{\rightskip}{0pt plus 5cm}H\-Y\-P\-R\-E\-\_\-\-Par\-Vector chem\-Parx\mbox{[}{\bf N\-C\-H\-E\-M}\mbox{]}}}\label{chemf_8c_aae118f98b57f3dda9f036d39db247bb1}
+
+
+Definition at line 46 of file chemf.\-c.
+
+\hypertarget{chemf_8c_a614434a804d9a302d1db9603c22b60a7}{\index{chemf.\-c@{chemf.\-c}!chem\-P\-C@{chem\-P\-C}}
+\index{chem\-P\-C@{chem\-P\-C}!chemf.c@{chemf.\-c}}
+\subsubsection[{chem\-P\-C}]{\setlength{\rightskip}{0pt plus 5cm}double$\ast$ chem\-P\-C}}\label{chemf_8c_a614434a804d9a302d1db9603c22b60a7}
+
+
+Definition at line 70 of file chemf.\-c.
+
+\hypertarget{chemf_8c_a91747632f47bf551e8915e343439777f}{\index{chemf.\-c@{chemf.\-c}!chem\-Precond@{chem\-Precond}}
+\index{chem\-Precond@{chem\-Precond}!chemf.c@{chemf.\-c}}
+\subsubsection[{chem\-Precond}]{\setlength{\rightskip}{0pt plus 5cm}H\-Y\-P\-R\-E\-\_\-\-Solver chem\-Precond\mbox{[}{\bf N\-C\-H\-E\-M}\mbox{]}}}\label{chemf_8c_a91747632f47bf551e8915e343439777f}
+
+
+Definition at line 49 of file chemf.\-c.
+
+\hypertarget{chemf_8c_a99bbb7b0352d9c850e98287fa45b42c0}{\index{chemf.\-c@{chemf.\-c}!chem\-Solver@{chem\-Solver}}
+\index{chem\-Solver@{chem\-Solver}!chemf.c@{chemf.\-c}}
+\subsubsection[{chem\-Solver}]{\setlength{\rightskip}{0pt plus 5cm}H\-Y\-P\-R\-E\-\_\-\-Solver chem\-Solver\mbox{[}{\bf N\-C\-H\-E\-M}\mbox{]}}}\label{chemf_8c_a99bbb7b0352d9c850e98287fa45b42c0}
+
+
+Definition at line 48 of file chemf.\-c.
+
+\hypertarget{chemf_8c_ae8a36b5c7c6256a7d248a08c71944c73}{\index{chemf.\-c@{chemf.\-c}!chem\-Stencil@{chem\-Stencil}}
+\index{chem\-Stencil@{chem\-Stencil}!chemf.c@{chemf.\-c}}
+\subsubsection[{chem\-Stencil}]{\setlength{\rightskip}{0pt plus 5cm}H\-Y\-P\-R\-E\-\_\-\-S\-Struct\-Stencil chem\-Stencil\mbox{[}{\bf N\-C\-H\-E\-M}\mbox{]}}}\label{chemf_8c_ae8a36b5c7c6256a7d248a08c71944c73}
+
+
+Definition at line 38 of file chemf.\-c.
+
+\hypertarget{chemf_8c_a019f631b2e2795023bf22abef7d9f80e}{\index{chemf.\-c@{chemf.\-c}!chem\-Upper@{chem\-Upper}}
+\index{chem\-Upper@{chem\-Upper}!chemf.c@{chemf.\-c}}
+\subsubsection[{chem\-Upper}]{\setlength{\rightskip}{0pt plus 5cm}long long chem\-Upper\mbox{[}3\mbox{]}}}\label{chemf_8c_a019f631b2e2795023bf22abef7d9f80e}
+
+
+Definition at line 53 of file chemf.\-c.
+
+\hypertarget{chemf_8c_aa73fdbffdd3d43dd503718011b98e41f}{\index{chemf.\-c@{chemf.\-c}!chem\-Vartypes@{chem\-Vartypes}}
+\index{chem\-Vartypes@{chem\-Vartypes}!chemf.c@{chemf.\-c}}
+\subsubsection[{chem\-Vartypes}]{\setlength{\rightskip}{0pt plus 5cm}H\-Y\-P\-R\-E\-\_\-\-S\-Struct\-Variable chem\-Vartypes\mbox{[}1\mbox{]} = \{ H\-Y\-P\-R\-E\-\_\-\-S\-S\-T\-R\-U\-C\-T\-\_\-\-V\-A\-R\-I\-A\-B\-L\-E\-\_\-\-N\-O\-D\-E \}}}\label{chemf_8c_aa73fdbffdd3d43dd503718011b98e41f}
+
+
+Definition at line 66 of file chemf.\-c.
+
+\hypertarget{chemf_8c_a48c5bcbe8787c6a6be2a6d5bcdae101f}{\index{chemf.\-c@{chemf.\-c}!chemx@{chemx}}
+\index{chemx@{chemx}!chemf.c@{chemf.\-c}}
+\subsubsection[{chemx}]{\setlength{\rightskip}{0pt plus 5cm}H\-Y\-P\-R\-E\-\_\-\-S\-Struct\-Vector chemx\mbox{[}{\bf N\-C\-H\-E\-M}\mbox{]}}}\label{chemf_8c_a48c5bcbe8787c6a6be2a6d5bcdae101f}
+
+
+Definition at line 42 of file chemf.\-c.
+
+\hypertarget{chemf_8c_ad1178dce1f62833a078c63e911e2e023}{\index{chemf.\-c@{chemf.\-c}!chem\-Z@{chem\-Z}}
+\index{chem\-Z@{chem\-Z}!chemf.c@{chemf.\-c}}
+\subsubsection[{chem\-Z}]{\setlength{\rightskip}{0pt plus 5cm}double chem\-Z\mbox{[}{\bf N\-C\-H\-E\-M}\mbox{]}}}\label{chemf_8c_ad1178dce1f62833a078c63e911e2e023}
+
+
+Definition at line 64 of file chemf.\-c.
+
+\hypertarget{chemf_8c_a27dc1f70b41e3739d1629663a1d3d0a6}{\index{chemf.\-c@{chemf.\-c}!chfname@{chfname}}
+\index{chfname@{chfname}!chemf.c@{chemf.\-c}}
+\subsubsection[{chfname}]{\setlength{\rightskip}{0pt plus 5cm}char chfname\mbox{[}256\mbox{]}}}\label{chemf_8c_a27dc1f70b41e3739d1629663a1d3d0a6}
+
+
+Definition at line 60 of file chemf.\-c.
+
+\hypertarget{chemf_8c_a881c8c944ac83a5c022ee0e236f35e52}{\index{chemf.\-c@{chemf.\-c}!dt@{dt}}
+\index{dt@{dt}!chemf.c@{chemf.\-c}}
+\subsubsection[{dt}]{\setlength{\rightskip}{0pt plus 5cm}double dt\mbox{[}{\bf N\-C\-H\-E\-M}\mbox{]}}}\label{chemf_8c_a881c8c944ac83a5c022ee0e236f35e52}
+
+
+Definition at line 57 of file chemf.\-c.
+
+\hypertarget{chemf_8c_a07fef4b421caa5300b13b2ba89422841}{\index{chemf.\-c@{chemf.\-c}!number\-Of\-Iters@{number\-Of\-Iters}}
+\index{number\-Of\-Iters@{number\-Of\-Iters}!chemf.c@{chemf.\-c}}
+\subsubsection[{number\-Of\-Iters}]{\setlength{\rightskip}{0pt plus 5cm}int number\-Of\-Iters}}\label{chemf_8c_a07fef4b421caa5300b13b2ba89422841}
+
+
+Definition at line 68 of file chemf.\-c.
+

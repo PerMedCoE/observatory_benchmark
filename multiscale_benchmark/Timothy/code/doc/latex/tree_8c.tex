@@ -1,0 +1,385 @@
+\hypertarget{tree_8c}{\section{tree.\-c File Reference}
+\label{tree_8c}\index{tree.\-c@{tree.\-c}}
+}
+
+
+contains tree build functions  
+
+
+{\ttfamily \#include $<$stdio.\-h$>$}\\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$math.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}global.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}inline.\-h\char`\"{}}\\*
+Include dependency graph for tree.\-c\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{tree_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{tree_8c_ad150033e7d3cb347f85fe638c54d395b}{tree\-Build\-Initial} (int depth, struct \hyperlink{structbht__node}{bht\-\_\-node} $\ast$$\ast$iroots, struct \hyperlink{structbht__node}{bht\-\_\-node} $\ast$node)
+\item 
+void \hyperlink{tree_8c_a3c43e59861e6c6097d82a34ceef3b8a3}{tree\-Build} ()
+\item 
+void \hyperlink{tree_8c_acfd9d286d8821139e83371e46e7f5e51}{tree\-Free} ()
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+double \hyperlink{tree_8c_af9d3dabd62b331b5be6be69261a98596}{tci} \mbox{[}8\mbox{]}\mbox{[}3\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+contains tree build functions 
+
+Definition in file \hyperlink{tree_8c_source}{tree.\-c}.
+
+
+
+\subsection{Function Documentation}
+\hypertarget{tree_8c_a3c43e59861e6c6097d82a34ceef3b8a3}{\index{tree.\-c@{tree.\-c}!tree\-Build@{tree\-Build}}
+\index{tree\-Build@{tree\-Build}!tree.c@{tree.\-c}}
+\subsubsection[{tree\-Build}]{\setlength{\rightskip}{0pt plus 5cm}void tree\-Build (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{tree_8c_a3c43e59861e6c6097d82a34ceef3b8a3}
+This function builds an octree for local cells. 
+
+Definition at line 181 of file tree.\-c.
+
+
+
+References bht\-\_\-root, boxmax, boxmin, boxsize, cells, bht\-\_\-node\-::center, bht\-\_\-node\-::child, bht\-\_\-node\-::father, bht\-\_\-node\-::isempty, bht\-\_\-node\-::leaf, leafs, bht\-\_\-node\-::len, lnc, M\-P\-Irank, ni, nnodes, nnodes\-\_\-init, nx, O\-M\-Pthreads, bht\-\_\-node\-::partnum, s, sdim, stat\-Out\-Step, step, stop\-Run(), tnc, tree, tree\-Build\-Initial(), cell\-Data\-::x, cell\-Data\-::y, and cell\-Data\-::z.
+
+
+\begin{DoxyCode}
+182 \{
+183 
+184   \textcolor{keywordtype}{int} i, j;
+185   \textcolor{keywordtype}{int} pow2, idepth, pparts, k, l;
+186   \textcolor{keywordtype}{int} maxTreeSize;
+187   \textcolor{keyword}{struct }\hyperlink{structbht__node}{bht\_node} *node;
+188   \textcolor{keyword}{struct }\hyperlink{structbht__node}{bht\_node} **iroots;
+189   \textcolor{keywordtype}{int} nnodes\_per\_thread = 0;
+190 
+191   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc} == 0)
+192     \textcolor{keywordflow}{return};
+193 \textcolor{preprocessor}{#ifdef DEBUG}
+194 \textcolor{preprocessor}{}  \textcolor{keywordflow}{if} (\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank} == 0 && !(\hyperlink{global_8h_abc16e65f240ed0c8f3e876e8732c0a33}{step} % \hyperlink{global_8h_aab9700fe12cc303ff43e1a35a210128e}{statOutStep})) \{
+195     printf(\textcolor{stringliteral}{" Tree build..."});
+196     fflush(stdout);
+197   \}
+198 \textcolor{preprocessor}{#endif}
+199 \textcolor{preprocessor}{}  \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 3)
+200     \hyperlink{global_8h_a96f00f69e2102e1720c989a00c385d81}{tnc} = 8;
+201   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 2)
+202     \hyperlink{global_8h_a96f00f69e2102e1720c989a00c385d81}{tnc} = 4;
+203 
+204   \hyperlink{global_8h_a824ac1af8a4229ed37411081a1ffd928}{nnodes} = 0;
+205   \hyperlink{global_8h_ab6b3020aaf0144a41169e6b995c2921c}{nnodes\_init} = 0;
+206 
+207   pow2 = 0;
+208   k = 1;
+209   \textcolor{keywordflow}{while} (1) \{
+210     \textcolor{keywordflow}{if} (k >= \hyperlink{global_8h_ae5f15194d70ca4e470e6f3cb85510c65}{OMPthreads} || k >= \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc})
+211       \textcolor{keywordflow}{break};
+212     k = k * 2;
+213     pow2 += 1;
+214   \}
+215 
+216   idepth = 0;
+217   l = 1;
+218   \textcolor{keywordflow}{while} (1) \{
+219     \textcolor{keywordflow}{if} (l >= k)
+220       \textcolor{keywordflow}{break};
+221     l = l * \hyperlink{global_8h_a96f00f69e2102e1720c989a00c385d81}{tnc};
+222     idepth += 1;
+223   \}
+224 
+225   \textcolor{keywordflow}{if} (!
+226       (iroots =
+227        (\textcolor{keyword}{struct} \hyperlink{structbht__node}{bht\_node} **) malloc(l * \textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} \hyperlink{structbht__node}{bht\_node} *))))
+228     \hyperlink{utils_8c_a07dd99a04f2723be164531a7a862fb67}{stopRun}(106, \textcolor{stringliteral}{"iroots"}, \_\_FILE\_\_, \_\_LINE\_\_);
+229 
+230   pparts = l / k;
+231 
+232   \textcolor{comment}{/* allocate memory for the leafs table */}
+233   \textcolor{keywordflow}{if} (!
+234       (\hyperlink{global_8h_a0681d5d05f66720bbcc34493ceff6fc3}{leafs} =
+235        (\textcolor{keyword}{struct} \hyperlink{structbht__node}{bht\_node} **) malloc(\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc} * \textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} \hyperlink{structbht__node}{bht\_node} *))))
+236     \hyperlink{utils_8c_a07dd99a04f2723be164531a7a862fb67}{stopRun}(106, \textcolor{stringliteral}{"leafs"}, \_\_FILE\_\_, \_\_LINE\_\_);
+237 
+238   maxTreeSize = \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc} * 16;
+239 
+240   \textcolor{keywordflow}{if} (!
+241       (\hyperlink{global_8h_a7c0d548b636dc26d8fa1808037ef3fb5}{tree} =
+242        (\textcolor{keyword}{struct} \hyperlink{structbht__node}{bht\_node} *) malloc(maxTreeSize * \textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} \hyperlink{structbht__node}{bht\_node}))))
+243     \hyperlink{utils_8c_a07dd99a04f2723be164531a7a862fb67}{stopRun}(106, \textcolor{stringliteral}{"tree"}, \_\_FILE\_\_, \_\_LINE\_\_);
+244 
+245   \hyperlink{global_8h_a6920a8c121a4a8d48989c8d923e4797e}{bht\_root} = &\hyperlink{global_8h_a7c0d548b636dc26d8fa1808037ef3fb5}{tree}[0];
+246 
+247   \hyperlink{global_8h_ab6b3020aaf0144a41169e6b995c2921c}{nnodes\_init} = 1;
+248 
+249 
+250   \hyperlink{global_8h_af6759ff06efd7eb00db0924990465f99}{boxmin}[0] = \hyperlink{global_8h_a02d47a4f36ec0bcce348696534567e30}{nx};
+251   \hyperlink{global_8h_af6759ff06efd7eb00db0924990465f99}{boxmin}[1] = \hyperlink{global_8h_a02d47a4f36ec0bcce348696534567e30}{nx};
+252   \hyperlink{global_8h_af6759ff06efd7eb00db0924990465f99}{boxmin}[2] = \hyperlink{global_8h_a02d47a4f36ec0bcce348696534567e30}{nx};
+253   \hyperlink{global_8h_ad7b4df01585142c37082c0ab7a52b0f1}{boxmax}[0] = -\hyperlink{global_8h_a02d47a4f36ec0bcce348696534567e30}{nx};
+254   \hyperlink{global_8h_ad7b4df01585142c37082c0ab7a52b0f1}{boxmax}[1] = -\hyperlink{global_8h_a02d47a4f36ec0bcce348696534567e30}{nx};
+255   \hyperlink{global_8h_ad7b4df01585142c37082c0ab7a52b0f1}{boxmax}[2] = -\hyperlink{global_8h_a02d47a4f36ec0bcce348696534567e30}{nx};
+256 
+257   \textcolor{keywordflow}{for} (i = 0; i < \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}; i++) \{
+258     \hyperlink{global_8h_af6759ff06efd7eb00db0924990465f99}{boxmin}[0] = (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_af88b946fb90d5f08b5fb740c70e98c10}{x} < \hyperlink{global_8h_af6759ff06efd7eb00db0924990465f99}{boxmin}[0] ? \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_af88b946fb90d5f08b5fb740c70e98c10}{x} : 
+      \hyperlink{global_8h_af6759ff06efd7eb00db0924990465f99}{boxmin}[0]);
+259     \hyperlink{global_8h_ad7b4df01585142c37082c0ab7a52b0f1}{boxmax}[0] = (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_af88b946fb90d5f08b5fb740c70e98c10}{x} > \hyperlink{global_8h_ad7b4df01585142c37082c0ab7a52b0f1}{boxmax}[0] ? \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_af88b946fb90d5f08b5fb740c70e98c10}{x} : 
+      \hyperlink{global_8h_ad7b4df01585142c37082c0ab7a52b0f1}{boxmax}[0]);
+260     \hyperlink{global_8h_af6759ff06efd7eb00db0924990465f99}{boxmin}[1] = (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_ab927965981178aa1fba979a37168db2a}{y} < \hyperlink{global_8h_af6759ff06efd7eb00db0924990465f99}{boxmin}[1] ? \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_ab927965981178aa1fba979a37168db2a}{y} : 
+      \hyperlink{global_8h_af6759ff06efd7eb00db0924990465f99}{boxmin}[1]);
+261     \hyperlink{global_8h_ad7b4df01585142c37082c0ab7a52b0f1}{boxmax}[1] = (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_ab927965981178aa1fba979a37168db2a}{y} > \hyperlink{global_8h_ad7b4df01585142c37082c0ab7a52b0f1}{boxmax}[1] ? \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_ab927965981178aa1fba979a37168db2a}{y} : 
+      \hyperlink{global_8h_ad7b4df01585142c37082c0ab7a52b0f1}{boxmax}[1]);
+262     \hyperlink{global_8h_af6759ff06efd7eb00db0924990465f99}{boxmin}[2] = (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_ab3e6ed577a7c669c19de1f9c1b46c872}{z} < \hyperlink{global_8h_af6759ff06efd7eb00db0924990465f99}{boxmin}[2] ? \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_ab3e6ed577a7c669c19de1f9c1b46c872}{z} : 
+      \hyperlink{global_8h_af6759ff06efd7eb00db0924990465f99}{boxmin}[2]);
+263     \hyperlink{global_8h_ad7b4df01585142c37082c0ab7a52b0f1}{boxmax}[2] = (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_ab3e6ed577a7c669c19de1f9c1b46c872}{z} > \hyperlink{global_8h_ad7b4df01585142c37082c0ab7a52b0f1}{boxmax}[2] ? \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_ab3e6ed577a7c669c19de1f9c1b46c872}{z} : 
+      \hyperlink{global_8h_ad7b4df01585142c37082c0ab7a52b0f1}{boxmax}[2]);
+264   \}
+265 
+266   \hyperlink{global_8h_a2c5e0e624851de1af8c332343d097abd}{boxsize} = \hyperlink{global_8h_ad7b4df01585142c37082c0ab7a52b0f1}{boxmax}[0] - \hyperlink{global_8h_af6759ff06efd7eb00db0924990465f99}{boxmin}[0];
+267   \hyperlink{global_8h_a2c5e0e624851de1af8c332343d097abd}{boxsize} =
+268       (\hyperlink{global_8h_ad7b4df01585142c37082c0ab7a52b0f1}{boxmax}[1] - boxmin[1] > \hyperlink{global_8h_a2c5e0e624851de1af8c332343d097abd}{boxsize} ? \hyperlink{global_8h_ad7b4df01585142c37082c0ab7a52b0f1}{boxmax}[1] - boxmin[1] : 
+      \hyperlink{global_8h_a2c5e0e624851de1af8c332343d097abd}{boxsize});
+269   \hyperlink{global_8h_a2c5e0e624851de1af8c332343d097abd}{boxsize} =
+270       (\hyperlink{global_8h_ad7b4df01585142c37082c0ab7a52b0f1}{boxmax}[2] - boxmin[2] > \hyperlink{global_8h_a2c5e0e624851de1af8c332343d097abd}{boxsize} ? \hyperlink{global_8h_ad7b4df01585142c37082c0ab7a52b0f1}{boxmax}[2] - boxmin[2] : 
+      \hyperlink{global_8h_a2c5e0e624851de1af8c332343d097abd}{boxsize});
+271   \hyperlink{global_8h_a2c5e0e624851de1af8c332343d097abd}{boxsize} += 0.1;
+272 
+273   \textcolor{comment}{/* set up the root node */}
+274   \hyperlink{global_8h_a6920a8c121a4a8d48989c8d923e4797e}{bht\_root}->\hyperlink{structbht__node_ad4bd51cdbe6ba41894905207ed94974f}{len} = \hyperlink{global_8h_a2c5e0e624851de1af8c332343d097abd}{boxsize};
+275   \hyperlink{global_8h_a6920a8c121a4a8d48989c8d923e4797e}{bht\_root}->\hyperlink{structbht__node_a9da2c4f10aed3a86628aad3dd87c9d6a}{center}[0] = boxmin[0] + (\hyperlink{global_8h_ad7b4df01585142c37082c0ab7a52b0f1}{boxmax}[0] - boxmin[0]) / 2.0;
+276   \hyperlink{global_8h_a6920a8c121a4a8d48989c8d923e4797e}{bht\_root}->\hyperlink{structbht__node_a9da2c4f10aed3a86628aad3dd87c9d6a}{center}[1] = boxmin[1] + (\hyperlink{global_8h_ad7b4df01585142c37082c0ab7a52b0f1}{boxmax}[1] - boxmin[1]) / 2.0;
+277   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 3)
+278     \hyperlink{global_8h_a6920a8c121a4a8d48989c8d923e4797e}{bht\_root}->\hyperlink{structbht__node_a9da2c4f10aed3a86628aad3dd87c9d6a}{center}[2] = boxmin[2] + (\hyperlink{global_8h_ad7b4df01585142c37082c0ab7a52b0f1}{boxmax}[2] - boxmin[2]) / 2.0;
+279   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 2)
+280     \hyperlink{global_8h_a6920a8c121a4a8d48989c8d923e4797e}{bht\_root}->\hyperlink{structbht__node_a9da2c4f10aed3a86628aad3dd87c9d6a}{center}[2] = 0.0;
+281 
+282   \hyperlink{global_8h_a6920a8c121a4a8d48989c8d923e4797e}{bht\_root}->\hyperlink{structbht__node_afdde1540721b0d5dbc4b234677b4ad8d}{leaf} = 1;
+283   \hyperlink{global_8h_a6920a8c121a4a8d48989c8d923e4797e}{bht\_root}->\hyperlink{structbht__node_a3aa7881ee7de66da41c4eeacb9280836}{isempty} = 1;
+284   \hyperlink{global_8h_a6920a8c121a4a8d48989c8d923e4797e}{bht\_root}->\hyperlink{structbht__node_ad327b7e4aaac3a9687feb283d05fabbe}{father} = NULL;
+285 
+286   \textcolor{keywordflow}{for} (i = 0; i < \hyperlink{global_8h_a96f00f69e2102e1720c989a00c385d81}{tnc}; i++)
+287     \hyperlink{global_8h_a6920a8c121a4a8d48989c8d923e4797e}{bht\_root}->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[i] = NULL;
+288 
+289   \hyperlink{global_8h_ad2b24a5d9628942aab73cf1db2bb4bed}{ni} = 0;
+290 
+291   \hyperlink{tree_8c_ad150033e7d3cb347f85fe638c54d395b}{treeBuildInitial}(idepth, iroots, \hyperlink{global_8h_a6920a8c121a4a8d48989c8d923e4797e}{bht\_root});
+292 
+293   \hyperlink{global_8h_ad2b24a5d9628942aab73cf1db2bb4bed}{ni} = \hyperlink{global_8h_ab6b3020aaf0144a41169e6b995c2921c}{nnodes\_init};
+294 
+295   \textcolor{comment}{/* stop if there are no particles in this process */}
+296   \textcolor{keywordflow}{if} (lnc == 0)
+297     \textcolor{keywordflow}{return};
+298 
+299 \textcolor{preprocessor}{#pragma omp parallel num\_threads(k) private(node,i,j) firstprivate(pparts) shared(ni)}
+300 \textcolor{preprocessor}{}  \{
+301     \textcolor{keywordtype}{int} OMPid;
+302 
+303     OMPid = omp\_get\_thread\_num();
+304 
+305     node = \hyperlink{global_8h_a6920a8c121a4a8d48989c8d923e4797e}{bht\_root};
+306 
+307     \textcolor{comment}{/* loop over cells - each cell is inserted into its own octree location */}
+308     \textcolor{keywordflow}{for} (i = 0; i < \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}; i++) \{
+309       \textcolor{keywordtype}{int} mycell = 0;
+310       \textcolor{keywordtype}{int} c;
+311       \textcolor{keywordtype}{int} \hyperlink{global_8h_a874f74a4dc1c9a0cd9c6e0d79c298f55}{s};
+312       \textcolor{keyword}{struct }\hyperlink{structbht__node}{bht\_node} *no;
+313 
+314       no = node;
+315 
+316       \textcolor{keywordflow}{for} (j = 0; j < pparts; j++) \{
+317     mycell = cellInNode(i, iroots[OMPid * pparts + j]);
+318     \textcolor{keywordflow}{if} (mycell == 1) \{
+319       no = iroots[OMPid * pparts + j];
+320       \textcolor{keywordflow}{break};
+321     \}
+322       \}
+323 
+324       \textcolor{keywordflow}{if} (mycell == 0)
+325     \textcolor{keywordflow}{continue};
+326 
+327       \textcolor{comment}{/* this loop iterates until given cell p is inserted into its location */}
+328       \textcolor{keywordflow}{while} (1) \{
+329     \textcolor{comment}{/* if this node is not a leaf we continue searching */}
+330     \textcolor{keywordflow}{if} (no->\hyperlink{structbht__node_afdde1540721b0d5dbc4b234677b4ad8d}{leaf} == 0) \{
+331       c = whichChildNode(i, no);
+332       no = no->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[c];
+333       \textcolor{comment}{/* if this node is a leaf and it is not empty we need to move cells */}
+334     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (no->\hyperlink{structbht__node_afdde1540721b0d5dbc4b234677b4ad8d}{leaf} == 1 && no->\hyperlink{structbht__node_a3aa7881ee7de66da41c4eeacb9280836}{isempty} == 0) \{
+335       \textcolor{keywordflow}{for} (s = 0; s < \hyperlink{global_8h_a96f00f69e2102e1720c989a00c385d81}{tnc}; s++)
+336         no->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[s] = NULL;
+337       no->\hyperlink{structbht__node_afdde1540721b0d5dbc4b234677b4ad8d}{leaf} = 0;
+338       c = whichChildNode(no->\hyperlink{structbht__node_a0c60ab00baa47c069768352b2f2b6d3d}{partnum}, no);
+339       no->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[c]->\hyperlink{structbht__node_a0c60ab00baa47c069768352b2f2b6d3d}{partnum} = no->\hyperlink{structbht__node_a0c60ab00baa47c069768352b2f2b6d3d}{partnum};
+340       no->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[c]->\hyperlink{structbht__node_a3aa7881ee7de66da41c4eeacb9280836}{isempty} = 0;
+341       \hyperlink{global_8h_a0681d5d05f66720bbcc34493ceff6fc3}{leafs}[no->\hyperlink{structbht__node_a0c60ab00baa47c069768352b2f2b6d3d}{partnum}] = no->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[c];
+342       c = whichChildNode(i, no);
+343       no = no->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[c];
+344       \textcolor{comment}{/* if this node is a leaf and it is empty we insert cell into the node */}
+345     \} \textcolor{keywordflow}{else} \{
+346       no->\hyperlink{structbht__node_a0c60ab00baa47c069768352b2f2b6d3d}{partnum} = i;
+347       no->\hyperlink{structbht__node_a3aa7881ee7de66da41c4eeacb9280836}{isempty} = 0;
+348       \hyperlink{global_8h_a0681d5d05f66720bbcc34493ceff6fc3}{leafs}[i] = no;
+349       \textcolor{keywordflow}{break};
+350     \}
+351       \}
+352 
+353     \}
+354 
+355   \}             \textcolor{comment}{/* end of OpenMP parallel region */}
+356 
+357   free(iroots);
+358 \textcolor{preprocessor}{#ifdef DEBUG}
+359 \textcolor{preprocessor}{}  \textcolor{keywordflow}{if} (\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank} == 0 && !(\hyperlink{global_8h_abc16e65f240ed0c8f3e876e8732c0a33}{step} % statOutStep)) \{
+360     printf(\textcolor{stringliteral}{"done\(\backslash\)n"});
+361     fflush(stdout);
+362   \}
+363 \textcolor{preprocessor}{#endif}
+364 \textcolor{preprocessor}{}\}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=250pt]{tree_8c_a3c43e59861e6c6097d82a34ceef3b8a3_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=210pt]{tree_8c_a3c43e59861e6c6097d82a34ceef3b8a3_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{tree_8c_ad150033e7d3cb347f85fe638c54d395b}{\index{tree.\-c@{tree.\-c}!tree\-Build\-Initial@{tree\-Build\-Initial}}
+\index{tree\-Build\-Initial@{tree\-Build\-Initial}!tree.c@{tree.\-c}}
+\subsubsection[{tree\-Build\-Initial}]{\setlength{\rightskip}{0pt plus 5cm}void tree\-Build\-Initial (
+\begin{DoxyParamCaption}
+\item[{int}]{depth, }
+\item[{struct {\bf bht\-\_\-node} $\ast$$\ast$}]{iroots, }
+\item[{struct {\bf bht\-\_\-node} $\ast$}]{node}
+\end{DoxyParamCaption}
+)}}\label{tree_8c_ad150033e7d3cb347f85fe638c54d395b}
+This function builds an initial tree which is needed for Open\-M\-P parallelization 
+
+Definition at line 145 of file tree.\-c.
+
+
+
+References bht\-\_\-node\-::center, bht\-\_\-node\-::child, bht\-\_\-node\-::father, bht\-\_\-node\-::isempty, bht\-\_\-node\-::leaf, bht\-\_\-node\-::len, ni, nnodes\-\_\-init, bht\-\_\-node\-::partnum, sdim, tci, tnc, and tree.
+
+
+\begin{DoxyCode}
+147 \{
+148   \textcolor{keywordtype}{int} i, j, k;
+149   \textcolor{keywordflow}{if} (depth != 0) \{
+150     \textcolor{keywordtype}{double} shift;
+151     shift = node->\hyperlink{structbht__node_ad4bd51cdbe6ba41894905207ed94974f}{len} * 0.25;
+152     \textcolor{keywordflow}{for} (j = 0; j < \hyperlink{global_8h_a96f00f69e2102e1720c989a00c385d81}{tnc}; j++) \{
+153       node->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[j] = &\hyperlink{global_8h_a7c0d548b636dc26d8fa1808037ef3fb5}{tree}[\hyperlink{global_8h_ab6b3020aaf0144a41169e6b995c2921c}{nnodes\_init}];
+154       node->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[j]->\hyperlink{structbht__node_ad4bd51cdbe6ba41894905207ed94974f}{len} = node->\hyperlink{structbht__node_ad4bd51cdbe6ba41894905207ed94974f}{len} * 0.5;
+155       node->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[j]->\hyperlink{structbht__node_a9da2c4f10aed3a86628aad3dd87c9d6a}{center}[0] = node->\hyperlink{structbht__node_a9da2c4f10aed3a86628aad3dd87c9d6a}{center}[0] + \hyperlink{tree_8c_af9d3dabd62b331b5be6be69261a98596}{tci}[j][0] * shift;
+156       node->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[j]->\hyperlink{structbht__node_a9da2c4f10aed3a86628aad3dd87c9d6a}{center}[1] = node->\hyperlink{structbht__node_a9da2c4f10aed3a86628aad3dd87c9d6a}{center}[1] + \hyperlink{tree_8c_af9d3dabd62b331b5be6be69261a98596}{tci}[j][1] * shift;
+157       \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 3)
+158     node->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[j]->\hyperlink{structbht__node_a9da2c4f10aed3a86628aad3dd87c9d6a}{center}[2] = node->\hyperlink{structbht__node_a9da2c4f10aed3a86628aad3dd87c9d6a}{center}[2] + \hyperlink{tree_8c_af9d3dabd62b331b5be6be69261a98596}{tci}[j][2] * shift;
+159       \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 2)
+160     node->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[j]->\hyperlink{structbht__node_a9da2c4f10aed3a86628aad3dd87c9d6a}{center}[2] = 0.0;
+161       node->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[j]->\hyperlink{structbht__node_ad327b7e4aaac3a9687feb283d05fabbe}{father} = node;
+162       node->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[j]->\hyperlink{structbht__node_a3aa7881ee7de66da41c4eeacb9280836}{isempty} = 1;
+163       node->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[j]->\hyperlink{structbht__node_afdde1540721b0d5dbc4b234677b4ad8d}{leaf} = 1;
+164       node->\hyperlink{structbht__node_afdde1540721b0d5dbc4b234677b4ad8d}{leaf} = 0;
+165       \textcolor{keywordflow}{for} (k = 0; k < \hyperlink{global_8h_a96f00f69e2102e1720c989a00c385d81}{tnc}; k++)
+166     node->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[j]->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[k] = NULL;
+167       \hyperlink{global_8h_ab6b3020aaf0144a41169e6b995c2921c}{nnodes\_init}++;
+168       \hyperlink{tree_8c_ad150033e7d3cb347f85fe638c54d395b}{treeBuildInitial}(depth - 1, iroots, node->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[j]);
+169     \}
+170   \} \textcolor{keywordflow}{else} \{
+171     node->\hyperlink{structbht__node_afdde1540721b0d5dbc4b234677b4ad8d}{leaf} = 1;
+172     node->\hyperlink{structbht__node_a0c60ab00baa47c069768352b2f2b6d3d}{partnum} = -1;      \textcolor{comment}{/* indicates an empty node */}
+173     iroots[\hyperlink{global_8h_ad2b24a5d9628942aab73cf1db2bb4bed}{ni}] = node;
+174     \hyperlink{global_8h_ad2b24a5d9628942aab73cf1db2bb4bed}{ni}++;
+175   \}
+176 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=324pt]{tree_8c_ad150033e7d3cb347f85fe638c54d395b_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{tree_8c_acfd9d286d8821139e83371e46e7f5e51}{\index{tree.\-c@{tree.\-c}!tree\-Free@{tree\-Free}}
+\index{tree\-Free@{tree\-Free}!tree.c@{tree.\-c}}
+\subsubsection[{tree\-Free}]{\setlength{\rightskip}{0pt plus 5cm}void tree\-Free (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{tree_8c_acfd9d286d8821139e83371e46e7f5e51}
+This function dealocates arrays used in tree building 
+
+Definition at line 369 of file tree.\-c.
+
+
+
+References leafs, and tree.
+
+
+\begin{DoxyCode}
+370 \{
+371   free(\hyperlink{global_8h_a7c0d548b636dc26d8fa1808037ef3fb5}{tree});
+372   free(\hyperlink{global_8h_a0681d5d05f66720bbcc34493ceff6fc3}{leafs});
+373 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=208pt]{tree_8c_acfd9d286d8821139e83371e46e7f5e51_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Variable Documentation}
+\hypertarget{tree_8c_af9d3dabd62b331b5be6be69261a98596}{\index{tree.\-c@{tree.\-c}!tci@{tci}}
+\index{tci@{tci}!tree.c@{tree.\-c}}
+\subsubsection[{tci}]{\setlength{\rightskip}{0pt plus 5cm}double tci\mbox{[}8\mbox{]}\mbox{[}3\mbox{]}}}\label{tree_8c_af9d3dabd62b331b5be6be69261a98596}
+{\bfseries Initial value\-:}
+\begin{DoxyCode}
+= \{ \{-1, -1, -1\}, \{-1, 1, -1\}, \{1, -1, -1\}, \{1, 1, -1\},
+\{-1, -1, 1\}, \{-1, 1, 1\}, \{1, -1, 1\}, \{1, 1, 1\},
+\}
+\end{DoxyCode}
+
+
+Definition at line 35 of file tree.\-c.
+

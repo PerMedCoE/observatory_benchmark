@@ -1,0 +1,8 @@
+<map id="computePotentialField" name="computePotentialField">
+<area shape="rect" id="node2" href="$comm_8c.html#aa92fc6732720bc9accbbdef7fb02384f" title="cellsExchangeInit" alt="" coords="243,5,368,32"/>
+<area shape="rect" id="node3" href="$comm_8c.html#ac5b7dbd1157ef088c4e6f8a9f08fcc4b" title="cellsExchangeWait" alt="" coords="238,56,373,83"/>
+<area shape="rect" id="node5" href="$potential_8c.html#a637d3e5960a44074c8f7f747af89eabf" title="computeRemoteCellsPotential" alt="" coords="206,107,405,133"/>
+<area shape="rect" id="node7" href="$potential_8c.html#a5fe9cb7ae024bd3157bafc1b5fe3e2f7" title="potentialTraverseSubtree" alt="" coords="222,157,389,184"/>
+<area shape="rect" id="node4" href="$utils_8c.html#a07dd99a04f2723be164531a7a862fb67" title="stopRun" alt="" coords="490,56,561,83"/>
+<area shape="rect" id="node6" href="$potential_8c.html#a029d6c8547c6d860ab733c73bfbb07ee" title="computeCCPotential" alt="" coords="454,132,597,159"/>
+</map>

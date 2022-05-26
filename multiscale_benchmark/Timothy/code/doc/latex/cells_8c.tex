@@ -1,0 +1,1084 @@
+\hypertarget{cells_8c}{\section{cells.\-c File Reference}
+\label{cells_8c}\index{cells.\-c@{cells.\-c}}
+}
+
+
+contains functions which control current states and evolution of cells  
+
+
+{\ttfamily \#include $<$stdio.\-h$>$}\\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$mpi.\-h$>$}\\*
+{\ttfamily \#include $<$math.\-h$>$}\\*
+{\ttfamily \#include $<$inttypes.\-h$>$}\\*
+{\ttfamily \#include $<$sprng.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}global.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}inline.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}fields.\-h\char`\"{}}\\*
+Include dependency graph for cells.\-c\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{cells_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{cells_8c_afdf0714d4b325131b21a0cbe42c44ece}{cells\-Allocate} ()
+\item 
+void \hyperlink{cells_8c_aa2527c8374034b85c4e95b665786b0ca}{cells\-Cycle\-Init} ()
+\item 
+int \hyperlink{cells_8c_a68e70197591e819d22315879c8141bdd}{cells\-Random\-Init} ()
+\item 
+void \hyperlink{cells_8c_a2d9450bd2eebb8f4d645417b92666b87}{mitosis} (int c)
+\item 
+void \hyperlink{cells_8c_a00dbe1f9f23fc7385462c32b89d28cf8}{mark\-Middle\-Cancer\-Cell} ()
+\item 
+void \hyperlink{cells_8c_aead37c061c3f1ec47259afaf2783029f}{cells\-Cleanup} ()
+\item 
+void \hyperlink{cells_8c_a8101c456dae07ab9cbd918ccad3a2ff7}{cells\-Death} (int lnc\-\_\-old)
+\item 
+void \hyperlink{cells_8c_aeeb6dee9938af6fef987f1c949458703}{update\-Cell\-Counters} ()
+\item 
+void \hyperlink{cells_8c_a227256c7da11efa2b4eacedf0a9f37c8}{update\-Cell\-Positions} ()
+\item 
+int \hyperlink{cells_8c_a718a88fce87f8ebdb87ed2fafed4c5c4}{update\-Cell\-Cycles} ()
+\item 
+void \hyperlink{cells_8c_aa2ee543811c23ee4b487102bb71ba9c7}{additional\-Scalar\-Field} ()
+\item 
+void \hyperlink{cells_8c_aeb1f066ef0713a8a50eb1e58784a3d7b}{update\-Cell\-States} ()
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+unsigned char $\ast$ \hyperlink{cells_8c_a96a825c021fe648b7fb171bd2c532ffb}{celld}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+contains functions which control current states and evolution of cells 
+
+Definition in file \hyperlink{cells_8c_source}{cells.\-c}.
+
+
+
+\subsection{Function Documentation}
+\hypertarget{cells_8c_aa2ee543811c23ee4b487102bb71ba9c7}{\index{cells.\-c@{cells.\-c}!additional\-Scalar\-Field@{additional\-Scalar\-Field}}
+\index{additional\-Scalar\-Field@{additional\-Scalar\-Field}!cells.c@{cells.\-c}}
+\subsubsection[{additional\-Scalar\-Field}]{\setlength{\rightskip}{0pt plus 5cm}void additional\-Scalar\-Field (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{cells_8c_aa2ee543811c23ee4b487102bb71ba9c7}
+This function fills the scalar\-Output field of each cell. It can be modified to output any float scalars that user would like to analyze or visualize after simulation. This field is printed to the output V\-T\-K files. 
+
+Definition at line 704 of file cells.\-c.
+
+
+
+References cells, cell\-Data\-::density, lnc, and cell\-Data\-::scalar\-Field.
+
+
+\begin{DoxyCode}
+705 \{
+706   \textcolor{keywordtype}{int} c;
+707   \textcolor{keywordflow}{for} (c = 0; c < \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}; c++) \{
+708     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].tumor == 1)
+709       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_a0045a5036d7f3f873fe33380932d4313}{scalarField} = 8.0;
+710     \textcolor{keywordflow}{else}
+711       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_a0045a5036d7f3f873fe33380932d4313}{scalarField} = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_a6f8c052f8417728038991f7f2826d38d}{density};
+712   \}
+713 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{cells_8c_aa2ee543811c23ee4b487102bb71ba9c7_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{cells_8c_afdf0714d4b325131b21a0cbe42c44ece}{\index{cells.\-c@{cells.\-c}!cells\-Allocate@{cells\-Allocate}}
+\index{cells\-Allocate@{cells\-Allocate}!cells.c@{cells.\-c}}
+\subsubsection[{cells\-Allocate}]{\setlength{\rightskip}{0pt plus 5cm}void cells\-Allocate (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{cells_8c_afdf0714d4b325131b21a0cbe42c44ece}
+This function allocates tables responsible for carrying informations about cells, their current state and evolution. 
+
+Definition at line 66 of file cells.\-c.
+
+
+
+References cell\-Fields, cells, csize, local\-I\-D, max\-Cells, max\-Cells\-Per\-Proc, M\-P\-Isize, N\-F\-I\-E\-L\-D\-S, nx, sdim, stop\-Run(), tlnc, and velocity.
+
+
+\begin{DoxyCode}
+67 \{
+68 
+69   \textcolor{keywordtype}{int} i, j, c, f;
+70   int64\_t cellsActualSize;
+71 
+72   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 2)
+73     \hyperlink{global_8h_a3b735e8520f1816ee73ee50daa3ef756}{csize} = (\hyperlink{global_8h_a02d47a4f36ec0bcce348696534567e30}{nx} / 2) / pow(8.0 * \hyperlink{global_8h_ac1a3e3adac8f1e6840fd332e3d3cfa21}{maxCells}, 1.0 / 2.0);
+74   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 3)
+75     \hyperlink{global_8h_a3b735e8520f1816ee73ee50daa3ef756}{csize} = (\hyperlink{global_8h_a02d47a4f36ec0bcce348696534567e30}{nx} / 2) / pow(8.0 * \hyperlink{global_8h_ac1a3e3adac8f1e6840fd332e3d3cfa21}{maxCells}, 1.0 / 3.0);
+76 
+77   \hyperlink{global_8h_a2de426dd266cfdaaf6fb52ba3dc2740a}{maxCellsPerProc} = 1.5 * \hyperlink{global_8h_ac1a3e3adac8f1e6840fd332e3d3cfa21}{maxCells} / \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize};
+78 
+79   cellsActualSize = \hyperlink{global_8h_a2de426dd266cfdaaf6fb52ba3dc2740a}{maxCellsPerProc} * \textcolor{keyword}{sizeof}(\textcolor{keyword}{struct }\hyperlink{structcellData}{cellData});
+80 
+81   \hyperlink{global_8h_a265cb7ee626de517ecec0f0ac60833a7}{localID} = 0;
+82 
+83   \textcolor{keywordflow}{if} (!(\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells} = (\textcolor{keyword}{struct} \hyperlink{structcellData}{cellData} *) malloc(cellsActualSize)))
+84     \hyperlink{utils_8c_a07dd99a04f2723be164531a7a862fb67}{stopRun}(106, \textcolor{stringliteral}{"cells"}, \_\_FILE\_\_, \_\_LINE\_\_);
+85 
+86   \textcolor{keywordflow}{if} (!
+87       (\hyperlink{global_8h_a6015afb23ea197551ff3d503aa3426a4}{velocity} =
+88        (\textcolor{keyword}{struct} \hyperlink{structdoubleVector3d}{doubleVector3d} *) malloc(\hyperlink{global_8h_a2de426dd266cfdaaf6fb52ba3dc2740a}{maxCellsPerProc} *
+89                     \textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} \hyperlink{structdoubleVector3d}{doubleVector3d}))))
+90     \hyperlink{utils_8c_a07dd99a04f2723be164531a7a862fb67}{stopRun}(106, \textcolor{stringliteral}{"velocity"}, \_\_FILE\_\_, \_\_LINE\_\_);
+91 
+92   \hyperlink{global_8h_a25e4317a1b5bb95a8e71e0e8c4e11f2b}{cellFields} = (\textcolor{keywordtype}{double} **) malloc(\hyperlink{fields_8h_a7986f01c038f396ce7df280bb2903099}{NFIELDS} * \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double} *));
+93   \textcolor{keywordflow}{for} (f = 0; f < \hyperlink{fields_8h_a7986f01c038f396ce7df280bb2903099}{NFIELDS}; f++)
+94     \textcolor{keywordflow}{if} (!
+95     (\hyperlink{global_8h_a25e4317a1b5bb95a8e71e0e8c4e11f2b}{cellFields}[f] =
+96      (\textcolor{keywordtype}{double} *) malloc(\hyperlink{global_8h_a2de426dd266cfdaaf6fb52ba3dc2740a}{maxCellsPerProc} * \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double}))))
+97       \hyperlink{utils_8c_a07dd99a04f2723be164531a7a862fb67}{stopRun}(106, \textcolor{stringliteral}{"cellFields"}, \_\_FILE\_\_, \_\_LINE\_\_);
+98 
+99   \textcolor{keywordflow}{if} (!(\hyperlink{global_8h_ac3c96b975a3376c555ad22a7d2688b2f}{tlnc} = (int64\_t *) calloc(\hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}, \textcolor{keyword}{sizeof}(int64\_t))))
+100     \hyperlink{utils_8c_a07dd99a04f2723be164531a7a862fb67}{stopRun}(106, \textcolor{stringliteral}{"tlnc"}, \_\_FILE\_\_, \_\_LINE\_\_);
+101 
+102 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=242pt]{cells_8c_afdf0714d4b325131b21a0cbe42c44ece_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{cells_8c_afdf0714d4b325131b21a0cbe42c44ece_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{cells_8c_aead37c061c3f1ec47259afaf2783029f}{\index{cells.\-c@{cells.\-c}!cells\-Cleanup@{cells\-Cleanup}}
+\index{cells\-Cleanup@{cells\-Cleanup}!cells.c@{cells.\-c}}
+\subsubsection[{cells\-Cleanup}]{\setlength{\rightskip}{0pt plus 5cm}void cells\-Cleanup (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{cells_8c_aead37c061c3f1ec47259afaf2783029f}
+This function dealocates all tables allocated during initialization of cell data 
+
+Definition at line 434 of file cells.\-c.
+
+
+
+References cell\-Fields, cells, N\-F\-I\-E\-L\-D\-S, tlnc, and velocity.
+
+
+\begin{DoxyCode}
+435 \{
+436   \textcolor{keywordtype}{int} f;
+437   free(\hyperlink{global_8h_ac3c96b975a3376c555ad22a7d2688b2f}{tlnc});
+438   free(\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells});
+439   \textcolor{keywordflow}{for} (f = 0; f < \hyperlink{fields_8h_a7986f01c038f396ce7df280bb2903099}{NFIELDS}; f++)
+440     free(\hyperlink{global_8h_a25e4317a1b5bb95a8e71e0e8c4e11f2b}{cellFields}[f]);
+441   free(\hyperlink{global_8h_a25e4317a1b5bb95a8e71e0e8c4e11f2b}{cellFields});
+442   free(\hyperlink{global_8h_a6015afb23ea197551ff3d503aa3426a4}{velocity});
+443 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=228pt]{cells_8c_aead37c061c3f1ec47259afaf2783029f_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{cells_8c_aa2527c8374034b85c4e95b665786b0ca}{\index{cells.\-c@{cells.\-c}!cells\-Cycle\-Init@{cells\-Cycle\-Init}}
+\index{cells\-Cycle\-Init@{cells\-Cycle\-Init}!cells.c@{cells.\-c}}
+\subsubsection[{cells\-Cycle\-Init}]{\setlength{\rightskip}{0pt plus 5cm}void cells\-Cycle\-Init (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{cells_8c_aa2527c8374034b85c4e95b665786b0ca}
+This function initializes counters of cells in various cell phases. 
+
+Definition at line 107 of file cells.\-c.
+
+
+
+References cancer, cnc, g0nc, g1nc, g2nc, lcnc, lg0nc, lg1nc, lg2nc, lmnc, lnc, lnnc, lsnc, mnc, nc, and snc.
+
+
+\begin{DoxyCode}
+108 \{
+109   \textcolor{comment}{/* global numbers of cells */}
+110   \hyperlink{global_8h_a33c78f8734fc6805cec2755dd09e0117}{g0nc} = \hyperlink{global_8h_a0845b4b004824f1fe3cd69db1672fa15}{nc};
+111   \hyperlink{global_8h_a09b30abbc9cc684e55a246df0528a14b}{g1nc} = 0;
+112   \hyperlink{global_8h_a0e24070582e0ecd757fdbdee28c8ff4e}{snc} = 0;
+113   \hyperlink{global_8h_ae6288fa86281103b55c317d7f88dca28}{g2nc} = 0;
+114   \hyperlink{global_8h_ad1cd19943c182708694e74186fb08015}{mnc} = 0;
+115   \hyperlink{global_8h_aec5760e92b3bdf9ac05fc2920446ecd8}{cnc} = 0;
+116   \textcolor{comment}{/* local numbers of cells */}
+117   \hyperlink{global_8h_a356af225353f2a5512be222c1354bee3}{lg0nc} = \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc};
+118   \hyperlink{global_8h_a59dc7e07b6be86e29bd0e9f3f18c3ca2}{lg1nc} = 0;
+119   \hyperlink{global_8h_af5e326c959f5815222d8f8e3f4d66419}{lsnc} = 0;
+120   \hyperlink{global_8h_a17ca9380dca478aa01c68ce4cc8ca720}{lg2nc} = 0;
+121   \hyperlink{global_8h_a002cff2ccc4cfc5b5f85ac5ea285ef9c}{lmnc} = 0;
+122   \hyperlink{global_8h_ab67f763fa0f30ce2912a6ab60dc8e648}{lcnc} = 0;
+123   \hyperlink{global_8h_a97370c479716d79f799616103c487d51}{lnnc} = 0;
+124   \textcolor{comment}{/* number of cancer cells */}
+125   \hyperlink{global_8h_a543a1902d49aca54ef382bf603a51e27}{cancer} = 0;
+126 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=340pt]{cells_8c_aa2527c8374034b85c4e95b665786b0ca_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{cells_8c_a8101c456dae07ab9cbd918ccad3a2ff7}{\index{cells.\-c@{cells.\-c}!cells\-Death@{cells\-Death}}
+\index{cells\-Death@{cells\-Death}!cells.c@{cells.\-c}}
+\subsubsection[{cells\-Death}]{\setlength{\rightskip}{0pt plus 5cm}void cells\-Death (
+\begin{DoxyParamCaption}
+\item[{int}]{lnc\-\_\-old}
+\end{DoxyParamCaption}
+)}}\label{cells_8c_a8101c456dae07ab9cbd918ccad3a2ff7}
+This function removes a dead cell from the simulation. 
+
+Definition at line 448 of file cells.\-c.
+
+
+
+References celld, cells, lcnc, lg0nc, lg1nc, lg2nc, lmnc, lnc, lsnc, and rsum.
+
+
+\begin{DoxyCode}
+449 \{
+450   \textcolor{keywordtype}{int} c, pos;
+451 
+452   pos = 0;
+453   \textcolor{keywordflow}{for} (c = 0; c < \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}; c++) \{
+454     \textcolor{comment}{/* shift cells after dead cell removal */}
+455     \textcolor{keywordflow}{if} (c >= lnc\_old) \{
+456       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[pos] = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c];
+457       pos++;
+458       \textcolor{keywordflow}{continue};
+459     \}
+460     \textcolor{keywordflow}{if} (c != pos && \hyperlink{cells_8c_a96a825c021fe648b7fb171bd2c532ffb}{celld}[c] == 0)
+461       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[pos] = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c];
+462     \textcolor{keywordflow}{if} (\hyperlink{cells_8c_a96a825c021fe648b7fb171bd2c532ffb}{celld}[c] == 0)
+463       pos++;
+464     \textcolor{comment}{/* update cell counters */}
+465     \textcolor{keywordflow}{if} (\hyperlink{cells_8c_a96a825c021fe648b7fb171bd2c532ffb}{celld}[c] == 1) \{
+466       \textcolor{keywordflow}{switch} (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_accf3aec63bc20b3c99ab4881cb07c05b}{phase}) \{
+467       \textcolor{keywordflow}{case} 0:
+468     \hyperlink{global_8h_a356af225353f2a5512be222c1354bee3}{lg0nc}--;
+469     \textcolor{keywordflow}{break};
+470       \textcolor{keywordflow}{case} 1:
+471     \hyperlink{global_8h_a59dc7e07b6be86e29bd0e9f3f18c3ca2}{lg1nc}--;
+472     \textcolor{keywordflow}{break};
+473       \textcolor{keywordflow}{case} 2:
+474     \hyperlink{global_8h_af5e326c959f5815222d8f8e3f4d66419}{lsnc}--;
+475     \textcolor{keywordflow}{break};
+476       \textcolor{keywordflow}{case} 3:
+477     \hyperlink{global_8h_a17ca9380dca478aa01c68ce4cc8ca720}{lg2nc}--;
+478     \textcolor{keywordflow}{break};
+479       \textcolor{keywordflow}{case} 4:
+480     \hyperlink{global_8h_a002cff2ccc4cfc5b5f85ac5ea285ef9c}{lmnc}--;
+481     \textcolor{keywordflow}{break};
+482       \}
+483       \textcolor{keywordflow}{if} (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_a49af8c5336d6c2401bc24f86dbb97b36}{tumor} == 1)
+484     \hyperlink{global_8h_ab67f763fa0f30ce2912a6ab60dc8e648}{lcnc}--;
+485     \}
+486   \}
+487   lnc -= \hyperlink{global_8h_a087a95bb36c9b36c708a73ce656fd1f1}{rsum};
+488 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{cells_8c_a8101c456dae07ab9cbd918ccad3a2ff7_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{cells_8c_a68e70197591e819d22315879c8141bdd}{\index{cells.\-c@{cells.\-c}!cells\-Random\-Init@{cells\-Random\-Init}}
+\index{cells\-Random\-Init@{cells\-Random\-Init}!cells.c@{cells.\-c}}
+\subsubsection[{cells\-Random\-Init}]{\setlength{\rightskip}{0pt plus 5cm}int cells\-Random\-Init (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{cells_8c_a68e70197591e819d22315879c8141bdd}
+This function initializes cell data. Locations of cells in space are generated randomly. 
+
+Definition at line 132 of file cells.\-c.
+
+
+
+References cell\-Data\-::age, cells, csize, cell\-Data\-::death, cell\-Data\-::density, cell\-Data\-::g1, g1, cell\-Data\-::g2, g2, cell\-Data\-::gid, cell\-Data\-::h, h, h2, h3, h4, cell\-Data\-::halo, lnc, local\-I\-D, cell\-Data\-::m, m, max\-Cells, max\-Cells\-Per\-Proc, M\-P\-Irank, nc, nx, cell\-Data\-::phase, cell\-Data\-::phasetime, rng, cell\-Data\-::s, s, sdim, sim\-Time, cell\-Data\-::size, stream, cell\-Data\-::tumor, cell\-Data\-::v, v, cell\-Data\-::x, cell\-Data\-::y, cell\-Data\-::young, and cell\-Data\-::z.
+
+
+\begin{DoxyCode}
+133 \{
+134 
+135   \textcolor{keywordtype}{int} i, j;
+136 
+137   \textcolor{comment}{/* uniform distribution */}
+138   \textcolor{keywordflow}{if} (!strcmp(\hyperlink{global_8h_ae94cd2e37eb46a6942cc45e1b29f87fc}{rng}, \textcolor{stringliteral}{"UNB"})) \{
+139     \textcolor{keywordtype}{double} D;
+140 
+141     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 2)
+142       \hyperlink{global_8h_a3b735e8520f1816ee73ee50daa3ef756}{csize} = (\hyperlink{global_8h_a02d47a4f36ec0bcce348696534567e30}{nx} / 2) / pow(8.0 * \hyperlink{global_8h_ac1a3e3adac8f1e6840fd332e3d3cfa21}{maxCells}, 1.0 / 2.0);
+143     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 3)
+144       \hyperlink{global_8h_a3b735e8520f1816ee73ee50daa3ef756}{csize} = (\hyperlink{global_8h_a02d47a4f36ec0bcce348696534567e30}{nx} / 2) / pow(8.0 * \hyperlink{global_8h_ac1a3e3adac8f1e6840fd332e3d3cfa21}{maxCells}, 1.0 / 3.0);
+145     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 2)
+146       D = \hyperlink{global_8h_a3b735e8520f1816ee73ee50daa3ef756}{csize} * pow(8.0 * \hyperlink{global_8h_a0845b4b004824f1fe3cd69db1672fa15}{nc}, 1.0 / 2.0);
+147     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 3)
+148       D = \hyperlink{global_8h_a3b735e8520f1816ee73ee50daa3ef756}{csize} * pow(8.0 * \hyperlink{global_8h_a0845b4b004824f1fe3cd69db1672fa15}{nc}, 1.0 / 3.0);
+149 
+150     \hyperlink{global_8h_a8ee9be1b5aa75abae556de3088cba6d9}{h} = 3.0 * \hyperlink{global_8h_a3b735e8520f1816ee73ee50daa3ef756}{csize};
+151     \hyperlink{global_8h_ad188f0f25b4773be09b6eb6babe59f59}{simTime} = 0;
+152 
+153     \textcolor{keywordflow}{for} (i = 0; i < \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}; i++) \{
+154       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_af88b946fb90d5f08b5fb740c70e98c10}{x} = D * (sprng(\hyperlink{global_8h_a5340130b6fb2647cef6b71354e27b0d4}{stream}) * 2 - 1);
+155       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_ab927965981178aa1fba979a37168db2a}{y} = D * (sprng(\hyperlink{global_8h_a5340130b6fb2647cef6b71354e27b0d4}{stream}) * 2 - 1);
+156       \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 3)
+157     \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_ab3e6ed577a7c669c19de1f9c1b46c872}{z} = D * (sprng(\hyperlink{global_8h_a5340130b6fb2647cef6b71354e27b0d4}{stream}) * 2 - 1);
+158       \textcolor{keywordflow}{else}
+159     \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_ab3e6ed577a7c669c19de1f9c1b46c872}{z} = 0.0;
+160 
+161       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_af88b946fb90d5f08b5fb740c70e98c10}{x} += \hyperlink{global_8h_a02d47a4f36ec0bcce348696534567e30}{nx} / 2;
+162       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_ab927965981178aa1fba979a37168db2a}{y} += \hyperlink{global_8h_a02d47a4f36ec0bcce348696534567e30}{nx} / 2;
+163       \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 3)
+164     \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_ab3e6ed577a7c669c19de1f9c1b46c872}{z} += \hyperlink{global_8h_a02d47a4f36ec0bcce348696534567e30}{nx} / 2;
+165       \textcolor{keywordflow}{else}
+166     \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_ab3e6ed577a7c669c19de1f9c1b46c872}{z} = 0.0;
+167 
+168       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_aba3c5d750d5dbd6e86c11ecaca62885e}{size} = pow(2.0, -(1.0 / 3.0)) * \hyperlink{global_8h_a3b735e8520f1816ee73ee50daa3ef756}{csize};
+169       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_abb4d4bd9231e9f994e87f32cc4fcfce8}{gid} =
+170       (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} int) \hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank} *(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} \textcolor{keywordtype}{int})
+171       \hyperlink{global_8h_a2de426dd266cfdaaf6fb52ba3dc2740a}{maxCellsPerProc} + (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} int) i;
+172       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_a3b90d5a73541ab9402511d87bed076ef}{v} = 0.0;
+173       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_a6f8c052f8417728038991f7f2826d38d}{density} = 0.0;
+174       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_a8ee9be1b5aa75abae556de3088cba6d9}{h} = \hyperlink{global_8h_a8ee9be1b5aa75abae556de3088cba6d9}{h};
+175       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_ad0bd87a264e65d1c17ecc07049819f2c}{young} = 2100.0 + sprng(\hyperlink{global_8h_a5340130b6fb2647cef6b71354e27b0d4}{stream}) * 100.0;
+176       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_a80ff3fcc4d03d0b1b01559839d12df5b}{halo} = 0;
+177       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_accf3aec63bc20b3c99ab4881cb07c05b}{phase} = 0;
+178       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_a581debe7d16bce9d187b97855f4e99d4}{g1} = \hyperlink{global_8h_a581debe7d16bce9d187b97855f4e99d4}{g1} * (1 + (sprng(\hyperlink{global_8h_a5340130b6fb2647cef6b71354e27b0d4}{stream}) * 2 - 1) * \hyperlink{global_8h_a48d9522e58fa05906c6dba23e5745a72}{v});
+179       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_aee9971139118d56815564304450c4775}{g2} = \hyperlink{global_8h_aee9971139118d56815564304450c4775}{g2} * (1 + (sprng(\hyperlink{global_8h_a5340130b6fb2647cef6b71354e27b0d4}{stream}) * 2 - 1) * \hyperlink{global_8h_a48d9522e58fa05906c6dba23e5745a72}{v});
+180       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_a874f74a4dc1c9a0cd9c6e0d79c298f55}{s} = \hyperlink{global_8h_a874f74a4dc1c9a0cd9c6e0d79c298f55}{s} * (1 + (sprng(\hyperlink{global_8h_a5340130b6fb2647cef6b71354e27b0d4}{stream}) * 2 - 1) * \hyperlink{global_8h_a48d9522e58fa05906c6dba23e5745a72}{v});
+181       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_ac51334f57ef8b81c0629c9421798c344}{m} = \hyperlink{global_8h_ac51334f57ef8b81c0629c9421798c344}{m} * (1 + (sprng(\hyperlink{global_8h_a5340130b6fb2647cef6b71354e27b0d4}{stream}) * 2 - 1) * \hyperlink{global_8h_a48d9522e58fa05906c6dba23e5745a72}{v});
+182       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_afe1297f954440c453b59fcb06992dbd5}{phasetime} = 0.0;
+183       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_a91d98a856bbd96810b40af3ca5cc901a}{age} = 0;
+184       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_add1e1533be6e693ffedcdbafdf8b855c}{death} = 0;
+185       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_a49af8c5336d6c2401bc24f86dbb97b36}{tumor} = 0;
+186       \hyperlink{global_8h_a265cb7ee626de517ecec0f0ac60833a7}{localID}++;
+187     \}
+188   \}
+189   \textcolor{comment}{/* normal distribution (Box-Muller transform) */}
+190   \textcolor{keywordflow}{if} (!strcmp(\hyperlink{global_8h_ae94cd2e37eb46a6942cc45e1b29f87fc}{rng}, \textcolor{stringliteral}{"BM"})) \{
+191     \textcolor{keywordtype}{double} x1, x2, x3;
+192     \textcolor{keywordtype}{double} z1, z2, z3;
+193     \textcolor{keywordtype}{double} r1, r2;
+194     \textcolor{keywordtype}{double} l;
+195     \textcolor{keywordtype}{double} D;
+196     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 2)
+197       \hyperlink{global_8h_a3b735e8520f1816ee73ee50daa3ef756}{csize} = (\hyperlink{global_8h_a02d47a4f36ec0bcce348696534567e30}{nx} / 2) / pow(8.0 * \hyperlink{global_8h_ac1a3e3adac8f1e6840fd332e3d3cfa21}{maxCells}, 1.0 / 2.0);
+198     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 3)
+199       \hyperlink{global_8h_a3b735e8520f1816ee73ee50daa3ef756}{csize} = (\hyperlink{global_8h_a02d47a4f36ec0bcce348696534567e30}{nx} / 2) / pow(8.0 * \hyperlink{global_8h_ac1a3e3adac8f1e6840fd332e3d3cfa21}{maxCells}, 1.0 / 3.0);
+200     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 2)
+201       D = \hyperlink{global_8h_a3b735e8520f1816ee73ee50daa3ef756}{csize} * pow(8.0 * \hyperlink{global_8h_a0845b4b004824f1fe3cd69db1672fa15}{nc}, 1.0 / 2.0);
+202     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 3)
+203       D = \hyperlink{global_8h_a3b735e8520f1816ee73ee50daa3ef756}{csize} * pow(8.0 * \hyperlink{global_8h_a0845b4b004824f1fe3cd69db1672fa15}{nc}, 1.0 / 3.0);
+204 
+205     \hyperlink{global_8h_a8ee9be1b5aa75abae556de3088cba6d9}{h} = 3.0 * \hyperlink{global_8h_a3b735e8520f1816ee73ee50daa3ef756}{csize};
+206     \hyperlink{global_8h_ad188f0f25b4773be09b6eb6babe59f59}{simTime} = 0;
+207 
+208     \textcolor{keywordflow}{for} (i = 0; i < \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}; i++) \{
+209 
+210       r2 = 1.1;
+211 
+212       \textcolor{keywordflow}{while} (r2 >= 1.0) \{
+213     r1 = 1.1;
+214     \textcolor{keywordflow}{while} (r1 == 0 || r1 >= 1.0) \{
+215       x1 = sprng(\hyperlink{global_8h_a5340130b6fb2647cef6b71354e27b0d4}{stream}) * 2 - 1;
+216       x2 = sprng(\hyperlink{global_8h_a5340130b6fb2647cef6b71354e27b0d4}{stream}) * 2 - 1;
+217       x3 = sprng(\hyperlink{global_8h_a5340130b6fb2647cef6b71354e27b0d4}{stream}) * 2 - 1;
+218       r1 = x1 * x1 + x2 * x2 + x3 * x3;
+219     \}
+220     l = sqrt(-2 * log(r1) / r1);
+221     z1 = x1 * l;
+222     z2 = x2 * l;
+223     z3 = x3 * l;
+224 
+225     r2 = z1 * z1 + z2 * z2 + z3 * z3;
+226       \}
+227 
+228       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_af88b946fb90d5f08b5fb740c70e98c10}{x} = z1 * D + \hyperlink{global_8h_a02d47a4f36ec0bcce348696534567e30}{nx} / 2;
+229       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_ab927965981178aa1fba979a37168db2a}{y} = z2 * D + \hyperlink{global_8h_a02d47a4f36ec0bcce348696534567e30}{nx} / 2;
+230       \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 3)
+231     \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_ab3e6ed577a7c669c19de1f9c1b46c872}{z} = z3 * D + \hyperlink{global_8h_a02d47a4f36ec0bcce348696534567e30}{nx} / 2;
+232       \textcolor{keywordflow}{else}
+233     \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_ab3e6ed577a7c669c19de1f9c1b46c872}{z} = 0.0;
+234 
+235       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_aba3c5d750d5dbd6e86c11ecaca62885e}{size} = pow(2.0, -(1.0 / 3.0)) * \hyperlink{global_8h_a3b735e8520f1816ee73ee50daa3ef756}{csize};
+236       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_abb4d4bd9231e9f994e87f32cc4fcfce8}{gid} =
+237       (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} int) \hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank} *(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} \textcolor{keywordtype}{int})
+238       \hyperlink{global_8h_a2de426dd266cfdaaf6fb52ba3dc2740a}{maxCellsPerProc} + (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} int) i;
+239       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_a3b90d5a73541ab9402511d87bed076ef}{v} = 0.0;
+240       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_a6f8c052f8417728038991f7f2826d38d}{density} = 0.0;
+241       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_a8ee9be1b5aa75abae556de3088cba6d9}{h} = \hyperlink{global_8h_a8ee9be1b5aa75abae556de3088cba6d9}{h};
+242       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_ad0bd87a264e65d1c17ecc07049819f2c}{young} = 2100.0 + sprng(\hyperlink{global_8h_a5340130b6fb2647cef6b71354e27b0d4}{stream}) * 100.0;
+243       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_a80ff3fcc4d03d0b1b01559839d12df5b}{halo} = 0;
+244       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_accf3aec63bc20b3c99ab4881cb07c05b}{phase} = 0;
+245       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_a581debe7d16bce9d187b97855f4e99d4}{g1} = \hyperlink{global_8h_a581debe7d16bce9d187b97855f4e99d4}{g1} * (1 + (sprng(\hyperlink{global_8h_a5340130b6fb2647cef6b71354e27b0d4}{stream}) * 2 - 1) * \hyperlink{global_8h_a48d9522e58fa05906c6dba23e5745a72}{v});
+246       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_aee9971139118d56815564304450c4775}{g2} = \hyperlink{global_8h_aee9971139118d56815564304450c4775}{g2} * (1 + (sprng(\hyperlink{global_8h_a5340130b6fb2647cef6b71354e27b0d4}{stream}) * 2 - 1) * \hyperlink{global_8h_a48d9522e58fa05906c6dba23e5745a72}{v});
+247       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_a874f74a4dc1c9a0cd9c6e0d79c298f55}{s} = \hyperlink{global_8h_a874f74a4dc1c9a0cd9c6e0d79c298f55}{s} * (1 + (sprng(\hyperlink{global_8h_a5340130b6fb2647cef6b71354e27b0d4}{stream}) * 2 - 1) * \hyperlink{global_8h_a48d9522e58fa05906c6dba23e5745a72}{v});
+248       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_ac51334f57ef8b81c0629c9421798c344}{m} = \hyperlink{global_8h_ac51334f57ef8b81c0629c9421798c344}{m} * (1 + (sprng(\hyperlink{global_8h_a5340130b6fb2647cef6b71354e27b0d4}{stream}) * 2 - 1) * \hyperlink{global_8h_a48d9522e58fa05906c6dba23e5745a72}{v});
+249       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_afe1297f954440c453b59fcb06992dbd5}{phasetime} = 0.0;
+250       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_a49af8c5336d6c2401bc24f86dbb97b36}{tumor} = 0;
+251       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_a91d98a856bbd96810b40af3ca5cc901a}{age} = 0;
+252       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_add1e1533be6e693ffedcdbafdf8b855c}{death} = 0;
+253       \hyperlink{global_8h_a265cb7ee626de517ecec0f0ac60833a7}{localID}++;
+254     \}
+255   \}
+256 
+257   \textcolor{comment}{/* powers of h are calculated only once here */}
+258   \hyperlink{global_8h_ac2d9b75feeec68992c955b63e813e7ce}{h2} = \hyperlink{global_8h_a8ee9be1b5aa75abae556de3088cba6d9}{h} * \hyperlink{global_8h_a8ee9be1b5aa75abae556de3088cba6d9}{h};
+259   \hyperlink{global_8h_adafe1d7389480b1a329b70b3c2baed11}{h3} = \hyperlink{global_8h_ac2d9b75feeec68992c955b63e813e7ce}{h2} * \hyperlink{global_8h_a8ee9be1b5aa75abae556de3088cba6d9}{h};
+260   \hyperlink{global_8h_a40b544b5f22197434cf4bb2ccca5c8a6}{h4} = \hyperlink{global_8h_adafe1d7389480b1a329b70b3c2baed11}{h3} * \hyperlink{global_8h_a8ee9be1b5aa75abae556de3088cba6d9}{h};
+261 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{cells_8c_a68e70197591e819d22315879c8141bdd_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{cells_8c_a00dbe1f9f23fc7385462c32b89d28cf8}{\index{cells.\-c@{cells.\-c}!mark\-Middle\-Cancer\-Cell@{mark\-Middle\-Cancer\-Cell}}
+\index{mark\-Middle\-Cancer\-Cell@{mark\-Middle\-Cancer\-Cell}!cells.c@{cells.\-c}}
+\subsubsection[{mark\-Middle\-Cancer\-Cell}]{\setlength{\rightskip}{0pt plus 5cm}void mark\-Middle\-Cancer\-Cell (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{cells_8c_a00dbe1f9f23fc7385462c32b89d28cf8}
+This function finds locates cell closest to the center of mass of the system and marks this cell as a cancer cell. 
+
+Definition at line 374 of file cells.\-c.
+
+
+
+References cancer, cells, lcnc, lg0nc, lg1nc, lnc, M\-P\-Irank, nc, cell\-Data\-::phase, cell\-Data\-::tumor, x, cell\-Data\-::x, cell\-Data\-::y, and cell\-Data\-::z.
+
+
+\begin{DoxyCode}
+375 \{
+376   \textcolor{keywordtype}{int} c;
+377   \textcolor{keywordtype}{int} middle = 0;
+378   \textcolor{keywordtype}{double} dist;
+379   \textcolor{keyword}{struct }\{
+380     \textcolor{keywordtype}{double} val;
+381     \textcolor{keywordtype}{int} rank;
+382   \} lmdist, gmdist;
+383   \textcolor{keywordtype}{double} center[3];
+384   \textcolor{keywordtype}{double} gcenter[3];
+385 
+386   \textcolor{comment}{/* each process computes its local center of mass */}
+387   center[0] = 0.0;
+388   center[1] = 0.0;
+389   center[2] = 0.0;
+390   \textcolor{keywordflow}{for} (c = 0; c < \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}; c++) \{
+391     center[0] += \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_af88b946fb90d5f08b5fb740c70e98c10}{x} / \hyperlink{global_8h_a0845b4b004824f1fe3cd69db1672fa15}{nc};
+392     center[1] += \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_ab927965981178aa1fba979a37168db2a}{y} / \hyperlink{global_8h_a0845b4b004824f1fe3cd69db1672fa15}{nc};
+393     center[2] += \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_ab3e6ed577a7c669c19de1f9c1b46c872}{z} / \hyperlink{global_8h_a0845b4b004824f1fe3cd69db1672fa15}{nc};
+394   \}
+395 
+396   \textcolor{comment}{/* MPI Reduce operation computes global center of mass */}
+397   MPI\_Allreduce(center, gcenter, 3, MPI\_DOUBLE, MPI\_SUM, MPI\_COMM\_WORLD);
+398 
+399   \textcolor{comment}{/* intialization */}
+400   lmdist.rank = \hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank};
+401   lmdist.val = INT\_MAX;
+402 
+403   \textcolor{comment}{/* each process finds local cell closest to the global center of mass */}
+404   \textcolor{keywordflow}{for} (c = 0; c < \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}; c++) \{
+405     dist =
+406     sqrt((\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{tempf_8c_a1780e9c70637026d6fab31f63b3a193e}{x} - gcenter[0]) * (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{tempf_8c_a1780e9c70637026d6fab31f63b3a193e}{x} - gcenter[0]) +
+407          (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].y - gcenter[1]) * (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].y - gcenter[1]) +
+408          (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].z - gcenter[2]) * (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].z - gcenter[2]));
+409     \textcolor{keywordflow}{if} (dist < lmdist.val) \{
+410       lmdist.val = dist;
+411       middle = c;
+412     \}
+413   \}
+414 
+415   \textcolor{comment}{/* MPI\_Allreduce locates the cell closest to the global center of mass */}
+416   MPI\_Allreduce(&lmdist, &gmdist, 1, MPI\_DOUBLE\_INT, MPI\_MINLOC,
+417         MPI\_COMM\_WORLD);
+418   \textcolor{comment}{/* mark the found cell as cancer one */}
+419   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank} == gmdist.rank) \{
+420     \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[middle].\hyperlink{structcellData_a49af8c5336d6c2401bc24f86dbb97b36}{tumor} = 1;
+421     \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[middle].\hyperlink{structcellData_accf3aec63bc20b3c99ab4881cb07c05b}{phase} = 1;
+422     \hyperlink{global_8h_a356af225353f2a5512be222c1354bee3}{lg0nc}--;
+423     \hyperlink{global_8h_a59dc7e07b6be86e29bd0e9f3f18c3ca2}{lg1nc}++;
+424     \hyperlink{global_8h_ab67f763fa0f30ce2912a6ab60dc8e648}{lcnc}++;
+425   \}
+426 
+427   \textcolor{comment}{/* indicate that there is a cancer cell in the system */}
+428   \hyperlink{global_8h_a543a1902d49aca54ef382bf603a51e27}{cancer} = 1;
+429 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{cells_8c_a00dbe1f9f23fc7385462c32b89d28cf8_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{cells_8c_a2d9450bd2eebb8f4d645417b92666b87}{\index{cells.\-c@{cells.\-c}!mitosis@{mitosis}}
+\index{mitosis@{mitosis}!cells.c@{cells.\-c}}
+\subsubsection[{mitosis}]{\setlength{\rightskip}{0pt plus 5cm}void mitosis (
+\begin{DoxyParamCaption}
+\item[{int}]{c}
+\end{DoxyParamCaption}
+)}}\label{cells_8c_a2d9450bd2eebb8f4d645417b92666b87}
+This function implements mitosis of cells. 
+
+Definition at line 266 of file cells.\-c.
+
+
+
+References cell\-Data\-::age, cells, cg1, cg2, cm, cs, cell\-Data\-::death, cell\-Data\-::density, cell\-Data\-::g1, g1, cell\-Data\-::g2, g2, cell\-Data\-::gid, cell\-Data\-::h, h, cell\-Data\-::halo, lcnc, lg1nc, lnc, local\-I\-D, cell\-Data\-::m, m, max\-Cells\-Per\-Proc, mitrand, M\-P\-Irank, cell\-Data\-::phase, cell\-Data\-::phasetime, cell\-Data\-::s, s, sdim, cell\-Data\-::size, stop\-Run(), stream, cell\-Data\-::tumor, cell\-Data\-::v, v, velocity, x, cell\-Data\-::x, double\-Vector3d\-::x, cell\-Data\-::y, double\-Vector3d\-::y, cell\-Data\-::young, cell\-Data\-::z, and double\-Vector3d\-::z.
+
+
+\begin{DoxyCode}
+267 \{
+268 
+269   \textcolor{keywordtype}{double} sc;
+270   \textcolor{keywordtype}{double} shift[3];
+271 
+272   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc} + 1 > \hyperlink{global_8h_a2de426dd266cfdaaf6fb52ba3dc2740a}{maxCellsPerProc})
+273     \hyperlink{utils_8c_a07dd99a04f2723be164531a7a862fb67}{stopRun}(109, NULL, \_\_FILE\_\_, \_\_LINE\_\_);
+274 
+275   sc = sqrt(\hyperlink{global_8h_a6015afb23ea197551ff3d503aa3426a4}{velocity}[c].\hyperlink{tempf_8c_a1780e9c70637026d6fab31f63b3a193e}{x} * \hyperlink{global_8h_a6015afb23ea197551ff3d503aa3426a4}{velocity}[c].\hyperlink{tempf_8c_a1780e9c70637026d6fab31f63b3a193e}{x} + \hyperlink{global_8h_a6015afb23ea197551ff3d503aa3426a4}{velocity}[c].y * 
+      \hyperlink{global_8h_a6015afb23ea197551ff3d503aa3426a4}{velocity}[c].y +
+276         \hyperlink{global_8h_a6015afb23ea197551ff3d503aa3426a4}{velocity}[c].z * \hyperlink{global_8h_a6015afb23ea197551ff3d503aa3426a4}{velocity}[c].z);
+277 
+278   \textcolor{comment}{/* daughter cells are shifted away from the center of parent cell */}
+279   \textcolor{keywordflow}{if} (sc > 0 && \hyperlink{global_8h_a4dc71fc8b57bbbe431a4b183d56297b3}{mitrand} == 0) \{  \textcolor{comment}{/* direction of shift related to velocity vector */}
+280     sc = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_aba3c5d750d5dbd6e86c11ecaca62885e}{size} / (2 * sc);
+281     shift[0] = sc * \hyperlink{global_8h_a6015afb23ea197551ff3d503aa3426a4}{velocity}[c].\hyperlink{structdoubleVector3d_af88b946fb90d5f08b5fb740c70e98c10}{x};
+282     shift[1] = sc * \hyperlink{global_8h_a6015afb23ea197551ff3d503aa3426a4}{velocity}[c].\hyperlink{structdoubleVector3d_ab927965981178aa1fba979a37168db2a}{y};
+283     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 3)
+284       shift[2] = sc * \hyperlink{global_8h_a6015afb23ea197551ff3d503aa3426a4}{velocity}[c].\hyperlink{structdoubleVector3d_ab3e6ed577a7c669c19de1f9c1b46c872}{z};
+285     \textcolor{keywordflow}{else}
+286       shift[2] = 0.0;
+287   \} \textcolor{keywordflow}{else} \{          \textcolor{comment}{/* direction of shift chosen randomly */}
+288     \textcolor{keywordtype}{int} accept = 0;
+289     \textcolor{keywordflow}{while} (accept == 0) \{
+290       shift[0] = sprng(\hyperlink{global_8h_a5340130b6fb2647cef6b71354e27b0d4}{stream}) * 2.0 - 1.0;
+291       shift[1] = sprng(\hyperlink{global_8h_a5340130b6fb2647cef6b71354e27b0d4}{stream}) * 2.0 - 1.0;
+292       \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 3)
+293     shift[2] = sprng(\hyperlink{global_8h_a5340130b6fb2647cef6b71354e27b0d4}{stream}) * 2.0 - 1.0;
+294       \textcolor{keywordflow}{else}
+295     shift[2] = 0.0;
+296       sc = sqrt(pow(shift[0], 2) + pow(shift[1], 2) + pow(shift[2], 2));
+297       \textcolor{keywordflow}{if} (sc == 0)
+298     \textcolor{keywordflow}{continue};
+299       sc = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_aba3c5d750d5dbd6e86c11ecaca62885e}{size} / (2 * sc);
+300       shift[0] = sc * shift[0];
+301       shift[1] = sc * shift[1];
+302       shift[2] = sc * shift[2];
+303       accept = 1;
+304     \}
+305   \}
+306   \textcolor{comment}{/* 1st daughter cell position, size, type and age */}
+307   \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}].\hyperlink{structcellData_af88b946fb90d5f08b5fb740c70e98c10}{x} = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_af88b946fb90d5f08b5fb740c70e98c10}{x} + shift[0];
+308   \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}].\hyperlink{structcellData_ab927965981178aa1fba979a37168db2a}{y} = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_ab927965981178aa1fba979a37168db2a}{y} + shift[1];
+309   \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}].\hyperlink{structcellData_ab3e6ed577a7c669c19de1f9c1b46c872}{z} = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_ab3e6ed577a7c669c19de1f9c1b46c872}{z} + shift[2];
+310   \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}].\hyperlink{structcellData_aba3c5d750d5dbd6e86c11ecaca62885e}{size} = pow(2.0, -(1.0 / 3.0)) * \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_aba3c5d750d5dbd6e86c11ecaca62885e}{size};;
+311   \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}].\hyperlink{structcellData_a49af8c5336d6c2401bc24f86dbb97b36}{tumor} = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_a49af8c5336d6c2401bc24f86dbb97b36}{tumor};
+312   \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}].\hyperlink{structcellData_a91d98a856bbd96810b40af3ca5cc901a}{age} = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_a91d98a856bbd96810b40af3ca5cc901a}{age} + 1;
+313 
+314   \textcolor{comment}{/* 2nd daughter cell position, size, type and age */}
+315   \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_af88b946fb90d5f08b5fb740c70e98c10}{x} -= shift[0];
+316   \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_ab927965981178aa1fba979a37168db2a}{y} -= shift[1];
+317   \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_ab3e6ed577a7c669c19de1f9c1b46c872}{z} -= shift[2];
+318   \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_aba3c5d750d5dbd6e86c11ecaca62885e}{size} = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}].\hyperlink{structcellData_aba3c5d750d5dbd6e86c11ecaca62885e}{size};;
+319   \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_a91d98a856bbd96810b40af3ca5cc901a}{age} += 1;
+320 
+321   \textcolor{comment}{/* 2nd daughter cell cycle phases lenghts */}
+322   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].tumor == 1) \{
+323     \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_a581debe7d16bce9d187b97855f4e99d4}{g1} = \hyperlink{global_8h_a30dcf4c8ed197e063ec4f2e899a83724}{cg1} * (1 + (sprng(\hyperlink{global_8h_a5340130b6fb2647cef6b71354e27b0d4}{stream}) * 2 - 1) * \hyperlink{global_8h_a48d9522e58fa05906c6dba23e5745a72}{v});
+324     \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_aee9971139118d56815564304450c4775}{g2} = \hyperlink{global_8h_af69394ce4871f38be319cc1fc0d900aa}{cg2} * (1 + (sprng(\hyperlink{global_8h_a5340130b6fb2647cef6b71354e27b0d4}{stream}) * 2 - 1) * \hyperlink{global_8h_a48d9522e58fa05906c6dba23e5745a72}{v});
+325     \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_a874f74a4dc1c9a0cd9c6e0d79c298f55}{s} = \hyperlink{global_8h_abafbf12f10610688ad061edb4b911e60}{cs} * (1 + (sprng(\hyperlink{global_8h_a5340130b6fb2647cef6b71354e27b0d4}{stream}) * 2 - 1) * \hyperlink{global_8h_a48d9522e58fa05906c6dba23e5745a72}{v});
+326     \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_ac51334f57ef8b81c0629c9421798c344}{m} = \hyperlink{global_8h_a3755ba3f0c70f11bcfc3d348bf394193}{cm} * (1 + (sprng(\hyperlink{global_8h_a5340130b6fb2647cef6b71354e27b0d4}{stream}) * 2 - 1) * \hyperlink{global_8h_a48d9522e58fa05906c6dba23e5745a72}{v});
+327   \} \textcolor{keywordflow}{else} \{
+328     \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_a581debe7d16bce9d187b97855f4e99d4}{g1} = \hyperlink{global_8h_a581debe7d16bce9d187b97855f4e99d4}{g1} * (1 + (sprng(\hyperlink{global_8h_a5340130b6fb2647cef6b71354e27b0d4}{stream}) * 2 - 1) * \hyperlink{global_8h_a48d9522e58fa05906c6dba23e5745a72}{v});
+329     \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_aee9971139118d56815564304450c4775}{g2} = \hyperlink{global_8h_aee9971139118d56815564304450c4775}{g2} * (1 + (sprng(\hyperlink{global_8h_a5340130b6fb2647cef6b71354e27b0d4}{stream}) * 2 - 1) * \hyperlink{global_8h_a48d9522e58fa05906c6dba23e5745a72}{v});
+330     \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_a874f74a4dc1c9a0cd9c6e0d79c298f55}{s} = \hyperlink{global_8h_a874f74a4dc1c9a0cd9c6e0d79c298f55}{s} * (1 + (sprng(\hyperlink{global_8h_a5340130b6fb2647cef6b71354e27b0d4}{stream}) * 2 - 1) * \hyperlink{global_8h_a48d9522e58fa05906c6dba23e5745a72}{v});
+331     \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_ac51334f57ef8b81c0629c9421798c344}{m} = \hyperlink{global_8h_ac51334f57ef8b81c0629c9421798c344}{m} * (1 + (sprng(\hyperlink{global_8h_a5340130b6fb2647cef6b71354e27b0d4}{stream}) * 2 - 1) * \hyperlink{global_8h_a48d9522e58fa05906c6dba23e5745a72}{v});
+332   \}
+333   \textcolor{comment}{/* 1st daughter cell global ID */}
+334   \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}].\hyperlink{structcellData_abb4d4bd9231e9f994e87f32cc4fcfce8}{gid} =
+335       (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} int) \hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank} *(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} \textcolor{keywordtype}{int})
+336       \hyperlink{global_8h_a2de426dd266cfdaaf6fb52ba3dc2740a}{maxCellsPerProc} + (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} int) \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc};
+337 
+338   \textcolor{comment}{/* 1st daughter cell parameters */}
+339   \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}].\hyperlink{structcellData_a3b90d5a73541ab9402511d87bed076ef}{v} = 0.0;
+340   \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}].\hyperlink{structcellData_a6f8c052f8417728038991f7f2826d38d}{density} = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_a6f8c052f8417728038991f7f2826d38d}{density};
+341   \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}].\hyperlink{structcellData_a8ee9be1b5aa75abae556de3088cba6d9}{h} = \hyperlink{global_8h_a8ee9be1b5aa75abae556de3088cba6d9}{h};
+342   \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}].\hyperlink{structcellData_ad0bd87a264e65d1c17ecc07049819f2c}{young} = 2100.0 + sprng(\hyperlink{global_8h_a5340130b6fb2647cef6b71354e27b0d4}{stream}) * 100.0;
+343   \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}].\hyperlink{structcellData_a80ff3fcc4d03d0b1b01559839d12df5b}{halo} = 0;
+344   \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}].\hyperlink{structcellData_accf3aec63bc20b3c99ab4881cb07c05b}{phase} = 1;
+345   \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}].\hyperlink{structcellData_add1e1533be6e693ffedcdbafdf8b855c}{death} = 0;
+346   \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}].\hyperlink{structcellData_afe1297f954440c453b59fcb06992dbd5}{phasetime} = 0.0;
+347   \textcolor{comment}{/* 1st daughter cell cycle phases lenghts */}
+348   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}].tumor == 1) \{
+349     \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}].\hyperlink{structcellData_a581debe7d16bce9d187b97855f4e99d4}{g1} = \hyperlink{global_8h_a30dcf4c8ed197e063ec4f2e899a83724}{cg1} * (1 + (sprng(\hyperlink{global_8h_a5340130b6fb2647cef6b71354e27b0d4}{stream}) * 2 - 1) * \hyperlink{global_8h_a48d9522e58fa05906c6dba23e5745a72}{v});
+350     \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}].\hyperlink{structcellData_aee9971139118d56815564304450c4775}{g2} = \hyperlink{global_8h_af69394ce4871f38be319cc1fc0d900aa}{cg2} * (1 + (sprng(\hyperlink{global_8h_a5340130b6fb2647cef6b71354e27b0d4}{stream}) * 2 - 1) * \hyperlink{global_8h_a48d9522e58fa05906c6dba23e5745a72}{v});
+351     \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}].\hyperlink{structcellData_a874f74a4dc1c9a0cd9c6e0d79c298f55}{s} = \hyperlink{global_8h_abafbf12f10610688ad061edb4b911e60}{cs} * (1 + (sprng(\hyperlink{global_8h_a5340130b6fb2647cef6b71354e27b0d4}{stream}) * 2 - 1) * \hyperlink{global_8h_a48d9522e58fa05906c6dba23e5745a72}{v});
+352     \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}].\hyperlink{structcellData_ac51334f57ef8b81c0629c9421798c344}{m} = \hyperlink{global_8h_a3755ba3f0c70f11bcfc3d348bf394193}{cm} * (1 + (sprng(\hyperlink{global_8h_a5340130b6fb2647cef6b71354e27b0d4}{stream}) * 2 - 1) * \hyperlink{global_8h_a48d9522e58fa05906c6dba23e5745a72}{v});
+353   \} \textcolor{keywordflow}{else} \{
+354     \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}].\hyperlink{structcellData_a581debe7d16bce9d187b97855f4e99d4}{g1} = \hyperlink{global_8h_a581debe7d16bce9d187b97855f4e99d4}{g1} * (1 + (sprng(\hyperlink{global_8h_a5340130b6fb2647cef6b71354e27b0d4}{stream}) * 2 - 1) * \hyperlink{global_8h_a48d9522e58fa05906c6dba23e5745a72}{v});
+355     \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}].\hyperlink{structcellData_aee9971139118d56815564304450c4775}{g2} = \hyperlink{global_8h_aee9971139118d56815564304450c4775}{g2} * (1 + (sprng(\hyperlink{global_8h_a5340130b6fb2647cef6b71354e27b0d4}{stream}) * 2 - 1) * \hyperlink{global_8h_a48d9522e58fa05906c6dba23e5745a72}{v});
+356     \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}].\hyperlink{structcellData_a874f74a4dc1c9a0cd9c6e0d79c298f55}{s} = \hyperlink{global_8h_a874f74a4dc1c9a0cd9c6e0d79c298f55}{s} * (1 + (sprng(\hyperlink{global_8h_a5340130b6fb2647cef6b71354e27b0d4}{stream}) * 2 - 1) * \hyperlink{global_8h_a48d9522e58fa05906c6dba23e5745a72}{v});
+357     \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}].\hyperlink{structcellData_ac51334f57ef8b81c0629c9421798c344}{m} = \hyperlink{global_8h_ac51334f57ef8b81c0629c9421798c344}{m} * (1 + (sprng(\hyperlink{global_8h_a5340130b6fb2647cef6b71354e27b0d4}{stream}) * 2 - 1) * \hyperlink{global_8h_a48d9522e58fa05906c6dba23e5745a72}{v});
+358   \}
+359 
+360   \textcolor{comment}{/* update local cell counters */}
+361   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}].tumor == 1)
+362     \hyperlink{global_8h_ab67f763fa0f30ce2912a6ab60dc8e648}{lcnc} += 1;
+363   \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc} = \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc} + 1;
+364   \hyperlink{global_8h_a59dc7e07b6be86e29bd0e9f3f18c3ca2}{lg1nc} += 1;
+365   \textcolor{comment}{/* increment local ID */}
+366   \hyperlink{global_8h_a265cb7ee626de517ecec0f0ac60833a7}{localID}++;
+367 
+368 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=218pt]{cells_8c_a2d9450bd2eebb8f4d645417b92666b87_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{cells_8c_a2d9450bd2eebb8f4d645417b92666b87_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{cells_8c_aeeb6dee9938af6fef987f1c949458703}{\index{cells.\-c@{cells.\-c}!update\-Cell\-Counters@{update\-Cell\-Counters}}
+\index{update\-Cell\-Counters@{update\-Cell\-Counters}!cells.c@{cells.\-c}}
+\subsubsection[{update\-Cell\-Counters}]{\setlength{\rightskip}{0pt plus 5cm}void update\-Cell\-Counters (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{cells_8c_aeeb6dee9938af6fef987f1c949458703}
+This function updates cell counters. 
+
+Definition at line 493 of file cells.\-c.
+
+
+
+References lnc, local\-Cell\-Count, number\-Of\-Counts, tlnc, and total\-Cell\-Count.
+
+
+\begin{DoxyCode}
+494 \{
+495   MPI\_Allgather(&\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}, 1, MPI\_INT64\_T, \hyperlink{global_8h_ac3c96b975a3376c555ad22a7d2688b2f}{tlnc}, 1, MPI\_INT64\_T,
+496         MPI\_COMM\_WORLD);
+497   MPI\_Allreduce(\hyperlink{global_8h_a055fa0d3ee8b74712109365cf2802bfa}{localCellCount}, \hyperlink{global_8h_af1a14df9e6c8efece5183d9625039587}{totalCellCount}, 
+      \hyperlink{global_8h_a97c5d6b146e57ace62a66400c433aa4d}{numberOfCounts},
+498         MPI\_INT64\_T, MPI\_SUM, MPI\_COMM\_WORLD);
+499 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{cells_8c_aeeb6dee9938af6fef987f1c949458703_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{cells_8c_a718a88fce87f8ebdb87ed2fafed4c5c4}{\index{cells.\-c@{cells.\-c}!update\-Cell\-Cycles@{update\-Cell\-Cycles}}
+\index{update\-Cell\-Cycles@{update\-Cell\-Cycles}!cells.c@{cells.\-c}}
+\subsubsection[{update\-Cell\-Cycles}]{\setlength{\rightskip}{0pt plus 5cm}int update\-Cell\-Cycles (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{cells_8c_a718a88fce87f8ebdb87ed2fafed4c5c4}
+This function updates cells' cycle phases. 
+
+Definition at line 537 of file cells.\-c.
+
+
+
+References celld, cell\-Fields, cells, csize, density\-Critical\-Level1, density\-Critical\-Level2, field\-Critical\-Level1, field\-Critical\-Level2, cell\-Data\-::g1, g1, g2, gf\-Dt, gfields, lg0nc, lg1nc, lg2nc, lmnc, lnc, lnnc, lsnc, m, mitosis(), nc, O\-X\-Y\-G, oxygen, cell\-Data\-::phase, cell\-Data\-::phasetime, rd, rsum, s, sim\-Start, cell\-Data\-::size, and stream.
+
+
+\begin{DoxyCode}
+538 \{
+539 
+540   \textcolor{keywordtype}{int} c;
+541   \textcolor{keywordtype}{double} eps, epsCancer;
+542   \textcolor{keywordtype}{int} lncAtThisStep;
+543 
+544   eps = \hyperlink{global_8h_a8a758046e5cb8b72210f0fc18cb3b7e1}{densityCriticalLevel1};
+545   epsCancer = \hyperlink{global_8h_aeddd5065a64a6a39c79e1dab7c0f9edf}{densityCriticalLevel2};
+546 
+547   lncAtThisStep = \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc};
+548 
+549   \textcolor{keywordflow}{for} (c = 0; c < lncAtThisStep; c++) \{
+550 
+551     \textcolor{keywordflow}{if} (outsideTheBox(c)) \{
+552       \hyperlink{cells_8c_a96a825c021fe648b7fb171bd2c532ffb}{celld}[c] = 1;
+553       \hyperlink{global_8h_a087a95bb36c9b36c708a73ce656fd1f1}{rsum}++;
+554       \textcolor{keywordflow}{continue};
+555     \}
+556 
+557     \textcolor{keywordflow}{if} (\hyperlink{cells_8c_a96a825c021fe648b7fb171bd2c532ffb}{celld}[c])
+558       \textcolor{keywordflow}{continue};
+559 
+560     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a42a935b4eec9242e09d47fc1c2b6dba3}{simStart}) \{
+561 
+562       \textcolor{keywordflow}{if} (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].phase != 0
+563       && ((\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].tumor == 0 && \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].density <= eps)
+564           || (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].tumor == 1 && \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].density <= epsCancer)))
+565     \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_afe1297f954440c453b59fcb06992dbd5}{phasetime} += \hyperlink{global_8h_aae6a1dda703fb50b7a8b0f4dc01d82c1}{gfDt} / 3600.0;
+566 
+567       \textcolor{keywordflow}{switch} (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].phase) \{
+568 
+569       \textcolor{keywordflow}{case} 0:           \textcolor{comment}{/* G0 phase */}
+570     \textcolor{keywordflow}{if} (\hyperlink{fields_8h_abe4692639a5f11507faff09f2d37efa8}{gfields} && \hyperlink{fields_8h_a67dd60f843bcdd47eb1503456d0da5de}{oxygen}
+571         && \hyperlink{global_8h_a25e4317a1b5bb95a8e71e0e8c4e11f2b}{cellFields}[\hyperlink{fields_8h_a5e74e9586fb0eac40835526c74bcb0bc}{OXYG}][c] < \hyperlink{fields_8h_a5534681dc803f20910d872026257fd75}{fieldCriticalLevel2}[
+      \hyperlink{fields_8h_a5e74e9586fb0eac40835526c74bcb0bc}{OXYG}]) \{
+572       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_accf3aec63bc20b3c99ab4881cb07c05b}{phase} = 5;
+573       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_afe1297f954440c453b59fcb06992dbd5}{phasetime} = 0;
+574       \hyperlink{global_8h_a356af225353f2a5512be222c1354bee3}{lg0nc}--;
+575       \hyperlink{global_8h_a97370c479716d79f799616103c487d51}{lnnc}++;
+576       \textcolor{keywordflow}{break};
+577     \}
+578     \textcolor{comment}{/* transition to G1 phase */}
+579     \textcolor{keywordflow}{if} ((\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].tumor == 0 && \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].density <= eps) ||   \textcolor{comment}{/* enough space for healthy cell */}
+580         (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].tumor == 1 && \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].density <= epsCancer) || \textcolor{comment}{/* enough space for tumor cell 
+      */}
+581         \hyperlink{global_8h_a0845b4b004824f1fe3cd69db1672fa15}{nc} == 1 ||        \textcolor{comment}{/* only single cell in the simulation */}
+582         (\hyperlink{fields_8h_abe4692639a5f11507faff09f2d37efa8}{gfields} && \hyperlink{fields_8h_a67dd60f843bcdd47eb1503456d0da5de}{oxygen} && \hyperlink{global_8h_a25e4317a1b5bb95a8e71e0e8c4e11f2b}{cellFields}[OXYG][c] >= 
+      \hyperlink{fields_8h_a3d0360f40f207ac596765b891c46b285}{fieldCriticalLevel1}[OXYG])) \{    \textcolor{comment}{/* sufficient level of oxygen */}
+583       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_accf3aec63bc20b3c99ab4881cb07c05b}{phase} = 1;
+584       \hyperlink{global_8h_a356af225353f2a5512be222c1354bee3}{lg0nc}--;
+585       \hyperlink{global_8h_a59dc7e07b6be86e29bd0e9f3f18c3ca2}{lg1nc}++;
+586       \textcolor{keywordflow}{break};
+587     \}
+588     \textcolor{keywordflow}{break};
+589       \textcolor{keywordflow}{case} 1:           \textcolor{comment}{/* G1 phase */}
+590     \textcolor{comment}{/* transition to G0 or Necrotic phase */}
+591     \textcolor{keywordflow}{if} ((\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].tumor == 0 && \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].density > eps) ||    \textcolor{comment}{/* too crowdy for healthy cell */}
+592         (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].tumor == 1 && \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].density > epsCancer) ||  \textcolor{comment}{/* too crowdy for tumor cell */}
+593         (\hyperlink{fields_8h_abe4692639a5f11507faff09f2d37efa8}{gfields} && \hyperlink{fields_8h_a67dd60f843bcdd47eb1503456d0da5de}{oxygen} && \hyperlink{global_8h_a25e4317a1b5bb95a8e71e0e8c4e11f2b}{cellFields}[OXYG][c] < 
+      \hyperlink{fields_8h_a3d0360f40f207ac596765b891c46b285}{fieldCriticalLevel1}[OXYG])) \{    \textcolor{comment}{/* too low oxygen level */}
+594       \textcolor{keywordflow}{if} (\hyperlink{fields_8h_abe4692639a5f11507faff09f2d37efa8}{gfields} && \hyperlink{fields_8h_a67dd60f843bcdd47eb1503456d0da5de}{oxygen} && \hyperlink{global_8h_a25e4317a1b5bb95a8e71e0e8c4e11f2b}{cellFields}[OXYG][c] < 
+      \hyperlink{fields_8h_a5534681dc803f20910d872026257fd75}{fieldCriticalLevel2}[OXYG]) \{ \textcolor{comment}{/* transition to Necrotic phase */}
+595         \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_accf3aec63bc20b3c99ab4881cb07c05b}{phase} = 5;
+596         \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_afe1297f954440c453b59fcb06992dbd5}{phasetime} = 0;
+597         \hyperlink{global_8h_a59dc7e07b6be86e29bd0e9f3f18c3ca2}{lg1nc}--;
+598         \hyperlink{global_8h_a97370c479716d79f799616103c487d51}{lnnc}++;
+599       \} \textcolor{keywordflow}{else} \{      \textcolor{comment}{/* transition to G0 phase */}
+600         \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_accf3aec63bc20b3c99ab4881cb07c05b}{phase} = 0;
+601         \hyperlink{global_8h_a59dc7e07b6be86e29bd0e9f3f18c3ca2}{lg1nc}--;
+602         \hyperlink{global_8h_a356af225353f2a5512be222c1354bee3}{lg0nc}++;
+603       \}
+604       \textcolor{keywordflow}{break};
+605     \}
+606     \textcolor{comment}{/* cells grow in phase G1 */}
+607     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].size < \hyperlink{global_8h_a3b735e8520f1816ee73ee50daa3ef756}{csize}) \{
+608       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_aba3c5d750d5dbd6e86c11ecaca62885e}{size} +=
+609           (\hyperlink{global_8h_a3b735e8520f1816ee73ee50daa3ef756}{csize} -
+610            pow(2.0,
+611            -(1.0 / 3.0)) * \hyperlink{global_8h_a3b735e8520f1816ee73ee50daa3ef756}{csize}) * (\hyperlink{global_8h_aae6a1dda703fb50b7a8b0f4dc01d82c1}{gfDt}) / (3600.0 *
+612                               \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_a581debe7d16bce9d187b97855f4e99d4}{g1});
+613     \}
+614     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].size > \hyperlink{global_8h_a3b735e8520f1816ee73ee50daa3ef756}{csize})
+615       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_aba3c5d750d5dbd6e86c11ecaca62885e}{size} = \hyperlink{global_8h_a3b735e8520f1816ee73ee50daa3ef756}{csize};
+616     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].phasetime >= \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{global_8h_a581debe7d16bce9d187b97855f4e99d4}{g1}) \{
+617       \textcolor{keywordtype}{int} death;
+618       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_accf3aec63bc20b3c99ab4881cb07c05b}{phase} = 2;
+619       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_afe1297f954440c453b59fcb06992dbd5}{phasetime} = 0;
+620       \hyperlink{global_8h_a59dc7e07b6be86e29bd0e9f3f18c3ca2}{lg1nc}--;
+621       \hyperlink{global_8h_af5e326c959f5815222d8f8e3f4d66419}{lsnc}++;
+622       \textcolor{keywordflow}{if} (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].tumor == 0) \{
+623         death = (sprng(\hyperlink{global_8h_a5340130b6fb2647cef6b71354e27b0d4}{stream}) < \hyperlink{global_8h_a0d2a1379adf81ce5f962f3c9263e81e9}{rd} ? 1 : 0);
+624         \textcolor{keywordflow}{if} (death) \{
+625           \hyperlink{cells_8c_a96a825c021fe648b7fb171bd2c532ffb}{celld}[c] = 1;
+626           \hyperlink{global_8h_a087a95bb36c9b36c708a73ce656fd1f1}{rsum}++;
+627         \}
+628       \}
+629     \}
+630     \textcolor{keywordflow}{break};
+631       \textcolor{keywordflow}{case} 2:           \textcolor{comment}{/* S phase */}
+632     \textcolor{keywordflow}{if} (\hyperlink{fields_8h_abe4692639a5f11507faff09f2d37efa8}{gfields} && \hyperlink{fields_8h_a67dd60f843bcdd47eb1503456d0da5de}{oxygen}
+633         && \hyperlink{global_8h_a25e4317a1b5bb95a8e71e0e8c4e11f2b}{cellFields}[OXYG][c] < \hyperlink{fields_8h_a5534681dc803f20910d872026257fd75}{fieldCriticalLevel2}[OXYG]) \{
+634       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_accf3aec63bc20b3c99ab4881cb07c05b}{phase} = 5;
+635       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_afe1297f954440c453b59fcb06992dbd5}{phasetime} = 0;
+636       \hyperlink{global_8h_af5e326c959f5815222d8f8e3f4d66419}{lsnc}--;
+637       \hyperlink{global_8h_a97370c479716d79f799616103c487d51}{lnnc}++;
+638       \textcolor{keywordflow}{break};
+639     \}
+640     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].phasetime >= \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{global_8h_a874f74a4dc1c9a0cd9c6e0d79c298f55}{s}) \{
+641       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_accf3aec63bc20b3c99ab4881cb07c05b}{phase} = 3;
+642       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_afe1297f954440c453b59fcb06992dbd5}{phasetime} = 0;
+643       \hyperlink{global_8h_af5e326c959f5815222d8f8e3f4d66419}{lsnc}--;
+644       \hyperlink{global_8h_a17ca9380dca478aa01c68ce4cc8ca720}{lg2nc}++;
+645       \textcolor{keywordflow}{break};
+646     \}
+647     \textcolor{keywordflow}{break};
+648       \textcolor{keywordflow}{case} 3:           \textcolor{comment}{/* G2 phase */}
+649     \textcolor{keywordflow}{if} (\hyperlink{fields_8h_abe4692639a5f11507faff09f2d37efa8}{gfields} && \hyperlink{fields_8h_a67dd60f843bcdd47eb1503456d0da5de}{oxygen}
+650         && \hyperlink{global_8h_a25e4317a1b5bb95a8e71e0e8c4e11f2b}{cellFields}[OXYG][c] < \hyperlink{fields_8h_a5534681dc803f20910d872026257fd75}{fieldCriticalLevel2}[OXYG]) \{
+651       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_accf3aec63bc20b3c99ab4881cb07c05b}{phase} = 5;
+652       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_afe1297f954440c453b59fcb06992dbd5}{phasetime} = 0;
+653       \hyperlink{global_8h_a17ca9380dca478aa01c68ce4cc8ca720}{lg2nc}--;
+654       \hyperlink{global_8h_a97370c479716d79f799616103c487d51}{lnnc}++;
+655       \textcolor{keywordflow}{break};
+656     \}
+657     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].phasetime >= \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{global_8h_aee9971139118d56815564304450c4775}{g2}) \{
+658       \textcolor{keywordtype}{int} death;
+659       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_accf3aec63bc20b3c99ab4881cb07c05b}{phase} = 4;
+660       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_afe1297f954440c453b59fcb06992dbd5}{phasetime} = 0;
+661       \hyperlink{global_8h_a17ca9380dca478aa01c68ce4cc8ca720}{lg2nc}--;
+662       \hyperlink{global_8h_a002cff2ccc4cfc5b5f85ac5ea285ef9c}{lmnc}++;
+663       \textcolor{keywordflow}{if} (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].tumor == 0) \{
+664         death = (sprng(\hyperlink{global_8h_a5340130b6fb2647cef6b71354e27b0d4}{stream}) < \hyperlink{global_8h_a0d2a1379adf81ce5f962f3c9263e81e9}{rd} ? 1 : 0);
+665         \textcolor{keywordflow}{if} (death) \{
+666           \hyperlink{cells_8c_a96a825c021fe648b7fb171bd2c532ffb}{celld}[c] = 1;
+667           \hyperlink{global_8h_a087a95bb36c9b36c708a73ce656fd1f1}{rsum}++;
+668         \}
+669       \}
+670       \textcolor{keywordflow}{break};
+671     \}
+672     \textcolor{keywordflow}{break};
+673       \textcolor{keywordflow}{case} 4:           \textcolor{comment}{/* M phase */}
+674     \textcolor{keywordflow}{if} (\hyperlink{fields_8h_abe4692639a5f11507faff09f2d37efa8}{gfields} && \hyperlink{fields_8h_a67dd60f843bcdd47eb1503456d0da5de}{oxygen}
+675         && \hyperlink{global_8h_a25e4317a1b5bb95a8e71e0e8c4e11f2b}{cellFields}[OXYG][c] < \hyperlink{fields_8h_a5534681dc803f20910d872026257fd75}{fieldCriticalLevel2}[OXYG]) \{
+676       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_accf3aec63bc20b3c99ab4881cb07c05b}{phase} = 5;
+677       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_afe1297f954440c453b59fcb06992dbd5}{phasetime} = 0;
+678       \hyperlink{global_8h_a002cff2ccc4cfc5b5f85ac5ea285ef9c}{lmnc}--;
+679       \hyperlink{global_8h_a97370c479716d79f799616103c487d51}{lnnc}++;
+680 
+681     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].phasetime >= \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{global_8h_ac51334f57ef8b81c0629c9421798c344}{m}) \{
+682       \hyperlink{cells_8c_a2d9450bd2eebb8f4d645417b92666b87}{mitosis}(c);
+683       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_accf3aec63bc20b3c99ab4881cb07c05b}{phase} = 1;
+684       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_afe1297f954440c453b59fcb06992dbd5}{phasetime} = 0;
+685       \hyperlink{global_8h_a002cff2ccc4cfc5b5f85ac5ea285ef9c}{lmnc}--;
+686       \hyperlink{global_8h_a59dc7e07b6be86e29bd0e9f3f18c3ca2}{lg1nc}++;
+687     \}
+688     \textcolor{keywordflow}{break};
+689       \}             \textcolor{comment}{// switch}
+690     \}               \textcolor{comment}{// if}
+691   \}             \textcolor{comment}{// for loop}
+692 
+693   \textcolor{comment}{/* update global number of cells */}
+694   MPI\_Allreduce(&\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}, &\hyperlink{global_8h_a0845b4b004824f1fe3cd69db1672fa15}{nc}, 1, MPI\_INT64\_T, MPI\_SUM, MPI\_COMM\_WORLD);
+695 
+696 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=348pt]{cells_8c_a718a88fce87f8ebdb87ed2fafed4c5c4_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{cells_8c_a718a88fce87f8ebdb87ed2fafed4c5c4_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{cells_8c_a227256c7da11efa2b4eacedf0a9f37c8}{\index{cells.\-c@{cells.\-c}!update\-Cell\-Positions@{update\-Cell\-Positions}}
+\index{update\-Cell\-Positions@{update\-Cell\-Positions}!cells.c@{cells.\-c}}
+\subsubsection[{update\-Cell\-Positions}]{\setlength{\rightskip}{0pt plus 5cm}void update\-Cell\-Positions (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{cells_8c_a227256c7da11efa2b4eacedf0a9f37c8}
+This function updates cells' positions. 
+
+Definition at line 504 of file cells.\-c.
+
+
+
+References cells, csize, lnc, statistics\-Data\-::mindist, M\-P\-Irank, nc, sim\-Start, statistics, stat\-Out\-Step, step, velocity, cell\-Data\-::x, double\-Vector3d\-::x, cell\-Data\-::y, double\-Vector3d\-::y, cell\-Data\-::z, and double\-Vector3d\-::z.
+
+
+\begin{DoxyCode}
+505 \{
+506   \textcolor{keywordtype}{int} c;
+507 \textcolor{preprocessor}{#ifdef DEBUG}
+508 \textcolor{preprocessor}{}  \textcolor{keywordflow}{if} (\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank} == 0 && !(\hyperlink{global_8h_abc16e65f240ed0c8f3e876e8732c0a33}{step} % \hyperlink{global_8h_aab9700fe12cc303ff43e1a35a210128e}{statOutStep})) \{
+509     printf(\textcolor{stringliteral}{" Cells movement..."});
+510     fflush(stdout);
+511   \}
+512 \textcolor{preprocessor}{#endif}
+513 \textcolor{preprocessor}{}  \textcolor{keywordflow}{if} ((\hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_a78455d23ec97258967b76cbb2332b7be}{mindist} >= 0.95 * 2.0 * pow(2.0, -(1.0 / 3.0)) * 
+      \hyperlink{global_8h_a3b735e8520f1816ee73ee50daa3ef756}{csize}
+514        && \hyperlink{global_8h_a42a935b4eec9242e09d47fc1c2b6dba3}{simStart} == 0) || (\hyperlink{global_8h_a0845b4b004824f1fe3cd69db1672fa15}{nc} == 1 && \hyperlink{global_8h_a42a935b4eec9242e09d47fc1c2b6dba3}{simStart} == 0)) \{
+515     \hyperlink{global_8h_a42a935b4eec9242e09d47fc1c2b6dba3}{simStart} = 1;
+516     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank} == 0)
+517       printf(\textcolor{stringliteral}{"\(\backslash\)nSimulation started.\(\backslash\)n"});
+518   \}
+519 
+520   \textcolor{comment}{/* move cells */}
+521   \textcolor{keywordflow}{for} (c = 0; c < \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}; c++) \{
+522     \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_af88b946fb90d5f08b5fb740c70e98c10}{x} += \hyperlink{global_8h_a6015afb23ea197551ff3d503aa3426a4}{velocity}[c].\hyperlink{structdoubleVector3d_af88b946fb90d5f08b5fb740c70e98c10}{x};
+523     \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_ab927965981178aa1fba979a37168db2a}{y} += \hyperlink{global_8h_a6015afb23ea197551ff3d503aa3426a4}{velocity}[c].\hyperlink{structdoubleVector3d_ab927965981178aa1fba979a37168db2a}{y};
+524     \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_ab3e6ed577a7c669c19de1f9c1b46c872}{z} += \hyperlink{global_8h_a6015afb23ea197551ff3d503aa3426a4}{velocity}[c].\hyperlink{structdoubleVector3d_ab3e6ed577a7c669c19de1f9c1b46c872}{z};
+525     \textcolor{comment}{// Mark cells that are out of the box and need to be removed}
+526     \textcolor{comment}{//if(outside\_the\_box(c)) \{ celld[c]=1; rsum++; \}}
+527   \}
+528 \textcolor{preprocessor}{#ifdef DEBUG}
+529 \textcolor{preprocessor}{}  \textcolor{keywordflow}{if} (\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank} == 0 && !(\hyperlink{global_8h_abc16e65f240ed0c8f3e876e8732c0a33}{step} % statOutStep))
+530     printf(\textcolor{stringliteral}{"done\(\backslash\)n"});
+531 \textcolor{preprocessor}{#endif}
+532 \textcolor{preprocessor}{}\}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=258pt]{cells_8c_a227256c7da11efa2b4eacedf0a9f37c8_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{cells_8c_aeb1f066ef0713a8a50eb1e58784a3d7b}{\index{cells.\-c@{cells.\-c}!update\-Cell\-States@{update\-Cell\-States}}
+\index{update\-Cell\-States@{update\-Cell\-States}!cells.c@{cells.\-c}}
+\subsubsection[{update\-Cell\-States}]{\setlength{\rightskip}{0pt plus 5cm}void update\-Cell\-States (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{cells_8c_aeb1f066ef0713a8a50eb1e58784a3d7b}
+This function drives the whole cell cycle update. 
+
+Definition at line 718 of file cells.\-c.
+
+
+
+References additional\-Scalar\-Field(), cancer, celld, cells\-Death(), lnc, mark\-Middle\-Cancer\-Cell(), nc, nhs, rsum, tgs, update\-Cell\-Counters(), and update\-Cell\-Cycles().
+
+
+\begin{DoxyCode}
+719 \{
+720   \textcolor{keywordtype}{int} lnc\_old;
+721   \textcolor{comment}{/* number of local cells might change during the update */}
+722   lnc\_old = \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc};
+723   \hyperlink{cells_8c_a96a825c021fe648b7fb171bd2c532ffb}{celld} = (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *) calloc(lnc\_old, \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}));
+724   \hyperlink{global_8h_a087a95bb36c9b36c708a73ce656fd1f1}{rsum} = 0;
+725 
+726   \hyperlink{cells_8c_a718a88fce87f8ebdb87ed2fafed4c5c4}{updateCellCycles}();
+727   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a4c518eee956421a1bf84ad13ab360967}{nhs} > 0 && \hyperlink{global_8h_a0845b4b004824f1fe3cd69db1672fa15}{nc} > \hyperlink{global_8h_a4c518eee956421a1bf84ad13ab360967}{nhs} && \hyperlink{global_8h_ac84ddf735039774c39779789f7afad53}{tgs} == 1 && \hyperlink{global_8h_a543a1902d49aca54ef382bf603a51e27}{cancer} == 0)
+728     \hyperlink{cells_8c_a00dbe1f9f23fc7385462c32b89d28cf8}{markMiddleCancerCell}();
+729   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a4c518eee956421a1bf84ad13ab360967}{nhs} > 0 && \hyperlink{global_8h_a0845b4b004824f1fe3cd69db1672fa15}{nc} > \hyperlink{global_8h_a4c518eee956421a1bf84ad13ab360967}{nhs})
+730     \hyperlink{cells_8c_a8101c456dae07ab9cbd918ccad3a2ff7}{cellsDeath}(lnc\_old);
+731   \hyperlink{cells_8c_aeeb6dee9938af6fef987f1c949458703}{updateCellCounters}();
+732   \hyperlink{cells_8c_aa2ee543811c23ee4b487102bb71ba9c7}{additionalScalarField}();
+733   free(\hyperlink{cells_8c_a96a825c021fe648b7fb171bd2c532ffb}{celld});
+734 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{cells_8c_aeb1f066ef0713a8a50eb1e58784a3d7b_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=348pt]{cells_8c_aeb1f066ef0713a8a50eb1e58784a3d7b_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Variable Documentation}
+\hypertarget{cells_8c_a96a825c021fe648b7fb171bd2c532ffb}{\index{cells.\-c@{cells.\-c}!celld@{celld}}
+\index{celld@{celld}!cells.c@{cells.\-c}}
+\subsubsection[{celld}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char$\ast$ celld}}\label{cells_8c_a96a825c021fe648b7fb171bd2c532ffb}
+
+
+Definition at line 38 of file cells.\-c.
+

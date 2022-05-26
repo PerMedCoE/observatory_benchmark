@@ -1,0 +1,323 @@
+\hypertarget{stats_8c}{\section{stats.\-c File Reference}
+\label{stats_8c}\index{stats.\-c@{stats.\-c}}
+}
+
+
+contains functions computing and printing simulation statisctical information  
+
+
+{\ttfamily \#include $<$stdio.\-h$>$}\\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$mpi.\-h$>$}\\*
+{\ttfamily \#include $<$math.\-h$>$}\\*
+{\ttfamily \#include $<$inttypes.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}global.\-h\char`\"{}}\\*
+Include dependency graph for stats.\-c\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{stats_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{stats_8c_a51c2ccacf7b0d07875d31c92ab18f6a9}{statistics\-Density} ()
+\item 
+void \hyperlink{stats_8c_abca7413044a3f8d5cd3efecb2946247a}{statistics\-Distance} ()
+\item 
+void \hyperlink{stats_8c_a89db4b6a362749923202081561987270}{statistics\-Velocity} ()
+\item 
+void \hyperlink{stats_8c_a5234a4779f61d345a30918d1a1510536}{statistics\-Size} ()
+\item 
+void \hyperlink{stats_8c_aaba18e1ccc9886ed85188f8322633b82}{statistics\-Phases} ()
+\item 
+void \hyperlink{stats_8c_ad55f3e7d6510f60dd4688172ff7e92ca}{statistics\-Print} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+contains functions computing and printing simulation statisctical information 
+
+Definition in file \hyperlink{stats_8c_source}{stats.\-c}.
+
+
+
+\subsection{Function Documentation}
+\hypertarget{stats_8c_a51c2ccacf7b0d07875d31c92ab18f6a9}{\index{stats.\-c@{stats.\-c}!statistics\-Density@{statistics\-Density}}
+\index{statistics\-Density@{statistics\-Density}!stats.c@{stats.\-c}}
+\subsubsection[{statistics\-Density}]{\setlength{\rightskip}{0pt plus 5cm}void statistics\-Density (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{stats_8c_a51c2ccacf7b0d07875d31c92ab18f6a9}
+This function computes and prints out density statistics. 
+
+Definition at line 38 of file stats.\-c.
+
+
+
+References cells, statistics\-Data\-::densavg, statistics\-Data\-::densdev, cell\-Data\-::density, lnc, statistics\-Data\-::maxdens, statistics\-Data\-::mindens, M\-P\-Irank, nc, and statistics.
+
+
+\begin{DoxyCode}
+39 \{
+40   \textcolor{keywordtype}{int} c;
+41   \textcolor{keywordtype}{double} sum = 0.0, mean;
+42   \textcolor{keywordtype}{double} globalMaxDens;
+43   \textcolor{keywordtype}{double} globalMinDens;
+44   \textcolor{keywordtype}{double} deviation;
+45 
+46   \hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_abc8b83844f3405d9046189aa841b48fd}{maxdens} = 0;
+47   \hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_a2ddb05b9ae611dab07eef62db427ed61}{mindens} = 1024;
+48 
+49   \textcolor{keywordflow}{for} (c = 0; c < \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}; c++) \{
+50     sum += \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_a6f8c052f8417728038991f7f2826d38d}{density};
+51     \hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_abc8b83844f3405d9046189aa841b48fd}{maxdens} =
+52     (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_a6f8c052f8417728038991f7f2826d38d}{density} >
+53      \hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_abc8b83844f3405d9046189aa841b48fd}{maxdens} ? \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_a6f8c052f8417728038991f7f2826d38d}{density} : 
+      \hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_abc8b83844f3405d9046189aa841b48fd}{maxdens});
+54     \hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_a2ddb05b9ae611dab07eef62db427ed61}{mindens} =
+55     (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_a6f8c052f8417728038991f7f2826d38d}{density} <
+56      \hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_a2ddb05b9ae611dab07eef62db427ed61}{mindens} ? \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_a6f8c052f8417728038991f7f2826d38d}{density} : 
+      \hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_a2ddb05b9ae611dab07eef62db427ed61}{mindens});
+57   \}
+58 
+59   MPI\_Allreduce(&sum, &mean, 1, MPI\_DOUBLE, MPI\_SUM, MPI\_COMM\_WORLD);
+60   MPI\_Allreduce(&\hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_abc8b83844f3405d9046189aa841b48fd}{maxdens}, &globalMaxDens, 1, MPI\_DOUBLE,
+61         MPI\_MAX, MPI\_COMM\_WORLD);
+62   MPI\_Allreduce(&\hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_a2ddb05b9ae611dab07eef62db427ed61}{mindens}, &globalMinDens, 1, MPI\_DOUBLE,
+63         MPI\_MIN, MPI\_COMM\_WORLD);
+64   \hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_abc8b83844f3405d9046189aa841b48fd}{maxdens} = globalMaxDens;
+65   \hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_a2ddb05b9ae611dab07eef62db427ed61}{mindens} = globalMinDens;
+66 
+67   mean /= \hyperlink{global_8h_a0845b4b004824f1fe3cd69db1672fa15}{nc};
+68   \hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_ae897d6b29710ca63a31e17866c73bc9a}{densavg} = mean;
+69   sum = 0.0;
+70 
+71   \textcolor{keywordflow}{for} (c = 0; c < \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}; c++)
+72     sum += (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].density - mean) * (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_a6f8c052f8417728038991f7f2826d38d}{density} - mean);
+73 
+74   MPI\_Allreduce(&sum, &(\hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_a62a3935a35dda8e375bf0ec6cc160d5e}{densdev}), 1, MPI\_DOUBLE, MPI\_SUM,
+75         MPI\_COMM\_WORLD);
+76 
+77   \hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_a62a3935a35dda8e375bf0ec6cc160d5e}{densdev} /= \hyperlink{global_8h_a0845b4b004824f1fe3cd69db1672fa15}{nc};
+78   \hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_a62a3935a35dda8e375bf0ec6cc160d5e}{densdev} = sqrt(\hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_a62a3935a35dda8e375bf0ec6cc160d5e}{densdev});
+79 
+80   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank} == 0)
+81     printf(\textcolor{stringliteral}{"%12s%10.4lf%10.4lf%10.4lf%10.4lf\(\backslash\)n"}, \textcolor{stringliteral}{"Density    "},
+82        globalMinDens, globalMaxDens, mean, \hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_a62a3935a35dda8e375bf0ec6cc160d5e}{densdev});
+83 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{stats_8c_a51c2ccacf7b0d07875d31c92ab18f6a9_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{stats_8c_abca7413044a3f8d5cd3efecb2946247a}{\index{stats.\-c@{stats.\-c}!statistics\-Distance@{statistics\-Distance}}
+\index{statistics\-Distance@{statistics\-Distance}!stats.c@{stats.\-c}}
+\subsubsection[{statistics\-Distance}]{\setlength{\rightskip}{0pt plus 5cm}void statistics\-Distance (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{stats_8c_abca7413044a3f8d5cd3efecb2946247a}
+This function computes and prints out distance statistics. 
+
+Definition at line 88 of file stats.\-c.
+
+
+
+References statistics\-Data\-::mindist, M\-P\-Irank, and statistics.
+
+
+\begin{DoxyCode}
+89 \{
+90   \textcolor{keywordtype}{double} globalMinDist;
+91   \textcolor{keywordtype}{double} globalMaxDist;
+92 
+93   MPI\_Allreduce(&\hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_a78455d23ec97258967b76cbb2332b7be}{mindist}, &globalMinDist, 1, MPI\_DOUBLE,
+94         MPI\_MIN, MPI\_COMM\_WORLD);
+95 
+96   \hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_a78455d23ec97258967b76cbb2332b7be}{mindist} = globalMinDist;
+97 
+98   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank} == 0)
+99     printf(\textcolor{stringliteral}{"%12s%10.4lf%10s%10s%10s\(\backslash\)n"}, \textcolor{stringliteral}{"Distance   "}, globalMinDist, \textcolor{stringliteral}{"-"},
+100        \textcolor{stringliteral}{"-"}, \textcolor{stringliteral}{"-"});
+101 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{stats_8c_abca7413044a3f8d5cd3efecb2946247a_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{stats_8c_aaba18e1ccc9886ed85188f8322633b82}{\index{stats.\-c@{stats.\-c}!statistics\-Phases@{statistics\-Phases}}
+\index{statistics\-Phases@{statistics\-Phases}!stats.c@{stats.\-c}}
+\subsubsection[{statistics\-Phases}]{\setlength{\rightskip}{0pt plus 5cm}void statistics\-Phases (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{stats_8c_aaba18e1ccc9886ed85188f8322633b82}
+This function computes and prints out phases statistics. 
+
+Definition at line 137 of file stats.\-c.
+
+
+
+References cnc, g0nc, g1nc, g2nc, mnc, M\-P\-Irank, nc, nnc, and snc.
+
+
+\begin{DoxyCode}
+138 \{
+139   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank} == 0) \{
+140     printf(\textcolor{stringliteral}{"%12s%12s%12s%12s%12s%12s\(\backslash\)n"}, \textcolor{stringliteral}{"Cell phase "}, \textcolor{stringliteral}{"G0"}, \textcolor{stringliteral}{"G1"}, \textcolor{stringliteral}{"S"},
+141        \textcolor{stringliteral}{"G2"}, \textcolor{stringliteral}{"M"});
+142     printf(\textcolor{stringliteral}{"%12s%12"} PRId64 \textcolor{stringliteral}{"%12"} PRId64 \textcolor{stringliteral}{"%12"} PRId64 \textcolor{stringliteral}{"%12"} PRId64 \textcolor{stringliteral}{"%12"}
+143        PRId64 \textcolor{stringliteral}{"\(\backslash\)n"}, \textcolor{stringliteral}{"N. of cells"}, \hyperlink{global_8h_a33c78f8734fc6805cec2755dd09e0117}{g0nc}, \hyperlink{global_8h_a09b30abbc9cc684e55a246df0528a14b}{g1nc}, \hyperlink{global_8h_a0e24070582e0ecd757fdbdee28c8ff4e}{snc}, \hyperlink{global_8h_ae6288fa86281103b55c317d7f88dca28}{g2nc}, \hyperlink{global_8h_ad1cd19943c182708694e74186fb08015}{mnc});
+144     printf(\textcolor{stringliteral}{"\(\backslash\)n%16s%12"} PRId64 \textcolor{stringliteral}{"\(\backslash\)n"}, \textcolor{stringliteral}{"Healthy cells  "}, \hyperlink{global_8h_a0845b4b004824f1fe3cd69db1672fa15}{nc} - \hyperlink{global_8h_aec5760e92b3bdf9ac05fc2920446ecd8}{cnc} - \hyperlink{global_8h_a1c352d192e03ad40d837682ef1516430}{nnc});
+145     printf(\textcolor{stringliteral}{"%16s%12"} PRId64 \textcolor{stringliteral}{"\(\backslash\)n"}, \textcolor{stringliteral}{"Cancer cells   "}, \hyperlink{global_8h_aec5760e92b3bdf9ac05fc2920446ecd8}{cnc});
+146     printf(\textcolor{stringliteral}{"%16s%12"} PRId64 \textcolor{stringliteral}{"\(\backslash\)n"}, \textcolor{stringliteral}{"Necrotic cells "}, \hyperlink{global_8h_a1c352d192e03ad40d837682ef1516430}{nnc});
+147   \}
+148 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{stats_8c_aaba18e1ccc9886ed85188f8322633b82_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{stats_8c_ad55f3e7d6510f60dd4688172ff7e92ca}{\index{stats.\-c@{stats.\-c}!statistics\-Print@{statistics\-Print}}
+\index{statistics\-Print@{statistics\-Print}!stats.c@{stats.\-c}}
+\subsubsection[{statistics\-Print}]{\setlength{\rightskip}{0pt plus 5cm}void statistics\-Print (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{stats_8c_ad55f3e7d6510f60dd4688172ff7e92ca}
+This is a driving function for computing and printing out statistics. 
+
+Definition at line 153 of file stats.\-c.
+
+
+
+References M\-P\-Irank, statistics\-Density(), statistics\-Distance(), statistics\-Phases(), and statistics\-Size().
+
+
+\begin{DoxyCode}
+154 \{
+155   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank} == 0)
+156     printf(\textcolor{stringliteral}{"%12s%10s%10s%10s%10s\(\backslash\)n"}, \textcolor{stringliteral}{""}, \textcolor{stringliteral}{"Min"}, \textcolor{stringliteral}{"Max"}, \textcolor{stringliteral}{"Avg"}, \textcolor{stringliteral}{"Dev"});
+157   \hyperlink{stats_8c_a51c2ccacf7b0d07875d31c92ab18f6a9}{statisticsDensity}();
+158   \hyperlink{stats_8c_abca7413044a3f8d5cd3efecb2946247a}{statisticsDistance}();
+159   \textcolor{comment}{/*statisticsVelocity(); */}
+160   \hyperlink{stats_8c_a5234a4779f61d345a30918d1a1510536}{statisticsSize}();
+161   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank} == 0)
+162     printf(\textcolor{stringliteral}{"\(\backslash\)n"});
+163   \hyperlink{stats_8c_aaba18e1ccc9886ed85188f8322633b82}{statisticsPhases}();
+164 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=290pt]{stats_8c_ad55f3e7d6510f60dd4688172ff7e92ca_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=232pt]{stats_8c_ad55f3e7d6510f60dd4688172ff7e92ca_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{stats_8c_a5234a4779f61d345a30918d1a1510536}{\index{stats.\-c@{stats.\-c}!statistics\-Size@{statistics\-Size}}
+\index{statistics\-Size@{statistics\-Size}!stats.c@{stats.\-c}}
+\subsubsection[{statistics\-Size}]{\setlength{\rightskip}{0pt plus 5cm}void statistics\-Size (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{stats_8c_a5234a4779f61d345a30918d1a1510536}
+This function computes and prints out cell size statistics. 
+
+Definition at line 120 of file stats.\-c.
+
+
+
+References statistics\-Data\-::maxsize, statistics\-Data\-::minsize, M\-P\-Irank, and statistics.
+
+
+\begin{DoxyCode}
+121 \{
+122   \textcolor{keywordtype}{double} globalMaxSize, globalMinSize;
+123 
+124   MPI\_Reduce(&\hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_a7383c898fd4cd4d862ca65d3713086cd}{maxsize}, &globalMaxSize, 1, MPI\_DOUBLE, MPI\_MAX,
+125          0, MPI\_COMM\_WORLD);
+126   MPI\_Reduce(&\hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_ad99dc4104d1898b6e593bbf331e41c69}{minsize}, &globalMinSize, 1, MPI\_DOUBLE, MPI\_MIN,
+127          0, MPI\_COMM\_WORLD);
+128 
+129   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank} == 0)
+130     printf(\textcolor{stringliteral}{"%12s%10.4lf%10.4lf%10s%10s\(\backslash\)n"}, \textcolor{stringliteral}{"Size       "}, globalMinSize,
+131        globalMaxSize, \textcolor{stringliteral}{"-"}, \textcolor{stringliteral}{"-"});
+132 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=344pt]{stats_8c_a5234a4779f61d345a30918d1a1510536_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{stats_8c_a89db4b6a362749923202081561987270}{\index{stats.\-c@{stats.\-c}!statistics\-Velocity@{statistics\-Velocity}}
+\index{statistics\-Velocity@{statistics\-Velocity}!stats.c@{stats.\-c}}
+\subsubsection[{statistics\-Velocity}]{\setlength{\rightskip}{0pt plus 5cm}void statistics\-Velocity (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{stats_8c_a89db4b6a362749923202081561987270}
+This function computes and prints out velocity statistics. 
+
+Definition at line 106 of file stats.\-c.
+
+
+
+References global\-Max\-Vel, global\-Min\-Vel, statistics\-Data\-::maxvel, statistics\-Data\-::minvel, M\-P\-Irank, and statistics.
+
+
+\begin{DoxyCode}
+107 \{
+108   MPI\_Reduce(&\hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_a1b9d00ac67b4ceca8e7747a50edc802b}{minvel}, &\hyperlink{global_8h_ab7f75171e7ed9d56069451dc0a7552c7}{globalMinVel}, 1, MPI\_DOUBLE, MPI\_MIN, 0,
+109          MPI\_COMM\_WORLD);
+110   MPI\_Reduce(&\hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_a485292d20f5d14bd18e83fef65976fb4}{maxvel}, &\hyperlink{global_8h_ae31bf2d4b7c8e89069b3563e1a2e7034}{globalMaxVel}, 1, MPI\_DOUBLE, MPI\_MAX, 0,
+111          MPI\_COMM\_WORLD);
+112   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank} == 0)
+113     printf(\textcolor{stringliteral}{"%12s%10.4lf%10.4lf%10s%10s\(\backslash\)n"}, \textcolor{stringliteral}{"Velocity   "}, \hyperlink{global_8h_ab7f75171e7ed9d56069451dc0a7552c7}{globalMinVel},
+114        \hyperlink{global_8h_ae31bf2d4b7c8e89069b3563e1a2e7034}{globalMaxVel}, \textcolor{stringliteral}{"-"}, \textcolor{stringliteral}{"-"});
+115 \}
+\end{DoxyCode}

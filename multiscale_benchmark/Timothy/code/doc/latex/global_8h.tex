@@ -1,0 +1,1100 @@
+\hypertarget{global_8h}{\section{global.\-h File Reference}
+\label{global_8h}\index{global.\-h@{global.\-h}}
+}
+
+
+contains the most important global variables, arrays and defines  
+
+
+{\ttfamily \#include $<$zoltan.\-h$>$}\\*
+Include dependency graph for global.\-h\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=130pt]{global_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{global_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structcellData}{cell\-Data}
+\item 
+struct \hyperlink{structpartData}{part\-Data}
+\item 
+struct \hyperlink{structdensPotData}{dens\-Pot\-Data}
+\item 
+struct \hyperlink{structdoubleVector3d}{double\-Vector3d}
+\item 
+struct \hyperlink{structint64Vector3d}{int64\-Vector3d}
+\item 
+struct \hyperlink{structfloatVector3d}{float\-Vector3d}
+\item 
+struct \hyperlink{structstatisticsData}{statistics\-Data}
+\item 
+struct \hyperlink{structbht__node}{bht\-\_\-node}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{global_8h_a1c6d5de492ac61ad29aec7aa9a436bbf}{V\-E\-R\-S\-I\-O\-N}~\char`\"{}1.\-0\char`\"{}
+\item 
+\#define \hyperlink{global_8h_a8eb18ab2bf9f20da791e23073c154f45}{P\-O\-W\-E\-R\-\_\-\-O\-F\-\_\-\-T\-W\-O}(\hyperlink{tempf_8c_a1780e9c70637026d6fab31f63b3a193e}{x})~!(\hyperlink{tempf_8c_a1780e9c70637026d6fab31f63b3a193e}{x}\&(\hyperlink{tempf_8c_a1780e9c70637026d6fab31f63b3a193e}{x}-\/1))
+\item 
+\#define \hyperlink{global_8h_a97c5d6b146e57ace62a66400c433aa4d}{number\-Of\-Counts}~8
+\item 
+\#define \hyperlink{global_8h_a0845b4b004824f1fe3cd69db1672fa15}{nc}~\hyperlink{global_8h_af1a14df9e6c8efece5183d9625039587}{total\-Cell\-Count}\mbox{[}0\mbox{]}
+\item 
+\#define \hyperlink{global_8h_a33c78f8734fc6805cec2755dd09e0117}{g0nc}~\hyperlink{global_8h_af1a14df9e6c8efece5183d9625039587}{total\-Cell\-Count}\mbox{[}1\mbox{]}
+\item 
+\#define \hyperlink{global_8h_a09b30abbc9cc684e55a246df0528a14b}{g1nc}~\hyperlink{global_8h_af1a14df9e6c8efece5183d9625039587}{total\-Cell\-Count}\mbox{[}2\mbox{]}
+\item 
+\#define \hyperlink{global_8h_a0e24070582e0ecd757fdbdee28c8ff4e}{snc}~\hyperlink{global_8h_af1a14df9e6c8efece5183d9625039587}{total\-Cell\-Count}\mbox{[}3\mbox{]}
+\item 
+\#define \hyperlink{global_8h_ae6288fa86281103b55c317d7f88dca28}{g2nc}~\hyperlink{global_8h_af1a14df9e6c8efece5183d9625039587}{total\-Cell\-Count}\mbox{[}4\mbox{]}
+\item 
+\#define \hyperlink{global_8h_ad1cd19943c182708694e74186fb08015}{mnc}~\hyperlink{global_8h_af1a14df9e6c8efece5183d9625039587}{total\-Cell\-Count}\mbox{[}5\mbox{]}
+\item 
+\#define \hyperlink{global_8h_aec5760e92b3bdf9ac05fc2920446ecd8}{cnc}~\hyperlink{global_8h_af1a14df9e6c8efece5183d9625039587}{total\-Cell\-Count}\mbox{[}6\mbox{]}
+\item 
+\#define \hyperlink{global_8h_a1c352d192e03ad40d837682ef1516430}{nnc}~\hyperlink{global_8h_af1a14df9e6c8efece5183d9625039587}{total\-Cell\-Count}\mbox{[}7\mbox{]}
+\item 
+\#define \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}~\hyperlink{global_8h_a055fa0d3ee8b74712109365cf2802bfa}{local\-Cell\-Count}\mbox{[}0\mbox{]}
+\item 
+\#define \hyperlink{global_8h_a356af225353f2a5512be222c1354bee3}{lg0nc}~\hyperlink{global_8h_a055fa0d3ee8b74712109365cf2802bfa}{local\-Cell\-Count}\mbox{[}1\mbox{]}
+\item 
+\#define \hyperlink{global_8h_a59dc7e07b6be86e29bd0e9f3f18c3ca2}{lg1nc}~\hyperlink{global_8h_a055fa0d3ee8b74712109365cf2802bfa}{local\-Cell\-Count}\mbox{[}2\mbox{]}
+\item 
+\#define \hyperlink{global_8h_af5e326c959f5815222d8f8e3f4d66419}{lsnc}~\hyperlink{global_8h_a055fa0d3ee8b74712109365cf2802bfa}{local\-Cell\-Count}\mbox{[}3\mbox{]}
+\item 
+\#define \hyperlink{global_8h_a17ca9380dca478aa01c68ce4cc8ca720}{lg2nc}~\hyperlink{global_8h_a055fa0d3ee8b74712109365cf2802bfa}{local\-Cell\-Count}\mbox{[}4\mbox{]}
+\item 
+\#define \hyperlink{global_8h_a002cff2ccc4cfc5b5f85ac5ea285ef9c}{lmnc}~\hyperlink{global_8h_a055fa0d3ee8b74712109365cf2802bfa}{local\-Cell\-Count}\mbox{[}5\mbox{]}
+\item 
+\#define \hyperlink{global_8h_ab67f763fa0f30ce2912a6ab60dc8e648}{lcnc}~\hyperlink{global_8h_a055fa0d3ee8b74712109365cf2802bfa}{local\-Cell\-Count}\mbox{[}6\mbox{]}
+\item 
+\#define \hyperlink{global_8h_a97370c479716d79f799616103c487d51}{lnnc}~\hyperlink{global_8h_a055fa0d3ee8b74712109365cf2802bfa}{local\-Cell\-Count}\mbox{[}7\mbox{]}
+\item 
+\#define \hyperlink{global_8h_ad350bae49f72ba58d73027f1316e38b8}{S\-E\-E\-D}~985456376
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structcellData}{cell\-Data} $\ast$ \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}
+\item 
+double $\ast$$\ast$ \hyperlink{global_8h_a25e4317a1b5bb95a8e71e0e8c4e11f2b}{cell\-Fields}
+\item 
+struct \hyperlink{structdoubleVector3d}{double\-Vector3d} $\ast$ \hyperlink{global_8h_a6015afb23ea197551ff3d503aa3426a4}{velocity}
+\item 
+int64\-\_\-t \hyperlink{global_8h_ac1a3e3adac8f1e6840fd332e3d3cfa21}{max\-Cells}
+\item 
+int64\-\_\-t \hyperlink{global_8h_a055fa0d3ee8b74712109365cf2802bfa}{local\-Cell\-Count} \mbox{[}\hyperlink{global_8h_a97c5d6b146e57ace62a66400c433aa4d}{number\-Of\-Counts}\mbox{]}
+\item 
+int64\-\_\-t \hyperlink{global_8h_af1a14df9e6c8efece5183d9625039587}{total\-Cell\-Count} \mbox{[}\hyperlink{global_8h_a97c5d6b146e57ace62a66400c433aa4d}{number\-Of\-Counts}\mbox{]}
+\item 
+int64\-\_\-t $\ast$ \hyperlink{global_8h_ac3c96b975a3376c555ad22a7d2688b2f}{tlnc}
+\item 
+int \hyperlink{global_8h_a2de426dd266cfdaaf6fb52ba3dc2740a}{max\-Cells\-Per\-Proc}
+\item 
+int \hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{M\-P\-Irank}
+\item 
+int \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{M\-P\-Isize}
+\item 
+int \hyperlink{global_8h_a633835398408aaee46fd56809af73e6c}{M\-P\-Idim} \mbox{[}3\mbox{]}
+\item 
+int \hyperlink{global_8h_ae5f15194d70ca4e470e6f3cb85510c65}{O\-M\-Pthreads}
+\item 
+int \hyperlink{global_8h_a40c386f441d91bf6176dd303428ecb95}{M\-P\-I\-Node\-Rank}
+\item 
+int \hyperlink{global_8h_a8b7e933faff3177f7f83eb60544f4fdf}{M\-P\-I\-Node\-Size}
+\item 
+int \hyperlink{global_8h_a75e019ac3d3333cc449595f0deedf7cc}{mem\-Per\-Proc}
+\item 
+M\-P\-I\-\_\-\-Comm \hyperlink{global_8h_a34ac355617a6a906e1f3e7832aeb0073}{M\-P\-I\-\_\-\-C\-A\-R\-T\-\_\-\-C\-O\-M\-M}
+\item 
+int $\ast$$\ast$ \hyperlink{global_8h_a8220294108e39b58632993a50a7dc4ca}{M\-P\-Icoords}
+\item 
+struct Zoltan\-\_\-\-Struct $\ast$ \hyperlink{global_8h_afc06c50b11f3b60d3738e669b612eb9c}{ztn}
+\item 
+struct \hyperlink{structpartData}{part\-Data} $\ast$ \hyperlink{global_8h_ac928fbed09198ca6c116fb58a115b594}{send\-Data}
+\item 
+struct \hyperlink{structpartData}{part\-Data} $\ast$ \hyperlink{global_8h_af851c922de87975e63161d38332d6a56}{recv\-Data}
+\item 
+struct \hyperlink{structdensPotData}{dens\-Pot\-Data} $\ast$ \hyperlink{global_8h_a5b0d78dc19924c0af131438356bfcdbd}{send\-Dens\-Pot\-Data}
+\item 
+struct \hyperlink{structdensPotData}{dens\-Pot\-Data} $\ast$ \hyperlink{global_8h_ac5932521dec6ac9c4208cb0312e002de}{recv\-Dens\-Pot\-Data}
+\item 
+int \hyperlink{global_8h_a4c3c9a79704128f7fcc9ebf4bdd9e3fc}{num\-Exp}
+\item 
+int \hyperlink{global_8h_a6e7ffc829c0f608016617f9057885a9f}{num\-Imp}
+\item 
+int \hyperlink{global_8h_a4f31d79e5388508ff9b17230b6cad8d7}{endian}
+\item 
+int \hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim}
+\item 
+int \hyperlink{global_8h_a4dc71fc8b57bbbe431a4b183d56297b3}{mitrand}
+\item 
+int \hyperlink{global_8h_a02d47a4f36ec0bcce348696534567e30}{nx}
+\item 
+int \hyperlink{global_8h_a9f4e20a91b26459133b83992e9d8d381}{ny}
+\item 
+int \hyperlink{global_8h_ac2eda98bb6d7e89cc3239973db2800cf}{nz}
+\item 
+char \hyperlink{global_8h_a4b4af00b9e103893ebeb3bd3d58aadd6}{rst\-File\-Name} \mbox{[}128\mbox{]}
+\item 
+char \hyperlink{global_8h_a5e19dd54f4bacae055016ee40eab2179}{outdir} \mbox{[}128\mbox{]}
+\item 
+char \hyperlink{global_8h_a58bd7d9996cba89c834ae9ec41bbc075}{logdir} \mbox{[}128\mbox{]}
+\item 
+char \hyperlink{global_8h_ae94cd2e37eb46a6942cc45e1b29f87fc}{rng} \mbox{[}3\mbox{]}
+\item 
+int \hyperlink{global_8h_aa2414080b021dbb9b56eeaeedec0ffa2}{nsteps}
+\item 
+int \hyperlink{global_8h_a42a935b4eec9242e09d47fc1c2b6dba3}{sim\-Start}
+\item 
+int \hyperlink{global_8h_abc16e65f240ed0c8f3e876e8732c0a33}{step}
+\item 
+float \hyperlink{global_8h_aaab1d6ce8367c01f2074e0c7b6c273b5}{tstep}
+\item 
+float \hyperlink{global_8h_ad188f0f25b4773be09b6eb6babe59f59}{sim\-Time}
+\item 
+float \hyperlink{global_8h_a3c105180f93a78cf3fb0903df278cf3f}{max\-Speed}
+\item 
+float \hyperlink{global_8h_aad1c418ff29a02376edeb263b553e53e}{max\-Speed\-In\-Units}
+\item 
+char \hyperlink{global_8h_a84a388abba64eb7d2311751653350fc1}{c\-Out\-Type} \mbox{[}3\mbox{]}
+\item 
+char \hyperlink{global_8h_a9fc2f91a577746250705ee9b00f51d70}{f\-Out\-Type} \mbox{[}3\mbox{]}
+\item 
+int \hyperlink{global_8h_a4a2046f20ca195391d5fcb98a02aedf6}{vtkout}
+\item 
+int \hyperlink{global_8h_a6d848b22ca9b60b1e8ec33fdcfbd91b8}{povout}
+\item 
+int \hyperlink{global_8h_a5d38ae5aec75c8ebfafe34914471b32a}{vnfout}
+\item 
+float \hyperlink{global_8h_a581debe7d16bce9d187b97855f4e99d4}{g1}
+\item 
+float \hyperlink{global_8h_a874f74a4dc1c9a0cd9c6e0d79c298f55}{s}
+\item 
+float \hyperlink{global_8h_aee9971139118d56815564304450c4775}{g2}
+\item 
+float \hyperlink{global_8h_ac51334f57ef8b81c0629c9421798c344}{m}
+\item 
+float \hyperlink{global_8h_a48d9522e58fa05906c6dba23e5745a72}{v}
+\item 
+float \hyperlink{global_8h_a0d2a1379adf81ce5f962f3c9263e81e9}{rd}
+\item 
+float \hyperlink{global_8h_a30dcf4c8ed197e063ec4f2e899a83724}{cg1}
+\item 
+float \hyperlink{global_8h_abafbf12f10610688ad061edb4b911e60}{cs}
+\item 
+float \hyperlink{global_8h_af69394ce4871f38be319cc1fc0d900aa}{cg2}
+\item 
+float \hyperlink{global_8h_a3755ba3f0c70f11bcfc3d348bf394193}{cm}
+\item 
+double \hyperlink{global_8h_a3b735e8520f1816ee73ee50daa3ef756}{csize}
+\item 
+double \hyperlink{global_8h_a5618d8682d7245e8770f85fbf8c2fda5}{csize\-In\-Units}
+\item 
+double \hyperlink{global_8h_a51a522fc8b714a615f532ee74a83f92b}{cell\-Volume}
+\item 
+double \hyperlink{global_8h_a8ee9be1b5aa75abae556de3088cba6d9}{h}
+\item 
+double \hyperlink{global_8h_ac2d9b75feeec68992c955b63e813e7ce}{h2}
+\item 
+double \hyperlink{global_8h_adafe1d7389480b1a329b70b3c2baed11}{h3}
+\item 
+double \hyperlink{global_8h_a40b544b5f22197434cf4bb2ccca5c8a6}{h4}
+\item 
+int \hyperlink{global_8h_a543a1902d49aca54ef382bf603a51e27}{cancer}
+\item 
+int64\-\_\-t \hyperlink{global_8h_a087a95bb36c9b36c708a73ce656fd1f1}{rsum}
+\item 
+double \hyperlink{global_8h_a8a758046e5cb8b72210f0fc18cb3b7e1}{density\-Critical\-Level1}
+\item 
+double \hyperlink{global_8h_aeddd5065a64a6a39c79e1dab7c0f9edf}{density\-Critical\-Level2}
+\item 
+int \hyperlink{global_8h_ab1000f2f5f3b4f1a2d29b621c53f3176}{rst}
+\item 
+int \hyperlink{global_8h_ad31dab599f001076b3fe40bae337932f}{rst\-Reset}
+\item 
+int \hyperlink{global_8h_aab9700fe12cc303ff43e1a35a210128e}{stat\-Out\-Step}
+\item 
+int \hyperlink{global_8h_a4207e6152bc8f1176e0be5efccbe7491}{rst\-Out\-Step}
+\item 
+int \hyperlink{global_8h_a6d101f941d5825146f98cc07dac9cb28}{vtk\-Out\-Step}
+\item 
+int64\-\_\-t \hyperlink{global_8h_a4c518eee956421a1bf84ad13ab360967}{nhs}
+\item 
+int \hyperlink{global_8h_ac84ddf735039774c39779789f7afad53}{tgs}
+\item 
+int64\-\_\-t \hyperlink{global_8h_a265cb7ee626de517ecec0f0ac60833a7}{local\-I\-D}
+\item 
+float \hyperlink{global_8h_aaf67d90c5e431e85ea2b7681537beab9}{dummy}
+\item 
+double \hyperlink{global_8h_af6759ff06efd7eb00db0924990465f99}{boxmin} \mbox{[}3\mbox{]}
+\item 
+double \hyperlink{global_8h_ad7b4df01585142c37082c0ab7a52b0f1}{boxmax} \mbox{[}3\mbox{]}
+\item 
+double \hyperlink{global_8h_a2c5e0e624851de1af8c332343d097abd}{boxsize}
+\item 
+float \hyperlink{global_8h_aac71dcf068b84f2973571ab102920190}{seconds\-Per\-Step}
+\item 
+float \hyperlink{global_8h_aae6a1dda703fb50b7a8b0f4dc01d82c1}{gf\-Dt}
+\item 
+float \hyperlink{global_8h_a3b15d89e3952fa259e37b9906836a9f9}{gf\-H}
+\item 
+int \hyperlink{global_8h_ab2e483b60cc15741bd6281688f31edbc}{gf\-Iter}
+\item 
+int \hyperlink{global_8h_a4b76c15679db05e32f70c9804e186557}{gf\-Iter\-Per\-Step}
+\item 
+struct \hyperlink{structstatisticsData}{statistics\-Data} \hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}
+\item 
+double \hyperlink{global_8h_ab7f75171e7ed9d56069451dc0a7552c7}{global\-Min\-Vel}
+\item 
+double \hyperlink{global_8h_ae31bf2d4b7c8e89069b3563e1a2e7034}{global\-Max\-Vel}
+\item 
+int $\ast$ \hyperlink{global_8h_a5340130b6fb2647cef6b71354e27b0d4}{stream}
+\item 
+struct \hyperlink{structbht__node}{bht\-\_\-node} $\ast$ \hyperlink{global_8h_a7c0d548b636dc26d8fa1808037ef3fb5}{tree}
+\item 
+struct \hyperlink{structbht__node}{bht\-\_\-node} $\ast$ \hyperlink{global_8h_a6920a8c121a4a8d48989c8d923e4797e}{bht\-\_\-root}
+\item 
+struct \hyperlink{structbht__node}{bht\-\_\-node} $\ast$$\ast$ \hyperlink{global_8h_a0681d5d05f66720bbcc34493ceff6fc3}{leafs}
+\item 
+int \hyperlink{global_8h_a824ac1af8a4229ed37411081a1ffd928}{nnodes}
+\item 
+int \hyperlink{global_8h_ab6b3020aaf0144a41169e6b995c2921c}{nnodes\-\_\-init}
+\item 
+int \hyperlink{global_8h_a96f00f69e2102e1720c989a00c385d81}{tnc}
+\item 
+int \hyperlink{global_8h_ad2b24a5d9628942aab73cf1db2bb4bed}{ni}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+contains the most important global variables, arrays and defines 
+
+Definition in file \hyperlink{global_8h_source}{global.\-h}.
+
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{global_8h_aec5760e92b3bdf9ac05fc2920446ecd8}{\index{global.\-h@{global.\-h}!cnc@{cnc}}
+\index{cnc@{cnc}!global.h@{global.\-h}}
+\subsubsection[{cnc}]{\setlength{\rightskip}{0pt plus 5cm}\#define cnc~{\bf total\-Cell\-Count}\mbox{[}6\mbox{]}}}\label{global_8h_aec5760e92b3bdf9ac05fc2920446ecd8}
+
+
+Definition at line 99 of file global.\-h.
+
+\hypertarget{global_8h_a33c78f8734fc6805cec2755dd09e0117}{\index{global.\-h@{global.\-h}!g0nc@{g0nc}}
+\index{g0nc@{g0nc}!global.h@{global.\-h}}
+\subsubsection[{g0nc}]{\setlength{\rightskip}{0pt plus 5cm}\#define g0nc~{\bf total\-Cell\-Count}\mbox{[}1\mbox{]}}}\label{global_8h_a33c78f8734fc6805cec2755dd09e0117}
+
+
+Definition at line 94 of file global.\-h.
+
+\hypertarget{global_8h_a09b30abbc9cc684e55a246df0528a14b}{\index{global.\-h@{global.\-h}!g1nc@{g1nc}}
+\index{g1nc@{g1nc}!global.h@{global.\-h}}
+\subsubsection[{g1nc}]{\setlength{\rightskip}{0pt plus 5cm}\#define g1nc~{\bf total\-Cell\-Count}\mbox{[}2\mbox{]}}}\label{global_8h_a09b30abbc9cc684e55a246df0528a14b}
+
+
+Definition at line 95 of file global.\-h.
+
+\hypertarget{global_8h_ae6288fa86281103b55c317d7f88dca28}{\index{global.\-h@{global.\-h}!g2nc@{g2nc}}
+\index{g2nc@{g2nc}!global.h@{global.\-h}}
+\subsubsection[{g2nc}]{\setlength{\rightskip}{0pt plus 5cm}\#define g2nc~{\bf total\-Cell\-Count}\mbox{[}4\mbox{]}}}\label{global_8h_ae6288fa86281103b55c317d7f88dca28}
+
+
+Definition at line 97 of file global.\-h.
+
+\hypertarget{global_8h_ab67f763fa0f30ce2912a6ab60dc8e648}{\index{global.\-h@{global.\-h}!lcnc@{lcnc}}
+\index{lcnc@{lcnc}!global.h@{global.\-h}}
+\subsubsection[{lcnc}]{\setlength{\rightskip}{0pt plus 5cm}\#define lcnc~{\bf local\-Cell\-Count}\mbox{[}6\mbox{]}}}\label{global_8h_ab67f763fa0f30ce2912a6ab60dc8e648}
+
+
+Definition at line 108 of file global.\-h.
+
+\hypertarget{global_8h_a356af225353f2a5512be222c1354bee3}{\index{global.\-h@{global.\-h}!lg0nc@{lg0nc}}
+\index{lg0nc@{lg0nc}!global.h@{global.\-h}}
+\subsubsection[{lg0nc}]{\setlength{\rightskip}{0pt plus 5cm}\#define lg0nc~{\bf local\-Cell\-Count}\mbox{[}1\mbox{]}}}\label{global_8h_a356af225353f2a5512be222c1354bee3}
+
+
+Definition at line 103 of file global.\-h.
+
+\hypertarget{global_8h_a59dc7e07b6be86e29bd0e9f3f18c3ca2}{\index{global.\-h@{global.\-h}!lg1nc@{lg1nc}}
+\index{lg1nc@{lg1nc}!global.h@{global.\-h}}
+\subsubsection[{lg1nc}]{\setlength{\rightskip}{0pt plus 5cm}\#define lg1nc~{\bf local\-Cell\-Count}\mbox{[}2\mbox{]}}}\label{global_8h_a59dc7e07b6be86e29bd0e9f3f18c3ca2}
+
+
+Definition at line 104 of file global.\-h.
+
+\hypertarget{global_8h_a17ca9380dca478aa01c68ce4cc8ca720}{\index{global.\-h@{global.\-h}!lg2nc@{lg2nc}}
+\index{lg2nc@{lg2nc}!global.h@{global.\-h}}
+\subsubsection[{lg2nc}]{\setlength{\rightskip}{0pt plus 5cm}\#define lg2nc~{\bf local\-Cell\-Count}\mbox{[}4\mbox{]}}}\label{global_8h_a17ca9380dca478aa01c68ce4cc8ca720}
+
+
+Definition at line 106 of file global.\-h.
+
+\hypertarget{global_8h_a002cff2ccc4cfc5b5f85ac5ea285ef9c}{\index{global.\-h@{global.\-h}!lmnc@{lmnc}}
+\index{lmnc@{lmnc}!global.h@{global.\-h}}
+\subsubsection[{lmnc}]{\setlength{\rightskip}{0pt plus 5cm}\#define lmnc~{\bf local\-Cell\-Count}\mbox{[}5\mbox{]}}}\label{global_8h_a002cff2ccc4cfc5b5f85ac5ea285ef9c}
+
+
+Definition at line 107 of file global.\-h.
+
+\hypertarget{global_8h_a7065c019590815f10169c219f358e7d0}{\index{global.\-h@{global.\-h}!lnc@{lnc}}
+\index{lnc@{lnc}!global.h@{global.\-h}}
+\subsubsection[{lnc}]{\setlength{\rightskip}{0pt plus 5cm}\#define lnc~{\bf local\-Cell\-Count}\mbox{[}0\mbox{]}}}\label{global_8h_a7065c019590815f10169c219f358e7d0}
+
+
+Definition at line 102 of file global.\-h.
+
+\hypertarget{global_8h_a97370c479716d79f799616103c487d51}{\index{global.\-h@{global.\-h}!lnnc@{lnnc}}
+\index{lnnc@{lnnc}!global.h@{global.\-h}}
+\subsubsection[{lnnc}]{\setlength{\rightskip}{0pt plus 5cm}\#define lnnc~{\bf local\-Cell\-Count}\mbox{[}7\mbox{]}}}\label{global_8h_a97370c479716d79f799616103c487d51}
+
+
+Definition at line 109 of file global.\-h.
+
+\hypertarget{global_8h_af5e326c959f5815222d8f8e3f4d66419}{\index{global.\-h@{global.\-h}!lsnc@{lsnc}}
+\index{lsnc@{lsnc}!global.h@{global.\-h}}
+\subsubsection[{lsnc}]{\setlength{\rightskip}{0pt plus 5cm}\#define lsnc~{\bf local\-Cell\-Count}\mbox{[}3\mbox{]}}}\label{global_8h_af5e326c959f5815222d8f8e3f4d66419}
+
+
+Definition at line 105 of file global.\-h.
+
+\hypertarget{global_8h_ad1cd19943c182708694e74186fb08015}{\index{global.\-h@{global.\-h}!mnc@{mnc}}
+\index{mnc@{mnc}!global.h@{global.\-h}}
+\subsubsection[{mnc}]{\setlength{\rightskip}{0pt plus 5cm}\#define mnc~{\bf total\-Cell\-Count}\mbox{[}5\mbox{]}}}\label{global_8h_ad1cd19943c182708694e74186fb08015}
+
+
+Definition at line 98 of file global.\-h.
+
+\hypertarget{global_8h_a0845b4b004824f1fe3cd69db1672fa15}{\index{global.\-h@{global.\-h}!nc@{nc}}
+\index{nc@{nc}!global.h@{global.\-h}}
+\subsubsection[{nc}]{\setlength{\rightskip}{0pt plus 5cm}\#define nc~{\bf total\-Cell\-Count}\mbox{[}0\mbox{]}}}\label{global_8h_a0845b4b004824f1fe3cd69db1672fa15}
+
+
+Definition at line 93 of file global.\-h.
+
+\hypertarget{global_8h_a1c352d192e03ad40d837682ef1516430}{\index{global.\-h@{global.\-h}!nnc@{nnc}}
+\index{nnc@{nnc}!global.h@{global.\-h}}
+\subsubsection[{nnc}]{\setlength{\rightskip}{0pt plus 5cm}\#define nnc~{\bf total\-Cell\-Count}\mbox{[}7\mbox{]}}}\label{global_8h_a1c352d192e03ad40d837682ef1516430}
+
+
+Definition at line 100 of file global.\-h.
+
+\hypertarget{global_8h_a97c5d6b146e57ace62a66400c433aa4d}{\index{global.\-h@{global.\-h}!number\-Of\-Counts@{number\-Of\-Counts}}
+\index{number\-Of\-Counts@{number\-Of\-Counts}!global.h@{global.\-h}}
+\subsubsection[{number\-Of\-Counts}]{\setlength{\rightskip}{0pt plus 5cm}\#define number\-Of\-Counts~8}}\label{global_8h_a97c5d6b146e57ace62a66400c433aa4d}
+
+
+Definition at line 88 of file global.\-h.
+
+\hypertarget{global_8h_a8eb18ab2bf9f20da791e23073c154f45}{\index{global.\-h@{global.\-h}!P\-O\-W\-E\-R\-\_\-\-O\-F\-\_\-\-T\-W\-O@{P\-O\-W\-E\-R\-\_\-\-O\-F\-\_\-\-T\-W\-O}}
+\index{P\-O\-W\-E\-R\-\_\-\-O\-F\-\_\-\-T\-W\-O@{P\-O\-W\-E\-R\-\_\-\-O\-F\-\_\-\-T\-W\-O}!global.h@{global.\-h}}
+\subsubsection[{P\-O\-W\-E\-R\-\_\-\-O\-F\-\_\-\-T\-W\-O}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\-O\-W\-E\-R\-\_\-\-O\-F\-\_\-\-T\-W\-O(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf x}}
+\end{DoxyParamCaption}
+)~!({\bf x}\&({\bf x}-\/1))}}\label{global_8h_a8eb18ab2bf9f20da791e23073c154f45}
+
+
+Definition at line 31 of file global.\-h.
+
+\hypertarget{global_8h_ad350bae49f72ba58d73027f1316e38b8}{\index{global.\-h@{global.\-h}!S\-E\-E\-D@{S\-E\-E\-D}}
+\index{S\-E\-E\-D@{S\-E\-E\-D}!global.h@{global.\-h}}
+\subsubsection[{S\-E\-E\-D}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\-E\-E\-D~985456376}}\label{global_8h_ad350bae49f72ba58d73027f1316e38b8}
+
+
+Definition at line 274 of file global.\-h.
+
+\hypertarget{global_8h_a0e24070582e0ecd757fdbdee28c8ff4e}{\index{global.\-h@{global.\-h}!snc@{snc}}
+\index{snc@{snc}!global.h@{global.\-h}}
+\subsubsection[{snc}]{\setlength{\rightskip}{0pt plus 5cm}\#define snc~{\bf total\-Cell\-Count}\mbox{[}3\mbox{]}}}\label{global_8h_a0e24070582e0ecd757fdbdee28c8ff4e}
+
+
+Definition at line 96 of file global.\-h.
+
+\hypertarget{global_8h_a1c6d5de492ac61ad29aec7aa9a436bbf}{\index{global.\-h@{global.\-h}!V\-E\-R\-S\-I\-O\-N@{V\-E\-R\-S\-I\-O\-N}}
+\index{V\-E\-R\-S\-I\-O\-N@{V\-E\-R\-S\-I\-O\-N}!global.h@{global.\-h}}
+\subsubsection[{V\-E\-R\-S\-I\-O\-N}]{\setlength{\rightskip}{0pt plus 5cm}\#define V\-E\-R\-S\-I\-O\-N~\char`\"{}1.\-0\char`\"{}}}\label{global_8h_a1c6d5de492ac61ad29aec7aa9a436bbf}
+
+
+Definition at line 29 of file global.\-h.
+
+
+
+\subsection{Variable Documentation}
+\hypertarget{global_8h_a6920a8c121a4a8d48989c8d923e4797e}{\index{global.\-h@{global.\-h}!bht\-\_\-root@{bht\-\_\-root}}
+\index{bht\-\_\-root@{bht\-\_\-root}!global.h@{global.\-h}}
+\subsubsection[{bht\-\_\-root}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf bht\-\_\-node}$\ast$ bht\-\_\-root}}\label{global_8h_a6920a8c121a4a8d48989c8d923e4797e}
+
+
+Definition at line 289 of file global.\-h.
+
+\hypertarget{global_8h_ad7b4df01585142c37082c0ab7a52b0f1}{\index{global.\-h@{global.\-h}!boxmax@{boxmax}}
+\index{boxmax@{boxmax}!global.h@{global.\-h}}
+\subsubsection[{boxmax}]{\setlength{\rightskip}{0pt plus 5cm}double boxmax\mbox{[}3\mbox{]}}}\label{global_8h_ad7b4df01585142c37082c0ab7a52b0f1}
+
+
+Definition at line 244 of file global.\-h.
+
+\hypertarget{global_8h_af6759ff06efd7eb00db0924990465f99}{\index{global.\-h@{global.\-h}!boxmin@{boxmin}}
+\index{boxmin@{boxmin}!global.h@{global.\-h}}
+\subsubsection[{boxmin}]{\setlength{\rightskip}{0pt plus 5cm}double boxmin\mbox{[}3\mbox{]}}}\label{global_8h_af6759ff06efd7eb00db0924990465f99}
+
+
+Definition at line 244 of file global.\-h.
+
+\hypertarget{global_8h_a2c5e0e624851de1af8c332343d097abd}{\index{global.\-h@{global.\-h}!boxsize@{boxsize}}
+\index{boxsize@{boxsize}!global.h@{global.\-h}}
+\subsubsection[{boxsize}]{\setlength{\rightskip}{0pt plus 5cm}double boxsize}}\label{global_8h_a2c5e0e624851de1af8c332343d097abd}
+
+
+Definition at line 245 of file global.\-h.
+
+\hypertarget{global_8h_a543a1902d49aca54ef382bf603a51e27}{\index{global.\-h@{global.\-h}!cancer@{cancer}}
+\index{cancer@{cancer}!global.h@{global.\-h}}
+\subsubsection[{cancer}]{\setlength{\rightskip}{0pt plus 5cm}int cancer}}\label{global_8h_a543a1902d49aca54ef382bf603a51e27}
+
+
+Definition at line 205 of file global.\-h.
+
+\hypertarget{global_8h_a25e4317a1b5bb95a8e71e0e8c4e11f2b}{\index{global.\-h@{global.\-h}!cell\-Fields@{cell\-Fields}}
+\index{cell\-Fields@{cell\-Fields}!global.h@{global.\-h}}
+\subsubsection[{cell\-Fields}]{\setlength{\rightskip}{0pt plus 5cm}double$\ast$$\ast$ cell\-Fields}}\label{global_8h_a25e4317a1b5bb95a8e71e0e8c4e11f2b}
+
+
+Definition at line 83 of file global.\-h.
+
+\hypertarget{global_8h_a56da06a03aa369ca203be968cb56d16c}{\index{global.\-h@{global.\-h}!cells@{cells}}
+\index{cells@{cells}!global.h@{global.\-h}}
+\subsubsection[{cells}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf cell\-Data}$\ast$ cells}}\label{global_8h_a56da06a03aa369ca203be968cb56d16c}
+
+
+Definition at line 82 of file global.\-h.
+
+\hypertarget{global_8h_a51a522fc8b714a615f532ee74a83f92b}{\index{global.\-h@{global.\-h}!cell\-Volume@{cell\-Volume}}
+\index{cell\-Volume@{cell\-Volume}!global.h@{global.\-h}}
+\subsubsection[{cell\-Volume}]{\setlength{\rightskip}{0pt plus 5cm}double cell\-Volume}}\label{global_8h_a51a522fc8b714a615f532ee74a83f92b}
+
+
+Definition at line 199 of file global.\-h.
+
+\hypertarget{global_8h_a30dcf4c8ed197e063ec4f2e899a83724}{\index{global.\-h@{global.\-h}!cg1@{cg1}}
+\index{cg1@{cg1}!global.h@{global.\-h}}
+\subsubsection[{cg1}]{\setlength{\rightskip}{0pt plus 5cm}float cg1}}\label{global_8h_a30dcf4c8ed197e063ec4f2e899a83724}
+
+
+Definition at line 192 of file global.\-h.
+
+\hypertarget{global_8h_af69394ce4871f38be319cc1fc0d900aa}{\index{global.\-h@{global.\-h}!cg2@{cg2}}
+\index{cg2@{cg2}!global.h@{global.\-h}}
+\subsubsection[{cg2}]{\setlength{\rightskip}{0pt plus 5cm}float cg2}}\label{global_8h_af69394ce4871f38be319cc1fc0d900aa}
+
+
+Definition at line 194 of file global.\-h.
+
+\hypertarget{global_8h_a3755ba3f0c70f11bcfc3d348bf394193}{\index{global.\-h@{global.\-h}!cm@{cm}}
+\index{cm@{cm}!global.h@{global.\-h}}
+\subsubsection[{cm}]{\setlength{\rightskip}{0pt plus 5cm}float cm}}\label{global_8h_a3755ba3f0c70f11bcfc3d348bf394193}
+
+
+Definition at line 195 of file global.\-h.
+
+\hypertarget{global_8h_a84a388abba64eb7d2311751653350fc1}{\index{global.\-h@{global.\-h}!c\-Out\-Type@{c\-Out\-Type}}
+\index{c\-Out\-Type@{c\-Out\-Type}!global.h@{global.\-h}}
+\subsubsection[{c\-Out\-Type}]{\setlength{\rightskip}{0pt plus 5cm}char c\-Out\-Type\mbox{[}3\mbox{]}}}\label{global_8h_a84a388abba64eb7d2311751653350fc1}
+
+
+Definition at line 178 of file global.\-h.
+
+\hypertarget{global_8h_abafbf12f10610688ad061edb4b911e60}{\index{global.\-h@{global.\-h}!cs@{cs}}
+\index{cs@{cs}!global.h@{global.\-h}}
+\subsubsection[{cs}]{\setlength{\rightskip}{0pt plus 5cm}float cs}}\label{global_8h_abafbf12f10610688ad061edb4b911e60}
+
+
+Definition at line 193 of file global.\-h.
+
+\hypertarget{global_8h_a3b735e8520f1816ee73ee50daa3ef756}{\index{global.\-h@{global.\-h}!csize@{csize}}
+\index{csize@{csize}!global.h@{global.\-h}}
+\subsubsection[{csize}]{\setlength{\rightskip}{0pt plus 5cm}double csize}}\label{global_8h_a3b735e8520f1816ee73ee50daa3ef756}
+
+
+Definition at line 197 of file global.\-h.
+
+\hypertarget{global_8h_a5618d8682d7245e8770f85fbf8c2fda5}{\index{global.\-h@{global.\-h}!csize\-In\-Units@{csize\-In\-Units}}
+\index{csize\-In\-Units@{csize\-In\-Units}!global.h@{global.\-h}}
+\subsubsection[{csize\-In\-Units}]{\setlength{\rightskip}{0pt plus 5cm}double csize\-In\-Units}}\label{global_8h_a5618d8682d7245e8770f85fbf8c2fda5}
+
+
+Definition at line 198 of file global.\-h.
+
+\hypertarget{global_8h_a8a758046e5cb8b72210f0fc18cb3b7e1}{\index{global.\-h@{global.\-h}!density\-Critical\-Level1@{density\-Critical\-Level1}}
+\index{density\-Critical\-Level1@{density\-Critical\-Level1}!global.h@{global.\-h}}
+\subsubsection[{density\-Critical\-Level1}]{\setlength{\rightskip}{0pt plus 5cm}double density\-Critical\-Level1}}\label{global_8h_a8a758046e5cb8b72210f0fc18cb3b7e1}
+
+
+Definition at line 208 of file global.\-h.
+
+\hypertarget{global_8h_aeddd5065a64a6a39c79e1dab7c0f9edf}{\index{global.\-h@{global.\-h}!density\-Critical\-Level2@{density\-Critical\-Level2}}
+\index{density\-Critical\-Level2@{density\-Critical\-Level2}!global.h@{global.\-h}}
+\subsubsection[{density\-Critical\-Level2}]{\setlength{\rightskip}{0pt plus 5cm}double density\-Critical\-Level2}}\label{global_8h_aeddd5065a64a6a39c79e1dab7c0f9edf}
+
+
+Definition at line 209 of file global.\-h.
+
+\hypertarget{global_8h_aaf67d90c5e431e85ea2b7681537beab9}{\index{global.\-h@{global.\-h}!dummy@{dummy}}
+\index{dummy@{dummy}!global.h@{global.\-h}}
+\subsubsection[{dummy}]{\setlength{\rightskip}{0pt plus 5cm}float dummy}}\label{global_8h_aaf67d90c5e431e85ea2b7681537beab9}
+
+
+Definition at line 242 of file global.\-h.
+
+\hypertarget{global_8h_a4f31d79e5388508ff9b17230b6cad8d7}{\index{global.\-h@{global.\-h}!endian@{endian}}
+\index{endian@{endian}!global.h@{global.\-h}}
+\subsubsection[{endian}]{\setlength{\rightskip}{0pt plus 5cm}int endian}}\label{global_8h_a4f31d79e5388508ff9b17230b6cad8d7}
+
+
+Definition at line 157 of file global.\-h.
+
+\hypertarget{global_8h_a9fc2f91a577746250705ee9b00f51d70}{\index{global.\-h@{global.\-h}!f\-Out\-Type@{f\-Out\-Type}}
+\index{f\-Out\-Type@{f\-Out\-Type}!global.h@{global.\-h}}
+\subsubsection[{f\-Out\-Type}]{\setlength{\rightskip}{0pt plus 5cm}char f\-Out\-Type\mbox{[}3\mbox{]}}}\label{global_8h_a9fc2f91a577746250705ee9b00f51d70}
+
+
+Definition at line 179 of file global.\-h.
+
+\hypertarget{global_8h_a581debe7d16bce9d187b97855f4e99d4}{\index{global.\-h@{global.\-h}!g1@{g1}}
+\index{g1@{g1}!global.h@{global.\-h}}
+\subsubsection[{g1}]{\setlength{\rightskip}{0pt plus 5cm}float g1}}\label{global_8h_a581debe7d16bce9d187b97855f4e99d4}
+
+
+Definition at line 185 of file global.\-h.
+
+\hypertarget{global_8h_aee9971139118d56815564304450c4775}{\index{global.\-h@{global.\-h}!g2@{g2}}
+\index{g2@{g2}!global.h@{global.\-h}}
+\subsubsection[{g2}]{\setlength{\rightskip}{0pt plus 5cm}float g2}}\label{global_8h_aee9971139118d56815564304450c4775}
+
+
+Definition at line 187 of file global.\-h.
+
+\hypertarget{global_8h_aae6a1dda703fb50b7a8b0f4dc01d82c1}{\index{global.\-h@{global.\-h}!gf\-Dt@{gf\-Dt}}
+\index{gf\-Dt@{gf\-Dt}!global.h@{global.\-h}}
+\subsubsection[{gf\-Dt}]{\setlength{\rightskip}{0pt plus 5cm}float gf\-Dt}}\label{global_8h_aae6a1dda703fb50b7a8b0f4dc01d82c1}
+
+
+Definition at line 249 of file global.\-h.
+
+\hypertarget{global_8h_a3b15d89e3952fa259e37b9906836a9f9}{\index{global.\-h@{global.\-h}!gf\-H@{gf\-H}}
+\index{gf\-H@{gf\-H}!global.h@{global.\-h}}
+\subsubsection[{gf\-H}]{\setlength{\rightskip}{0pt plus 5cm}float gf\-H}}\label{global_8h_a3b15d89e3952fa259e37b9906836a9f9}
+
+
+Definition at line 250 of file global.\-h.
+
+\hypertarget{global_8h_ab2e483b60cc15741bd6281688f31edbc}{\index{global.\-h@{global.\-h}!gf\-Iter@{gf\-Iter}}
+\index{gf\-Iter@{gf\-Iter}!global.h@{global.\-h}}
+\subsubsection[{gf\-Iter}]{\setlength{\rightskip}{0pt plus 5cm}int gf\-Iter}}\label{global_8h_ab2e483b60cc15741bd6281688f31edbc}
+
+
+Definition at line 252 of file global.\-h.
+
+\hypertarget{global_8h_a4b76c15679db05e32f70c9804e186557}{\index{global.\-h@{global.\-h}!gf\-Iter\-Per\-Step@{gf\-Iter\-Per\-Step}}
+\index{gf\-Iter\-Per\-Step@{gf\-Iter\-Per\-Step}!global.h@{global.\-h}}
+\subsubsection[{gf\-Iter\-Per\-Step}]{\setlength{\rightskip}{0pt plus 5cm}int gf\-Iter\-Per\-Step}}\label{global_8h_a4b76c15679db05e32f70c9804e186557}
+
+
+Definition at line 253 of file global.\-h.
+
+\hypertarget{global_8h_ae31bf2d4b7c8e89069b3563e1a2e7034}{\index{global.\-h@{global.\-h}!global\-Max\-Vel@{global\-Max\-Vel}}
+\index{global\-Max\-Vel@{global\-Max\-Vel}!global.h@{global.\-h}}
+\subsubsection[{global\-Max\-Vel}]{\setlength{\rightskip}{0pt plus 5cm}double global\-Max\-Vel}}\label{global_8h_ae31bf2d4b7c8e89069b3563e1a2e7034}
+
+
+Definition at line 271 of file global.\-h.
+
+\hypertarget{global_8h_ab7f75171e7ed9d56069451dc0a7552c7}{\index{global.\-h@{global.\-h}!global\-Min\-Vel@{global\-Min\-Vel}}
+\index{global\-Min\-Vel@{global\-Min\-Vel}!global.h@{global.\-h}}
+\subsubsection[{global\-Min\-Vel}]{\setlength{\rightskip}{0pt plus 5cm}double global\-Min\-Vel}}\label{global_8h_ab7f75171e7ed9d56069451dc0a7552c7}
+
+
+Definition at line 270 of file global.\-h.
+
+\hypertarget{global_8h_a8ee9be1b5aa75abae556de3088cba6d9}{\index{global.\-h@{global.\-h}!h@{h}}
+\index{h@{h}!global.h@{global.\-h}}
+\subsubsection[{h}]{\setlength{\rightskip}{0pt plus 5cm}double h}}\label{global_8h_a8ee9be1b5aa75abae556de3088cba6d9}
+
+
+Definition at line 200 of file global.\-h.
+
+\hypertarget{global_8h_ac2d9b75feeec68992c955b63e813e7ce}{\index{global.\-h@{global.\-h}!h2@{h2}}
+\index{h2@{h2}!global.h@{global.\-h}}
+\subsubsection[{h2}]{\setlength{\rightskip}{0pt plus 5cm}double h2}}\label{global_8h_ac2d9b75feeec68992c955b63e813e7ce}
+
+
+Definition at line 201 of file global.\-h.
+
+\hypertarget{global_8h_adafe1d7389480b1a329b70b3c2baed11}{\index{global.\-h@{global.\-h}!h3@{h3}}
+\index{h3@{h3}!global.h@{global.\-h}}
+\subsubsection[{h3}]{\setlength{\rightskip}{0pt plus 5cm}double h3}}\label{global_8h_adafe1d7389480b1a329b70b3c2baed11}
+
+
+Definition at line 202 of file global.\-h.
+
+\hypertarget{global_8h_a40b544b5f22197434cf4bb2ccca5c8a6}{\index{global.\-h@{global.\-h}!h4@{h4}}
+\index{h4@{h4}!global.h@{global.\-h}}
+\subsubsection[{h4}]{\setlength{\rightskip}{0pt plus 5cm}double h4}}\label{global_8h_a40b544b5f22197434cf4bb2ccca5c8a6}
+
+
+Definition at line 203 of file global.\-h.
+
+\hypertarget{global_8h_a0681d5d05f66720bbcc34493ceff6fc3}{\index{global.\-h@{global.\-h}!leafs@{leafs}}
+\index{leafs@{leafs}!global.h@{global.\-h}}
+\subsubsection[{leafs}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf bht\-\_\-node}$\ast$$\ast$ leafs}}\label{global_8h_a0681d5d05f66720bbcc34493ceff6fc3}
+
+
+Definition at line 290 of file global.\-h.
+
+\hypertarget{global_8h_a055fa0d3ee8b74712109365cf2802bfa}{\index{global.\-h@{global.\-h}!local\-Cell\-Count@{local\-Cell\-Count}}
+\index{local\-Cell\-Count@{local\-Cell\-Count}!global.h@{global.\-h}}
+\subsubsection[{local\-Cell\-Count}]{\setlength{\rightskip}{0pt plus 5cm}int64\-\_\-t local\-Cell\-Count\mbox{[}{\bf number\-Of\-Counts}\mbox{]}}}\label{global_8h_a055fa0d3ee8b74712109365cf2802bfa}
+
+
+Definition at line 90 of file global.\-h.
+
+\hypertarget{global_8h_a265cb7ee626de517ecec0f0ac60833a7}{\index{global.\-h@{global.\-h}!local\-I\-D@{local\-I\-D}}
+\index{local\-I\-D@{local\-I\-D}!global.h@{global.\-h}}
+\subsubsection[{local\-I\-D}]{\setlength{\rightskip}{0pt plus 5cm}int64\-\_\-t local\-I\-D}}\label{global_8h_a265cb7ee626de517ecec0f0ac60833a7}
+
+
+Definition at line 240 of file global.\-h.
+
+\hypertarget{global_8h_a58bd7d9996cba89c834ae9ec41bbc075}{\index{global.\-h@{global.\-h}!logdir@{logdir}}
+\index{logdir@{logdir}!global.h@{global.\-h}}
+\subsubsection[{logdir}]{\setlength{\rightskip}{0pt plus 5cm}char logdir\mbox{[}128\mbox{]}}}\label{global_8h_a58bd7d9996cba89c834ae9ec41bbc075}
+
+
+Definition at line 167 of file global.\-h.
+
+\hypertarget{global_8h_ac51334f57ef8b81c0629c9421798c344}{\index{global.\-h@{global.\-h}!m@{m}}
+\index{m@{m}!global.h@{global.\-h}}
+\subsubsection[{m}]{\setlength{\rightskip}{0pt plus 5cm}float m}}\label{global_8h_ac51334f57ef8b81c0629c9421798c344}
+
+
+Definition at line 188 of file global.\-h.
+
+\hypertarget{global_8h_ac1a3e3adac8f1e6840fd332e3d3cfa21}{\index{global.\-h@{global.\-h}!max\-Cells@{max\-Cells}}
+\index{max\-Cells@{max\-Cells}!global.h@{global.\-h}}
+\subsubsection[{max\-Cells}]{\setlength{\rightskip}{0pt plus 5cm}int64\-\_\-t max\-Cells}}\label{global_8h_ac1a3e3adac8f1e6840fd332e3d3cfa21}
+
+
+Definition at line 87 of file global.\-h.
+
+\hypertarget{global_8h_a2de426dd266cfdaaf6fb52ba3dc2740a}{\index{global.\-h@{global.\-h}!max\-Cells\-Per\-Proc@{max\-Cells\-Per\-Proc}}
+\index{max\-Cells\-Per\-Proc@{max\-Cells\-Per\-Proc}!global.h@{global.\-h}}
+\subsubsection[{max\-Cells\-Per\-Proc}]{\setlength{\rightskip}{0pt plus 5cm}int max\-Cells\-Per\-Proc}}\label{global_8h_a2de426dd266cfdaaf6fb52ba3dc2740a}
+
+
+Definition at line 132 of file global.\-h.
+
+\hypertarget{global_8h_a3c105180f93a78cf3fb0903df278cf3f}{\index{global.\-h@{global.\-h}!max\-Speed@{max\-Speed}}
+\index{max\-Speed@{max\-Speed}!global.h@{global.\-h}}
+\subsubsection[{max\-Speed}]{\setlength{\rightskip}{0pt plus 5cm}float max\-Speed}}\label{global_8h_a3c105180f93a78cf3fb0903df278cf3f}
+
+
+Definition at line 176 of file global.\-h.
+
+\hypertarget{global_8h_aad1c418ff29a02376edeb263b553e53e}{\index{global.\-h@{global.\-h}!max\-Speed\-In\-Units@{max\-Speed\-In\-Units}}
+\index{max\-Speed\-In\-Units@{max\-Speed\-In\-Units}!global.h@{global.\-h}}
+\subsubsection[{max\-Speed\-In\-Units}]{\setlength{\rightskip}{0pt plus 5cm}float max\-Speed\-In\-Units}}\label{global_8h_aad1c418ff29a02376edeb263b553e53e}
+
+
+Definition at line 177 of file global.\-h.
+
+\hypertarget{global_8h_a75e019ac3d3333cc449595f0deedf7cc}{\index{global.\-h@{global.\-h}!mem\-Per\-Proc@{mem\-Per\-Proc}}
+\index{mem\-Per\-Proc@{mem\-Per\-Proc}!global.h@{global.\-h}}
+\subsubsection[{mem\-Per\-Proc}]{\setlength{\rightskip}{0pt plus 5cm}int mem\-Per\-Proc}}\label{global_8h_a75e019ac3d3333cc449595f0deedf7cc}
+
+
+Definition at line 141 of file global.\-h.
+
+\hypertarget{global_8h_a4dc71fc8b57bbbe431a4b183d56297b3}{\index{global.\-h@{global.\-h}!mitrand@{mitrand}}
+\index{mitrand@{mitrand}!global.h@{global.\-h}}
+\subsubsection[{mitrand}]{\setlength{\rightskip}{0pt plus 5cm}int mitrand}}\label{global_8h_a4dc71fc8b57bbbe431a4b183d56297b3}
+
+
+Definition at line 161 of file global.\-h.
+
+\hypertarget{global_8h_a34ac355617a6a906e1f3e7832aeb0073}{\index{global.\-h@{global.\-h}!M\-P\-I\-\_\-\-C\-A\-R\-T\-\_\-\-C\-O\-M\-M@{M\-P\-I\-\_\-\-C\-A\-R\-T\-\_\-\-C\-O\-M\-M}}
+\index{M\-P\-I\-\_\-\-C\-A\-R\-T\-\_\-\-C\-O\-M\-M@{M\-P\-I\-\_\-\-C\-A\-R\-T\-\_\-\-C\-O\-M\-M}!global.h@{global.\-h}}
+\subsubsection[{M\-P\-I\-\_\-\-C\-A\-R\-T\-\_\-\-C\-O\-M\-M}]{\setlength{\rightskip}{0pt plus 5cm}M\-P\-I\-\_\-\-Comm M\-P\-I\-\_\-\-C\-A\-R\-T\-\_\-\-C\-O\-M\-M}}\label{global_8h_a34ac355617a6a906e1f3e7832aeb0073}
+
+
+Definition at line 143 of file global.\-h.
+
+\hypertarget{global_8h_a8220294108e39b58632993a50a7dc4ca}{\index{global.\-h@{global.\-h}!M\-P\-Icoords@{M\-P\-Icoords}}
+\index{M\-P\-Icoords@{M\-P\-Icoords}!global.h@{global.\-h}}
+\subsubsection[{M\-P\-Icoords}]{\setlength{\rightskip}{0pt plus 5cm}int$\ast$$\ast$ M\-P\-Icoords}}\label{global_8h_a8220294108e39b58632993a50a7dc4ca}
+
+
+Definition at line 144 of file global.\-h.
+
+\hypertarget{global_8h_a633835398408aaee46fd56809af73e6c}{\index{global.\-h@{global.\-h}!M\-P\-Idim@{M\-P\-Idim}}
+\index{M\-P\-Idim@{M\-P\-Idim}!global.h@{global.\-h}}
+\subsubsection[{M\-P\-Idim}]{\setlength{\rightskip}{0pt plus 5cm}int M\-P\-Idim\mbox{[}3\mbox{]}}}\label{global_8h_a633835398408aaee46fd56809af73e6c}
+
+
+Definition at line 136 of file global.\-h.
+
+\hypertarget{global_8h_a40c386f441d91bf6176dd303428ecb95}{\index{global.\-h@{global.\-h}!M\-P\-I\-Node\-Rank@{M\-P\-I\-Node\-Rank}}
+\index{M\-P\-I\-Node\-Rank@{M\-P\-I\-Node\-Rank}!global.h@{global.\-h}}
+\subsubsection[{M\-P\-I\-Node\-Rank}]{\setlength{\rightskip}{0pt plus 5cm}int M\-P\-I\-Node\-Rank}}\label{global_8h_a40c386f441d91bf6176dd303428ecb95}
+
+
+Definition at line 139 of file global.\-h.
+
+\hypertarget{global_8h_a8b7e933faff3177f7f83eb60544f4fdf}{\index{global.\-h@{global.\-h}!M\-P\-I\-Node\-Size@{M\-P\-I\-Node\-Size}}
+\index{M\-P\-I\-Node\-Size@{M\-P\-I\-Node\-Size}!global.h@{global.\-h}}
+\subsubsection[{M\-P\-I\-Node\-Size}]{\setlength{\rightskip}{0pt plus 5cm}int M\-P\-I\-Node\-Size}}\label{global_8h_a8b7e933faff3177f7f83eb60544f4fdf}
+
+
+Definition at line 140 of file global.\-h.
+
+\hypertarget{global_8h_a710288ab7d2734acc4566a87a645325d}{\index{global.\-h@{global.\-h}!M\-P\-Irank@{M\-P\-Irank}}
+\index{M\-P\-Irank@{M\-P\-Irank}!global.h@{global.\-h}}
+\subsubsection[{M\-P\-Irank}]{\setlength{\rightskip}{0pt plus 5cm}int M\-P\-Irank}}\label{global_8h_a710288ab7d2734acc4566a87a645325d}
+
+
+Definition at line 134 of file global.\-h.
+
+\hypertarget{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{\index{global.\-h@{global.\-h}!M\-P\-Isize@{M\-P\-Isize}}
+\index{M\-P\-Isize@{M\-P\-Isize}!global.h@{global.\-h}}
+\subsubsection[{M\-P\-Isize}]{\setlength{\rightskip}{0pt plus 5cm}int M\-P\-Isize}}\label{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}
+
+
+Definition at line 135 of file global.\-h.
+
+\hypertarget{global_8h_a4c518eee956421a1bf84ad13ab360967}{\index{global.\-h@{global.\-h}!nhs@{nhs}}
+\index{nhs@{nhs}!global.h@{global.\-h}}
+\subsubsection[{nhs}]{\setlength{\rightskip}{0pt plus 5cm}int64\-\_\-t nhs}}\label{global_8h_a4c518eee956421a1bf84ad13ab360967}
+
+
+Definition at line 218 of file global.\-h.
+
+\hypertarget{global_8h_ad2b24a5d9628942aab73cf1db2bb4bed}{\index{global.\-h@{global.\-h}!ni@{ni}}
+\index{ni@{ni}!global.h@{global.\-h}}
+\subsubsection[{ni}]{\setlength{\rightskip}{0pt plus 5cm}int ni}}\label{global_8h_ad2b24a5d9628942aab73cf1db2bb4bed}
+
+
+Definition at line 297 of file global.\-h.
+
+\hypertarget{global_8h_a824ac1af8a4229ed37411081a1ffd928}{\index{global.\-h@{global.\-h}!nnodes@{nnodes}}
+\index{nnodes@{nnodes}!global.h@{global.\-h}}
+\subsubsection[{nnodes}]{\setlength{\rightskip}{0pt plus 5cm}int nnodes}}\label{global_8h_a824ac1af8a4229ed37411081a1ffd928}
+
+
+Definition at line 292 of file global.\-h.
+
+\hypertarget{global_8h_ab6b3020aaf0144a41169e6b995c2921c}{\index{global.\-h@{global.\-h}!nnodes\-\_\-init@{nnodes\-\_\-init}}
+\index{nnodes\-\_\-init@{nnodes\-\_\-init}!global.h@{global.\-h}}
+\subsubsection[{nnodes\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}int nnodes\-\_\-init}}\label{global_8h_ab6b3020aaf0144a41169e6b995c2921c}
+
+
+Definition at line 293 of file global.\-h.
+
+\hypertarget{global_8h_aa2414080b021dbb9b56eeaeedec0ffa2}{\index{global.\-h@{global.\-h}!nsteps@{nsteps}}
+\index{nsteps@{nsteps}!global.h@{global.\-h}}
+\subsubsection[{nsteps}]{\setlength{\rightskip}{0pt plus 5cm}int nsteps}}\label{global_8h_aa2414080b021dbb9b56eeaeedec0ffa2}
+
+
+Definition at line 169 of file global.\-h.
+
+\hypertarget{global_8h_a4c3c9a79704128f7fcc9ebf4bdd9e3fc}{\index{global.\-h@{global.\-h}!num\-Exp@{num\-Exp}}
+\index{num\-Exp@{num\-Exp}!global.h@{global.\-h}}
+\subsubsection[{num\-Exp}]{\setlength{\rightskip}{0pt plus 5cm}int num\-Exp}}\label{global_8h_a4c3c9a79704128f7fcc9ebf4bdd9e3fc}
+
+
+Definition at line 153 of file global.\-h.
+
+\hypertarget{global_8h_a6e7ffc829c0f608016617f9057885a9f}{\index{global.\-h@{global.\-h}!num\-Imp@{num\-Imp}}
+\index{num\-Imp@{num\-Imp}!global.h@{global.\-h}}
+\subsubsection[{num\-Imp}]{\setlength{\rightskip}{0pt plus 5cm}int num\-Imp}}\label{global_8h_a6e7ffc829c0f608016617f9057885a9f}
+
+
+Definition at line 154 of file global.\-h.
+
+\hypertarget{global_8h_a02d47a4f36ec0bcce348696534567e30}{\index{global.\-h@{global.\-h}!nx@{nx}}
+\index{nx@{nx}!global.h@{global.\-h}}
+\subsubsection[{nx}]{\setlength{\rightskip}{0pt plus 5cm}int nx}}\label{global_8h_a02d47a4f36ec0bcce348696534567e30}
+
+
+Definition at line 162 of file global.\-h.
+
+\hypertarget{global_8h_a9f4e20a91b26459133b83992e9d8d381}{\index{global.\-h@{global.\-h}!ny@{ny}}
+\index{ny@{ny}!global.h@{global.\-h}}
+\subsubsection[{ny}]{\setlength{\rightskip}{0pt plus 5cm}int ny}}\label{global_8h_a9f4e20a91b26459133b83992e9d8d381}
+
+
+Definition at line 163 of file global.\-h.
+
+\hypertarget{global_8h_ac2eda98bb6d7e89cc3239973db2800cf}{\index{global.\-h@{global.\-h}!nz@{nz}}
+\index{nz@{nz}!global.h@{global.\-h}}
+\subsubsection[{nz}]{\setlength{\rightskip}{0pt plus 5cm}int nz}}\label{global_8h_ac2eda98bb6d7e89cc3239973db2800cf}
+
+
+Definition at line 164 of file global.\-h.
+
+\hypertarget{global_8h_ae5f15194d70ca4e470e6f3cb85510c65}{\index{global.\-h@{global.\-h}!O\-M\-Pthreads@{O\-M\-Pthreads}}
+\index{O\-M\-Pthreads@{O\-M\-Pthreads}!global.h@{global.\-h}}
+\subsubsection[{O\-M\-Pthreads}]{\setlength{\rightskip}{0pt plus 5cm}int O\-M\-Pthreads}}\label{global_8h_ae5f15194d70ca4e470e6f3cb85510c65}
+
+
+Definition at line 137 of file global.\-h.
+
+\hypertarget{global_8h_a5e19dd54f4bacae055016ee40eab2179}{\index{global.\-h@{global.\-h}!outdir@{outdir}}
+\index{outdir@{outdir}!global.h@{global.\-h}}
+\subsubsection[{outdir}]{\setlength{\rightskip}{0pt plus 5cm}char outdir\mbox{[}128\mbox{]}}}\label{global_8h_a5e19dd54f4bacae055016ee40eab2179}
+
+
+Definition at line 166 of file global.\-h.
+
+\hypertarget{global_8h_a6d848b22ca9b60b1e8ec33fdcfbd91b8}{\index{global.\-h@{global.\-h}!povout@{povout}}
+\index{povout@{povout}!global.h@{global.\-h}}
+\subsubsection[{povout}]{\setlength{\rightskip}{0pt plus 5cm}int povout}}\label{global_8h_a6d848b22ca9b60b1e8ec33fdcfbd91b8}
+
+
+Definition at line 181 of file global.\-h.
+
+\hypertarget{global_8h_a0d2a1379adf81ce5f962f3c9263e81e9}{\index{global.\-h@{global.\-h}!rd@{rd}}
+\index{rd@{rd}!global.h@{global.\-h}}
+\subsubsection[{rd}]{\setlength{\rightskip}{0pt plus 5cm}float rd}}\label{global_8h_a0d2a1379adf81ce5f962f3c9263e81e9}
+
+
+Definition at line 190 of file global.\-h.
+
+\hypertarget{global_8h_af851c922de87975e63161d38332d6a56}{\index{global.\-h@{global.\-h}!recv\-Data@{recv\-Data}}
+\index{recv\-Data@{recv\-Data}!global.h@{global.\-h}}
+\subsubsection[{recv\-Data}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf part\-Data}$\ast$ recv\-Data}}\label{global_8h_af851c922de87975e63161d38332d6a56}
+
+
+Definition at line 149 of file global.\-h.
+
+\hypertarget{global_8h_ac5932521dec6ac9c4208cb0312e002de}{\index{global.\-h@{global.\-h}!recv\-Dens\-Pot\-Data@{recv\-Dens\-Pot\-Data}}
+\index{recv\-Dens\-Pot\-Data@{recv\-Dens\-Pot\-Data}!global.h@{global.\-h}}
+\subsubsection[{recv\-Dens\-Pot\-Data}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf dens\-Pot\-Data}$\ast$ recv\-Dens\-Pot\-Data}}\label{global_8h_ac5932521dec6ac9c4208cb0312e002de}
+
+
+Definition at line 151 of file global.\-h.
+
+\hypertarget{global_8h_ae94cd2e37eb46a6942cc45e1b29f87fc}{\index{global.\-h@{global.\-h}!rng@{rng}}
+\index{rng@{rng}!global.h@{global.\-h}}
+\subsubsection[{rng}]{\setlength{\rightskip}{0pt plus 5cm}char rng\mbox{[}3\mbox{]}}}\label{global_8h_ae94cd2e37eb46a6942cc45e1b29f87fc}
+
+
+Definition at line 168 of file global.\-h.
+
+\hypertarget{global_8h_ab1000f2f5f3b4f1a2d29b621c53f3176}{\index{global.\-h@{global.\-h}!rst@{rst}}
+\index{rst@{rst}!global.h@{global.\-h}}
+\subsubsection[{rst}]{\setlength{\rightskip}{0pt plus 5cm}int rst}}\label{global_8h_ab1000f2f5f3b4f1a2d29b621c53f3176}
+
+
+Definition at line 211 of file global.\-h.
+
+\hypertarget{global_8h_a4b4af00b9e103893ebeb3bd3d58aadd6}{\index{global.\-h@{global.\-h}!rst\-File\-Name@{rst\-File\-Name}}
+\index{rst\-File\-Name@{rst\-File\-Name}!global.h@{global.\-h}}
+\subsubsection[{rst\-File\-Name}]{\setlength{\rightskip}{0pt plus 5cm}char rst\-File\-Name\mbox{[}128\mbox{]}}}\label{global_8h_a4b4af00b9e103893ebeb3bd3d58aadd6}
+
+
+Definition at line 165 of file global.\-h.
+
+\hypertarget{global_8h_a4207e6152bc8f1176e0be5efccbe7491}{\index{global.\-h@{global.\-h}!rst\-Out\-Step@{rst\-Out\-Step}}
+\index{rst\-Out\-Step@{rst\-Out\-Step}!global.h@{global.\-h}}
+\subsubsection[{rst\-Out\-Step}]{\setlength{\rightskip}{0pt plus 5cm}int rst\-Out\-Step}}\label{global_8h_a4207e6152bc8f1176e0be5efccbe7491}
+
+
+Definition at line 215 of file global.\-h.
+
+\hypertarget{global_8h_ad31dab599f001076b3fe40bae337932f}{\index{global.\-h@{global.\-h}!rst\-Reset@{rst\-Reset}}
+\index{rst\-Reset@{rst\-Reset}!global.h@{global.\-h}}
+\subsubsection[{rst\-Reset}]{\setlength{\rightskip}{0pt plus 5cm}int rst\-Reset}}\label{global_8h_ad31dab599f001076b3fe40bae337932f}
+
+
+Definition at line 212 of file global.\-h.
+
+\hypertarget{global_8h_a087a95bb36c9b36c708a73ce656fd1f1}{\index{global.\-h@{global.\-h}!rsum@{rsum}}
+\index{rsum@{rsum}!global.h@{global.\-h}}
+\subsubsection[{rsum}]{\setlength{\rightskip}{0pt plus 5cm}int64\-\_\-t rsum}}\label{global_8h_a087a95bb36c9b36c708a73ce656fd1f1}
+
+
+Definition at line 206 of file global.\-h.
+
+\hypertarget{global_8h_a874f74a4dc1c9a0cd9c6e0d79c298f55}{\index{global.\-h@{global.\-h}!s@{s}}
+\index{s@{s}!global.h@{global.\-h}}
+\subsubsection[{s}]{\setlength{\rightskip}{0pt plus 5cm}float s}}\label{global_8h_a874f74a4dc1c9a0cd9c6e0d79c298f55}
+
+
+Definition at line 186 of file global.\-h.
+
+\hypertarget{global_8h_a2f8118c1bfdf986827e156210c33cbab}{\index{global.\-h@{global.\-h}!sdim@{sdim}}
+\index{sdim@{sdim}!global.h@{global.\-h}}
+\subsubsection[{sdim}]{\setlength{\rightskip}{0pt plus 5cm}int sdim}}\label{global_8h_a2f8118c1bfdf986827e156210c33cbab}
+
+
+Definition at line 160 of file global.\-h.
+
+\hypertarget{global_8h_aac71dcf068b84f2973571ab102920190}{\index{global.\-h@{global.\-h}!seconds\-Per\-Step@{seconds\-Per\-Step}}
+\index{seconds\-Per\-Step@{seconds\-Per\-Step}!global.h@{global.\-h}}
+\subsubsection[{seconds\-Per\-Step}]{\setlength{\rightskip}{0pt plus 5cm}float seconds\-Per\-Step}}\label{global_8h_aac71dcf068b84f2973571ab102920190}
+
+
+Definition at line 247 of file global.\-h.
+
+\hypertarget{global_8h_ac928fbed09198ca6c116fb58a115b594}{\index{global.\-h@{global.\-h}!send\-Data@{send\-Data}}
+\index{send\-Data@{send\-Data}!global.h@{global.\-h}}
+\subsubsection[{send\-Data}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf part\-Data}$\ast$ send\-Data}}\label{global_8h_ac928fbed09198ca6c116fb58a115b594}
+
+
+Definition at line 148 of file global.\-h.
+
+\hypertarget{global_8h_a5b0d78dc19924c0af131438356bfcdbd}{\index{global.\-h@{global.\-h}!send\-Dens\-Pot\-Data@{send\-Dens\-Pot\-Data}}
+\index{send\-Dens\-Pot\-Data@{send\-Dens\-Pot\-Data}!global.h@{global.\-h}}
+\subsubsection[{send\-Dens\-Pot\-Data}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf dens\-Pot\-Data}$\ast$ send\-Dens\-Pot\-Data}}\label{global_8h_a5b0d78dc19924c0af131438356bfcdbd}
+
+
+Definition at line 150 of file global.\-h.
+
+\hypertarget{global_8h_a42a935b4eec9242e09d47fc1c2b6dba3}{\index{global.\-h@{global.\-h}!sim\-Start@{sim\-Start}}
+\index{sim\-Start@{sim\-Start}!global.h@{global.\-h}}
+\subsubsection[{sim\-Start}]{\setlength{\rightskip}{0pt plus 5cm}int sim\-Start}}\label{global_8h_a42a935b4eec9242e09d47fc1c2b6dba3}
+
+
+Definition at line 172 of file global.\-h.
+
+\hypertarget{global_8h_ad188f0f25b4773be09b6eb6babe59f59}{\index{global.\-h@{global.\-h}!sim\-Time@{sim\-Time}}
+\index{sim\-Time@{sim\-Time}!global.h@{global.\-h}}
+\subsubsection[{sim\-Time}]{\setlength{\rightskip}{0pt plus 5cm}float sim\-Time}}\label{global_8h_ad188f0f25b4773be09b6eb6babe59f59}
+
+
+Definition at line 175 of file global.\-h.
+
+\hypertarget{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{\index{global.\-h@{global.\-h}!statistics@{statistics}}
+\index{statistics@{statistics}!global.h@{global.\-h}}
+\subsubsection[{statistics}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf statistics\-Data} statistics}}\label{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}
+
+
+Definition at line 268 of file global.\-h.
+
+\hypertarget{global_8h_aab9700fe12cc303ff43e1a35a210128e}{\index{global.\-h@{global.\-h}!stat\-Out\-Step@{stat\-Out\-Step}}
+\index{stat\-Out\-Step@{stat\-Out\-Step}!global.h@{global.\-h}}
+\subsubsection[{stat\-Out\-Step}]{\setlength{\rightskip}{0pt plus 5cm}int stat\-Out\-Step}}\label{global_8h_aab9700fe12cc303ff43e1a35a210128e}
+
+
+Definition at line 214 of file global.\-h.
+
+\hypertarget{global_8h_abc16e65f240ed0c8f3e876e8732c0a33}{\index{global.\-h@{global.\-h}!step@{step}}
+\index{step@{step}!global.h@{global.\-h}}
+\subsubsection[{step}]{\setlength{\rightskip}{0pt plus 5cm}int step}}\label{global_8h_abc16e65f240ed0c8f3e876e8732c0a33}
+
+
+Definition at line 173 of file global.\-h.
+
+\hypertarget{global_8h_a5340130b6fb2647cef6b71354e27b0d4}{\index{global.\-h@{global.\-h}!stream@{stream}}
+\index{stream@{stream}!global.h@{global.\-h}}
+\subsubsection[{stream}]{\setlength{\rightskip}{0pt plus 5cm}int$\ast$ stream}}\label{global_8h_a5340130b6fb2647cef6b71354e27b0d4}
+
+
+Definition at line 275 of file global.\-h.
+
+\hypertarget{global_8h_ac84ddf735039774c39779789f7afad53}{\index{global.\-h@{global.\-h}!tgs@{tgs}}
+\index{tgs@{tgs}!global.h@{global.\-h}}
+\subsubsection[{tgs}]{\setlength{\rightskip}{0pt plus 5cm}int tgs}}\label{global_8h_ac84ddf735039774c39779789f7afad53}
+
+
+Definition at line 220 of file global.\-h.
+
+\hypertarget{global_8h_ac3c96b975a3376c555ad22a7d2688b2f}{\index{global.\-h@{global.\-h}!tlnc@{tlnc}}
+\index{tlnc@{tlnc}!global.h@{global.\-h}}
+\subsubsection[{tlnc}]{\setlength{\rightskip}{0pt plus 5cm}int64\-\_\-t$\ast$ tlnc}}\label{global_8h_ac3c96b975a3376c555ad22a7d2688b2f}
+
+
+Definition at line 111 of file global.\-h.
+
+\hypertarget{global_8h_a96f00f69e2102e1720c989a00c385d81}{\index{global.\-h@{global.\-h}!tnc@{tnc}}
+\index{tnc@{tnc}!global.h@{global.\-h}}
+\subsubsection[{tnc}]{\setlength{\rightskip}{0pt plus 5cm}int tnc}}\label{global_8h_a96f00f69e2102e1720c989a00c385d81}
+
+
+Definition at line 295 of file global.\-h.
+
+\hypertarget{global_8h_af1a14df9e6c8efece5183d9625039587}{\index{global.\-h@{global.\-h}!total\-Cell\-Count@{total\-Cell\-Count}}
+\index{total\-Cell\-Count@{total\-Cell\-Count}!global.h@{global.\-h}}
+\subsubsection[{total\-Cell\-Count}]{\setlength{\rightskip}{0pt plus 5cm}int64\-\_\-t total\-Cell\-Count\mbox{[}{\bf number\-Of\-Counts}\mbox{]}}}\label{global_8h_af1a14df9e6c8efece5183d9625039587}
+
+
+Definition at line 91 of file global.\-h.
+
+\hypertarget{global_8h_a7c0d548b636dc26d8fa1808037ef3fb5}{\index{global.\-h@{global.\-h}!tree@{tree}}
+\index{tree@{tree}!global.h@{global.\-h}}
+\subsubsection[{tree}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf bht\-\_\-node}$\ast$ tree}}\label{global_8h_a7c0d548b636dc26d8fa1808037ef3fb5}
+
+
+Definition at line 288 of file global.\-h.
+
+\hypertarget{global_8h_aaab1d6ce8367c01f2074e0c7b6c273b5}{\index{global.\-h@{global.\-h}!tstep@{tstep}}
+\index{tstep@{tstep}!global.h@{global.\-h}}
+\subsubsection[{tstep}]{\setlength{\rightskip}{0pt plus 5cm}float tstep}}\label{global_8h_aaab1d6ce8367c01f2074e0c7b6c273b5}
+
+
+Definition at line 174 of file global.\-h.
+
+\hypertarget{global_8h_a48d9522e58fa05906c6dba23e5745a72}{\index{global.\-h@{global.\-h}!v@{v}}
+\index{v@{v}!global.h@{global.\-h}}
+\subsubsection[{v}]{\setlength{\rightskip}{0pt plus 5cm}float v}}\label{global_8h_a48d9522e58fa05906c6dba23e5745a72}
+
+
+Definition at line 189 of file global.\-h.
+
+\hypertarget{global_8h_a6015afb23ea197551ff3d503aa3426a4}{\index{global.\-h@{global.\-h}!velocity@{velocity}}
+\index{velocity@{velocity}!global.h@{global.\-h}}
+\subsubsection[{velocity}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf double\-Vector3d}$\ast$ velocity}}\label{global_8h_a6015afb23ea197551ff3d503aa3426a4}
+
+
+Definition at line 84 of file global.\-h.
+
+\hypertarget{global_8h_a5d38ae5aec75c8ebfafe34914471b32a}{\index{global.\-h@{global.\-h}!vnfout@{vnfout}}
+\index{vnfout@{vnfout}!global.h@{global.\-h}}
+\subsubsection[{vnfout}]{\setlength{\rightskip}{0pt plus 5cm}int vnfout}}\label{global_8h_a5d38ae5aec75c8ebfafe34914471b32a}
+
+
+Definition at line 182 of file global.\-h.
+
+\hypertarget{global_8h_a4a2046f20ca195391d5fcb98a02aedf6}{\index{global.\-h@{global.\-h}!vtkout@{vtkout}}
+\index{vtkout@{vtkout}!global.h@{global.\-h}}
+\subsubsection[{vtkout}]{\setlength{\rightskip}{0pt plus 5cm}int vtkout}}\label{global_8h_a4a2046f20ca195391d5fcb98a02aedf6}
+
+
+Definition at line 180 of file global.\-h.
+
+\hypertarget{global_8h_a6d101f941d5825146f98cc07dac9cb28}{\index{global.\-h@{global.\-h}!vtk\-Out\-Step@{vtk\-Out\-Step}}
+\index{vtk\-Out\-Step@{vtk\-Out\-Step}!global.h@{global.\-h}}
+\subsubsection[{vtk\-Out\-Step}]{\setlength{\rightskip}{0pt plus 5cm}int vtk\-Out\-Step}}\label{global_8h_a6d101f941d5825146f98cc07dac9cb28}
+
+
+Definition at line 216 of file global.\-h.
+
+\hypertarget{global_8h_afc06c50b11f3b60d3738e669b612eb9c}{\index{global.\-h@{global.\-h}!ztn@{ztn}}
+\index{ztn@{ztn}!global.h@{global.\-h}}
+\subsubsection[{ztn}]{\setlength{\rightskip}{0pt plus 5cm}struct Zoltan\-\_\-\-Struct$\ast$ ztn}}\label{global_8h_afc06c50b11f3b60d3738e669b612eb9c}
+
+
+Definition at line 146 of file global.\-h.
+

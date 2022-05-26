@@ -1,0 +1,300 @@
+\hypertarget{init_8c}{\section{init.\-c File Reference}
+\label{init_8c}\index{init.\-c@{init.\-c}}
+}
+
+
+contains initialization functions  
+
+
+{\ttfamily \#include $<$stdio.\-h$>$}\\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$string.\-h$>$}\\*
+{\ttfamily \#include $<$math.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}global.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}inline.\-h\char`\"{}}\\*
+Include dependency graph for init.\-c\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{init_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{init_8c_ab88e91544727e2433d8adc8612a5658a}{default\-Values} ()
+\item 
+void \hyperlink{init_8c_ac1c7f1d01717cf0983a9dd4498b321ec}{check\-Parameters} ()
+\item 
+void \hyperlink{init_8c_a6a28d9c038b4ef73a4e2177db89d40aa}{simulation\-Init} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+contains initialization functions 
+
+Definition in file \hyperlink{init_8c_source}{init.\-c}.
+
+
+
+\subsection{Function Documentation}
+\hypertarget{init_8c_ac1c7f1d01717cf0983a9dd4498b321ec}{\index{init.\-c@{init.\-c}!check\-Parameters@{check\-Parameters}}
+\index{check\-Parameters@{check\-Parameters}!init.c@{init.\-c}}
+\subsubsection[{check\-Parameters}]{\setlength{\rightskip}{0pt plus 5cm}void check\-Parameters (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{init_8c_ac1c7f1d01717cf0983a9dd4498b321ec}
+This functions checks the consistence of key simulation parameters. 
+
+Definition at line 61 of file init.\-c.
+
+
+
+References c\-Out\-Type, f\-Out\-Type, and stop\-Run().
+
+
+\begin{DoxyCode}
+62 \{
+63   \textcolor{comment}{/* under construction */}
+64   \textcolor{keywordflow}{if} (strcmp(\hyperlink{global_8h_a84a388abba64eb7d2311751653350fc1}{cOutType}, \textcolor{stringliteral}{"VTK"}) && strcmp(\hyperlink{global_8h_a84a388abba64eb7d2311751653350fc1}{cOutType}, \textcolor{stringliteral}{"POV"})
+65       && strcmp(\hyperlink{global_8h_a84a388abba64eb7d2311751653350fc1}{cOutType}, \textcolor{stringliteral}{"NON"}))
+66     \hyperlink{utils_8c_a07dd99a04f2723be164531a7a862fb67}{stopRun}(116, \textcolor{stringliteral}{"COUTTYPE"}, \_\_FILE\_\_, \_\_LINE\_\_);
+67   \textcolor{keywordflow}{if} (strcmp(\hyperlink{global_8h_a9fc2f91a577746250705ee9b00f51d70}{fOutType}, \textcolor{stringliteral}{"VNF"}) && strcmp(\hyperlink{global_8h_a9fc2f91a577746250705ee9b00f51d70}{fOutType}, \textcolor{stringliteral}{"NON"}))
+68     \hyperlink{utils_8c_a07dd99a04f2723be164531a7a862fb67}{stopRun}(116, \textcolor{stringliteral}{"FOUTTYPE"}, \_\_FILE\_\_, \_\_LINE\_\_);
+69 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=264pt]{init_8c_ac1c7f1d01717cf0983a9dd4498b321ec_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{init_8c_ac1c7f1d01717cf0983a9dd4498b321ec_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{init_8c_ab88e91544727e2433d8adc8612a5658a}{\index{init.\-c@{init.\-c}!default\-Values@{default\-Values}}
+\index{default\-Values@{default\-Values}!init.c@{init.\-c}}
+\subsubsection[{default\-Values}]{\setlength{\rightskip}{0pt plus 5cm}void default\-Values (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{init_8c_ab88e91544727e2433d8adc8612a5658a}
+This function sets default values for the simulation. 
+
+Definition at line 38 of file init.\-c.
+
+
+
+References cell\-Volume, csize\-In\-Units, nhs, povout, rst, rst\-Out\-Step, rst\-Reset, stat\-Out\-Step, tgs, vnfout, vtkout, and vtk\-Out\-Step.
+
+
+\begin{DoxyCode}
+39 \{
+40   \hyperlink{global_8h_ab1000f2f5f3b4f1a2d29b621c53f3176}{rst} = 0;
+41   \hyperlink{global_8h_ad31dab599f001076b3fe40bae337932f}{rstReset} = 0;
+42   \hyperlink{global_8h_a4c518eee956421a1bf84ad13ab360967}{nhs} = -1;
+43   \hyperlink{global_8h_ac84ddf735039774c39779789f7afad53}{tgs} = 0;
+44 
+45   \hyperlink{global_8h_aab9700fe12cc303ff43e1a35a210128e}{statOutStep} = 1;
+46   \hyperlink{global_8h_a4207e6152bc8f1176e0be5efccbe7491}{rstOutStep} = 1;
+47   \hyperlink{global_8h_a6d101f941d5825146f98cc07dac9cb28}{vtkOutStep} = 1;
+48 
+49   \hyperlink{global_8h_a6d848b22ca9b60b1e8ec33fdcfbd91b8}{povout} = 0;
+50   \hyperlink{global_8h_a4a2046f20ca195391d5fcb98a02aedf6}{vtkout} = 0;
+51   \hyperlink{global_8h_a5d38ae5aec75c8ebfafe34914471b32a}{vnfout} = 0;
+52 
+53   \hyperlink{global_8h_a5618d8682d7245e8770f85fbf8c2fda5}{csizeInUnits} = 10.0;      \textcolor{comment}{/* eukaryotic cell size is usually between 10-30 micrometers */}
+54   \hyperlink{global_8h_a51a522fc8b714a615f532ee74a83f92b}{cellVolume} = (4.0 / 3.0) * M\_PI * pow(\hyperlink{global_8h_a5618d8682d7245e8770f85fbf8c2fda5}{csizeInUnits} * 0.0001, 3.0);
+55 
+56 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=340pt]{init_8c_ab88e91544727e2433d8adc8612a5658a_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{init_8c_a6a28d9c038b4ef73a4e2177db89d40aa}{\index{init.\-c@{init.\-c}!simulation\-Init@{simulation\-Init}}
+\index{simulation\-Init@{simulation\-Init}!init.c@{init.\-c}}
+\subsubsection[{simulation\-Init}]{\setlength{\rightskip}{0pt plus 5cm}void simulation\-Init (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$$\ast$}]{argv}
+\end{DoxyParamCaption}
+)}}\label{init_8c_a6a28d9c038b4ef73a4e2177db89d40aa}
+This function intializes the simulation by setting all most important simulation parameters. 
+
+Definition at line 74 of file init.\-c.
+
+
+
+References allocate\-Grid(), cells\-Allocate(), cells\-Cycle\-Init(), cells\-Random\-Init(), check\-Endiannes(), check\-Parameters(), compute\-Grid\-Size(), c\-Out\-Type, csize, decomposition\-Init(), default\-Values(), define\-Colormaps(), density\-Critical\-Level1, density\-Critical\-Level2, fields\-Init(), f\-Out\-Type, get\-Local\-Rank\-And\-Size(), get\-Memory\-Per\-Process(), gf\-Dt, gf\-Iter\-Per\-Step, h2, h3, init\-Params(), lnc, max\-Speed, max\-Speed\-In\-Units, mem\-Per\-Proc, M\-P\-I\-\_\-\-C\-A\-R\-T\-\_\-\-C\-O\-M\-M, M\-P\-Icoords, M\-P\-Idim, M\-P\-I\-Node\-Rank, M\-P\-I\-Node\-Size, M\-P\-Irank, M\-P\-Isize, nc, povout, P\-O\-W\-E\-R\-\_\-\-O\-F\-\_\-\-T\-W\-O, print\-Basic\-Info(), print\-Exec\-Info(), print\-Help(), random\-Stream\-Init(), read\-Params(), rst, sdim, seconds\-Per\-Step, sim\-Start, stop\-Run(), tlnc, vnfout, and vtkout.
+
+
+\begin{DoxyCode}
+75 \{
+76   \textcolor{keywordtype}{int} i;
+77   \textcolor{keywordtype}{int} periods[3];
+78   \textcolor{keywordtype}{int} reorder;
+79 
+80   \textcolor{comment}{/* print basic informations */}
+81   \hyperlink{io_8c_a7e1845faba29232ba711a389a1545dbe}{printBasicInfo}();
+82 
+83   \textcolor{comment}{/* check necessary arguments */}
+84   \textcolor{comment}{//if( (argc<3 || (strcmp(argv[1],"-p"))) || (argc<2 || (strcmp(argv[1],"-h"))) )}
+85   \textcolor{comment}{//  stopRun(102,NULL,\_\_FILE\_\_,\_\_LINE\_\_);}
+86 
+87   \textcolor{keywordflow}{if} (argc < 2)
+88     \hyperlink{utils_8c_a07dd99a04f2723be164531a7a862fb67}{stopRun}(102, NULL, \_\_FILE\_\_, \_\_LINE\_\_);
+89   \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ((argc < 3 && strcmp(argv[1], \textcolor{stringliteral}{"-p"}) == 0)
+90        || (strcmp(argv[1], \textcolor{stringliteral}{"-p"}) && strcmp(argv[1], \textcolor{stringliteral}{"-h"})))
+91     \hyperlink{utils_8c_a07dd99a04f2723be164531a7a862fb67}{stopRun}(102, NULL, \_\_FILE\_\_, \_\_LINE\_\_);
+92 
+93   \hyperlink{io_8c_a3ae28fd9cfa8807c68d3233f3e704935}{initParams}();
+94 
+95   \textcolor{keywordflow}{if} (strcmp(argv[1], \textcolor{stringliteral}{"-h"}) == 0)
+96     \hyperlink{io_8c_a0d20b69b0ad703df78459e1033d5c1d4}{printHelp}();
+97 
+98   \textcolor{comment}{/* check number of processes */}
+99   \textcolor{keywordflow}{if} (!\hyperlink{global_8h_a8eb18ab2bf9f20da791e23073c154f45}{POWER\_OF\_TWO}(\hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}))
+100     \hyperlink{utils_8c_a07dd99a04f2723be164531a7a862fb67}{stopRun}(101, NULL, \_\_FILE\_\_, \_\_LINE\_\_);
+101 
+102   \textcolor{comment}{/* checking system and runtime configuration */}
+103   \hyperlink{utils_8c_a2a1ed8bec6b019999fd7a7adff8899a2}{checkEndiannes}();
+104   \hyperlink{utils_8c_a6ffc4e1c282c2f9e13f230a2d1ffe783}{getLocalRankAndSize}(\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}, \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}, &
+      \hyperlink{global_8h_a40c386f441d91bf6176dd303428ecb95}{MPINodeRank}, &\hyperlink{global_8h_a8b7e933faff3177f7f83eb60544f4fdf}{MPINodeSize});
+105   \hyperlink{global_8h_a75e019ac3d3333cc449595f0deedf7cc}{memPerProc} = \hyperlink{utils_8c_ae16592f39d6cd608a9c9681400be731b}{getMemoryPerProcess}(\hyperlink{global_8h_a8b7e933faff3177f7f83eb60544f4fdf}{MPINodeSize});
+106 
+107   \textcolor{comment}{/* print execution informations */}
+108   \hyperlink{io_8c_a818c8b18aa889031b04936c55db60ae2}{printExecInfo}();
+109 
+110   \textcolor{comment}{/* set default values */}
+111   \hyperlink{init_8c_ab88e91544727e2433d8adc8612a5658a}{defaultValues}();
+112 
+113   \textcolor{comment}{/* initialize random number generator */}
+114   \hyperlink{random_8c_ac1c861c14b5385cd5498b308a290a22a}{randomStreamInit}();
+115 
+116   \textcolor{comment}{/* read parameters file and restart file (if present) */}
+117   \hyperlink{io_8c_a96d45a43485aa727199f59f9a922d7d0}{readParams}(argc, argv);
+118 
+119   \textcolor{comment}{/* generate random cells if not a restart simulation */}
+120   \textcolor{keywordflow}{if} (!\hyperlink{global_8h_ab1000f2f5f3b4f1a2d29b621c53f3176}{rst}) \{
+121     \hyperlink{global_8h_a42a935b4eec9242e09d47fc1c2b6dba3}{simStart} = 0;
+122     \textcolor{comment}{/* calculating number of cells per process */}
+123     \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc} = \hyperlink{global_8h_a0845b4b004824f1fe3cd69db1672fa15}{nc} / \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize};
+124     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank} < \hyperlink{global_8h_a0845b4b004824f1fe3cd69db1672fa15}{nc} % \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize})
+125       \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}++;
+126     \textcolor{comment}{/* allocating tables */}
+127     \hyperlink{cells_8c_afdf0714d4b325131b21a0cbe42c44ece}{cellsAllocate}();
+128     \textcolor{comment}{/* total number of cells - initialization */}
+129     \textcolor{keywordflow}{for} (i = 0; i < \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}; i++)
+130       \hyperlink{global_8h_ac3c96b975a3376c555ad22a7d2688b2f}{tlnc}[i] = \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc};     \textcolor{comment}{//ZLE!!!!!}
+131     \textcolor{comment}{/* cell cycle init */}
+132     \hyperlink{cells_8c_aa2527c8374034b85c4e95b665786b0ca}{cellsCycleInit}();
+133     \textcolor{comment}{/* random cell placement */}
+134     \hyperlink{cells_8c_a68e70197591e819d22315879c8141bdd}{cellsRandomInit}();
+135     \textcolor{comment}{/* decomposition - initialization */}
+136     \hyperlink{domdec_8c_ae7429f968958e491ffc5aa144f564e0a}{decompositionInit}(argc, argv, MPI\_COMM\_WORLD);
+137   \}
+138 
+139   \textcolor{comment}{/* maximum distance cell can travel in 1 sec */}
+140   \hyperlink{global_8h_aad1c418ff29a02376edeb263b553e53e}{maxSpeedInUnits} = (\hyperlink{global_8h_a3c105180f93a78cf3fb0903df278cf3f}{maxSpeed} * \hyperlink{global_8h_a3b735e8520f1816ee73ee50daa3ef756}{csize}) / (24.0 * 60.0 * 60.0);
+141   \textcolor{comment}{/* at least one global fields iteration per step */}
+142   \hyperlink{global_8h_aae6a1dda703fb50b7a8b0f4dc01d82c1}{gfDt} = (\hyperlink{global_8h_aae6a1dda703fb50b7a8b0f4dc01d82c1}{gfDt} > \hyperlink{global_8h_aac71dcf068b84f2973571ab102920190}{secondsPerStep} ? \hyperlink{global_8h_aac71dcf068b84f2973571ab102920190}{secondsPerStep} : 
+      \hyperlink{global_8h_aae6a1dda703fb50b7a8b0f4dc01d82c1}{gfDt});
+143   \textcolor{comment}{/* global fields iterations per step */}
+144   \hyperlink{global_8h_a4b76c15679db05e32f70c9804e186557}{gfIterPerStep} = (int) (\hyperlink{global_8h_aac71dcf068b84f2973571ab102920190}{secondsPerStep} / \hyperlink{global_8h_aae6a1dda703fb50b7a8b0f4dc01d82c1}{gfDt});
+145 
+146   \textcolor{comment}{/* density critical levels (very important parameters) */}
+147   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 3) \{
+148     \hyperlink{global_8h_a8a758046e5cb8b72210f0fc18cb3b7e1}{densityCriticalLevel1} = 6 * \hyperlink{global_8h_adafe1d7389480b1a329b70b3c2baed11}{h3} * sph\_kernel(1.5 * 
+      \hyperlink{global_8h_a3b735e8520f1816ee73ee50daa3ef756}{csize});    \textcolor{comment}{//1.8  //1.4 //1.75}
+149     \hyperlink{global_8h_aeddd5065a64a6a39c79e1dab7c0f9edf}{densityCriticalLevel2} = 6 * \hyperlink{global_8h_adafe1d7389480b1a329b70b3c2baed11}{h3} * sph\_kernel(1.1 * 
+      \hyperlink{global_8h_a3b735e8520f1816ee73ee50daa3ef756}{csize});    \textcolor{comment}{//1.1 //1.4}
+150   \}
+151   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 2) \{
+152     \hyperlink{global_8h_a8a758046e5cb8b72210f0fc18cb3b7e1}{densityCriticalLevel1} = 4 * \hyperlink{global_8h_ac2d9b75feeec68992c955b63e813e7ce}{h2} * sph\_kernel(1.4 * 
+      \hyperlink{global_8h_a3b735e8520f1816ee73ee50daa3ef756}{csize});    \textcolor{comment}{//1.4 //1.75}
+153     \hyperlink{global_8h_aeddd5065a64a6a39c79e1dab7c0f9edf}{densityCriticalLevel2} = 4 * \hyperlink{global_8h_ac2d9b75feeec68992c955b63e813e7ce}{h2} * sph\_kernel(1.15 * 
+      \hyperlink{global_8h_a3b735e8520f1816ee73ee50daa3ef756}{csize});    \textcolor{comment}{//1.1 //1.4}
+154   \}
+155 
+156   \textcolor{comment}{/* checking the consistency */}
+157   \hyperlink{init_8c_ac1c7f1d01717cf0983a9dd4498b321ec}{checkParameters}();
+158 
+159   \textcolor{keywordflow}{if} (!strcmp(\hyperlink{global_8h_a84a388abba64eb7d2311751653350fc1}{cOutType}, \textcolor{stringliteral}{"POV"}))
+160     \hyperlink{global_8h_a6d848b22ca9b60b1e8ec33fdcfbd91b8}{povout} = 1;
+161   \textcolor{keywordflow}{if} (!strcmp(\hyperlink{global_8h_a84a388abba64eb7d2311751653350fc1}{cOutType}, \textcolor{stringliteral}{"VTK"}))
+162     \hyperlink{global_8h_a4a2046f20ca195391d5fcb98a02aedf6}{vtkout} = 1;
+163   \textcolor{keywordflow}{if} (!strcmp(\hyperlink{global_8h_a9fc2f91a577746250705ee9b00f51d70}{fOutType}, \textcolor{stringliteral}{"VNF"}))
+164     \hyperlink{global_8h_a5d38ae5aec75c8ebfafe34914471b32a}{vnfout} = 1;
+165 
+166   \textcolor{comment}{/* organizing processes in a Cartesian grid for global fields computations */}
+167   MPI\_Dims\_create(MPIsize, \hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim}, \hyperlink{global_8h_a633835398408aaee46fd56809af73e6c}{MPIdim});
+168   periods[0] = 0;
+169   periods[1] = 0;
+170   periods[2] = 0;
+171   reorder = 0;
+172   MPI\_Cart\_create(MPI\_COMM\_WORLD, \hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim}, \hyperlink{global_8h_a633835398408aaee46fd56809af73e6c}{MPIdim}, periods, reorder,
+173           &\hyperlink{global_8h_a34ac355617a6a906e1f3e7832aeb0073}{MPI\_CART\_COMM});
+174   \hyperlink{global_8h_a8220294108e39b58632993a50a7dc4ca}{MPIcoords} = (\textcolor{keywordtype}{int} **) malloc(MPIsize * \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{int} *));
+175   \textcolor{keywordflow}{for} (i = 0; i < \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}; i++) \{
+176     \hyperlink{global_8h_a8220294108e39b58632993a50a7dc4ca}{MPIcoords}[i] = (\textcolor{keywordtype}{int} *) malloc(3 * \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{int}));
+177     MPI\_Cart\_coords(\hyperlink{global_8h_a34ac355617a6a906e1f3e7832aeb0073}{MPI\_CART\_COMM}, i, \hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim}, \hyperlink{global_8h_a8220294108e39b58632993a50a7dc4ca}{MPIcoords}[i]);
+178   \}
+179   \textcolor{comment}{/* compute grid size */}
+180   \hyperlink{grid_8c_aecb2e0f80fabf29dae32fdfb639deb15}{computeGridSize}();
+181 
+182   \textcolor{comment}{/* allocate grid data */}
+183   \hyperlink{grid_8c_a5e5be1f2bb1f6f6fcf08f2cb3bee3432}{allocateGrid}();
+184   \textcolor{comment}{/* initialize global fields (might take some time) */}
+185   \hyperlink{fields_8c_af20f777e99b72945b22c053d2f7b8e46}{fieldsInit}();
+186 
+187   \textcolor{comment}{/* define colormaps for PovRay outputs */}
+188   \hyperlink{io_8c_aad2e9679946e47c98a4eea983f79b9a9}{defineColormaps}();
+189 
+190   \textcolor{comment}{/* define vessels - TBD */}
+191   \textcolor{comment}{//initVessel();}
+192 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{init_8c_a6a28d9c038b4ef73a4e2177db89d40aa_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=228pt]{init_8c_a6a28d9c038b4ef73a4e2177db89d40aa_icgraph}
+\end{center}
+\end{figure}
+
+

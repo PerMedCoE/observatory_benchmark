@@ -1,0 +1,433 @@
+\hypertarget{gradient_8c}{\section{gradient.\-c File Reference}
+\label{gradient_8c}\index{gradient.\-c@{gradient.\-c}}
+}
+
+
+contains functions that compute potential gradient  
+
+
+{\ttfamily \#include $<$stdio.\-h$>$}\\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$math.\-h$>$}\\*
+{\ttfamily \#include $<$float.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}global.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}inline.\-h\char`\"{}}\\*
+Include dependency graph for gradient.\-c\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{gradient_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{gradient_8c_a74fd10e6dde0917f4bfecbdbf42c2e6d}{compute\-C\-Cgradient} (int p1, int p2, int mode)
+\item 
+void \hyperlink{gradient_8c_ae155d539c0a0dee478f43c1e8c856c44}{gradient\-Traverse\-Subtree} (int p, struct \hyperlink{structbht__node}{bht\-\_\-node} $\ast$no)
+\item 
+void \hyperlink{gradient_8c_ae048023f359ea4e1111e852c94f609c8}{compute\-Remote\-Cells\-Potential\-Gradient} (int rp, struct \hyperlink{structbht__node}{bht\-\_\-node} $\ast$no)
+\item 
+int \hyperlink{gradient_8c_af107568230af4c30034d76d9f629a1e8}{compute\-Potential\-Gradient} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+contains functions that compute potential gradient 
+
+Definition in file \hyperlink{gradient_8c_source}{gradient.\-c}.
+
+
+
+\subsection{Function Documentation}
+\hypertarget{gradient_8c_a74fd10e6dde0917f4bfecbdbf42c2e6d}{\index{gradient.\-c@{gradient.\-c}!compute\-C\-Cgradient@{compute\-C\-Cgradient}}
+\index{compute\-C\-Cgradient@{compute\-C\-Cgradient}!gradient.c@{gradient.\-c}}
+\subsubsection[{compute\-C\-Cgradient}]{\setlength{\rightskip}{0pt plus 5cm}void compute\-C\-Cgradient (
+\begin{DoxyParamCaption}
+\item[{int}]{p1, }
+\item[{int}]{p2, }
+\item[{int}]{mode}
+\end{DoxyParamCaption}
+)}}\label{gradient_8c_a74fd10e6dde0917f4bfecbdbf42c2e6d}
+This function computes potential gradient for two neighbour cells. mode=0 -\/ computations for local cells mode=1 -\/ computations for remote cells 
+
+Definition at line 40 of file gradient.\-c.
+
+
+
+References cells, csize, cell\-Data\-::density, dens\-Pot\-Data\-::density, m, recv\-Data, recv\-Dens\-Pot\-Data, sdim, cell\-Data\-::size, part\-Data\-::size, cell\-Data\-::v, dens\-Pot\-Data\-::v, v, velocity, cell\-Data\-::x, part\-Data\-::x, double\-Vector3d\-::x, cell\-Data\-::y, part\-Data\-::y, double\-Vector3d\-::y, cell\-Data\-::z, part\-Data\-::z, and double\-Vector3d\-::z.
+
+
+\begin{DoxyCode}
+41 \{
+42 
+43   \textcolor{keywordtype}{double} pot;
+44   \textcolor{keywordtype}{double} dist;
+45   \textcolor{keywordtype}{double} g;
+46   \textcolor{keywordtype}{double} grad[3];
+47   \textcolor{keywordtype}{double} \hyperlink{global_8h_ac51334f57ef8b81c0629c9421798c344}{m} = 1.0;      \textcolor{comment}{/* we assume that cells' mass is always 1.0 */}
+48   \textcolor{keywordtype}{double} sc;
+49   \textcolor{keywordtype}{double} x1, x2, y1, y2, z1, z2;
+50   \textcolor{keywordtype}{double} \hyperlink{global_8h_a48d9522e58fa05906c6dba23e5745a72}{v}, \hyperlink{structcellData_a6f8c052f8417728038991f7f2826d38d}{density}, \hyperlink{structcellData_aba3c5d750d5dbd6e86c11ecaca62885e}{size};
+51   \textcolor{keywordtype}{double} r;
+52 
+53   \textcolor{keywordflow}{if} (p1 == p2 && mode == 0)
+54     \textcolor{keywordflow}{return};
+55 
+56   \textcolor{keywordflow}{if} (mode == 0) \{
+57     x1 = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p1].\hyperlink{structcellData_af88b946fb90d5f08b5fb740c70e98c10}{x};
+58     x2 = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p2].\hyperlink{structcellData_af88b946fb90d5f08b5fb740c70e98c10}{x};
+59     y1 = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p1].\hyperlink{structcellData_ab927965981178aa1fba979a37168db2a}{y};
+60     y2 = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p2].\hyperlink{structcellData_ab927965981178aa1fba979a37168db2a}{y};
+61     z1 = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p1].\hyperlink{structcellData_ab3e6ed577a7c669c19de1f9c1b46c872}{z};
+62     z2 = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p2].\hyperlink{structcellData_ab3e6ed577a7c669c19de1f9c1b46c872}{z};
+63     v = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p2].\hyperlink{structcellData_a3b90d5a73541ab9402511d87bed076ef}{v};
+64     density = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p2].\hyperlink{structcellData_a6f8c052f8417728038991f7f2826d38d}{density};
+65     size = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p2].\hyperlink{structcellData_aba3c5d750d5dbd6e86c11ecaca62885e}{size};
+66   \}
+67   \textcolor{keywordflow}{if} (mode == 1) \{
+68     x1 = \hyperlink{global_8h_af851c922de87975e63161d38332d6a56}{recvData}[p1].\hyperlink{structpartData_af88b946fb90d5f08b5fb740c70e98c10}{x};
+69     x2 = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p2].\hyperlink{structcellData_af88b946fb90d5f08b5fb740c70e98c10}{x};
+70     y1 = \hyperlink{global_8h_af851c922de87975e63161d38332d6a56}{recvData}[p1].\hyperlink{structpartData_ab927965981178aa1fba979a37168db2a}{y};
+71     y2 = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p2].\hyperlink{structcellData_ab927965981178aa1fba979a37168db2a}{y};
+72     z1 = \hyperlink{global_8h_af851c922de87975e63161d38332d6a56}{recvData}[p1].\hyperlink{structpartData_ab3e6ed577a7c669c19de1f9c1b46c872}{z};
+73     z2 = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p2].\hyperlink{structcellData_ab3e6ed577a7c669c19de1f9c1b46c872}{z};
+74     v = \hyperlink{global_8h_ac5932521dec6ac9c4208cb0312e002de}{recvDensPotData}[p1].\hyperlink{structdensPotData_a3b90d5a73541ab9402511d87bed076ef}{v};
+75     density = \hyperlink{global_8h_ac5932521dec6ac9c4208cb0312e002de}{recvDensPotData}[p1].\hyperlink{structdensPotData_a6f8c052f8417728038991f7f2826d38d}{density};
+76     size = \hyperlink{global_8h_af851c922de87975e63161d38332d6a56}{recvData}[p1].\hyperlink{structpartData_aba3c5d750d5dbd6e86c11ecaca62885e}{size};
+77   \}
+78 
+79   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 2)
+80     r = sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+81   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 3)
+82     r = sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2) +
+83          (z1 - z2) * (z1 - z2));
+84 
+85   grad[0] = 0.0;
+86   grad[1] = 0.0;
+87   grad[2] = 0.0;
+88 
+89   \textcolor{comment}{/* compute the gradient of SPH kernel function */}
+90   sph\_kernel\_gradient(p1, p2, grad, mode, r);
+91 
+92   \textcolor{keywordflow}{if} (density == 0.0)
+93     sc = 0.0;
+94   \textcolor{keywordflow}{else} \{
+95     m = size / \hyperlink{global_8h_a3b735e8520f1816ee73ee50daa3ef756}{csize};
+96     sc = (m / \hyperlink{structcellData_a6f8c052f8417728038991f7f2826d38d}{density}) * v;
+97   \}
+98 
+99   \textcolor{comment}{/* update forces */}
+100   \textcolor{keywordflow}{if} (mode == 0) \{
+101     \hyperlink{global_8h_a6015afb23ea197551ff3d503aa3426a4}{velocity}[p1].\hyperlink{structdoubleVector3d_af88b946fb90d5f08b5fb740c70e98c10}{x} += sc * grad[0];
+102     \hyperlink{global_8h_a6015afb23ea197551ff3d503aa3426a4}{velocity}[p1].\hyperlink{structdoubleVector3d_ab927965981178aa1fba979a37168db2a}{y} += sc * grad[1];
+103     \hyperlink{global_8h_a6015afb23ea197551ff3d503aa3426a4}{velocity}[p1].\hyperlink{structdoubleVector3d_ab3e6ed577a7c669c19de1f9c1b46c872}{z} += sc * grad[2];
+104   \} \textcolor{keywordflow}{else} \{
+105     \hyperlink{global_8h_a6015afb23ea197551ff3d503aa3426a4}{velocity}[p2].\hyperlink{structdoubleVector3d_af88b946fb90d5f08b5fb740c70e98c10}{x} -= sc * grad[0];
+106     \hyperlink{global_8h_a6015afb23ea197551ff3d503aa3426a4}{velocity}[p2].\hyperlink{structdoubleVector3d_ab927965981178aa1fba979a37168db2a}{y} -= sc * grad[1];
+107     \hyperlink{global_8h_a6015afb23ea197551ff3d503aa3426a4}{velocity}[p2].\hyperlink{structdoubleVector3d_ab3e6ed577a7c669c19de1f9c1b46c872}{z} -= sc * grad[2];
+108   \}
+109 
+110 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{gradient_8c_a74fd10e6dde0917f4bfecbdbf42c2e6d_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{gradient_8c_af107568230af4c30034d76d9f629a1e8}{\index{gradient.\-c@{gradient.\-c}!compute\-Potential\-Gradient@{compute\-Potential\-Gradient}}
+\index{compute\-Potential\-Gradient@{compute\-Potential\-Gradient}!gradient.c@{gradient.\-c}}
+\subsubsection[{compute\-Potential\-Gradient}]{\setlength{\rightskip}{0pt plus 5cm}int compute\-Potential\-Gradient (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{gradient_8c_af107568230af4c30034d76d9f629a1e8}
+This function computes the potential gradient with the use of S\-P\-H method for all local cells. 
+
+Definition at line 183 of file gradient.\-c.
+
+
+
+References bht\-\_\-root, cells, bht\-\_\-node\-::child, compute\-Remote\-Cells\-Potential\-Gradient(), dens\-Pot\-Exchange\-Init(), dens\-Pot\-Exchange\-Wait(), bht\-\_\-node\-::father, global\-Max\-Vel, global\-Min\-Vel, gradient\-Traverse\-Subtree(), h, leafs, lnc, statistics\-Data\-::maxsize, max\-Speed\-In\-Units, statistics\-Data\-::maxvel, statistics\-Data\-::minsize, statistics\-Data\-::minvel, M\-P\-Irank, num\-Imp, bht\-\_\-node\-::partnum, s, seconds\-Per\-Step, cell\-Data\-::size, statistics, stat\-Out\-Step, step, tnc, velocity, x, double\-Vector3d\-::x, double\-Vector3d\-::y, and double\-Vector3d\-::z.
+
+
+\begin{DoxyCode}
+184 \{
+185   \textcolor{keywordtype}{int} p, \hyperlink{global_8h_a874f74a4dc1c9a0cd9c6e0d79c298f55}{s};
+186   \textcolor{keyword}{struct }\hyperlink{structbht__node}{bht\_node} *no;
+187   \textcolor{keywordtype}{double} dvel;
+188   \textcolor{keywordtype}{double} sf;
+189 \textcolor{preprocessor}{#ifdef DEBUG}
+190 \textcolor{preprocessor}{}  \textcolor{keywordflow}{if} (\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank} == 0 && !(\hyperlink{global_8h_abc16e65f240ed0c8f3e876e8732c0a33}{step} % \hyperlink{global_8h_aab9700fe12cc303ff43e1a35a210128e}{statOutStep})) \{
+191     printf(\textcolor{stringliteral}{" Potential gradient..."});
+192     fflush(stdout);
+193   \}
+194 \textcolor{preprocessor}{#endif}
+195 \textcolor{preprocessor}{}  \hyperlink{comm_8c_a206e073b7e35f281184b3487b3bbc055}{densPotExchangeInit}();
+196 
+197   \textcolor{comment}{/* loop over all local cells */}
+198 \textcolor{preprocessor}{#pragma omp parallel for private(p,s,no)    //schedule(dynamic)}
+199 \textcolor{preprocessor}{}  \textcolor{keywordflow}{for} (p = 0; p < \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}; p++) \{
+200     \hyperlink{global_8h_a6015afb23ea197551ff3d503aa3426a4}{velocity}[p].\hyperlink{structdoubleVector3d_af88b946fb90d5f08b5fb740c70e98c10}{x} = 0.0;
+201     \hyperlink{global_8h_a6015afb23ea197551ff3d503aa3426a4}{velocity}[p].\hyperlink{structdoubleVector3d_ab927965981178aa1fba979a37168db2a}{y} = 0.0;
+202     \hyperlink{global_8h_a6015afb23ea197551ff3d503aa3426a4}{velocity}[p].\hyperlink{structdoubleVector3d_ab3e6ed577a7c669c19de1f9c1b46c872}{z} = 0.0;
+203     \textcolor{comment}{/* set the pointer to the node that owns the cell */}
+204     no = \hyperlink{global_8h_a0681d5d05f66720bbcc34493ceff6fc3}{leafs}[p];
+205     \textcolor{comment}{/* traverse the tree (bottom-up) */}
+206     \textcolor{keywordflow}{while} (1) \{
+207       \textcolor{keywordflow}{if} (no->\hyperlink{structbht__node_ad327b7e4aaac3a9687feb283d05fabbe}{father} == NULL)
+208     \textcolor{keywordflow}{break};
+209       \textcolor{comment}{/* loop over siblings */}
+210       \textcolor{keywordflow}{for} (s = 0; s < \hyperlink{global_8h_a96f00f69e2102e1720c989a00c385d81}{tnc}; s++) \{
+211     \textcolor{comment}{/* "Son of my father but not my brother. It's me." Hairdresser */}
+212     \textcolor{keywordflow}{if} ((no->\hyperlink{structbht__node_ad327b7e4aaac3a9687feb283d05fabbe}{father}->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[s] == NULL) || (no->\hyperlink{structbht__node_ad327b7e4aaac3a9687feb283d05fabbe}{father}->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[s] == no)
+213         || (no->\hyperlink{structbht__node_ad327b7e4aaac3a9687feb283d05fabbe}{father}->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[s]->\hyperlink{structbht__node_a0c60ab00baa47c069768352b2f2b6d3d}{partnum} == -1))
+214       \textcolor{keywordflow}{continue};
+215     \textcolor{keywordflow}{if} (cellIntersectNode
+216         (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p].\hyperlink{tempf_8c_a1780e9c70637026d6fab31f63b3a193e}{x}, \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p].y, \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p].z, \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p].\hyperlink{global_8h_a8ee9be1b5aa75abae556de3088cba6d9}{h},
+217          no->\hyperlink{structbht__node_ad327b7e4aaac3a9687feb283d05fabbe}{father}->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[s])) \{
+218       \textcolor{comment}{/* traverse subtree of the sibling (up-bottom) */}
+219       \hyperlink{gradient_8c_ae155d539c0a0dee478f43c1e8c856c44}{gradientTraverseSubtree}(p, no->\hyperlink{structbht__node_ad327b7e4aaac3a9687feb283d05fabbe}{father}->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[s]);
+220     \}
+221 
+222       \}
+223       no = no->\hyperlink{structbht__node_ad327b7e4aaac3a9687feb283d05fabbe}{father};
+224       \textcolor{keywordflow}{if} (no->\hyperlink{structbht__node_ad327b7e4aaac3a9687feb283d05fabbe}{father} == NULL)
+225     \textcolor{keywordflow}{break};          \textcolor{comment}{/* this is the root node */}
+226       \textcolor{keywordflow}{if} (cellInsideNode(p, no))
+227     \textcolor{keywordflow}{break};
+228     \}
+229   \}
+230 
+231   \hyperlink{comm_8c_afebf59220f4170178e5fb828d569aaab}{densPotExchangeWait}();
+232 
+233   \textcolor{comment}{/* loop over imported cells */}
+234   \textcolor{keywordflow}{for} (p = 0; p < \hyperlink{global_8h_a6e7ffc829c0f608016617f9057885a9f}{numImp}; p++) \{
+235     \textcolor{comment}{/* start with the root node */}
+236     no = \hyperlink{global_8h_a6920a8c121a4a8d48989c8d923e4797e}{bht\_root};
+237     \textcolor{comment}{/* traverse the tree starting from the root and compute potential */}
+238     \hyperlink{gradient_8c_ae048023f359ea4e1111e852c94f609c8}{computeRemoteCellsPotentialGradient}(p, no);
+239 
+240   \}
+241 
+242   \textcolor{keywordflow}{for} (p = 0; p < \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}; p++) \{
+243     dvel =
+244     sqrt(\hyperlink{global_8h_a6015afb23ea197551ff3d503aa3426a4}{velocity}[p].\hyperlink{tempf_8c_a1780e9c70637026d6fab31f63b3a193e}{x} * \hyperlink{global_8h_a6015afb23ea197551ff3d503aa3426a4}{velocity}[p].\hyperlink{tempf_8c_a1780e9c70637026d6fab31f63b3a193e}{x} +
+245          \hyperlink{global_8h_a6015afb23ea197551ff3d503aa3426a4}{velocity}[p].y * \hyperlink{global_8h_a6015afb23ea197551ff3d503aa3426a4}{velocity}[p].y +
+246          \hyperlink{global_8h_a6015afb23ea197551ff3d503aa3426a4}{velocity}[p].z * \hyperlink{global_8h_a6015afb23ea197551ff3d503aa3426a4}{velocity}[p].z);
+247     \textcolor{keywordflow}{if} (dvel < \hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_a1b9d00ac67b4ceca8e7747a50edc802b}{minvel})
+248       \hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_a1b9d00ac67b4ceca8e7747a50edc802b}{minvel} = dvel;
+249     \textcolor{keywordflow}{if} (dvel > \hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_a485292d20f5d14bd18e83fef65976fb4}{maxvel})
+250       \hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_a485292d20f5d14bd18e83fef65976fb4}{maxvel} = dvel;
+251     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p].size < \hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_ad99dc4104d1898b6e593bbf331e41c69}{minsize})
+252       \hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_ad99dc4104d1898b6e593bbf331e41c69}{minsize} = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p].\hyperlink{structcellData_aba3c5d750d5dbd6e86c11ecaca62885e}{size};
+253     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p].size > \hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_a7383c898fd4cd4d862ca65d3713086cd}{maxsize})
+254       \hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_a7383c898fd4cd4d862ca65d3713086cd}{maxsize} = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p].\hyperlink{structcellData_aba3c5d750d5dbd6e86c11ecaca62885e}{size};
+255   \}
+256   \textcolor{comment}{/* this should be removed soon (do we really need to reduceall here?) */}
+257   MPI\_Allreduce(&\hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_a1b9d00ac67b4ceca8e7747a50edc802b}{minvel}, &\hyperlink{global_8h_ab7f75171e7ed9d56069451dc0a7552c7}{globalMinVel}, 1, MPI\_DOUBLE, MPI\_MIN,
+258         MPI\_COMM\_WORLD);
+259   MPI\_Allreduce(&\hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_a485292d20f5d14bd18e83fef65976fb4}{maxvel}, &\hyperlink{global_8h_ae31bf2d4b7c8e89069b3563e1a2e7034}{globalMaxVel}, 1, MPI\_DOUBLE, MPI\_MAX,
+260         MPI\_COMM\_WORLD);
+261 
+262   \textcolor{keywordflow}{if} (\hyperlink{global_8h_ae31bf2d4b7c8e89069b3563e1a2e7034}{globalMaxVel} == 0.0)
+263     sf = 0.0;
+264   \textcolor{keywordflow}{else}
+265     sf = \hyperlink{global_8h_aad1c418ff29a02376edeb263b553e53e}{maxSpeedInUnits} * \hyperlink{global_8h_aac71dcf068b84f2973571ab102920190}{secondsPerStep} / 
+      \hyperlink{global_8h_ae31bf2d4b7c8e89069b3563e1a2e7034}{globalMaxVel};
+266 
+267   \hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_a1b9d00ac67b4ceca8e7747a50edc802b}{minvel} = DBL\_MAX;  \textcolor{comment}{/* minimal velocity is set to DBL\_MAX */}
+268   \hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_a485292d20f5d14bd18e83fef65976fb4}{maxvel} = 0;    \textcolor{comment}{/* maximal velocity is set to zero */}
+269 
+270   \textcolor{keywordflow}{for} (p = 0; p < \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}; p++) \{
+271     \hyperlink{global_8h_a6015afb23ea197551ff3d503aa3426a4}{velocity}[p].\hyperlink{structdoubleVector3d_af88b946fb90d5f08b5fb740c70e98c10}{x} *= sf;
+272     \hyperlink{global_8h_a6015afb23ea197551ff3d503aa3426a4}{velocity}[p].\hyperlink{structdoubleVector3d_ab927965981178aa1fba979a37168db2a}{y} *= sf;
+273     \hyperlink{global_8h_a6015afb23ea197551ff3d503aa3426a4}{velocity}[p].\hyperlink{structdoubleVector3d_ab3e6ed577a7c669c19de1f9c1b46c872}{z} *= sf;
+274     dvel =
+275     sqrt(\hyperlink{global_8h_a6015afb23ea197551ff3d503aa3426a4}{velocity}[p].\hyperlink{tempf_8c_a1780e9c70637026d6fab31f63b3a193e}{x} * \hyperlink{global_8h_a6015afb23ea197551ff3d503aa3426a4}{velocity}[p].\hyperlink{tempf_8c_a1780e9c70637026d6fab31f63b3a193e}{x} +
+276          \hyperlink{global_8h_a6015afb23ea197551ff3d503aa3426a4}{velocity}[p].y * \hyperlink{global_8h_a6015afb23ea197551ff3d503aa3426a4}{velocity}[p].y +
+277          \hyperlink{global_8h_a6015afb23ea197551ff3d503aa3426a4}{velocity}[p].z * \hyperlink{global_8h_a6015afb23ea197551ff3d503aa3426a4}{velocity}[p].z);
+278     \textcolor{keywordflow}{if} (dvel < \hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_a1b9d00ac67b4ceca8e7747a50edc802b}{minvel})
+279       \hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_a1b9d00ac67b4ceca8e7747a50edc802b}{minvel} = dvel;
+280     \textcolor{keywordflow}{if} (dvel > \hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_a485292d20f5d14bd18e83fef65976fb4}{maxvel})
+281       \hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_a485292d20f5d14bd18e83fef65976fb4}{maxvel} = dvel;
+282   \}
+283 \textcolor{preprocessor}{#ifdef DEBUG}
+284 \textcolor{preprocessor}{}  \textcolor{keywordflow}{if} (\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank} == 0 && !(\hyperlink{global_8h_abc16e65f240ed0c8f3e876e8732c0a33}{step} % statOutStep)) \{
+285     printf(\textcolor{stringliteral}{"done\(\backslash\)n"});
+286     fflush(stdout);
+287   \}
+288 \textcolor{preprocessor}{#endif}
+289 \textcolor{preprocessor}{}\}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{gradient_8c_af107568230af4c30034d76d9f629a1e8_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=284pt]{gradient_8c_af107568230af4c30034d76d9f629a1e8_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{gradient_8c_ae048023f359ea4e1111e852c94f609c8}{\index{gradient.\-c@{gradient.\-c}!compute\-Remote\-Cells\-Potential\-Gradient@{compute\-Remote\-Cells\-Potential\-Gradient}}
+\index{compute\-Remote\-Cells\-Potential\-Gradient@{compute\-Remote\-Cells\-Potential\-Gradient}!gradient.c@{gradient.\-c}}
+\subsubsection[{compute\-Remote\-Cells\-Potential\-Gradient}]{\setlength{\rightskip}{0pt plus 5cm}void compute\-Remote\-Cells\-Potential\-Gradient (
+\begin{DoxyParamCaption}
+\item[{int}]{rp, }
+\item[{struct {\bf bht\-\_\-node} $\ast$}]{no}
+\end{DoxyParamCaption}
+)}}\label{gradient_8c_ae048023f359ea4e1111e852c94f609c8}
+This function traverse the tree (up-\/bottom) and computes potential gradient for remote cells. 
+
+Definition at line 151 of file gradient.\-c.
+
+
+
+References bht\-\_\-node\-::child, compute\-C\-Cgradient(), h, bht\-\_\-node\-::leaf, lnc, bht\-\_\-node\-::partnum, recv\-Data, s, tnc, and x.
+
+
+\begin{DoxyCode}
+152 \{
+153 
+154   \textcolor{keywordtype}{int} \hyperlink{global_8h_a874f74a4dc1c9a0cd9c6e0d79c298f55}{s};
+155 
+156   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc} == 0)
+157     \textcolor{keywordflow}{return};
+158   \textcolor{keywordflow}{if} (no->\hyperlink{structbht__node_a0c60ab00baa47c069768352b2f2b6d3d}{partnum} == -1)
+159     \textcolor{keywordflow}{return};
+160 
+161   \textcolor{comment}{/* compute potential if it is a leaf node */}
+162   \textcolor{keywordflow}{if} (no->\hyperlink{structbht__node_afdde1540721b0d5dbc4b234677b4ad8d}{leaf} == 1) \{
+163     \hyperlink{gradient_8c_a74fd10e6dde0917f4bfecbdbf42c2e6d}{computeCCgradient}(rp, no->\hyperlink{structbht__node_a0c60ab00baa47c069768352b2f2b6d3d}{partnum}, 1);
+164     \textcolor{keywordflow}{return};
+165   \}
+166 
+167   \textcolor{comment}{/* loop over all siblings */}
+168   \textcolor{keywordflow}{for} (s = 0; s < \hyperlink{global_8h_a96f00f69e2102e1720c989a00c385d81}{tnc}; s++) \{
+169     \textcolor{comment}{/* continue if there is no child */}
+170     \textcolor{keywordflow}{if} (no->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[s] == NULL || no->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[s]->\hyperlink{structbht__node_a0c60ab00baa47c069768352b2f2b6d3d}{partnum} == -1)
+171       \textcolor{keywordflow}{continue};
+172     \textcolor{comment}{/* proceed if the child node and particle intersect */}
+173     \textcolor{keywordflow}{if} (cellIntersectNode
+174     (\hyperlink{global_8h_af851c922de87975e63161d38332d6a56}{recvData}[rp].\hyperlink{tempf_8c_a1780e9c70637026d6fab31f63b3a193e}{x}, \hyperlink{global_8h_af851c922de87975e63161d38332d6a56}{recvData}[rp].y, \hyperlink{global_8h_af851c922de87975e63161d38332d6a56}{recvData}[rp].z, 
+      \hyperlink{global_8h_af851c922de87975e63161d38332d6a56}{recvData}[rp].\hyperlink{global_8h_a8ee9be1b5aa75abae556de3088cba6d9}{h},
+175      no->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[s]))
+176       \hyperlink{gradient_8c_ae048023f359ea4e1111e852c94f609c8}{computeRemoteCellsPotentialGradient}(rp, no->
+      \hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[s]);
+177   \}
+178 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{gradient_8c_ae048023f359ea4e1111e852c94f609c8_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{gradient_8c_ae048023f359ea4e1111e852c94f609c8_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{gradient_8c_ae155d539c0a0dee478f43c1e8c856c44}{\index{gradient.\-c@{gradient.\-c}!gradient\-Traverse\-Subtree@{gradient\-Traverse\-Subtree}}
+\index{gradient\-Traverse\-Subtree@{gradient\-Traverse\-Subtree}!gradient.c@{gradient.\-c}}
+\subsubsection[{gradient\-Traverse\-Subtree}]{\setlength{\rightskip}{0pt plus 5cm}void gradient\-Traverse\-Subtree (
+\begin{DoxyParamCaption}
+\item[{int}]{p, }
+\item[{struct {\bf bht\-\_\-node} $\ast$}]{no}
+\end{DoxyParamCaption}
+)}}\label{gradient_8c_ae155d539c0a0dee478f43c1e8c856c44}
+This function traverses the subtree under given node looking for neighbour cells. 
+
+Definition at line 115 of file gradient.\-c.
+
+
+
+References cells, bht\-\_\-node\-::child, compute\-C\-Cgradient(), h, bht\-\_\-node\-::leaf, lnc, bht\-\_\-node\-::partnum, s, tnc, and x.
+
+
+\begin{DoxyCode}
+116 \{
+117 
+118   \textcolor{keywordtype}{int} \hyperlink{global_8h_a874f74a4dc1c9a0cd9c6e0d79c298f55}{s};
+119 
+120   \textcolor{keywordflow}{if} (no->\hyperlink{structbht__node_a0c60ab00baa47c069768352b2f2b6d3d}{partnum} == -1)
+121     \textcolor{keywordflow}{return};
+122 
+123   \textcolor{comment}{/* if it is a leaf node we do not proceed to the siblings */}
+124   \textcolor{keywordflow}{if} (no->\hyperlink{structbht__node_afdde1540721b0d5dbc4b234677b4ad8d}{leaf} == 1) \{
+125     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc} > 0)
+126       \hyperlink{gradient_8c_a74fd10e6dde0917f4bfecbdbf42c2e6d}{computeCCgradient}(p, no->\hyperlink{structbht__node_a0c60ab00baa47c069768352b2f2b6d3d}{partnum}, 0);
+127     \textcolor{keywordflow}{return};
+128   \}
+129 
+130   \textcolor{comment}{/* loop over siblings */}
+131   \textcolor{keywordflow}{for} (s = 0; s < \hyperlink{global_8h_a96f00f69e2102e1720c989a00c385d81}{tnc}; s++) \{
+132     \textcolor{comment}{/* if it is an empty child proceed to the next one */}
+133     \textcolor{keywordflow}{if} (no->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[s] == NULL || no->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[s]->\hyperlink{structbht__node_a0c60ab00baa47c069768352b2f2b6d3d}{partnum} == -1)
+134       \textcolor{keywordflow}{continue};
+135     \textcolor{comment}{/* if there is no intersection with this child proceed to next one */}
+136     \textcolor{keywordflow}{if} (!cellIntersectNode
+137     (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p].\hyperlink{tempf_8c_a1780e9c70637026d6fab31f63b3a193e}{x}, \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p].y, \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p].z, \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p].\hyperlink{global_8h_a8ee9be1b5aa75abae556de3088cba6d9}{h}, no->
+      \hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[s]))
+138       \textcolor{keywordflow}{continue};
+139     \textcolor{comment}{/* if it is an leaf child compute the potential */}
+140     \textcolor{keywordflow}{if} (no->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[s]->\hyperlink{structbht__node_afdde1540721b0d5dbc4b234677b4ad8d}{leaf} == 1) \{
+141       \hyperlink{gradient_8c_a74fd10e6dde0917f4bfecbdbf42c2e6d}{computeCCgradient}(p, no->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[s]->\hyperlink{structbht__node_a0c60ab00baa47c069768352b2f2b6d3d}{partnum}, 0);
+142     \} \textcolor{keywordflow}{else} \{
+143       \hyperlink{gradient_8c_ae155d539c0a0dee478f43c1e8c856c44}{gradientTraverseSubtree}(p, no->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[s]);
+144     \}
+145   \}
+146 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=344pt]{gradient_8c_ae155d539c0a0dee478f43c1e8c856c44_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{gradient_8c_ae155d539c0a0dee478f43c1e8c856c44_icgraph}
+\end{center}
+\end{figure}
+
+

@@ -1,0 +1,6 @@
+<map id="randomStreamInit" name="randomStreamInit">
+<area shape="rect" id="node2" href="$init_8c.html#a6a28d9c038b4ef73a4e2177db89d40aa" title="simulationInit" alt="" coords="459,5,557,32"/>
+<area shape="rect" id="node4" href="$io_8c.html#abdc9000ea224eb0537e7efc3c036cddd" title="readRstFile" alt="" coords="179,31,269,57"/>
+<area shape="rect" id="node3" href="$main_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="605,5,656,32"/>
+<area shape="rect" id="node5" href="$io_8c.html#a96d45a43485aa727199f59f9a922d7d0" title="readParams" alt="" coords="318,31,410,57"/>
+</map>

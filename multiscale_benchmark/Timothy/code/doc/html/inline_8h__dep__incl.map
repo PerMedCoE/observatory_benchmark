@@ -1,0 +1,7 @@
+<map id="inline.h" name="inline.h">
+<area shape="rect" id="node2" href="$cells_8c.html" title="contains functions which control current states and evolution of cells " alt="" coords="5,80,64,107"/>
+<area shape="rect" id="node3" href="$gradient_8c.html" title="contains functions that compute potential gradient " alt="" coords="89,80,167,107"/>
+<area shape="rect" id="node4" href="$init_8c.html" title="contains initialization functions " alt="" coords="192,80,243,107"/>
+<area shape="rect" id="node5" href="$potential_8c.html" title="contains functions that compute the potential " alt="" coords="267,80,348,107"/>
+<area shape="rect" id="node6" href="$tree_8c.html" title="contains tree build functions " alt="" coords="374,80,428,107"/>
+</map>

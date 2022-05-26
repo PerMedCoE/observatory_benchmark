@@ -1,0 +1,1158 @@
+\hypertarget{interp_8c}{\section{interp.\-c File Reference}
+\label{interp_8c}\index{interp.\-c@{interp.\-c}}
+}
+
+
+contains grid to cellular data interpolation functions  
+
+
+{\ttfamily \#include $<$stdio.\-h$>$}\\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$math.\-h$>$}\\*
+{\ttfamily \#include $<$limits.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}global.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}fields.\-h\char`\"{}}\\*
+Include dependency graph for interp.\-c\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interp_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{interp_8c_aebce899f04ee8be80684bb4610b99392}{patch}(p, i, j, k)~(\hyperlink{interp_8c_a7b2e819edbf39d5d976cff399612f6e8}{cic\-Patch}\mbox{[}p\mbox{]}\mbox{[}\hyperlink{interp_8c_a63c4dd6e4bd05dfdc1e3b01c60b96c31}{patch\-Size}\mbox{[}p\mbox{]}.y$\ast$\hyperlink{interp_8c_a63c4dd6e4bd05dfdc1e3b01c60b96c31}{patch\-Size}\mbox{[}p\mbox{]}.z$\ast$i+\hyperlink{interp_8c_a63c4dd6e4bd05dfdc1e3b01c60b96c31}{patch\-Size}\mbox{[}p\mbox{]}.z$\ast$j+k\mbox{]})
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{interp_8c_a4299a7e9993adbe7a047b835b2339550}{find\-Patches} ()
+\item 
+void \hyperlink{interp_8c_a09ed91c5c40f3937e10c8c60c2b8fb7f}{do\-Interpolation} ()
+\item 
+void \hyperlink{interp_8c_a085ef29ed8159779989ae8fac05fd699}{init\-Patch\-Exchange} ()
+\item 
+int \hyperlink{interp_8c_a4124511b40767952ed61d5ae30bae7b6}{wait\-Patch\-Exchange} ()
+\item 
+int \hyperlink{interp_8c_a3e968c18c11bbe46df754e7eca593b33}{apply\-Patches} ()
+\item 
+void \hyperlink{interp_8c_a4fe8eca69017d7e0f87fd2c6cdb9b2e2}{init\-Fields\-Patches\-Exchange} ()
+\item 
+void \hyperlink{interp_8c_a751d539b1af7ca1f9ce8e55a91084874}{wait\-Fields\-Patches\-Exchange} ()
+\item 
+void \hyperlink{interp_8c_a08111192411fead96613d994aa95f960}{apply\-Fields\-Patches} ()
+\item 
+void \hyperlink{interp_8c_ace868928ce5497cc3edc942bd5c8f396}{interpolate\-Cells\-To\-Grid} ()
+\item 
+void \hyperlink{interp_8c_ad862fb7e08b1dee6d784a09a26978ada}{init\-Cells\-To\-Grid\-Exchange} ()
+\item 
+void \hyperlink{interp_8c_ac7fd669461f281bbaceac377028fb722}{wait\-Cells\-To\-Grid\-Exchange} ()
+\item 
+void \hyperlink{interp_8c_a7f8b42e40580516283e6f43ce7fe6389}{interpolate\-Fields\-To\-Cells} ()
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+double $\ast$$\ast$ \hyperlink{interp_8c_a7b2e819edbf39d5d976cff399612f6e8}{cic\-Patch}
+\item 
+int $\ast$ \hyperlink{interp_8c_aa1e8e01a33edaeee7b43a257115fe3ed}{cic\-Intersect}
+\item 
+int $\ast$ \hyperlink{interp_8c_adb4ccb79955589454dc66b849d8701ec}{cic\-Receiver}
+\item 
+int $\ast$ \hyperlink{interp_8c_a2a5d63a8f1ea342e89fe82d9bfa34dc4}{cic\-Sender}
+\item 
+double $\ast$$\ast$ \hyperlink{interp_8c_aa694a54cf85528e82466805524525b7d}{cic\-Recv\-Patch}
+\item 
+M\-P\-I\-\_\-\-Request $\ast$ \hyperlink{interp_8c_ae3d471e7732a1f671ffe978fcd723912}{cic\-Req\-Send}
+\item 
+M\-P\-I\-\_\-\-Request $\ast$ \hyperlink{interp_8c_a63b72f0c32960cd3ecc1733f30c40214}{cic\-Req\-Recv}
+\item 
+int $\ast$ \hyperlink{interp_8c_a55ace146e560886795409d6ac149119c}{recv\-P}
+\item 
+struct \hyperlink{structint64Vector3d}{int64\-Vector3d} $\ast$ \hyperlink{interp_8c_a4a5d5cd735e0be12043322e83f096e15}{lower\-Patch\-Corner}
+\item 
+struct \hyperlink{structint64Vector3d}{int64\-Vector3d} $\ast$ \hyperlink{interp_8c_a1ad7766a77930978570efda9dc79c423}{upper\-Patch\-Corner}
+\item 
+struct \hyperlink{structint64Vector3d}{int64\-Vector3d} $\ast$ \hyperlink{interp_8c_a2376cd58453249d9c7665fa650751766}{lower\-Patch\-Corner\-R}
+\item 
+struct \hyperlink{structint64Vector3d}{int64\-Vector3d} $\ast$ \hyperlink{interp_8c_a6a5d325724a8a8e583d58f951412aa0f}{upper\-Patch\-Corner\-R}
+\item 
+struct \hyperlink{structint64Vector3d}{int64\-Vector3d} $\ast$ \hyperlink{interp_8c_a63c4dd6e4bd05dfdc1e3b01c60b96c31}{patch\-Size}
+\item 
+struct \hyperlink{structint64Vector3d}{int64\-Vector3d} $\ast$ \hyperlink{interp_8c_ac36d10dac7f64ef74bbf954bf709a0bd}{patch\-Size\-R}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+contains grid to cellular data interpolation functions 
+
+Definition in file \hyperlink{interp_8c_source}{interp.\-c}.
+
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{interp_8c_aebce899f04ee8be80684bb4610b99392}{\index{interp.\-c@{interp.\-c}!patch@{patch}}
+\index{patch@{patch}!interp.c@{interp.\-c}}
+\subsubsection[{patch}]{\setlength{\rightskip}{0pt plus 5cm}\#define patch(
+\begin{DoxyParamCaption}
+\item[{}]{p, }
+\item[{}]{i, }
+\item[{}]{j, }
+\item[{}]{k}
+\end{DoxyParamCaption}
+)~({\bf cic\-Patch}\mbox{[}p\mbox{]}\mbox{[}{\bf patch\-Size}\mbox{[}p\mbox{]}.y$\ast${\bf patch\-Size}\mbox{[}p\mbox{]}.z$\ast$i+{\bf patch\-Size}\mbox{[}p\mbox{]}.z$\ast$j+k\mbox{]})}}\label{interp_8c_aebce899f04ee8be80684bb4610b99392}
+
+
+Definition at line 49 of file interp.\-c.
+
+
+
+\subsection{Function Documentation}
+\hypertarget{interp_8c_a08111192411fead96613d994aa95f960}{\index{interp.\-c@{interp.\-c}!apply\-Fields\-Patches@{apply\-Fields\-Patches}}
+\index{apply\-Fields\-Patches@{apply\-Fields\-Patches}!interp.c@{interp.\-c}}
+\subsubsection[{apply\-Fields\-Patches}]{\setlength{\rightskip}{0pt plus 5cm}void apply\-Fields\-Patches (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{interp_8c_a08111192411fead96613d994aa95f960}
+Update local cell fields with information from remote processes received in patches. Receiveing field patches are deallocated here. 
+
+Definition at line 509 of file interp.\-c.
+
+
+
+References cell\-Fields, cells, cic\-Receiver, fields\-Patches, grid\-End\-Idx, grid\-Resolution, grid\-Start\-Idx, lnc, M\-P\-Isize, N\-F\-I\-E\-L\-D\-S, x, cell\-Data\-::x, double\-Vector3d\-::x, int64\-Vector3d\-::x, cell\-Data\-::y, double\-Vector3d\-::y, int64\-Vector3d\-::y, cell\-Data\-::z, double\-Vector3d\-::z, and int64\-Vector3d\-::z.
+
+
+\begin{DoxyCode}
+510 \{
+511 
+512   \textcolor{keywordtype}{int} p, c, f, i, j, k;
+513   \textcolor{keyword}{struct }\hyperlink{structint64Vector3d}{int64Vector3d} idx;
+514   \textcolor{keyword}{struct }\hyperlink{structdoubleVector3d}{doubleVector3d} d, t;
+515   \textcolor{keyword}{struct }\hyperlink{structint64Vector3d}{int64Vector3d} cellIdx;
+516   \textcolor{keyword}{struct }\hyperlink{structdoubleVector3d}{doubleVector3d} cicCoord;
+517 
+518   \textcolor{keywordtype}{int} max = 0;
+519   \textcolor{keywordtype}{int} iddd;
+520 
+521   \textcolor{comment}{/* reset fields */}
+522   \textcolor{keywordflow}{for} (f = 0; f < \hyperlink{fields_8h_a7986f01c038f396ce7df280bb2903099}{NFIELDS}; f++)
+523     \textcolor{keywordflow}{for} (c = 0; c < \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}; c++)
+524       \hyperlink{global_8h_a25e4317a1b5bb95a8e71e0e8c4e11f2b}{cellFields}[f][c] = 0.0;
+525 
+526   \textcolor{keywordflow}{for} (c = 0; c < \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}; c++) \{    \textcolor{comment}{/* for every cell */}
+527     cellIdx.x = ((\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_af88b946fb90d5f08b5fb740c70e98c10}{x} - lowerGridCorner.x) / \hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution});
+528     cellIdx.y = ((\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_ab927965981178aa1fba979a37168db2a}{y} - lowerGridCorner.y) / \hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution});
+529     cellIdx.z = ((\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_ab3e6ed577a7c669c19de1f9c1b46c872}{z} - lowerGridCorner.z) / \hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution});
+530     \textcolor{keywordflow}{for} (p = 0; p < \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}; p++) \{  \textcolor{comment}{/* for each process */}
+531       \textcolor{keywordtype}{int} ax, ay, az;
+532       \textcolor{keywordflow}{if} (!\hyperlink{interp_8c_adb4ccb79955589454dc66b849d8701ec}{cicReceiver}[p])
+533     \textcolor{keywordflow}{continue};       \textcolor{comment}{/* there is no patch from this process */}
+534       \textcolor{keywordflow}{for} (ax = 0; ax < 2; ax++)
+535     \textcolor{keywordflow}{for} (ay = 0; ay < 2; ay++)
+536       \textcolor{keywordflow}{for} (az = 0; az < 2; az++) \{
+537         \textcolor{keywordflow}{if} (cellIdx.x + ax >= \hyperlink{fields_8h_a9154f33f7786c05c61f4d519da14d501}{gridStartIdx}[p].\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x}
+538         && cellIdx.y + ay >= \hyperlink{fields_8h_a9154f33f7786c05c61f4d519da14d501}{gridStartIdx}[p].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y}
+539         && cellIdx.z + az >= \hyperlink{fields_8h_a9154f33f7786c05c61f4d519da14d501}{gridStartIdx}[p].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z}
+540         && cellIdx.x + ax <= \hyperlink{fields_8h_a1d13a1c43b1a6eb6ca088b79ee681b48}{gridEndIdx}[p].\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x}
+541         && cellIdx.y + ay <= \hyperlink{fields_8h_a1d13a1c43b1a6eb6ca088b79ee681b48}{gridEndIdx}[p].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y}
+542         && cellIdx.z + az <= \hyperlink{fields_8h_a1d13a1c43b1a6eb6ca088b79ee681b48}{gridEndIdx}[p].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z}) \{
+543 
+544           idx.x = (cellIdx.x + ax) - \hyperlink{interp_8c_a4a5d5cd735e0be12043322e83f096e15}{lowerPatchCorner}[p].\hyperlink{tempf_8c_a1780e9c70637026d6fab31f63b3a193e}{x};
+545           idx.y = (cellIdx.y + ay) - \hyperlink{interp_8c_a4a5d5cd735e0be12043322e83f096e15}{lowerPatchCorner}[p].\hyperlink{structdoubleVector3d_ab927965981178aa1fba979a37168db2a}{y};
+546           idx.z = (cellIdx.z + az) - \hyperlink{interp_8c_a4a5d5cd735e0be12043322e83f096e15}{lowerPatchCorner}[p].\hyperlink{structdoubleVector3d_ab3e6ed577a7c669c19de1f9c1b46c872}{z};
+547 
+548           cicCoord.x = lowerGridCorner.x + cellIdx.x * \hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution};
+549           cicCoord.y = lowerGridCorner.y + cellIdx.y * \hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution};
+550           cicCoord.z = lowerGridCorner.z + cellIdx.z * \hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution};
+551 
+552           d.x = (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_af88b946fb90d5f08b5fb740c70e98c10}{x} - cicCoord.x) / \hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution};
+553           d.y = (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_ab927965981178aa1fba979a37168db2a}{y} - cicCoord.y) / \hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution};
+554           d.z = (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_ab3e6ed577a7c669c19de1f9c1b46c872}{z} - cicCoord.z) / \hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution};
+555 
+556           t.x = 1.0 - d.x;
+557           t.y = 1.0 - d.y;
+558           t.z = 1.0 - d.z;
+559 
+560           \textcolor{comment}{/* interpolating back to cells */}
+561           \textcolor{comment}{/* scaling from mol/cm^3 to mol/cell */}
+562           \textcolor{keywordflow}{for} (f = 0; f < \hyperlink{fields_8h_a7986f01c038f396ce7df280bb2903099}{NFIELDS}; f++) \{
+563         \hyperlink{global_8h_a25e4317a1b5bb95a8e71e0e8c4e11f2b}{cellFields}[f][c] += \hyperlink{fields_8h_a978db43304285c6d893667023bd6bfb9}{fieldsPatches}[p][f * 
+      \hyperlink{interp_8c_a63c4dd6e4bd05dfdc1e3b01c60b96c31}{patchSize}[p].\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} * \hyperlink{interp_8c_a63c4dd6e4bd05dfdc1e3b01c60b96c31}{patchSize}[p].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} * \hyperlink{interp_8c_a63c4dd6e4bd05dfdc1e3b01c60b96c31}{patchSize}[p].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} + 
+      \hyperlink{interp_8c_a63c4dd6e4bd05dfdc1e3b01c60b96c31}{patchSize}[p].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} * \hyperlink{interp_8c_a63c4dd6e4bd05dfdc1e3b01c60b96c31}{patchSize}[p].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} * idx.x + \hyperlink{interp_8c_a63c4dd6e4bd05dfdc1e3b01c60b96c31}{patchSize}[p].
+      \hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} * idx.y + idx.z] * (ax * d.x + (1 - ax) * t.x) * (ay * d.y + (1 - ay) * t.y) * (az * d.z + (1 - az) * t.
+      z);  \textcolor{comment}{//*cellVolume;}
+564           \}
+565         \}           \textcolor{comment}{// if}
+566       \}         \textcolor{comment}{// az}
+567     \}               \textcolor{comment}{// p}
+568   \}             \textcolor{comment}{// c}
+569 
+570   \textcolor{keywordflow}{for} (p = 0; p < \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}; p++)
+571     free(\hyperlink{fields_8h_a978db43304285c6d893667023bd6bfb9}{fieldsPatches}[p]);
+572   free(\hyperlink{fields_8h_a978db43304285c6d893667023bd6bfb9}{fieldsPatches});
+573 
+574   \textcolor{keywordflow}{return};
+575 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interp_8c_a08111192411fead96613d994aa95f960_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{interp_8c_a3e968c18c11bbe46df754e7eca593b33}{\index{interp.\-c@{interp.\-c}!apply\-Patches@{apply\-Patches}}
+\index{apply\-Patches@{apply\-Patches}!interp.c@{interp.\-c}}
+\subsubsection[{apply\-Patches}]{\setlength{\rightskip}{0pt plus 5cm}int apply\-Patches (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{interp_8c_a3e968c18c11bbe46df754e7eca593b33}
+Update local density\-Field part with information from remote processes received in patches. Receiveing patches are deallocated here. 
+
+Definition at line 338 of file interp.\-c.
+
+
+
+References cic\-Intersect, cic\-Patch, cic\-Recv\-Patch, cic\-Sender, density\-Field, grid\-End\-Idx, grid\-Size, grid\-Start\-Idx, M\-P\-Irank, M\-P\-Isize, x, int64\-Vector3d\-::x, double\-Vector3d\-::y, int64\-Vector3d\-::y, double\-Vector3d\-::z, and int64\-Vector3d\-::z.
+
+
+\begin{DoxyCode}
+339 \{
+340 
+341   \textcolor{keywordtype}{int} p;
+342   \textcolor{keywordtype}{int} i, j, k;
+343 
+344   \textcolor{keywordflow}{for} (i = 0; i < \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z}; i++)
+345     \hyperlink{fields_8h_ab5fe38cf4811c34fa9d1c8e4aa6340c2}{densityField}[i] = 0.0;
+346 
+347   \textcolor{keywordflow}{for} (p = 0; p < \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}; p++) \{
+348     \textcolor{keywordtype}{int} i, j, k;
+349     \textcolor{keywordflow}{if} (!\hyperlink{interp_8c_a2a5d63a8f1ea342e89fe82d9bfa34dc4}{cicSender}[p])
+350       \textcolor{keywordflow}{continue};
+351     \textcolor{keywordflow}{for} (i = \hyperlink{interp_8c_a2376cd58453249d9c7665fa650751766}{lowerPatchCornerR}[p].\hyperlink{tempf_8c_a1780e9c70637026d6fab31f63b3a193e}{x}; i <= \hyperlink{interp_8c_a6a5d325724a8a8e583d58f951412aa0f}{upperPatchCornerR}[p].
+      \hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x}; i++)
+352       \textcolor{keywordflow}{for} (j = \hyperlink{interp_8c_a2376cd58453249d9c7665fa650751766}{lowerPatchCornerR}[p].\hyperlink{structdoubleVector3d_ab927965981178aa1fba979a37168db2a}{y}; j <= \hyperlink{interp_8c_a6a5d325724a8a8e583d58f951412aa0f}{upperPatchCornerR}[p].
+      \hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y}; j++)
+353     \textcolor{keywordflow}{for} (k = \hyperlink{interp_8c_a2376cd58453249d9c7665fa650751766}{lowerPatchCornerR}[p].\hyperlink{structdoubleVector3d_ab3e6ed577a7c669c19de1f9c1b46c872}{z}; k <= \hyperlink{interp_8c_a6a5d325724a8a8e583d58f951412aa0f}{upperPatchCornerR}[p].
+      \hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z}; k++) \{
+354       \textcolor{keyword}{struct }\hyperlink{structint64Vector3d}{int64Vector3d} c, g, size;
+355       size.\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} = \hyperlink{interp_8c_a6a5d325724a8a8e583d58f951412aa0f}{upperPatchCornerR}[p].\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} - \hyperlink{interp_8c_a2376cd58453249d9c7665fa650751766}{lowerPatchCornerR}[p].
+      \hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} + 1;
+356       size.y = \hyperlink{interp_8c_a6a5d325724a8a8e583d58f951412aa0f}{upperPatchCornerR}[p].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} - \hyperlink{interp_8c_a2376cd58453249d9c7665fa650751766}{lowerPatchCornerR}[p].
+      \hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} + 1;
+357       size.z = \hyperlink{interp_8c_a6a5d325724a8a8e583d58f951412aa0f}{upperPatchCornerR}[p].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} - \hyperlink{interp_8c_a2376cd58453249d9c7665fa650751766}{lowerPatchCornerR}[p].
+      \hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} + 1;
+358       c.x = i - \hyperlink{interp_8c_a2376cd58453249d9c7665fa650751766}{lowerPatchCornerR}[p].\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x};
+359       c.y = j - \hyperlink{interp_8c_a2376cd58453249d9c7665fa650751766}{lowerPatchCornerR}[p].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y};
+360       c.z = k - \hyperlink{interp_8c_a2376cd58453249d9c7665fa650751766}{lowerPatchCornerR}[p].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z};
+361       \textcolor{keywordflow}{if} (i >= \hyperlink{fields_8h_a9154f33f7786c05c61f4d519da14d501}{gridStartIdx}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}].\hyperlink{tempf_8c_a1780e9c70637026d6fab31f63b3a193e}{x} && i <= \hyperlink{fields_8h_a1d13a1c43b1a6eb6ca088b79ee681b48}{gridEndIdx}[
+      \hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}].\hyperlink{tempf_8c_a1780e9c70637026d6fab31f63b3a193e}{x}
+362           && j >= \hyperlink{fields_8h_a9154f33f7786c05c61f4d519da14d501}{gridStartIdx}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} && j <= \hyperlink{fields_8h_a1d13a1c43b1a6eb6ca088b79ee681b48}{gridEndIdx}[
+      \hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y}
+363           && k >= \hyperlink{fields_8h_a9154f33f7786c05c61f4d519da14d501}{gridStartIdx}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z}
+364           && k <= \hyperlink{fields_8h_a1d13a1c43b1a6eb6ca088b79ee681b48}{gridEndIdx}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z}) \{
+365         g.x = i - \hyperlink{fields_8h_a9154f33f7786c05c61f4d519da14d501}{gridStartIdx}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}].\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x};
+366         g.y = j - \hyperlink{fields_8h_a9154f33f7786c05c61f4d519da14d501}{gridStartIdx}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y};
+367         g.z = k - \hyperlink{fields_8h_a9154f33f7786c05c61f4d519da14d501}{gridStartIdx}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z};
+368         \hyperlink{fields_8h_ab5fe38cf4811c34fa9d1c8e4aa6340c2}{densityField}[\hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} * g.x + 
+      \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} * g.y +
+369              g.z] +=
+370         \hyperlink{interp_8c_aa694a54cf85528e82466805524525b7d}{cicRecvPatch}[p][size.z * size.y * c.x + size.z * c.y +
+371                 c.z];
+372       \}
+373     \}
+374     free(\hyperlink{interp_8c_aa694a54cf85528e82466805524525b7d}{cicRecvPatch}[p]);
+375   \}
+376 
+377   free(\hyperlink{interp_8c_aa694a54cf85528e82466805524525b7d}{cicRecvPatch});
+378 
+379   \textcolor{keywordflow}{for} (p = 0; p < \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}; p++)
+380     \textcolor{keywordflow}{if} (\hyperlink{interp_8c_aa1e8e01a33edaeee7b43a257115fe3ed}{cicIntersect}[p])
+381       free(\hyperlink{interp_8c_a7b2e819edbf39d5d976cff399612f6e8}{cicPatch}[p]);
+382 
+383   free(\hyperlink{interp_8c_a7b2e819edbf39d5d976cff399612f6e8}{cicPatch});
+384   \textcolor{keywordflow}{return};
+385 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interp_8c_a3e968c18c11bbe46df754e7eca593b33_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{interp_8c_a09ed91c5c40f3937e10c8c60c2b8fb7f}{\index{interp.\-c@{interp.\-c}!do\-Interpolation@{do\-Interpolation}}
+\index{do\-Interpolation@{do\-Interpolation}!interp.c@{interp.\-c}}
+\subsubsection[{do\-Interpolation}]{\setlength{\rightskip}{0pt plus 5cm}void do\-Interpolation (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{interp_8c_a09ed91c5c40f3937e10c8c60c2b8fb7f}
+For each local cell its density value is interpolated accross neighbouring grid vertices with the use of Cloud-\/\-In-\/\-Cell method. Computed values are stored in patches instead in field buffers. No additional memory allocations are made here. 
+
+Definition at line 181 of file interp.\-c.
+
+
+
+References cells, grid\-End\-Idx, grid\-Resolution, grid\-Start\-Idx, lnc, M\-P\-Isize, patch, x, cell\-Data\-::x, double\-Vector3d\-::x, int64\-Vector3d\-::x, cell\-Data\-::y, double\-Vector3d\-::y, int64\-Vector3d\-::y, cell\-Data\-::z, double\-Vector3d\-::z, and int64\-Vector3d\-::z.
+
+
+\begin{DoxyCode}
+182 \{
+183 
+184   \textcolor{keywordtype}{int} c, i, p, j, k;
+185   \textcolor{keyword}{struct }\hyperlink{structint64Vector3d}{int64Vector3d} idx;
+186   \textcolor{keyword}{struct }\hyperlink{structdoubleVector3d}{doubleVector3d} d, t;
+187   \textcolor{keyword}{struct }\hyperlink{structint64Vector3d}{int64Vector3d} cellIdx;
+188   \textcolor{keyword}{struct }\hyperlink{structdoubleVector3d}{doubleVector3d} cicCoord;
+189 
+190   \textcolor{keywordflow}{for} (p = 0; p < \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}; p++)
+191     \textcolor{keywordflow}{for} (i = 0; i < \hyperlink{interp_8c_a63c4dd6e4bd05dfdc1e3b01c60b96c31}{patchSize}[p].\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x}; i++)
+192       \textcolor{keywordflow}{for} (j = 0; j < \hyperlink{interp_8c_a63c4dd6e4bd05dfdc1e3b01c60b96c31}{patchSize}[p].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y}; j++)
+193     \textcolor{keywordflow}{for} (k = 0; k < \hyperlink{interp_8c_a63c4dd6e4bd05dfdc1e3b01c60b96c31}{patchSize}[p].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z}; k++)
+194       \hyperlink{interp_8c_aebce899f04ee8be80684bb4610b99392}{patch}(p, i, j, k) = 0.0;
+195 
+196   \textcolor{keywordflow}{for} (c = 0; c < \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}; c++) \{
+197 
+198     cellIdx.x = ((\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_af88b946fb90d5f08b5fb740c70e98c10}{x} - lowerGridCorner.x) / \hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution});
+199     cellIdx.y = ((\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_ab927965981178aa1fba979a37168db2a}{y} - lowerGridCorner.y) / \hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution});
+200     cellIdx.z = ((\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_ab3e6ed577a7c669c19de1f9c1b46c872}{z} - lowerGridCorner.z) / \hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution});
+201 
+202     \textcolor{keywordflow}{for} (p = 0; p < \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}; p++) \{
+203       \textcolor{keywordtype}{int} ax, ay, az;
+204       \textcolor{keywordflow}{for} (ax = 0; ax < 2; ax++)
+205     \textcolor{keywordflow}{for} (ay = 0; ay < 2; ay++)
+206       \textcolor{keywordflow}{for} (az = 0; az < 2; az++) \{
+207         \textcolor{keywordflow}{if} (cellIdx.x + ax >= \hyperlink{fields_8h_a9154f33f7786c05c61f4d519da14d501}{gridStartIdx}[p].\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x}
+208         && cellIdx.y + ay >= \hyperlink{fields_8h_a9154f33f7786c05c61f4d519da14d501}{gridStartIdx}[p].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y}
+209         && cellIdx.z + az >= \hyperlink{fields_8h_a9154f33f7786c05c61f4d519da14d501}{gridStartIdx}[p].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z}
+210         && cellIdx.x + ax <= \hyperlink{fields_8h_a1d13a1c43b1a6eb6ca088b79ee681b48}{gridEndIdx}[p].\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x}
+211         && cellIdx.y + ay <= \hyperlink{fields_8h_a1d13a1c43b1a6eb6ca088b79ee681b48}{gridEndIdx}[p].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y}
+212         && cellIdx.z + az <= \hyperlink{fields_8h_a1d13a1c43b1a6eb6ca088b79ee681b48}{gridEndIdx}[p].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z}) \{
+213 
+214           idx.x = (cellIdx.x + ax) - \hyperlink{interp_8c_a4a5d5cd735e0be12043322e83f096e15}{lowerPatchCorner}[p].\hyperlink{tempf_8c_a1780e9c70637026d6fab31f63b3a193e}{x};
+215           idx.y = (cellIdx.y + ay) - \hyperlink{interp_8c_a4a5d5cd735e0be12043322e83f096e15}{lowerPatchCorner}[p].\hyperlink{structdoubleVector3d_ab927965981178aa1fba979a37168db2a}{y};
+216           idx.z = (cellIdx.z + az) - \hyperlink{interp_8c_a4a5d5cd735e0be12043322e83f096e15}{lowerPatchCorner}[p].\hyperlink{structdoubleVector3d_ab3e6ed577a7c669c19de1f9c1b46c872}{z};
+217 
+218           cicCoord.x = lowerGridCorner.x + cellIdx.x * \hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution};
+219           cicCoord.y = lowerGridCorner.y + cellIdx.y * \hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution};
+220           cicCoord.z = lowerGridCorner.z + cellIdx.z * \hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution};
+221 
+222           d.x = (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_af88b946fb90d5f08b5fb740c70e98c10}{x} - cicCoord.x) / \hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution};
+223           d.y = (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_ab927965981178aa1fba979a37168db2a}{y} - cicCoord.y) / \hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution};
+224           d.z = (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_ab3e6ed577a7c669c19de1f9c1b46c872}{z} - cicCoord.z) / \hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution};
+225 
+226           t.x = 1.0 - d.x;
+227           t.y = 1.0 - d.y;
+228           t.z = 1.0 - d.z;
+229 
+230           \textcolor{keywordflow}{if} (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].phase != 5) \{   \textcolor{comment}{/* if not in necrotic phase */}
+231         \textcolor{keywordflow}{if} (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].phase == 0) \{ \textcolor{comment}{/* if in G0 phase - lower consumption */}
+232           \hyperlink{interp_8c_aebce899f04ee8be80684bb4610b99392}{patch}(p, idx.x, idx.y, idx.z) +=
+233               0.75 * (ax * d.x + (1 - ax) * t.x) * (ay * d.y +
+234                                 (1 -
+235                                  ay) * t.y) *
+236               (az * d.z + (1 - az) * t.z);
+237         \} \textcolor{keywordflow}{else} \{    \textcolor{comment}{/* if not in G0 phase - normal consumption */}
+238           \hyperlink{interp_8c_aebce899f04ee8be80684bb4610b99392}{patch}(p, idx.x, idx.y, idx.z) +=
+239               1.0 * (ax * d.x + (1 - ax) * t.x) * (ay * d.y +
+240                                (1 -
+241                                 ay) * t.y) *
+242               (az * d.z + (1 - az) * t.z);
+243         \}
+244           \}
+245 
+246         \}
+247       \}
+248     \}
+249   \}
+250   \textcolor{keywordflow}{return};
+251 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interp_8c_a09ed91c5c40f3937e10c8c60c2b8fb7f_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{interp_8c_a4299a7e9993adbe7a047b835b2339550}{\index{interp.\-c@{interp.\-c}!find\-Patches@{find\-Patches}}
+\index{find\-Patches@{find\-Patches}!interp.c@{interp.\-c}}
+\subsubsection[{find\-Patches}]{\setlength{\rightskip}{0pt plus 5cm}void find\-Patches (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{interp_8c_a4299a7e9993adbe7a047b835b2339550}
+For each local cell we check its position in the grid. If cell is located in the grid partition of other process than the information about this cell should be send to remote process by M\-P\-I communication. This is done by preparing special patches and sending the information on all bunch of cells rather than sendind it one by one. This function identifies patches and allocate memory buffers for patches. 
+
+Definition at line 60 of file interp.\-c.
+
+
+
+References cells, cic\-Intersect, cic\-Patch, grid\-End\-Idx, grid\-Resolution, grid\-Start\-Idx, lnc, M\-P\-Isize, sdim, x, cell\-Data\-::x, int64\-Vector3d\-::x, cell\-Data\-::y, int64\-Vector3d\-::y, cell\-Data\-::z, and int64\-Vector3d\-::z.
+
+
+\begin{DoxyCode}
+61 \{
+62 
+63   \textcolor{keywordtype}{int} i, c, p;
+64   \textcolor{keyword}{struct }\hyperlink{structint64Vector3d}{int64Vector3d} cellIdx;
+65 
+66   \hyperlink{interp_8c_a7b2e819edbf39d5d976cff399612f6e8}{cicPatch} = (\textcolor{keywordtype}{double} **) calloc(\hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}, \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double} *));
+67   \hyperlink{interp_8c_aa1e8e01a33edaeee7b43a257115fe3ed}{cicIntersect} = (\textcolor{keywordtype}{int} *) calloc(\hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}, \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{int}));
+68   \hyperlink{interp_8c_a4a5d5cd735e0be12043322e83f096e15}{lowerPatchCorner} =
+69       (\textcolor{keyword}{struct }\hyperlink{structint64Vector3d}{int64Vector3d} *) calloc(\hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize},
+70                       \textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} \hyperlink{structint64Vector3d}{int64Vector3d}));
+71   \hyperlink{interp_8c_a1ad7766a77930978570efda9dc79c423}{upperPatchCorner} =
+72       (\textcolor{keyword}{struct }\hyperlink{structint64Vector3d}{int64Vector3d} *) calloc(\hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize},
+73                       \textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} \hyperlink{structint64Vector3d}{int64Vector3d}));
+74   \hyperlink{interp_8c_a2376cd58453249d9c7665fa650751766}{lowerPatchCornerR} =
+75       (\textcolor{keyword}{struct }\hyperlink{structint64Vector3d}{int64Vector3d} *) calloc(\hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize},
+76                       \textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} \hyperlink{structint64Vector3d}{int64Vector3d}));
+77   \hyperlink{interp_8c_a6a5d325724a8a8e583d58f951412aa0f}{upperPatchCornerR} =
+78       (\textcolor{keyword}{struct }\hyperlink{structint64Vector3d}{int64Vector3d} *) calloc(\hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize},
+79                       \textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} \hyperlink{structint64Vector3d}{int64Vector3d}));
+80   \hyperlink{interp_8c_a63c4dd6e4bd05dfdc1e3b01c60b96c31}{patchSize} =
+81       (\textcolor{keyword}{struct }\hyperlink{structint64Vector3d}{int64Vector3d} *) calloc(\hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize},
+82                       \textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} \hyperlink{structint64Vector3d}{int64Vector3d}));
+83   \hyperlink{interp_8c_ac36d10dac7f64ef74bbf954bf709a0bd}{patchSizeR} =
+84       (\textcolor{keyword}{struct }\hyperlink{structint64Vector3d}{int64Vector3d} *) calloc(\hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize},
+85                       \textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} \hyperlink{structint64Vector3d}{int64Vector3d}));
+86 
+87   \textcolor{keywordflow}{for} (p = 0; p < \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}; p++) \{
+88     \hyperlink{interp_8c_aa1e8e01a33edaeee7b43a257115fe3ed}{cicIntersect}[p] = 0;
+89     \hyperlink{interp_8c_a63c4dd6e4bd05dfdc1e3b01c60b96c31}{patchSize}[p].\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} = 0;
+90     \hyperlink{interp_8c_a63c4dd6e4bd05dfdc1e3b01c60b96c31}{patchSize}[p].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} = 0;
+91     \hyperlink{interp_8c_a63c4dd6e4bd05dfdc1e3b01c60b96c31}{patchSize}[p].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} = 0;
+92     \hyperlink{interp_8c_a4a5d5cd735e0be12043322e83f096e15}{lowerPatchCorner}[p].\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} = INT\_MAX;
+93     \hyperlink{interp_8c_a4a5d5cd735e0be12043322e83f096e15}{lowerPatchCorner}[p].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} = INT\_MAX;
+94     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 3)
+95       \hyperlink{interp_8c_a4a5d5cd735e0be12043322e83f096e15}{lowerPatchCorner}[p].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} = INT\_MAX;
+96     \textcolor{keywordflow}{else}
+97       \hyperlink{interp_8c_a4a5d5cd735e0be12043322e83f096e15}{lowerPatchCorner}[p].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} = 0;
+98     \hyperlink{interp_8c_a1ad7766a77930978570efda9dc79c423}{upperPatchCorner}[p].\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} = INT\_MIN, \hyperlink{interp_8c_a1ad7766a77930978570efda9dc79c423}{upperPatchCorner}[p].
+      \hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} = INT\_MIN;
+99     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 3)
+100       \hyperlink{interp_8c_a1ad7766a77930978570efda9dc79c423}{upperPatchCorner}[p].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} = INT\_MIN;
+101     \textcolor{keywordflow}{else}
+102       \hyperlink{interp_8c_a1ad7766a77930978570efda9dc79c423}{upperPatchCorner}[p].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} = 0;
+103   \}
+104 
+105   \textcolor{comment}{//#pragma omp parallel for default(none) private(p,c,cellIdx)
+       shared(cells,gridResolution,lnc,MPIsize,gridStartIdx,gridEndIdx,lowerPatchCorner,upperPatchCorner,cicIntersect,sdim,lowerGridCorner)}
+106   \textcolor{keywordflow}{for} (p = 0; p < \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}; p++) \{
+107 
+108     \textcolor{keywordflow}{for} (c = 0; c < \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}; c++) \{
+109 
+110       \textcolor{keywordtype}{int} ax, ay, az;
+111 
+112       cellIdx.x = ((\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_af88b946fb90d5f08b5fb740c70e98c10}{x} - lowerGridCorner.x) / \hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution});
+113       cellIdx.y = ((\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_ab927965981178aa1fba979a37168db2a}{y} - lowerGridCorner.y) / \hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution});
+114       cellIdx.z = ((\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[c].\hyperlink{structcellData_ab3e6ed577a7c669c19de1f9c1b46c872}{z} - lowerGridCorner.z) / \hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution});
+115 
+116       \textcolor{keywordflow}{for} (ax = 0; ax < 2; ax++)
+117     \textcolor{keywordflow}{for} (ay = 0; ay < 2; ay++)
+118       \textcolor{keywordflow}{for} (az = 0; az < 2; az++) \{
+119 
+120         \textcolor{keywordflow}{if} (cellIdx.x + ax >= \hyperlink{fields_8h_a9154f33f7786c05c61f4d519da14d501}{gridStartIdx}[p].\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x}
+121         && cellIdx.y + ay >= \hyperlink{fields_8h_a9154f33f7786c05c61f4d519da14d501}{gridStartIdx}[p].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y}
+122         && cellIdx.z + az >= \hyperlink{fields_8h_a9154f33f7786c05c61f4d519da14d501}{gridStartIdx}[p].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z}
+123         && cellIdx.x + ax <= \hyperlink{fields_8h_a1d13a1c43b1a6eb6ca088b79ee681b48}{gridEndIdx}[p].\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x}
+124         && cellIdx.y + ay <= \hyperlink{fields_8h_a1d13a1c43b1a6eb6ca088b79ee681b48}{gridEndIdx}[p].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y}
+125         && cellIdx.z + az <= \hyperlink{fields_8h_a1d13a1c43b1a6eb6ca088b79ee681b48}{gridEndIdx}[p].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z}) \{
+126           \hyperlink{interp_8c_a4a5d5cd735e0be12043322e83f096e15}{lowerPatchCorner}[p].\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} =
+127           (\hyperlink{interp_8c_a4a5d5cd735e0be12043322e83f096e15}{lowerPatchCorner}[p].\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} >
+128            cellIdx.x + ax ? cellIdx.x +
+129            ax : \hyperlink{interp_8c_a4a5d5cd735e0be12043322e83f096e15}{lowerPatchCorner}[p].\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x});
+130           \hyperlink{interp_8c_a4a5d5cd735e0be12043322e83f096e15}{lowerPatchCorner}[p].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} =
+131           (\hyperlink{interp_8c_a4a5d5cd735e0be12043322e83f096e15}{lowerPatchCorner}[p].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} >
+132            cellIdx.y + ay ? cellIdx.y +
+133            ay : \hyperlink{interp_8c_a4a5d5cd735e0be12043322e83f096e15}{lowerPatchCorner}[p].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y});
+134           \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 3)
+135         \hyperlink{interp_8c_a4a5d5cd735e0be12043322e83f096e15}{lowerPatchCorner}[p].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} =
+136             (\hyperlink{interp_8c_a4a5d5cd735e0be12043322e83f096e15}{lowerPatchCorner}[p].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} >
+137              cellIdx.z + az ? cellIdx.z +
+138              az : \hyperlink{interp_8c_a4a5d5cd735e0be12043322e83f096e15}{lowerPatchCorner}[p].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z});
+139           \hyperlink{interp_8c_a1ad7766a77930978570efda9dc79c423}{upperPatchCorner}[p].\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} =
+140           (\hyperlink{interp_8c_a1ad7766a77930978570efda9dc79c423}{upperPatchCorner}[p].\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} <
+141            cellIdx.x + ax ? cellIdx.x +
+142            ax : \hyperlink{interp_8c_a1ad7766a77930978570efda9dc79c423}{upperPatchCorner}[p].\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x});
+143           \hyperlink{interp_8c_a1ad7766a77930978570efda9dc79c423}{upperPatchCorner}[p].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} =
+144           (\hyperlink{interp_8c_a1ad7766a77930978570efda9dc79c423}{upperPatchCorner}[p].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} <
+145            cellIdx.y + ay ? cellIdx.y +
+146            ay : \hyperlink{interp_8c_a1ad7766a77930978570efda9dc79c423}{upperPatchCorner}[p].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y});
+147           \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 3)
+148         \hyperlink{interp_8c_a1ad7766a77930978570efda9dc79c423}{upperPatchCorner}[p].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} =
+149             (\hyperlink{interp_8c_a1ad7766a77930978570efda9dc79c423}{upperPatchCorner}[p].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} <
+150              cellIdx.z + az ? cellIdx.z +
+151              az : \hyperlink{interp_8c_a1ad7766a77930978570efda9dc79c423}{upperPatchCorner}[p].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z});
+152 
+153           \hyperlink{interp_8c_aa1e8e01a33edaeee7b43a257115fe3ed}{cicIntersect}[p] = 1;
+154         \}
+155       \}
+156     \}
+157   \}
+158 
+159   \textcolor{keywordflow}{for} (p = 0; p < \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}; p++)
+160     \textcolor{keywordflow}{if} (\hyperlink{interp_8c_aa1e8e01a33edaeee7b43a257115fe3ed}{cicIntersect}[p]) \{
+161       \hyperlink{interp_8c_a63c4dd6e4bd05dfdc1e3b01c60b96c31}{patchSize}[p].\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} = \hyperlink{interp_8c_a1ad7766a77930978570efda9dc79c423}{upperPatchCorner}[p].\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} - 
+      \hyperlink{interp_8c_a4a5d5cd735e0be12043322e83f096e15}{lowerPatchCorner}[p].\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} + 1;
+162       \hyperlink{interp_8c_a63c4dd6e4bd05dfdc1e3b01c60b96c31}{patchSize}[p].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} = \hyperlink{interp_8c_a1ad7766a77930978570efda9dc79c423}{upperPatchCorner}[p].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} - 
+      \hyperlink{interp_8c_a4a5d5cd735e0be12043322e83f096e15}{lowerPatchCorner}[p].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} + 1;
+163       \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 3)
+164     \hyperlink{interp_8c_a63c4dd6e4bd05dfdc1e3b01c60b96c31}{patchSize}[p].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} = \hyperlink{interp_8c_a1ad7766a77930978570efda9dc79c423}{upperPatchCorner}[p].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} - 
+      \hyperlink{interp_8c_a4a5d5cd735e0be12043322e83f096e15}{lowerPatchCorner}[p].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} + 1;
+165       \textcolor{keywordflow}{else}
+166     \hyperlink{interp_8c_a63c4dd6e4bd05dfdc1e3b01c60b96c31}{patchSize}[p].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} = 1;
+167       cicPatch[p] =
+168       (\textcolor{keywordtype}{double} *) calloc(\hyperlink{interp_8c_a63c4dd6e4bd05dfdc1e3b01c60b96c31}{patchSize}[p].\hyperlink{tempf_8c_a1780e9c70637026d6fab31f63b3a193e}{x} * \hyperlink{interp_8c_a63c4dd6e4bd05dfdc1e3b01c60b96c31}{patchSize}[p].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} *
+169                 \hyperlink{interp_8c_a63c4dd6e4bd05dfdc1e3b01c60b96c31}{patchSize}[p].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z}, \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double}));
+170     \}
+171 
+172   \textcolor{keywordflow}{return};
+173 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interp_8c_a4299a7e9993adbe7a047b835b2339550_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{interp_8c_ad862fb7e08b1dee6d784a09a26978ada}{\index{interp.\-c@{interp.\-c}!init\-Cells\-To\-Grid\-Exchange@{init\-Cells\-To\-Grid\-Exchange}}
+\index{init\-Cells\-To\-Grid\-Exchange@{init\-Cells\-To\-Grid\-Exchange}!interp.c@{interp.\-c}}
+\subsubsection[{init\-Cells\-To\-Grid\-Exchange}]{\setlength{\rightskip}{0pt plus 5cm}void init\-Cells\-To\-Grid\-Exchange (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{interp_8c_ad862fb7e08b1dee6d784a09a26978ada}
+This function initializes data exchange between processes required in cells-\/to-\/grid interpolation. This function enables overlapping communication and computations. 
+
+Definition at line 598 of file interp.\-c.
+
+
+
+References do\-Interpolation(), find\-Patches(), gfields, and init\-Patch\-Exchange().
+
+
+\begin{DoxyCode}
+599 \{
+600   \textcolor{keywordflow}{if} (!\hyperlink{fields_8h_abe4692639a5f11507faff09f2d37efa8}{gfields})
+601     \textcolor{keywordflow}{return};
+602   \hyperlink{interp_8c_a4299a7e9993adbe7a047b835b2339550}{findPatches}();
+603   \hyperlink{interp_8c_a09ed91c5c40f3937e10c8c60c2b8fb7f}{doInterpolation}();
+604   \hyperlink{interp_8c_a085ef29ed8159779989ae8fac05fd699}{initPatchExchange}();
+605 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=340pt]{interp_8c_ad862fb7e08b1dee6d784a09a26978ada_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=280pt]{interp_8c_ad862fb7e08b1dee6d784a09a26978ada_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{interp_8c_a4fe8eca69017d7e0f87fd2c6cdb9b2e2}{\index{interp.\-c@{interp.\-c}!init\-Fields\-Patches\-Exchange@{init\-Fields\-Patches\-Exchange}}
+\index{init\-Fields\-Patches\-Exchange@{init\-Fields\-Patches\-Exchange}!interp.c@{interp.\-c}}
+\subsubsection[{init\-Fields\-Patches\-Exchange}]{\setlength{\rightskip}{0pt plus 5cm}void init\-Fields\-Patches\-Exchange (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{interp_8c_a4fe8eca69017d7e0f87fd2c6cdb9b2e2}
+Now each local cell should receive information about values of global fields in the grid. Field patches are filled with appropriate values. Non-\/blocking communication is initiated. This is executed after global fields are computed. Field patches buffers are allocated here. Sizes of the patches are the same as those from previous C\-I\-C communication. Receiving field patches are also allocated here. M\-P\-I\-\_\-\-Request tables are allocated here. 
+
+Definition at line 398 of file interp.\-c.
+
+
+
+References cic\-Receiver, cic\-Req\-Recv, cic\-Req\-Send, cic\-Sender, field\-Addr, fields\-Patches, fields\-Patches\-Comm\-Buff, grid\-Size, grid\-Start\-Idx, M\-P\-Irank, M\-P\-Isize, N\-F\-I\-E\-L\-D\-S, stop\-Run(), x, int64\-Vector3d\-::x, int64\-Vector3d\-::y, and int64\-Vector3d\-::z.
+
+
+\begin{DoxyCode}
+399 \{
+400 
+401   \textcolor{keywordtype}{int} f;            \textcolor{comment}{/* fields index */}
+402   \textcolor{keywordtype}{int} p;            \textcolor{comment}{/* process index */}
+403   \textcolor{keyword}{struct }\hyperlink{structint64Vector3d}{int64Vector3d} idx, g;
+404   \textcolor{keyword}{struct }\hyperlink{structint64Vector3d}{int64Vector3d} size;
+405 
+406   \hyperlink{fields_8h_af5c78cf0ef851175243d9f71767efe50}{fieldsPatchesCommBuff} = (\textcolor{keywordtype}{double} **) calloc(\hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}, \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double} *));
+407 
+408   \textcolor{keywordflow}{for} (p = 0; p < \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}; p++) \{
+409     \textcolor{keywordtype}{int} fieldPatchSize;
+410     \textcolor{keywordflow}{if} (!\hyperlink{interp_8c_a2a5d63a8f1ea342e89fe82d9bfa34dc4}{cicSender}[p])
+411       \textcolor{keywordflow}{continue};         \textcolor{comment}{/* continue to next process if current process do not overlap domain */}
+412     size.x = \hyperlink{interp_8c_a6a5d325724a8a8e583d58f951412aa0f}{upperPatchCornerR}[p].\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} - \hyperlink{interp_8c_a2376cd58453249d9c7665fa650751766}{lowerPatchCornerR}[p].
+      \hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} + 1;
+413     size.y = \hyperlink{interp_8c_a6a5d325724a8a8e583d58f951412aa0f}{upperPatchCornerR}[p].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} - \hyperlink{interp_8c_a2376cd58453249d9c7665fa650751766}{lowerPatchCornerR}[p].
+      \hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} + 1;
+414     size.z = \hyperlink{interp_8c_a6a5d325724a8a8e583d58f951412aa0f}{upperPatchCornerR}[p].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} - \hyperlink{interp_8c_a2376cd58453249d9c7665fa650751766}{lowerPatchCornerR}[p].
+      \hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} + 1;
+415     fieldPatchSize = size.x * size.y * size.z;
+416     fieldsPatchesCommBuff[p] =
+417     (\textcolor{keywordtype}{double} *) calloc(\hyperlink{fields_8h_a7986f01c038f396ce7df280bb2903099}{NFIELDS} * fieldPatchSize, \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double}));
+418     \textcolor{keywordflow}{for} (f = 0; f < \hyperlink{fields_8h_a7986f01c038f396ce7df280bb2903099}{NFIELDS}; f++) \{
+419       int64\_t i, j, k;
+420       \textcolor{keywordflow}{for} (i = \hyperlink{interp_8c_a2376cd58453249d9c7665fa650751766}{lowerPatchCornerR}[p].\hyperlink{tempf_8c_a1780e9c70637026d6fab31f63b3a193e}{x}; i <= \hyperlink{interp_8c_a6a5d325724a8a8e583d58f951412aa0f}{upperPatchCornerR}[p].
+      \hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x}; i++)
+421     \textcolor{keywordflow}{for} (j = \hyperlink{interp_8c_a2376cd58453249d9c7665fa650751766}{lowerPatchCornerR}[p].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y}; j <= \hyperlink{interp_8c_a6a5d325724a8a8e583d58f951412aa0f}{upperPatchCornerR}[p].
+      \hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y}; j++)
+422       \textcolor{keywordflow}{for} (k = \hyperlink{interp_8c_a2376cd58453249d9c7665fa650751766}{lowerPatchCornerR}[p].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z}; k <= \hyperlink{interp_8c_a6a5d325724a8a8e583d58f951412aa0f}{upperPatchCornerR}[p].
+      \hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z};
+423            k++) \{
+424         idx.x = i - \hyperlink{interp_8c_a2376cd58453249d9c7665fa650751766}{lowerPatchCornerR}[p].\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x};
+425         idx.y = j - \hyperlink{interp_8c_a2376cd58453249d9c7665fa650751766}{lowerPatchCornerR}[p].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y};
+426         idx.z = k - \hyperlink{interp_8c_a2376cd58453249d9c7665fa650751766}{lowerPatchCornerR}[p].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z};
+427         g.x = i - \hyperlink{fields_8h_a9154f33f7786c05c61f4d519da14d501}{gridStartIdx}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}].\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x};
+428         g.y = j - \hyperlink{fields_8h_a9154f33f7786c05c61f4d519da14d501}{gridStartIdx}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y};
+429         g.z = k - \hyperlink{fields_8h_a9154f33f7786c05c61f4d519da14d501}{gridStartIdx}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z};
+430         fieldsPatchesCommBuff[p][f * fieldPatchSize +
+431                      size.z * size.y * idx.x +
+432                      size.z * idx.y + idx.z] =
+433         ((\textcolor{keywordtype}{double} *) \hyperlink{fields_8h_a6f2153921f2cf97a60e41a347ecaeb39}{fieldAddr}[f])[\hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.
+      \hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} * g.x +
+434                       \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} * g.y + g.z];
+435       \}
+436     \}
+437   \}
+438 
+439   \textcolor{keywordflow}{if} (!(\hyperlink{fields_8h_a978db43304285c6d893667023bd6bfb9}{fieldsPatches} = (\textcolor{keywordtype}{double} **) calloc(MPIsize, \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double} *))))
+440     \hyperlink{utils_8c_a07dd99a04f2723be164531a7a862fb67}{stopRun}(106, \textcolor{stringliteral}{"fieldsPatches"}, \_\_FILE\_\_, \_\_LINE\_\_);
+441 
+442   \hyperlink{interp_8c_ae3d471e7732a1f671ffe978fcd723912}{cicReqSend} = (MPI\_Request *) malloc(\textcolor{keyword}{sizeof}(MPI\_Request) * \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize});
+443   \hyperlink{interp_8c_a63b72f0c32960cd3ecc1733f30c40214}{cicReqRecv} = (MPI\_Request *) malloc(\textcolor{keyword}{sizeof}(MPI\_Request) * \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize});
+444 
+445   \textcolor{keywordflow}{for} (p = 0; p < \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}; p++) \{
+446     \textcolor{keywordflow}{if} (\hyperlink{interp_8c_a2a5d63a8f1ea342e89fe82d9bfa34dc4}{cicSender}[p]) \{
+447       \textcolor{keywordtype}{int} sendSize;
+448       sendSize =
+449       (\hyperlink{interp_8c_a6a5d325724a8a8e583d58f951412aa0f}{upperPatchCornerR}[p].\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} - \hyperlink{interp_8c_a2376cd58453249d9c7665fa650751766}{lowerPatchCornerR}[p].
+      \hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} +
+450        1) * (\hyperlink{interp_8c_a6a5d325724a8a8e583d58f951412aa0f}{upperPatchCornerR}[p].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} - \hyperlink{interp_8c_a2376cd58453249d9c7665fa650751766}{lowerPatchCornerR}[p].
+      \hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} +
+451          1) * (\hyperlink{interp_8c_a6a5d325724a8a8e583d58f951412aa0f}{upperPatchCornerR}[p].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} - \hyperlink{interp_8c_a2376cd58453249d9c7665fa650751766}{lowerPatchCornerR}[p].
+      \hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} +
+452                1) * NFIELDS;
+453       MPI\_Isend(&(fieldsPatchesCommBuff[p][0]), sendSize, MPI\_DOUBLE, p,
+454         \hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}, MPI\_COMM\_WORLD, &\hyperlink{interp_8c_ae3d471e7732a1f671ffe978fcd723912}{cicReqSend}[p]);
+455     \}
+456     \textcolor{keywordflow}{if} (\hyperlink{interp_8c_adb4ccb79955589454dc66b849d8701ec}{cicReceiver}[p]) \{
+457       \textcolor{keywordtype}{int} recvSize;
+458       recvSize =
+459       \hyperlink{interp_8c_a63c4dd6e4bd05dfdc1e3b01c60b96c31}{patchSize}[p].\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} * \hyperlink{interp_8c_a63c4dd6e4bd05dfdc1e3b01c60b96c31}{patchSize}[p].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} * \hyperlink{interp_8c_a63c4dd6e4bd05dfdc1e3b01c60b96c31}{patchSize}[p].
+      \hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} * \hyperlink{fields_8h_a7986f01c038f396ce7df280bb2903099}{NFIELDS};
+460       \textcolor{keywordflow}{if} (!
+461       (\hyperlink{fields_8h_a978db43304285c6d893667023bd6bfb9}{fieldsPatches}[p] = (\textcolor{keywordtype}{double} *) calloc(recvSize, \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double}))))
+462     \hyperlink{utils_8c_a07dd99a04f2723be164531a7a862fb67}{stopRun}(106, \textcolor{stringliteral}{"fieldsPatches"}, \_\_FILE\_\_, \_\_LINE\_\_);
+463       MPI\_Irecv(&(\hyperlink{fields_8h_a978db43304285c6d893667023bd6bfb9}{fieldsPatches}[p][0]), recvSize, MPI\_DOUBLE, p, p,
+464         MPI\_COMM\_WORLD, &\hyperlink{interp_8c_a63b72f0c32960cd3ecc1733f30c40214}{cicReqRecv}[p]);
+465     \}
+466   \}
+467   \textcolor{keywordflow}{return};
+468 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=306pt]{interp_8c_a4fe8eca69017d7e0f87fd2c6cdb9b2e2_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interp_8c_a4fe8eca69017d7e0f87fd2c6cdb9b2e2_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{interp_8c_a085ef29ed8159779989ae8fac05fd699}{\index{interp.\-c@{interp.\-c}!init\-Patch\-Exchange@{init\-Patch\-Exchange}}
+\index{init\-Patch\-Exchange@{init\-Patch\-Exchange}!interp.c@{interp.\-c}}
+\subsubsection[{init\-Patch\-Exchange}]{\setlength{\rightskip}{0pt plus 5cm}void init\-Patch\-Exchange (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{interp_8c_a085ef29ed8159779989ae8fac05fd699}
+Patches are being sent to receiving processes with non-\/blocking communication scheme (Isend, Irecv). Receiving patches are allocated here. M\-P\-I\-\_\-\-Request tables are allocated here. 
+
+Definition at line 259 of file interp.\-c.
+
+
+
+References cic\-Intersect, cic\-Patch, cic\-Receiver, cic\-Recv\-Patch, cic\-Req\-Recv, cic\-Req\-Send, cic\-Sender, M\-P\-Irank, M\-P\-Isize, x, int64\-Vector3d\-::x, double\-Vector3d\-::y, double\-Vector3d\-::z, and int64\-Vector3d\-::z.
+
+
+\begin{DoxyCode}
+260 \{
+261   \textcolor{keywordtype}{int} p;
+262 
+263   \hyperlink{interp_8c_adb4ccb79955589454dc66b849d8701ec}{cicReceiver} = (\textcolor{keywordtype}{int} *) calloc(\hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}, \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{int}));
+264   \hyperlink{interp_8c_a2a5d63a8f1ea342e89fe82d9bfa34dc4}{cicSender} = (\textcolor{keywordtype}{int} *) calloc(\hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}, \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{int}));
+265 
+266   \textcolor{keywordflow}{for} (p = 0; p < \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}; p++)
+267     \hyperlink{interp_8c_adb4ccb79955589454dc66b849d8701ec}{cicReceiver}[p] = \hyperlink{interp_8c_aa1e8e01a33edaeee7b43a257115fe3ed}{cicIntersect}[p];
+268 
+269   MPI\_Alltoall(\hyperlink{interp_8c_adb4ccb79955589454dc66b849d8701ec}{cicReceiver}, 1, MPI\_INT, \hyperlink{interp_8c_a2a5d63a8f1ea342e89fe82d9bfa34dc4}{cicSender}, 1, MPI\_INT,
+270            MPI\_COMM\_WORLD);
+271 
+272   MPI\_Alltoall(\hyperlink{interp_8c_a4a5d5cd735e0be12043322e83f096e15}{lowerPatchCorner}, \textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} \hyperlink{structint64Vector3d}{int64Vector3d}), MPI\_BYTE,
+273            \hyperlink{interp_8c_a2376cd58453249d9c7665fa650751766}{lowerPatchCornerR}, \textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} \hyperlink{structint64Vector3d}{int64Vector3d}), MPI\_BYTE,
+274            MPI\_COMM\_WORLD);
+275   MPI\_Alltoall(\hyperlink{interp_8c_a1ad7766a77930978570efda9dc79c423}{upperPatchCorner}, \textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} \hyperlink{structint64Vector3d}{int64Vector3d}), MPI\_BYTE,
+276            \hyperlink{interp_8c_a6a5d325724a8a8e583d58f951412aa0f}{upperPatchCornerR}, \textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} \hyperlink{structint64Vector3d}{int64Vector3d}), MPI\_BYTE,
+277            MPI\_COMM\_WORLD);
+278 
+279   \hyperlink{interp_8c_aa694a54cf85528e82466805524525b7d}{cicRecvPatch} = (\textcolor{keywordtype}{double} **) calloc(MPIsize, \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double} *));
+280   \hyperlink{interp_8c_ae3d471e7732a1f671ffe978fcd723912}{cicReqSend} = (MPI\_Request *) malloc(\textcolor{keyword}{sizeof}(MPI\_Request) * \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize});
+281   \hyperlink{interp_8c_a63b72f0c32960cd3ecc1733f30c40214}{cicReqRecv} = (MPI\_Request *) malloc(\textcolor{keyword}{sizeof}(MPI\_Request) * \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize});
+282 
+283   \textcolor{keywordflow}{for} (p = 0; p < \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}; p++) \{
+284     \textcolor{keywordflow}{if} (\hyperlink{interp_8c_adb4ccb79955589454dc66b849d8701ec}{cicReceiver}[p]) \{
+285       MPI\_Isend(&(\hyperlink{interp_8c_a7b2e819edbf39d5d976cff399612f6e8}{cicPatch}[p][0]),
+286         \hyperlink{interp_8c_a63c4dd6e4bd05dfdc1e3b01c60b96c31}{patchSize}[p].\hyperlink{tempf_8c_a1780e9c70637026d6fab31f63b3a193e}{x} * \hyperlink{interp_8c_a63c4dd6e4bd05dfdc1e3b01c60b96c31}{patchSize}[p].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} * \hyperlink{interp_8c_a63c4dd6e4bd05dfdc1e3b01c60b96c31}{patchSize}[p].
+      \hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z},
+287         MPI\_DOUBLE, p, \hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}, MPI\_COMM\_WORLD, &\hyperlink{interp_8c_ae3d471e7732a1f671ffe978fcd723912}{cicReqSend}[p]);
+288     \}
+289     \textcolor{keywordflow}{if} (\hyperlink{interp_8c_a2a5d63a8f1ea342e89fe82d9bfa34dc4}{cicSender}[p]) \{
+290       \textcolor{keywordtype}{int} recvSize;
+291       recvSize =
+292       (\hyperlink{interp_8c_a6a5d325724a8a8e583d58f951412aa0f}{upperPatchCornerR}[p].\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} - \hyperlink{interp_8c_a2376cd58453249d9c7665fa650751766}{lowerPatchCornerR}[p].
+      \hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} +
+293        1) * (\hyperlink{interp_8c_a6a5d325724a8a8e583d58f951412aa0f}{upperPatchCornerR}[p].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} - \hyperlink{interp_8c_a2376cd58453249d9c7665fa650751766}{lowerPatchCornerR}[p].
+      \hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} +
+294          1) * (\hyperlink{interp_8c_a6a5d325724a8a8e583d58f951412aa0f}{upperPatchCornerR}[p].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} - \hyperlink{interp_8c_a2376cd58453249d9c7665fa650751766}{lowerPatchCornerR}[p].
+      \hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} +
+295                1);
+296       \textcolor{keywordflow}{if} (!(\hyperlink{interp_8c_aa694a54cf85528e82466805524525b7d}{cicRecvPatch}[p] = (\textcolor{keywordtype}{double} *) calloc(recvSize, \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double}))))
+297     exit(0);
+298       MPI\_Irecv(&(\hyperlink{interp_8c_aa694a54cf85528e82466805524525b7d}{cicRecvPatch}[p][0]), recvSize, MPI\_DOUBLE, p, p,
+299         MPI\_COMM\_WORLD, &\hyperlink{interp_8c_a63b72f0c32960cd3ecc1733f30c40214}{cicReqRecv}[p]);
+300     \}
+301   \}
+302   \textcolor{keywordflow}{return};
+303 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interp_8c_a085ef29ed8159779989ae8fac05fd699_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{interp_8c_ace868928ce5497cc3edc942bd5c8f396}{\index{interp.\-c@{interp.\-c}!interpolate\-Cells\-To\-Grid@{interpolate\-Cells\-To\-Grid}}
+\index{interpolate\-Cells\-To\-Grid@{interpolate\-Cells\-To\-Grid}!interp.c@{interp.\-c}}
+\subsubsection[{interpolate\-Cells\-To\-Grid}]{\setlength{\rightskip}{0pt plus 5cm}void interpolate\-Cells\-To\-Grid (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{interp_8c_ace868928ce5497cc3edc942bd5c8f396}
+This is a driving function interpolating cellular data to grid data. This function does not enable overlapping communication and computations. 
+
+Definition at line 583 of file interp.\-c.
+
+
+
+References apply\-Patches(), do\-Interpolation(), find\-Patches(), init\-Patch\-Exchange(), and wait\-Patch\-Exchange().
+
+
+\begin{DoxyCode}
+584 \{
+585   \hyperlink{interp_8c_a4299a7e9993adbe7a047b835b2339550}{findPatches}();
+586   \hyperlink{interp_8c_a09ed91c5c40f3937e10c8c60c2b8fb7f}{doInterpolation}();
+587   \hyperlink{interp_8c_a085ef29ed8159779989ae8fac05fd699}{initPatchExchange}();
+588   \hyperlink{interp_8c_a4124511b40767952ed61d5ae30bae7b6}{waitPatchExchange}();
+589   \hyperlink{interp_8c_a3e968c18c11bbe46df754e7eca593b33}{applyPatches}();
+590 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interp_8c_ace868928ce5497cc3edc942bd5c8f396_cgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{interp_8c_a7f8b42e40580516283e6f43ce7fe6389}{\index{interp.\-c@{interp.\-c}!interpolate\-Fields\-To\-Cells@{interpolate\-Fields\-To\-Cells}}
+\index{interpolate\-Fields\-To\-Cells@{interpolate\-Fields\-To\-Cells}!interp.c@{interp.\-c}}
+\subsubsection[{interpolate\-Fields\-To\-Cells}]{\setlength{\rightskip}{0pt plus 5cm}void interpolate\-Fields\-To\-Cells (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{interp_8c_a7f8b42e40580516283e6f43ce7fe6389}
+This function is used to interpolate field data back to cells. Overlapping of communication and computations is not implemented here. This function deallocates all important arrays used in interpolation. 
+
+Definition at line 627 of file interp.\-c.
+
+
+
+References apply\-Fields\-Patches(), cic\-Intersect, cic\-Receiver, cic\-Sender, gfields, init\-Fields\-Patches\-Exchange(), and wait\-Fields\-Patches\-Exchange().
+
+
+\begin{DoxyCode}
+628 \{
+629   \textcolor{keywordflow}{if} (!\hyperlink{fields_8h_abe4692639a5f11507faff09f2d37efa8}{gfields})
+630     \textcolor{keywordflow}{return};
+631 
+632   \hyperlink{interp_8c_a4fe8eca69017d7e0f87fd2c6cdb9b2e2}{initFieldsPatchesExchange}();
+633   \hyperlink{interp_8c_a751d539b1af7ca1f9ce8e55a91084874}{waitFieldsPatchesExchange}();
+634   \hyperlink{interp_8c_a08111192411fead96613d994aa95f960}{applyFieldsPatches}();
+635 
+636   free(\hyperlink{interp_8c_adb4ccb79955589454dc66b849d8701ec}{cicReceiver});
+637   free(\hyperlink{interp_8c_a2a5d63a8f1ea342e89fe82d9bfa34dc4}{cicSender});
+638   free(\hyperlink{interp_8c_aa1e8e01a33edaeee7b43a257115fe3ed}{cicIntersect});
+639 
+640   free(\hyperlink{interp_8c_a4a5d5cd735e0be12043322e83f096e15}{lowerPatchCorner});
+641   free(\hyperlink{interp_8c_a1ad7766a77930978570efda9dc79c423}{upperPatchCorner});
+642   free(\hyperlink{interp_8c_a2376cd58453249d9c7665fa650751766}{lowerPatchCornerR});
+643   free(\hyperlink{interp_8c_a6a5d325724a8a8e583d58f951412aa0f}{upperPatchCornerR});
+644   free(\hyperlink{interp_8c_a63c4dd6e4bd05dfdc1e3b01c60b96c31}{patchSize});
+645   free(\hyperlink{interp_8c_ac36d10dac7f64ef74bbf954bf709a0bd}{patchSizeR});
+646 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interp_8c_a7f8b42e40580516283e6f43ce7fe6389_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=276pt]{interp_8c_a7f8b42e40580516283e6f43ce7fe6389_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{interp_8c_ac7fd669461f281bbaceac377028fb722}{\index{interp.\-c@{interp.\-c}!wait\-Cells\-To\-Grid\-Exchange@{wait\-Cells\-To\-Grid\-Exchange}}
+\index{wait\-Cells\-To\-Grid\-Exchange@{wait\-Cells\-To\-Grid\-Exchange}!interp.c@{interp.\-c}}
+\subsubsection[{wait\-Cells\-To\-Grid\-Exchange}]{\setlength{\rightskip}{0pt plus 5cm}void wait\-Cells\-To\-Grid\-Exchange (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{interp_8c_ac7fd669461f281bbaceac377028fb722}
+This function wait for patches communication to finish in cells-\/to-\/grid interpolation. This function enables overlapping communication and computations. 
+
+Definition at line 613 of file interp.\-c.
+
+
+
+References apply\-Patches(), gfields, and wait\-Patch\-Exchange().
+
+
+\begin{DoxyCode}
+614 \{
+615   \textcolor{keywordflow}{if} (!\hyperlink{fields_8h_abe4692639a5f11507faff09f2d37efa8}{gfields})
+616     \textcolor{keywordflow}{return};
+617   \hyperlink{interp_8c_a4124511b40767952ed61d5ae30bae7b6}{waitPatchExchange}();
+618   \hyperlink{interp_8c_a3e968c18c11bbe46df754e7eca593b33}{applyPatches}();
+619 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interp_8c_ac7fd669461f281bbaceac377028fb722_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=284pt]{interp_8c_ac7fd669461f281bbaceac377028fb722_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{interp_8c_a751d539b1af7ca1f9ce8e55a91084874}{\index{interp.\-c@{interp.\-c}!wait\-Fields\-Patches\-Exchange@{wait\-Fields\-Patches\-Exchange}}
+\index{wait\-Fields\-Patches\-Exchange@{wait\-Fields\-Patches\-Exchange}!interp.c@{interp.\-c}}
+\subsubsection[{wait\-Fields\-Patches\-Exchange}]{\setlength{\rightskip}{0pt plus 5cm}void wait\-Fields\-Patches\-Exchange (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{interp_8c_a751d539b1af7ca1f9ce8e55a91084874}
+Wait for communication to finish. M\-P\-I\-\_\-\-Request tables are deallocated here. Field patches buffers are deallocated here. 
+
+Definition at line 475 of file interp.\-c.
+
+
+
+References cic\-Receiver, cic\-Req\-Recv, cic\-Req\-Send, cic\-Sender, fields\-Patches\-Comm\-Buff, M\-P\-Isize, and stop\-Run().
+
+
+\begin{DoxyCode}
+476 \{
+477   \textcolor{keywordtype}{int} p, f;
+478   MPI\_Status status;
+479 
+480   \textcolor{keywordflow}{for} (p = 0; p < \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}; p++) \{
+481     \textcolor{keywordflow}{if} (!\hyperlink{interp_8c_a2a5d63a8f1ea342e89fe82d9bfa34dc4}{cicSender}[p])
+482       \textcolor{keywordflow}{continue};
+483     \textcolor{keywordflow}{if} (MPI\_Wait(&\hyperlink{interp_8c_ae3d471e7732a1f671ffe978fcd723912}{cicReqSend}[p], &status) != MPI\_SUCCESS)
+484       \hyperlink{utils_8c_a07dd99a04f2723be164531a7a862fb67}{stopRun}(103, \textcolor{stringliteral}{"sending"}, \_\_FILE\_\_, \_\_LINE\_\_);
+485   \}
+486 
+487   \textcolor{keywordflow}{for} (p = 0; p < \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}; p++) \{
+488     \textcolor{keywordflow}{if} (!\hyperlink{interp_8c_adb4ccb79955589454dc66b849d8701ec}{cicReceiver}[p])
+489       \textcolor{keywordflow}{continue};
+490     \textcolor{keywordflow}{if} (MPI\_Wait(&\hyperlink{interp_8c_a63b72f0c32960cd3ecc1733f30c40214}{cicReqRecv}[p], &status) != MPI\_SUCCESS)
+491       \hyperlink{utils_8c_a07dd99a04f2723be164531a7a862fb67}{stopRun}(103, \textcolor{stringliteral}{"receiving"}, \_\_FILE\_\_, \_\_LINE\_\_);
+492   \}
+493 
+494   free(\hyperlink{interp_8c_ae3d471e7732a1f671ffe978fcd723912}{cicReqSend});
+495   free(\hyperlink{interp_8c_a63b72f0c32960cd3ecc1733f30c40214}{cicReqRecv});
+496 
+497   \textcolor{keywordflow}{for} (p = 0; p < \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}; p++)
+498     free(\hyperlink{fields_8h_af5c78cf0ef851175243d9f71767efe50}{fieldsPatchesCommBuff}[p]);
+499   free(\hyperlink{fields_8h_af5c78cf0ef851175243d9f71767efe50}{fieldsPatchesCommBuff});
+500 
+501   \textcolor{keywordflow}{return};
+502 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=310pt]{interp_8c_a751d539b1af7ca1f9ce8e55a91084874_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interp_8c_a751d539b1af7ca1f9ce8e55a91084874_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{interp_8c_a4124511b40767952ed61d5ae30bae7b6}{\index{interp.\-c@{interp.\-c}!wait\-Patch\-Exchange@{wait\-Patch\-Exchange}}
+\index{wait\-Patch\-Exchange@{wait\-Patch\-Exchange}!interp.c@{interp.\-c}}
+\subsubsection[{wait\-Patch\-Exchange}]{\setlength{\rightskip}{0pt plus 5cm}int wait\-Patch\-Exchange (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{interp_8c_a4124511b40767952ed61d5ae30bae7b6}
+Wait for communication to finish. M\-P\-I\-\_\-\-Request tables are deallocated here. 
+
+Definition at line 309 of file interp.\-c.
+
+
+
+References cic\-Receiver, cic\-Req\-Recv, cic\-Req\-Send, cic\-Sender, M\-P\-Isize, and stop\-Run().
+
+
+\begin{DoxyCode}
+310 \{
+311   \textcolor{keywordtype}{int} p;
+312   MPI\_Status status;
+313 
+314   \textcolor{keywordflow}{for} (p = 0; p < \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}; p++) \{
+315     \textcolor{keywordflow}{if} (!\hyperlink{interp_8c_adb4ccb79955589454dc66b849d8701ec}{cicReceiver}[p])
+316       \textcolor{keywordflow}{continue};
+317     \textcolor{keywordflow}{if} (MPI\_Wait(&\hyperlink{interp_8c_ae3d471e7732a1f671ffe978fcd723912}{cicReqSend}[p], &status) != MPI\_SUCCESS)
+318       \hyperlink{utils_8c_a07dd99a04f2723be164531a7a862fb67}{stopRun}(103, \textcolor{stringliteral}{"sending"}, \_\_FILE\_\_, \_\_LINE\_\_);
+319   \}
+320 
+321   \textcolor{keywordflow}{for} (p = 0; p < \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}; p++) \{
+322     \textcolor{keywordflow}{if} (!\hyperlink{interp_8c_a2a5d63a8f1ea342e89fe82d9bfa34dc4}{cicSender}[p])
+323       \textcolor{keywordflow}{continue};
+324     \textcolor{keywordflow}{if} (MPI\_Wait(&\hyperlink{interp_8c_a63b72f0c32960cd3ecc1733f30c40214}{cicReqRecv}[p], &status) != MPI\_SUCCESS)
+325       \hyperlink{utils_8c_a07dd99a04f2723be164531a7a862fb67}{stopRun}(103, \textcolor{stringliteral}{"receiving"}, \_\_FILE\_\_, \_\_LINE\_\_);
+326   \}
+327 
+328   free(\hyperlink{interp_8c_ae3d471e7732a1f671ffe978fcd723912}{cicReqSend});
+329   free(\hyperlink{interp_8c_a63b72f0c32960cd3ecc1733f30c40214}{cicReqRecv});
+330 
+331   \textcolor{keywordflow}{return} 0;
+332 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=274pt]{interp_8c_a4124511b40767952ed61d5ae30bae7b6_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{interp_8c_a4124511b40767952ed61d5ae30bae7b6_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Variable Documentation}
+\hypertarget{interp_8c_aa1e8e01a33edaeee7b43a257115fe3ed}{\index{interp.\-c@{interp.\-c}!cic\-Intersect@{cic\-Intersect}}
+\index{cic\-Intersect@{cic\-Intersect}!interp.c@{interp.\-c}}
+\subsubsection[{cic\-Intersect}]{\setlength{\rightskip}{0pt plus 5cm}int$\ast$ cic\-Intersect}}\label{interp_8c_aa1e8e01a33edaeee7b43a257115fe3ed}
+
+
+Definition at line 36 of file interp.\-c.
+
+\hypertarget{interp_8c_a7b2e819edbf39d5d976cff399612f6e8}{\index{interp.\-c@{interp.\-c}!cic\-Patch@{cic\-Patch}}
+\index{cic\-Patch@{cic\-Patch}!interp.c@{interp.\-c}}
+\subsubsection[{cic\-Patch}]{\setlength{\rightskip}{0pt plus 5cm}double$\ast$$\ast$ cic\-Patch}}\label{interp_8c_a7b2e819edbf39d5d976cff399612f6e8}
+
+
+Definition at line 35 of file interp.\-c.
+
+\hypertarget{interp_8c_adb4ccb79955589454dc66b849d8701ec}{\index{interp.\-c@{interp.\-c}!cic\-Receiver@{cic\-Receiver}}
+\index{cic\-Receiver@{cic\-Receiver}!interp.c@{interp.\-c}}
+\subsubsection[{cic\-Receiver}]{\setlength{\rightskip}{0pt plus 5cm}int$\ast$ cic\-Receiver}}\label{interp_8c_adb4ccb79955589454dc66b849d8701ec}
+
+
+Definition at line 37 of file interp.\-c.
+
+\hypertarget{interp_8c_aa694a54cf85528e82466805524525b7d}{\index{interp.\-c@{interp.\-c}!cic\-Recv\-Patch@{cic\-Recv\-Patch}}
+\index{cic\-Recv\-Patch@{cic\-Recv\-Patch}!interp.c@{interp.\-c}}
+\subsubsection[{cic\-Recv\-Patch}]{\setlength{\rightskip}{0pt plus 5cm}double$\ast$$\ast$ cic\-Recv\-Patch}}\label{interp_8c_aa694a54cf85528e82466805524525b7d}
+
+
+Definition at line 39 of file interp.\-c.
+
+\hypertarget{interp_8c_a63b72f0c32960cd3ecc1733f30c40214}{\index{interp.\-c@{interp.\-c}!cic\-Req\-Recv@{cic\-Req\-Recv}}
+\index{cic\-Req\-Recv@{cic\-Req\-Recv}!interp.c@{interp.\-c}}
+\subsubsection[{cic\-Req\-Recv}]{\setlength{\rightskip}{0pt plus 5cm}M\-P\-I\-\_\-\-Request $\ast$ cic\-Req\-Recv}}\label{interp_8c_a63b72f0c32960cd3ecc1733f30c40214}
+
+
+Definition at line 41 of file interp.\-c.
+
+\hypertarget{interp_8c_ae3d471e7732a1f671ffe978fcd723912}{\index{interp.\-c@{interp.\-c}!cic\-Req\-Send@{cic\-Req\-Send}}
+\index{cic\-Req\-Send@{cic\-Req\-Send}!interp.c@{interp.\-c}}
+\subsubsection[{cic\-Req\-Send}]{\setlength{\rightskip}{0pt plus 5cm}M\-P\-I\-\_\-\-Request$\ast$ cic\-Req\-Send}}\label{interp_8c_ae3d471e7732a1f671ffe978fcd723912}
+
+
+Definition at line 41 of file interp.\-c.
+
+\hypertarget{interp_8c_a2a5d63a8f1ea342e89fe82d9bfa34dc4}{\index{interp.\-c@{interp.\-c}!cic\-Sender@{cic\-Sender}}
+\index{cic\-Sender@{cic\-Sender}!interp.c@{interp.\-c}}
+\subsubsection[{cic\-Sender}]{\setlength{\rightskip}{0pt plus 5cm}int$\ast$ cic\-Sender}}\label{interp_8c_a2a5d63a8f1ea342e89fe82d9bfa34dc4}
+
+
+Definition at line 38 of file interp.\-c.
+
+\hypertarget{interp_8c_a4a5d5cd735e0be12043322e83f096e15}{\index{interp.\-c@{interp.\-c}!lower\-Patch\-Corner@{lower\-Patch\-Corner}}
+\index{lower\-Patch\-Corner@{lower\-Patch\-Corner}!interp.c@{interp.\-c}}
+\subsubsection[{lower\-Patch\-Corner}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf int64\-Vector3d}$\ast$ lower\-Patch\-Corner}}\label{interp_8c_a4a5d5cd735e0be12043322e83f096e15}
+
+
+Definition at line 45 of file interp.\-c.
+
+\hypertarget{interp_8c_a2376cd58453249d9c7665fa650751766}{\index{interp.\-c@{interp.\-c}!lower\-Patch\-Corner\-R@{lower\-Patch\-Corner\-R}}
+\index{lower\-Patch\-Corner\-R@{lower\-Patch\-Corner\-R}!interp.c@{interp.\-c}}
+\subsubsection[{lower\-Patch\-Corner\-R}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf int64\-Vector3d}$\ast$ lower\-Patch\-Corner\-R}}\label{interp_8c_a2376cd58453249d9c7665fa650751766}
+
+
+Definition at line 46 of file interp.\-c.
+
+\hypertarget{interp_8c_a63c4dd6e4bd05dfdc1e3b01c60b96c31}{\index{interp.\-c@{interp.\-c}!patch\-Size@{patch\-Size}}
+\index{patch\-Size@{patch\-Size}!interp.c@{interp.\-c}}
+\subsubsection[{patch\-Size}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf int64\-Vector3d}$\ast$ patch\-Size}}\label{interp_8c_a63c4dd6e4bd05dfdc1e3b01c60b96c31}
+
+
+Definition at line 47 of file interp.\-c.
+
+\hypertarget{interp_8c_ac36d10dac7f64ef74bbf954bf709a0bd}{\index{interp.\-c@{interp.\-c}!patch\-Size\-R@{patch\-Size\-R}}
+\index{patch\-Size\-R@{patch\-Size\-R}!interp.c@{interp.\-c}}
+\subsubsection[{patch\-Size\-R}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf int64\-Vector3d}$\ast$ patch\-Size\-R}}\label{interp_8c_ac36d10dac7f64ef74bbf954bf709a0bd}
+
+
+Definition at line 48 of file interp.\-c.
+
+\hypertarget{interp_8c_a55ace146e560886795409d6ac149119c}{\index{interp.\-c@{interp.\-c}!recv\-P@{recv\-P}}
+\index{recv\-P@{recv\-P}!interp.c@{interp.\-c}}
+\subsubsection[{recv\-P}]{\setlength{\rightskip}{0pt plus 5cm}int$\ast$ recv\-P}}\label{interp_8c_a55ace146e560886795409d6ac149119c}
+
+
+Definition at line 43 of file interp.\-c.
+
+\hypertarget{interp_8c_a1ad7766a77930978570efda9dc79c423}{\index{interp.\-c@{interp.\-c}!upper\-Patch\-Corner@{upper\-Patch\-Corner}}
+\index{upper\-Patch\-Corner@{upper\-Patch\-Corner}!interp.c@{interp.\-c}}
+\subsubsection[{upper\-Patch\-Corner}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf int64\-Vector3d} $\ast$ upper\-Patch\-Corner}}\label{interp_8c_a1ad7766a77930978570efda9dc79c423}
+
+
+Definition at line 45 of file interp.\-c.
+
+\hypertarget{interp_8c_a6a5d325724a8a8e583d58f951412aa0f}{\index{interp.\-c@{interp.\-c}!upper\-Patch\-Corner\-R@{upper\-Patch\-Corner\-R}}
+\index{upper\-Patch\-Corner\-R@{upper\-Patch\-Corner\-R}!interp.c@{interp.\-c}}
+\subsubsection[{upper\-Patch\-Corner\-R}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf int64\-Vector3d} $\ast$ upper\-Patch\-Corner\-R}}\label{interp_8c_a6a5d325724a8a8e583d58f951412aa0f}
+
+
+Definition at line 46 of file interp.\-c.
+

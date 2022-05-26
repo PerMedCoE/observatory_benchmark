@@ -1,0 +1,910 @@
+\hypertarget{tempf_8c}{\section{tempf.\-c File Reference}
+\label{tempf_8c}\index{tempf.\-c@{tempf.\-c}}
+}
+
+
+contains functions used for solving temperature field  
+
+
+{\ttfamily \#include \char`\"{}\-\_\-hypre\-\_\-utilities.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}H\-Y\-P\-R\-E\-\_\-sstruct\-\_\-ls.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}H\-Y\-P\-R\-E\-\_\-parcsr\-\_\-ls.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}H\-Y\-P\-R\-E\-\_\-krylov.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}global.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}fields.\-h\char`\"{}}\\*
+Include dependency graph for tempf.\-c\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{tempf_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{tempf_8c_a79074c63a5e46e7e5ae6648324ed3c69}{temp\-Set\-Boundary} (int coord, int boundary)
+\item 
+void \hyperlink{tempf_8c_afdd72425d842d0527b7707235c6b1426}{temp\-Env\-Init\-System} ()
+\item 
+void \hyperlink{tempf_8c_aa500322cb37c8e4f6b5cdd19f7f4c52a}{temp\-Env\-Init\-B\-C} ()
+\item 
+void \hyperlink{tempf_8c_a03c57aff346d1ca0f30a1cbe5d74110d}{temp\-Env\-Init\-Solver} ()
+\item 
+void \hyperlink{tempf_8c_a7e47d73682b9a931fd9d680f6d495331}{temp\-Env\-Solve} ()
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+H\-Y\-P\-R\-E\-\_\-\-S\-Struct\-Grid \hyperlink{tempf_8c_a306941a728f83331c95c2355cbad756e}{temp\-Grid}
+\item 
+H\-Y\-P\-R\-E\-\_\-\-S\-Struct\-Graph \hyperlink{tempf_8c_a8e4efbbc574194c74f201b9328263d51}{temp\-Graph}
+\item 
+H\-Y\-P\-R\-E\-\_\-\-S\-Struct\-Stencil \hyperlink{tempf_8c_a8e2e31e96bb8622f2b457c7a631b0b17}{temp\-Stencil}
+\item 
+H\-Y\-P\-R\-E\-\_\-\-S\-Struct\-Matrix \hyperlink{tempf_8c_a1452a7f843e91ac3a1c29b82092d467c}{A}
+\item 
+H\-Y\-P\-R\-E\-\_\-\-S\-Struct\-Vector \hyperlink{tempf_8c_a74a523afdfebddf9b6b280e545977c5a}{b}
+\item 
+H\-Y\-P\-R\-E\-\_\-\-S\-Struct\-Vector \hyperlink{tempf_8c_a1780e9c70637026d6fab31f63b3a193e}{x}
+\item 
+H\-Y\-P\-R\-E\-\_\-\-Par\-C\-S\-R\-Matrix \hyperlink{tempf_8c_af2d53284d0549b262215b77eb3fc5cad}{par\-A}
+\item 
+H\-Y\-P\-R\-E\-\_\-\-Par\-Vector \hyperlink{tempf_8c_a22c8c44999d3430aef3e02c8081b9d9e}{parb}
+\item 
+H\-Y\-P\-R\-E\-\_\-\-Par\-Vector \hyperlink{tempf_8c_a2a202d5a6f9421afac04dc63cc35ce6f}{parx}
+\item 
+H\-Y\-P\-R\-E\-\_\-\-Solver \hyperlink{tempf_8c_a7d3217679c2aa0229a38f279a62863d7}{temp\-Solver}
+\item 
+H\-Y\-P\-R\-E\-\_\-\-Solver \hyperlink{tempf_8c_a0b22e7791e7e1c5dc3e0f61e9a6149eb}{temp\-Precond}
+\item 
+int \hyperlink{tempf_8c_a3b7e11fcbb7f9521ac3f553e1a0e292d}{temp\-Object\-Type}
+\item 
+long long \hyperlink{tempf_8c_a196355f9f84bb71de2c7f2817d245e20}{temp\-Lower} \mbox{[}3\mbox{]}
+\item 
+long long \hyperlink{tempf_8c_ad0a57dc1002e63ea4c360662e6019ef3}{temp\-Upper} \mbox{[}3\mbox{]}
+\item 
+long long \hyperlink{tempf_8c_a397798166a570960b5d468b6df8bf02c}{bc\-Lower} \mbox{[}3\mbox{]}
+\item 
+long long \hyperlink{tempf_8c_aaea99b8c85fcedb15091dcac991999fd}{bc\-Upper} \mbox{[}3\mbox{]}
+\item 
+double \hyperlink{tempf_8c_a03e28be41881b703c836edbfe9b51b17}{dt}
+\item 
+double \hyperlink{tempf_8c_abac9e0ed06bb0a5fea5332d7c39f0b8e}{temp\-Lambda} = 0.\-25
+\item 
+char \hyperlink{tempf_8c_a2063913752083aa6b25d054e8d34dbc6}{tfname} \mbox{[}256\mbox{]}
+\item 
+int \hyperlink{tempf_8c_a61d9e9d52407e9c24553063b99088457}{temp\-N\-Vars}
+\item 
+int \hyperlink{tempf_8c_a5d7b5d2a5e1ad21ae8f4bd43f0392276}{temp\-N\-Parts}
+\item 
+int \hyperlink{tempf_8c_a99cc2555bf46405acb3e2b14e8567604}{temp\-Iter}
+\item 
+H\-Y\-P\-R\-E\-\_\-\-S\-Struct\-Variable \hyperlink{tempf_8c_a10ce94c724b037f8ef4c4d6c9bcbbb94}{temp\-Vartypes} \mbox{[}1\mbox{]} = \{ H\-Y\-P\-R\-E\-\_\-\-S\-S\-T\-R\-U\-C\-T\-\_\-\-V\-A\-R\-I\-A\-B\-L\-E\-\_\-\-N\-O\-D\-E \}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+contains functions used for solving temperature field 
+
+Definition in file \hyperlink{tempf_8c_source}{tempf.\-c}.
+
+
+
+\subsection{Function Documentation}
+\hypertarget{tempf_8c_aa500322cb37c8e4f6b5cdd19f7f4c52a}{\index{tempf.\-c@{tempf.\-c}!temp\-Env\-Init\-B\-C@{temp\-Env\-Init\-B\-C}}
+\index{temp\-Env\-Init\-B\-C@{temp\-Env\-Init\-B\-C}!tempf.c@{tempf.\-c}}
+\subsubsection[{temp\-Env\-Init\-B\-C}]{\setlength{\rightskip}{0pt plus 5cm}void temp\-Env\-Init\-B\-C (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{tempf_8c_aa500322cb37c8e4f6b5cdd19f7f4c52a}
+This function computes cell oxygen consumption function based on the interpolated cell density field. 
+
+Definition at line 219 of file tempf.\-c.
+
+
+
+References A, b, bc\-Lower, bc\-Upper, dt, field\-B\-C, field\-I\-C\-Mean, grid\-Resolution, grid\-Size, m, M\-P\-I\-\_\-\-C\-A\-R\-T\-\_\-\-C\-O\-M\-M, M\-P\-Icoords, M\-P\-Idim, M\-P\-Irank, revert\-Std\-Out(), switch\-Std\-Out(), T\-E\-M\-P, temp\-Grid, temp\-Lambda, temp\-Lower, temp\-Object\-Type, temp\-Set\-Boundary(), temp\-Upper, tfname, x, int64\-Vector3d\-::x, int64\-Vector3d\-::y, and int64\-Vector3d\-::z.
+
+
+\begin{DoxyCode}
+220 \{
+221   \textcolor{keywordtype}{int} i, j, k;
+222   \textcolor{keywordtype}{int} \hyperlink{global_8h_ac51334f57ef8b81c0629c9421798c344}{m};
+223   \textcolor{keywordtype}{int} nvalues;
+224   \textcolor{keywordtype}{int} nentries;
+225   \textcolor{keywordtype}{double} *values, *bvalues;
+226   \textcolor{keywordtype}{double} z;
+227   z = \hyperlink{tempf_8c_a03e28be41881b703c836edbfe9b51b17}{dt} / (\hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution} * \hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution});
+228   \textcolor{comment}{/* stdout redirected to file */}
+229   \hyperlink{io_8c_a62f5074e9f833de4cbf65a82dbb2f81b}{switchStdOut}(\hyperlink{tempf_8c_a2063913752083aa6b25d054e8d34dbc6}{tfname});
+230 
+231   \textcolor{comment}{/* 5. SETUP STRUCT VECTORS FOR B AND X */}
+232   nvalues = \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z};
+233 
+234   values = calloc(nvalues, \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double}));
+235 
+236   \textcolor{comment}{/* create an empty vector object */}
+237   HYPRE\_SStructVectorCreate(\hyperlink{global_8h_a34ac355617a6a906e1f3e7832aeb0073}{MPI\_CART\_COMM}, \hyperlink{tempf_8c_a306941a728f83331c95c2355cbad756e}{tempGrid}, &\hyperlink{tempf_8c_a74a523afdfebddf9b6b280e545977c5a}{b});
+238   HYPRE\_SStructVectorCreate(\hyperlink{global_8h_a34ac355617a6a906e1f3e7832aeb0073}{MPI\_CART\_COMM}, \hyperlink{tempf_8c_a306941a728f83331c95c2355cbad756e}{tempGrid}, &\hyperlink{tempf_8c_a1780e9c70637026d6fab31f63b3a193e}{x});
+239 
+240   \textcolor{comment}{/* as with the matrix, set the appropriate object type for the vectors */}
+241   HYPRE\_SStructVectorSetObjectType(\hyperlink{tempf_8c_a74a523afdfebddf9b6b280e545977c5a}{b}, \hyperlink{tempf_8c_a3b7e11fcbb7f9521ac3f553e1a0e292d}{tempObjectType});
+242   HYPRE\_SStructVectorSetObjectType(\hyperlink{tempf_8c_a1780e9c70637026d6fab31f63b3a193e}{x}, \hyperlink{tempf_8c_a3b7e11fcbb7f9521ac3f553e1a0e292d}{tempObjectType});
+243 
+244   \textcolor{comment}{/* indicate that the vector coefficients are ready to be set */}
+245   HYPRE\_SStructVectorInitialize(\hyperlink{tempf_8c_a74a523afdfebddf9b6b280e545977c5a}{b});
+246   HYPRE\_SStructVectorInitialize(\hyperlink{tempf_8c_a1780e9c70637026d6fab31f63b3a193e}{x});
+247 
+248   \textcolor{comment}{/* set the values */}
+249   m = 0;
+250   \textcolor{keywordflow}{for} (k = \hyperlink{tempf_8c_a196355f9f84bb71de2c7f2817d245e20}{tempLower}[2]; k <= \hyperlink{tempf_8c_ad0a57dc1002e63ea4c360662e6019ef3}{tempUpper}[2]; k++)
+251     \textcolor{keywordflow}{for} (j = \hyperlink{tempf_8c_a196355f9f84bb71de2c7f2817d245e20}{tempLower}[1]; j <= \hyperlink{tempf_8c_ad0a57dc1002e63ea4c360662e6019ef3}{tempUpper}[1]; j++)
+252       \textcolor{keywordflow}{for} (i = \hyperlink{tempf_8c_a196355f9f84bb71de2c7f2817d245e20}{tempLower}[0]; i <= \hyperlink{tempf_8c_ad0a57dc1002e63ea4c360662e6019ef3}{tempUpper}[0]; i++) \{
+253     values[\hyperlink{global_8h_ac51334f57ef8b81c0629c9421798c344}{m}] = \hyperlink{fields_8h_ad0fb86debb3e1b138683ff94a2f51f5b}{fieldICMean}[\hyperlink{fields_8h_a10bed19ceedeb2c12c5aad6de1d3b1a1}{TEMP}];
+254     m++;
+255       \}
+256 
+257   HYPRE\_SStructVectorSetBoxValues(\hyperlink{tempf_8c_a74a523afdfebddf9b6b280e545977c5a}{b}, 0, \hyperlink{tempf_8c_a196355f9f84bb71de2c7f2817d245e20}{tempLower}, \hyperlink{tempf_8c_ad0a57dc1002e63ea4c360662e6019ef3}{tempUpper}, 0, values);
+258 
+259   m = 0;
+260   \textcolor{keywordflow}{for} (k = \hyperlink{tempf_8c_a196355f9f84bb71de2c7f2817d245e20}{tempLower}[2]; k <= \hyperlink{tempf_8c_ad0a57dc1002e63ea4c360662e6019ef3}{tempUpper}[2]; k++)
+261     \textcolor{keywordflow}{for} (j = \hyperlink{tempf_8c_a196355f9f84bb71de2c7f2817d245e20}{tempLower}[1]; j <= \hyperlink{tempf_8c_ad0a57dc1002e63ea4c360662e6019ef3}{tempUpper}[1]; j++)
+262       \textcolor{keywordflow}{for} (i = \hyperlink{tempf_8c_a196355f9f84bb71de2c7f2817d245e20}{tempLower}[0]; i <= \hyperlink{tempf_8c_ad0a57dc1002e63ea4c360662e6019ef3}{tempUpper}[0]; i++) \{
+263     values[\hyperlink{global_8h_ac51334f57ef8b81c0629c9421798c344}{m}] = \hyperlink{fields_8h_ad0fb86debb3e1b138683ff94a2f51f5b}{fieldICMean}[\hyperlink{fields_8h_a10bed19ceedeb2c12c5aad6de1d3b1a1}{TEMP}];
+264     m++;
+265       \}
+266 
+267   HYPRE\_SStructVectorSetBoxValues(\hyperlink{tempf_8c_a1780e9c70637026d6fab31f63b3a193e}{x}, 0, \hyperlink{tempf_8c_a196355f9f84bb71de2c7f2817d245e20}{tempLower}, \hyperlink{tempf_8c_ad0a57dc1002e63ea4c360662e6019ef3}{tempUpper}, 0, values);
+268 
+269   free(values);
+270 
+271   \textcolor{comment}{/* incorporate boundary conditions; Dirichlet on 1 face; Robin on 7 other faces (low X) */}
+272 
+273   \textcolor{comment}{/* Robin conditions */}
+274   nentries = 3;
+275   \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} stencilRindices[3];
+276   \textcolor{keywordtype}{int} Nmax;
+277   Nmax = 0;
+278   Nmax = (Nmax < \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} ? \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} : Nmax);
+279   Nmax = (Nmax < \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} ? \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} : Nmax);
+280   Nmax = (Nmax < \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} ? \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} : Nmax);
+281   values = calloc(nentries * Nmax * Nmax, \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double}));
+282   bvalues = calloc(Nmax * Nmax, \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double}));
+283 
+284   \textcolor{keywordflow}{for} (i = 0; i < Nmax * Nmax; i++)
+285     bvalues[i] = 2.0 * z * \hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution} * \hyperlink{tempf_8c_abac9e0ed06bb0a5fea5332d7c39f0b8e}{tempLambda} * 
+      \hyperlink{fields_8h_ad0fb86debb3e1b138683ff94a2f51f5b}{fieldICMean}[\hyperlink{fields_8h_a10bed19ceedeb2c12c5aad6de1d3b1a1}{TEMP}];
+286 
+287   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a8220294108e39b58632993a50a7dc4ca}{MPIcoords}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}][0] == \hyperlink{global_8h_a633835398408aaee46fd56809af73e6c}{MPIdim}[0] - 1) \{
+288     nvalues = nentries * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z};
+289     \textcolor{keywordflow}{for} (i = 0; i < nvalues; i += nentries) \{
+290       values[i] = 2.0 * z * \hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution} * \hyperlink{tempf_8c_abac9e0ed06bb0a5fea5332d7c39f0b8e}{tempLambda};
+291       values[i + 1] = z;
+292       values[i + 2] = -z;
+293     \}
+294 
+295     \hyperlink{tempf_8c_a79074c63a5e46e7e5ae6648324ed3c69}{tempSetBoundary}(0, 1);
+296 
+297     stencilRindices[0] = 0;
+298     stencilRindices[1] = 2;
+299     stencilRindices[2] = 1;
+300 
+301     HYPRE\_SStructMatrixAddToBoxValues(\hyperlink{tempf_8c_a1452a7f843e91ac3a1c29b82092d467c}{A}, 0, \hyperlink{tempf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}, \hyperlink{tempf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}, 0, nentries,
+302                       stencilRindices, values);
+303 
+304     HYPRE\_SStructVectorAddToBoxValues(\hyperlink{tempf_8c_a74a523afdfebddf9b6b280e545977c5a}{b}, 0, \hyperlink{tempf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}, \hyperlink{tempf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}, 0, bvalues);
+305 
+306   \}
+307 
+308   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a8220294108e39b58632993a50a7dc4ca}{MPIcoords}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}][1] == 0) \{
+309     nvalues = nentries * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z};
+310     \textcolor{keywordflow}{for} (i = 0; i < nvalues; i += nentries) \{
+311       values[i] = 2.0 * z * \hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution} * \hyperlink{tempf_8c_abac9e0ed06bb0a5fea5332d7c39f0b8e}{tempLambda};
+312       values[i + 1] = z;
+313       values[i + 2] = -z;
+314     \}
+315 
+316     \hyperlink{tempf_8c_a79074c63a5e46e7e5ae6648324ed3c69}{tempSetBoundary}(1, -1);
+317 
+318     stencilRindices[0] = 0;
+319     stencilRindices[1] = 3;
+320     stencilRindices[2] = 4;
+321 
+322     HYPRE\_SStructMatrixAddToBoxValues(\hyperlink{tempf_8c_a1452a7f843e91ac3a1c29b82092d467c}{A}, 0, \hyperlink{tempf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}, \hyperlink{tempf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}, 0, nentries,
+323                       stencilRindices, values);
+324 
+325     HYPRE\_SStructVectorAddToBoxValues(\hyperlink{tempf_8c_a74a523afdfebddf9b6b280e545977c5a}{b}, 0, \hyperlink{tempf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}, \hyperlink{tempf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}, 0, bvalues);
+326 
+327   \}
+328 
+329   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a8220294108e39b58632993a50a7dc4ca}{MPIcoords}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}][1] == \hyperlink{global_8h_a633835398408aaee46fd56809af73e6c}{MPIdim}[1] - 1) \{
+330     nvalues = nentries * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z};
+331     \textcolor{keywordflow}{for} (i = 0; i < nvalues; i += nentries) \{
+332       values[i] = 2.0 * z * \hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution} * \hyperlink{tempf_8c_abac9e0ed06bb0a5fea5332d7c39f0b8e}{tempLambda};
+333       values[i + 1] = z;
+334       values[i + 2] = -z;
+335     \}
+336 
+337     \hyperlink{tempf_8c_a79074c63a5e46e7e5ae6648324ed3c69}{tempSetBoundary}(1, 1);
+338 
+339     stencilRindices[0] = 0;
+340     stencilRindices[1] = 4;
+341     stencilRindices[2] = 3;
+342 
+343     HYPRE\_SStructMatrixAddToBoxValues(\hyperlink{tempf_8c_a1452a7f843e91ac3a1c29b82092d467c}{A}, 0, \hyperlink{tempf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}, \hyperlink{tempf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}, 0, nentries,
+344                       stencilRindices, values);
+345 
+346     HYPRE\_SStructVectorAddToBoxValues(\hyperlink{tempf_8c_a74a523afdfebddf9b6b280e545977c5a}{b}, 0, \hyperlink{tempf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}, \hyperlink{tempf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}, 0, bvalues);
+347 
+348   \}
+349 
+350   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a8220294108e39b58632993a50a7dc4ca}{MPIcoords}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}][2] == 0) \{
+351     nvalues = nentries * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y};
+352     \textcolor{keywordflow}{for} (i = 0; i < nvalues; i += nentries) \{
+353       values[i] = 2.0 * z * \hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution} * \hyperlink{tempf_8c_abac9e0ed06bb0a5fea5332d7c39f0b8e}{tempLambda};
+354       values[i + 1] = z;
+355       values[i + 2] = -z;
+356     \}
+357 
+358     \hyperlink{tempf_8c_a79074c63a5e46e7e5ae6648324ed3c69}{tempSetBoundary}(2, -1);
+359 
+360     stencilRindices[0] = 0;
+361     stencilRindices[1] = 5;
+362     stencilRindices[2] = 6;
+363 
+364     HYPRE\_SStructMatrixAddToBoxValues(\hyperlink{tempf_8c_a1452a7f843e91ac3a1c29b82092d467c}{A}, 0, \hyperlink{tempf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}, \hyperlink{tempf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}, 0, nentries,
+365                       stencilRindices, values);
+366 
+367     HYPRE\_SStructVectorAddToBoxValues(\hyperlink{tempf_8c_a74a523afdfebddf9b6b280e545977c5a}{b}, 0, \hyperlink{tempf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}, \hyperlink{tempf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}, 0, bvalues);
+368 
+369   \}
+370 
+371   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a8220294108e39b58632993a50a7dc4ca}{MPIcoords}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}][2] == \hyperlink{global_8h_a633835398408aaee46fd56809af73e6c}{MPIdim}[2] - 1) \{
+372     nvalues = nentries * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y};
+373     \textcolor{keywordflow}{for} (i = 0; i < nvalues; i += nentries) \{
+374       values[i] = 2.0 * z * \hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution} * \hyperlink{tempf_8c_abac9e0ed06bb0a5fea5332d7c39f0b8e}{tempLambda};
+375       values[i + 1] = z;
+376       values[i + 2] = -z;
+377     \}
+378 
+379     \hyperlink{tempf_8c_a79074c63a5e46e7e5ae6648324ed3c69}{tempSetBoundary}(2, 1);
+380 
+381     stencilRindices[0] = 0;
+382     stencilRindices[1] = 6;
+383     stencilRindices[2] = 5;
+384 
+385     HYPRE\_SStructMatrixAddToBoxValues(\hyperlink{tempf_8c_a1452a7f843e91ac3a1c29b82092d467c}{A}, 0, \hyperlink{tempf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}, \hyperlink{tempf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}, 0, nentries,
+386                       stencilRindices, values);
+387 
+388     HYPRE\_SStructVectorAddToBoxValues(\hyperlink{tempf_8c_a74a523afdfebddf9b6b280e545977c5a}{b}, 0, \hyperlink{tempf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}, \hyperlink{tempf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}, 0, bvalues);
+389 
+390   \}
+391 
+392   free(values);
+393   free(bvalues);
+394 
+395   \textcolor{comment}{/* Dirichlet conditions */}
+396   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a8220294108e39b58632993a50a7dc4ca}{MPIcoords}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}][0] == 0) \{
+397 
+398     \textcolor{keywordtype}{int} nentries = 1;
+399     \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} stencilDindices[1];
+400     nvalues = nentries * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z};
+401     values = calloc(nvalues, \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double}));
+402     bvalues = calloc(nvalues, \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double}));
+403     \textcolor{keywordflow}{for} (i = 0; i < nvalues; i++)
+404       values[i] = z;
+405 
+406     \hyperlink{tempf_8c_a79074c63a5e46e7e5ae6648324ed3c69}{tempSetBoundary}(0, -1);
+407 
+408     stencilDindices[0] = 1;
+409 
+410     HYPRE\_SStructMatrixAddToBoxValues(\hyperlink{tempf_8c_a1452a7f843e91ac3a1c29b82092d467c}{A}, 0, \hyperlink{tempf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}, \hyperlink{tempf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}, 0, nentries,
+411                       stencilDindices, values);
+412 
+413     \textcolor{keywordflow}{for} (i = 0; i < nvalues; i++)
+414       bvalues[i] = z * \hyperlink{fields_8h_a80c6ee80e0f056adba2430ab0d21e58f}{fieldBC}[\hyperlink{fields_8h_a10bed19ceedeb2c12c5aad6de1d3b1a1}{TEMP}];
+415 
+416     HYPRE\_SStructVectorAddToBoxValues(\hyperlink{tempf_8c_a74a523afdfebddf9b6b280e545977c5a}{b}, 0, \hyperlink{tempf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}, \hyperlink{tempf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}, 0, bvalues);
+417 
+418     free(values);
+419     free(bvalues);
+420   \}
+421   \textcolor{comment}{/* stdout brought back */}
+422   \hyperlink{io_8c_affa00173da9bea48973a6ac887d505bb}{revertStdOut}();
+423 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=296pt]{tempf_8c_aa500322cb37c8e4f6b5cdd19f7f4c52a_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{tempf_8c_aa500322cb37c8e4f6b5cdd19f7f4c52a_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{tempf_8c_a03c57aff346d1ca0f30a1cbe5d74110d}{\index{tempf.\-c@{tempf.\-c}!temp\-Env\-Init\-Solver@{temp\-Env\-Init\-Solver}}
+\index{temp\-Env\-Init\-Solver@{temp\-Env\-Init\-Solver}!tempf.c@{tempf.\-c}}
+\subsubsection[{temp\-Env\-Init\-Solver}]{\setlength{\rightskip}{0pt plus 5cm}void temp\-Env\-Init\-Solver (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{tempf_8c_a03c57aff346d1ca0f30a1cbe5d74110d}
+This function initializes Hypre for solving temperature field. 
+
+Definition at line 428 of file tempf.\-c.
+
+
+
+References A, b, M\-P\-I\-\_\-\-C\-A\-R\-T\-\_\-\-C\-O\-M\-M, par\-A, parb, parx, revert\-Std\-Out(), switch\-Std\-Out(), temp\-Precond, temp\-Solver, tfname, and x.
+
+
+\begin{DoxyCode}
+429 \{
+430   \textcolor{comment}{/* stdout redirected to file */}
+431   \hyperlink{io_8c_a62f5074e9f833de4cbf65a82dbb2f81b}{switchStdOut}(\hyperlink{tempf_8c_a2063913752083aa6b25d054e8d34dbc6}{tfname});
+432 
+433   HYPRE\_SStructMatrixAssemble(\hyperlink{tempf_8c_a1452a7f843e91ac3a1c29b82092d467c}{A});
+434   \textcolor{comment}{/* This is a collective call finalizing the vector assembly.}
+435 \textcolor{comment}{     The vector is now ``ready to be used'' */}
+436   HYPRE\_SStructVectorAssemble(\hyperlink{tempf_8c_a74a523afdfebddf9b6b280e545977c5a}{b});
+437   HYPRE\_SStructVectorAssemble(\hyperlink{tempf_8c_a1780e9c70637026d6fab31f63b3a193e}{x});
+438 
+439   HYPRE\_SStructMatrixGetObject(\hyperlink{tempf_8c_a1452a7f843e91ac3a1c29b82092d467c}{A}, (\textcolor{keywordtype}{void} **) &\hyperlink{tempf_8c_af2d53284d0549b262215b77eb3fc5cad}{parA});
+440   HYPRE\_SStructVectorGetObject(\hyperlink{tempf_8c_a74a523afdfebddf9b6b280e545977c5a}{b}, (\textcolor{keywordtype}{void} **) &\hyperlink{tempf_8c_a22c8c44999d3430aef3e02c8081b9d9e}{parb});
+441   HYPRE\_SStructVectorGetObject(\hyperlink{tempf_8c_a1780e9c70637026d6fab31f63b3a193e}{x}, (\textcolor{keywordtype}{void} **) &\hyperlink{tempf_8c_a2a202d5a6f9421afac04dc63cc35ce6f}{parx});
+442 
+443   HYPRE\_ParCSRPCGCreate(\hyperlink{global_8h_a34ac355617a6a906e1f3e7832aeb0073}{MPI\_CART\_COMM}, &\hyperlink{tempf_8c_a7d3217679c2aa0229a38f279a62863d7}{tempSolver});
+444   HYPRE\_ParCSRPCGSetTol(\hyperlink{tempf_8c_a7d3217679c2aa0229a38f279a62863d7}{tempSolver}, 1.0e-12);
+445   HYPRE\_ParCSRPCGSetPrintLevel(\hyperlink{tempf_8c_a7d3217679c2aa0229a38f279a62863d7}{tempSolver}, 2);
+446   HYPRE\_ParCSRPCGSetMaxIter(\hyperlink{tempf_8c_a7d3217679c2aa0229a38f279a62863d7}{tempSolver}, 50);
+447 
+448   HYPRE\_BoomerAMGCreate(&\hyperlink{tempf_8c_a0b22e7791e7e1c5dc3e0f61e9a6149eb}{tempPrecond});
+449   HYPRE\_BoomerAMGSetMaxIter(\hyperlink{tempf_8c_a0b22e7791e7e1c5dc3e0f61e9a6149eb}{tempPrecond}, 1);
+450   HYPRE\_BoomerAMGSetTol(\hyperlink{tempf_8c_a0b22e7791e7e1c5dc3e0f61e9a6149eb}{tempPrecond}, 0.0);
+451   HYPRE\_BoomerAMGSetPrintLevel(\hyperlink{tempf_8c_a0b22e7791e7e1c5dc3e0f61e9a6149eb}{tempPrecond}, 2);
+452   HYPRE\_BoomerAMGSetCoarsenType(\hyperlink{tempf_8c_a0b22e7791e7e1c5dc3e0f61e9a6149eb}{tempPrecond}, 6);
+453   HYPRE\_BoomerAMGSetRelaxType(\hyperlink{tempf_8c_a0b22e7791e7e1c5dc3e0f61e9a6149eb}{tempPrecond}, 6);
+454   HYPRE\_BoomerAMGSetNumSweeps(\hyperlink{tempf_8c_a0b22e7791e7e1c5dc3e0f61e9a6149eb}{tempPrecond}, 1);
+455 
+456   HYPRE\_ParCSRPCGSetPrecond(\hyperlink{tempf_8c_a7d3217679c2aa0229a38f279a62863d7}{tempSolver}, HYPRE\_BoomerAMGSolve,
+457                 HYPRE\_BoomerAMGSetup, \hyperlink{tempf_8c_a0b22e7791e7e1c5dc3e0f61e9a6149eb}{tempPrecond});
+458   HYPRE\_ParCSRPCGSetup(\hyperlink{tempf_8c_a7d3217679c2aa0229a38f279a62863d7}{tempSolver}, \hyperlink{tempf_8c_af2d53284d0549b262215b77eb3fc5cad}{parA}, \hyperlink{tempf_8c_a22c8c44999d3430aef3e02c8081b9d9e}{parb}, \hyperlink{tempf_8c_a2a202d5a6f9421afac04dc63cc35ce6f}{parx});
+459   \textcolor{comment}{/* stdout brought back */}
+460   \hyperlink{io_8c_affa00173da9bea48973a6ac887d505bb}{revertStdOut}();
+461 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=290pt]{tempf_8c_a03c57aff346d1ca0f30a1cbe5d74110d_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{tempf_8c_a03c57aff346d1ca0f30a1cbe5d74110d_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{tempf_8c_afdd72425d842d0527b7707235c6b1426}{\index{tempf.\-c@{tempf.\-c}!temp\-Env\-Init\-System@{temp\-Env\-Init\-System}}
+\index{temp\-Env\-Init\-System@{temp\-Env\-Init\-System}!tempf.c@{tempf.\-c}}
+\subsubsection[{temp\-Env\-Init\-System}]{\setlength{\rightskip}{0pt plus 5cm}void temp\-Env\-Init\-System (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{tempf_8c_afdd72425d842d0527b7707235c6b1426}
+This function initializes grid, stencil and matrix for temperature field. 
+
+Definition at line 126 of file tempf.\-c.
+
+
+
+References A, dt, grid\-End\-Idx, grid\-Resolution, grid\-Size, grid\-Start\-Idx, logdir, M\-P\-I\-\_\-\-C\-A\-R\-T\-\_\-\-C\-O\-M\-M, M\-P\-Irank, revert\-Std\-Out(), switch\-Std\-Out(), temp\-Graph, temp\-Grid, temp\-Iter, temp\-Lower, temp\-N\-Parts, temp\-N\-Vars, temp\-Object\-Type, temp\-Stencil, temp\-Upper, temp\-Vartypes, tfname, int64\-Vector3d\-::x, int64\-Vector3d\-::y, and int64\-Vector3d\-::z.
+
+
+\begin{DoxyCode}
+127 \{
+128   \textcolor{keywordtype}{int} i, j, k;
+129   \textcolor{keywordtype}{double} z;
+130   \textcolor{keywordtype}{int} entry;
+131   \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} offsets[7][3] =
+132       \{ \{0, 0, 0\}, \{-1, 0, 0\}, \{1, 0, 0\}, \{0, -1, 0\}, \{0, 1, 0\}, \{0, 0,
+133                                   -1\}, \{0,
+134                                     0,
+135                                     1\}
+136   \};
+137 
+138   \hyperlink{tempf_8c_a03e28be41881b703c836edbfe9b51b17}{dt} = 0.1;
+139   \hyperlink{tempf_8c_a99cc2555bf46405acb3e2b14e8567604}{tempIter} = 0;
+140   \hyperlink{tempf_8c_a61d9e9d52407e9c24553063b99088457}{tempNVars} = 1;
+141   \hyperlink{tempf_8c_a5d7b5d2a5e1ad21ae8f4bd43f0392276}{tempNParts} = 1;
+142 
+143   sprintf(\hyperlink{tempf_8c_a2063913752083aa6b25d054e8d34dbc6}{tfname}, \textcolor{stringliteral}{"%s/tempSolver.log"}, \hyperlink{global_8h_a58bd7d9996cba89c834ae9ec41bbc075}{logdir});
+144   \textcolor{comment}{/* stdout redirected to file */}
+145   \hyperlink{io_8c_a62f5074e9f833de4cbf65a82dbb2f81b}{switchStdOut}(\hyperlink{tempf_8c_a2063913752083aa6b25d054e8d34dbc6}{tfname});
+146 
+147   \textcolor{comment}{/* 1. INIT GRID */}
+148 
+149   \textcolor{comment}{/* create an empty 3D grid object */}
+150   HYPRE\_SStructGridCreate(\hyperlink{global_8h_a34ac355617a6a906e1f3e7832aeb0073}{MPI\_CART\_COMM}, 3, \hyperlink{tempf_8c_a5d7b5d2a5e1ad21ae8f4bd43f0392276}{tempNParts}, &
+      \hyperlink{tempf_8c_a306941a728f83331c95c2355cbad756e}{tempGrid});
+151 
+152   \textcolor{comment}{/* set this process box */}
+153   \hyperlink{tempf_8c_a196355f9f84bb71de2c7f2817d245e20}{tempLower}[0] = \hyperlink{fields_8h_a9154f33f7786c05c61f4d519da14d501}{gridStartIdx}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}].\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x};
+154   \hyperlink{tempf_8c_a196355f9f84bb71de2c7f2817d245e20}{tempLower}[1] = \hyperlink{fields_8h_a9154f33f7786c05c61f4d519da14d501}{gridStartIdx}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y};
+155   \hyperlink{tempf_8c_a196355f9f84bb71de2c7f2817d245e20}{tempLower}[2] = \hyperlink{fields_8h_a9154f33f7786c05c61f4d519da14d501}{gridStartIdx}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z};
+156 
+157   \hyperlink{tempf_8c_ad0a57dc1002e63ea4c360662e6019ef3}{tempUpper}[0] = \hyperlink{fields_8h_a1d13a1c43b1a6eb6ca088b79ee681b48}{gridEndIdx}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}].\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x};
+158   \hyperlink{tempf_8c_ad0a57dc1002e63ea4c360662e6019ef3}{tempUpper}[1] = \hyperlink{fields_8h_a1d13a1c43b1a6eb6ca088b79ee681b48}{gridEndIdx}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y};
+159   \hyperlink{tempf_8c_ad0a57dc1002e63ea4c360662e6019ef3}{tempUpper}[2] = \hyperlink{fields_8h_a1d13a1c43b1a6eb6ca088b79ee681b48}{gridEndIdx}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z};
+160 
+161   \textcolor{comment}{/* add a new box to the grid */}
+162   HYPRE\_SStructGridSetExtents(\hyperlink{tempf_8c_a306941a728f83331c95c2355cbad756e}{tempGrid}, 0, \hyperlink{tempf_8c_a196355f9f84bb71de2c7f2817d245e20}{tempLower}, \hyperlink{tempf_8c_ad0a57dc1002e63ea4c360662e6019ef3}{tempUpper});
+163 
+164   HYPRE\_SStructGridSetVariables(\hyperlink{tempf_8c_a306941a728f83331c95c2355cbad756e}{tempGrid}, 0, \hyperlink{tempf_8c_a61d9e9d52407e9c24553063b99088457}{tempNVars}, 
+      \hyperlink{tempf_8c_a10ce94c724b037f8ef4c4d6c9bcbbb94}{tempVartypes});
+165   HYPRE\_SStructGridAssemble(\hyperlink{tempf_8c_a306941a728f83331c95c2355cbad756e}{tempGrid});
+166 
+167   \textcolor{comment}{/*  2. INIT STENCIL */}
+168   HYPRE\_SStructStencilCreate(3, 7, &\hyperlink{tempf_8c_a8e2e31e96bb8622f2b457c7a631b0b17}{tempStencil});
+169   \textcolor{keywordflow}{for} (entry = 0; entry < 7; entry++)
+170     HYPRE\_SStructStencilSetEntry(\hyperlink{tempf_8c_a8e2e31e96bb8622f2b457c7a631b0b17}{tempStencil}, entry, offsets[entry], 0);
+171 
+172   \textcolor{comment}{/* 3. SET UP THE GRAPH */}
+173   \hyperlink{tempf_8c_a3b7e11fcbb7f9521ac3f553e1a0e292d}{tempObjectType} = HYPRE\_PARCSR;
+174   HYPRE\_SStructGraphCreate(\hyperlink{global_8h_a34ac355617a6a906e1f3e7832aeb0073}{MPI\_CART\_COMM}, \hyperlink{tempf_8c_a306941a728f83331c95c2355cbad756e}{tempGrid}, &
+      \hyperlink{tempf_8c_a8e4efbbc574194c74f201b9328263d51}{tempGraph});
+175   HYPRE\_SStructGraphSetObjectType(\hyperlink{tempf_8c_a8e4efbbc574194c74f201b9328263d51}{tempGraph}, \hyperlink{tempf_8c_a3b7e11fcbb7f9521ac3f553e1a0e292d}{tempObjectType});
+176   HYPRE\_SStructGraphSetStencil(\hyperlink{tempf_8c_a8e4efbbc574194c74f201b9328263d51}{tempGraph}, 0, 0, \hyperlink{tempf_8c_a8e2e31e96bb8622f2b457c7a631b0b17}{tempStencil});
+177   HYPRE\_SStructGraphAssemble(\hyperlink{tempf_8c_a8e4efbbc574194c74f201b9328263d51}{tempGraph});
+178 
+179   \textcolor{comment}{/* 4. SET UP MATRIX */}
+180   \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} nentries = 7;
+181   \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} nvalues;
+182   \textcolor{keywordtype}{double} *values;
+183   \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} stencil\_indices[7];
+184 
+185   nvalues = nentries * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.
+      \hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z};
+186   \textcolor{comment}{/* create an empty matrix object */}
+187   HYPRE\_SStructMatrixCreate(\hyperlink{global_8h_a34ac355617a6a906e1f3e7832aeb0073}{MPI\_CART\_COMM}, \hyperlink{tempf_8c_a8e4efbbc574194c74f201b9328263d51}{tempGraph}, &\hyperlink{tempf_8c_a1452a7f843e91ac3a1c29b82092d467c}{A});
+188   HYPRE\_SStructMatrixSetObjectType(\hyperlink{tempf_8c_a1452a7f843e91ac3a1c29b82092d467c}{A}, \hyperlink{tempf_8c_a3b7e11fcbb7f9521ac3f553e1a0e292d}{tempObjectType});
+189   \textcolor{comment}{/* indicate that the matrix coefficients are ready to be set */}
+190   HYPRE\_SStructMatrixInitialize(\hyperlink{tempf_8c_a1452a7f843e91ac3a1c29b82092d467c}{A});
+191 
+192   values = calloc(nvalues, \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double}));
+193 
+194   \textcolor{keywordflow}{for} (j = 0; j < nentries; j++)
+195     stencil\_indices[j] = j;
+196 
+197   z = \hyperlink{tempf_8c_a03e28be41881b703c836edbfe9b51b17}{dt} / (\hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution} * \hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution});
+198 
+199   \textcolor{comment}{/* set the standard stencil at each grid point,}
+200 \textcolor{comment}{   * we will fix the boundaries later */}
+201   \textcolor{keywordflow}{for} (i = 0; i < nvalues; i += nentries) \{
+202     values[i] = 1 + 6.0 * z;
+203     \textcolor{keywordflow}{for} (j = 1; j < nentries; j++)
+204       values[i + j] = -z;
+205   \}
+206 
+207   HYPRE\_SStructMatrixSetBoxValues(\hyperlink{tempf_8c_a1452a7f843e91ac3a1c29b82092d467c}{A}, 0, \hyperlink{tempf_8c_a196355f9f84bb71de2c7f2817d245e20}{tempLower}, \hyperlink{tempf_8c_ad0a57dc1002e63ea4c360662e6019ef3}{tempUpper}, 0, nentries,
+208                   stencil\_indices, values);
+209 
+210   free(values);
+211   \textcolor{comment}{/* stdout brought back */}
+212   \hyperlink{io_8c_affa00173da9bea48973a6ac887d505bb}{revertStdOut}();
+213 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=296pt]{tempf_8c_afdd72425d842d0527b7707235c6b1426_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{tempf_8c_afdd72425d842d0527b7707235c6b1426_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{tempf_8c_a7e47d73682b9a931fd9d680f6d495331}{\index{tempf.\-c@{tempf.\-c}!temp\-Env\-Solve@{temp\-Env\-Solve}}
+\index{temp\-Env\-Solve@{temp\-Env\-Solve}!tempf.c@{tempf.\-c}}
+\subsubsection[{temp\-Env\-Solve}]{\setlength{\rightskip}{0pt plus 5cm}void temp\-Env\-Solve (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{tempf_8c_a7e47d73682b9a931fd9d680f6d495331}
+This function is a driving function for the solving next time step of temperature field. 
+
+Definition at line 467 of file tempf.\-c.
+
+
+
+References b, bc\-Lower, bc\-Upper, dt, field\-B\-C, field\-I\-C\-Mean, grid\-Resolution, grid\-Size, M\-P\-Icoords, M\-P\-Idim, M\-P\-Irank, par\-A, parb, parx, revert\-Std\-Out(), switch\-Std\-Out(), T\-E\-M\-P, temp\-Field, temp\-Iter, temp\-Lambda, temp\-Lower, temp\-Set\-Boundary(), temp\-Solver, temp\-Upper, tfname, x, int64\-Vector3d\-::x, int64\-Vector3d\-::y, and int64\-Vector3d\-::z.
+
+
+\begin{DoxyCode}
+468 \{
+469 
+470   \textcolor{keywordtype}{int} i, j, k;
+471   \textcolor{keywordtype}{int} idx;
+472   \textcolor{keywordtype}{double} z;
+473   \textcolor{keywordtype}{double} *values;
+474   \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} nvalues = \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.
+      \hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z};
+475   z = \hyperlink{tempf_8c_a03e28be41881b703c836edbfe9b51b17}{dt} / (\hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution} * \hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution});
+476   \textcolor{comment}{/* stdout redirected to file */}
+477   \hyperlink{io_8c_a62f5074e9f833de4cbf65a82dbb2f81b}{switchStdOut}(\hyperlink{tempf_8c_a2063913752083aa6b25d054e8d34dbc6}{tfname});
+478 
+479   \textcolor{keywordflow}{if} (\hyperlink{tempf_8c_a99cc2555bf46405acb3e2b14e8567604}{tempIter} > 0) \{
+480 
+481     \textcolor{comment}{/* update right hand side */}
+482 
+483     values = calloc(nvalues, \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double}));
+484 
+485     HYPRE\_SStructVectorGetBoxValues(\hyperlink{tempf_8c_a1780e9c70637026d6fab31f63b3a193e}{x}, 0, \hyperlink{tempf_8c_a196355f9f84bb71de2c7f2817d245e20}{tempLower}, \hyperlink{tempf_8c_ad0a57dc1002e63ea4c360662e6019ef3}{tempUpper}, 0, values);
+486     HYPRE\_SStructVectorSetBoxValues(\hyperlink{tempf_8c_a74a523afdfebddf9b6b280e545977c5a}{b}, 0, \hyperlink{tempf_8c_a196355f9f84bb71de2c7f2817d245e20}{tempLower}, \hyperlink{tempf_8c_ad0a57dc1002e63ea4c360662e6019ef3}{tempUpper}, 0, values);
+487 
+488     \textcolor{keywordflow}{for} (i = 0; i < nvalues; i++)
+489       values[i] =
+490       2.0 * z * \hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution} * \hyperlink{tempf_8c_abac9e0ed06bb0a5fea5332d7c39f0b8e}{tempLambda} * 
+      \hyperlink{fields_8h_ad0fb86debb3e1b138683ff94a2f51f5b}{fieldICMean}[\hyperlink{fields_8h_a10bed19ceedeb2c12c5aad6de1d3b1a1}{TEMP}];
+491 
+492     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a8220294108e39b58632993a50a7dc4ca}{MPIcoords}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}][0] == \hyperlink{global_8h_a633835398408aaee46fd56809af73e6c}{MPIdim}[0] - 1) \{
+493       \hyperlink{tempf_8c_a79074c63a5e46e7e5ae6648324ed3c69}{tempSetBoundary}(0, 1);
+494       HYPRE\_SStructVectorAddToBoxValues(\hyperlink{tempf_8c_a74a523afdfebddf9b6b280e545977c5a}{b}, 0, \hyperlink{tempf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}, \hyperlink{tempf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}, 0, values);
+495     \}
+496     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a8220294108e39b58632993a50a7dc4ca}{MPIcoords}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}][1] == 0) \{
+497       \hyperlink{tempf_8c_a79074c63a5e46e7e5ae6648324ed3c69}{tempSetBoundary}(1, -1);
+498       HYPRE\_SStructVectorAddToBoxValues(\hyperlink{tempf_8c_a74a523afdfebddf9b6b280e545977c5a}{b}, 0, \hyperlink{tempf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}, \hyperlink{tempf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}, 0, values);
+499     \}
+500     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a8220294108e39b58632993a50a7dc4ca}{MPIcoords}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}][1] == \hyperlink{global_8h_a633835398408aaee46fd56809af73e6c}{MPIdim}[1] - 1) \{
+501       \hyperlink{tempf_8c_a79074c63a5e46e7e5ae6648324ed3c69}{tempSetBoundary}(1, 1);
+502       HYPRE\_SStructVectorAddToBoxValues(\hyperlink{tempf_8c_a74a523afdfebddf9b6b280e545977c5a}{b}, 0, \hyperlink{tempf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}, \hyperlink{tempf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}, 0, values);
+503     \}
+504     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a8220294108e39b58632993a50a7dc4ca}{MPIcoords}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}][2] == 0) \{
+505       \hyperlink{tempf_8c_a79074c63a5e46e7e5ae6648324ed3c69}{tempSetBoundary}(2, -1);
+506       HYPRE\_SStructVectorAddToBoxValues(\hyperlink{tempf_8c_a74a523afdfebddf9b6b280e545977c5a}{b}, 0, \hyperlink{tempf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}, \hyperlink{tempf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}, 0, values);
+507     \}
+508     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a8220294108e39b58632993a50a7dc4ca}{MPIcoords}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}][2] == \hyperlink{global_8h_a633835398408aaee46fd56809af73e6c}{MPIdim}[2] - 1) \{
+509       \hyperlink{tempf_8c_a79074c63a5e46e7e5ae6648324ed3c69}{tempSetBoundary}(2, 1);
+510       HYPRE\_SStructVectorAddToBoxValues(\hyperlink{tempf_8c_a74a523afdfebddf9b6b280e545977c5a}{b}, 0, \hyperlink{tempf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}, \hyperlink{tempf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}, 0, values);
+511     \}
+512 
+513     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a8220294108e39b58632993a50a7dc4ca}{MPIcoords}[\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}][0] == 0) \{
+514       \textcolor{keywordtype}{int} nentries = 1;
+515       \textcolor{keywordtype}{long} \textcolor{keywordtype}{long} nvalues;
+516       nvalues = \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z};
+517       \textcolor{keywordflow}{for} (i = 0; i < nvalues; i++)
+518     values[i] = z * \hyperlink{fields_8h_a80c6ee80e0f056adba2430ab0d21e58f}{fieldBC}[\hyperlink{fields_8h_a10bed19ceedeb2c12c5aad6de1d3b1a1}{TEMP}];
+519 
+520       \hyperlink{tempf_8c_a79074c63a5e46e7e5ae6648324ed3c69}{tempSetBoundary}(0, -1);
+521 
+522       HYPRE\_SStructVectorAddToBoxValues(\hyperlink{tempf_8c_a74a523afdfebddf9b6b280e545977c5a}{b}, 0, \hyperlink{tempf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}, \hyperlink{tempf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}, 0, values);
+523     \}
+524     free(values);
+525 
+526     HYPRE\_SStructVectorAssemble(\hyperlink{tempf_8c_a74a523afdfebddf9b6b280e545977c5a}{b});
+527     HYPRE\_SStructVectorAssemble(\hyperlink{tempf_8c_a1780e9c70637026d6fab31f63b3a193e}{x});
+528 
+529   \}
+530 
+531   HYPRE\_ParCSRPCGSolve(\hyperlink{tempf_8c_a7d3217679c2aa0229a38f279a62863d7}{tempSolver}, \hyperlink{tempf_8c_af2d53284d0549b262215b77eb3fc5cad}{parA}, \hyperlink{tempf_8c_a22c8c44999d3430aef3e02c8081b9d9e}{parb}, \hyperlink{tempf_8c_a2a202d5a6f9421afac04dc63cc35ce6f}{parx});
+532 
+533   \textcolor{comment}{/* copy solution to field buffer */}
+534   HYPRE\_SStructVectorGather(\hyperlink{tempf_8c_a1780e9c70637026d6fab31f63b3a193e}{x});
+535   values = calloc(nvalues, \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double}));
+536   HYPRE\_SStructVectorGetBoxValues(\hyperlink{tempf_8c_a1780e9c70637026d6fab31f63b3a193e}{x}, 0, \hyperlink{tempf_8c_a196355f9f84bb71de2c7f2817d245e20}{tempLower}, \hyperlink{tempf_8c_ad0a57dc1002e63ea4c360662e6019ef3}{tempUpper}, 0, values);
+537   idx = 0;
+538   \textcolor{keywordflow}{for} (k = 0; k < \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z}; k++)
+539     \textcolor{keywordflow}{for} (j = 0; j < \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y}; j++)
+540       \textcolor{keywordflow}{for} (i = 0; i < \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x}; i++, idx++)
+541     \hyperlink{fields_8h_afffa6ff788240a58e074a58603f3d11e}{tempField}[\hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} * i + \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.
+      \hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} * j + k] =
+542         values[idx];
+543   free(values);
+544 
+545   \hyperlink{tempf_8c_a99cc2555bf46405acb3e2b14e8567604}{tempIter}++;
+546   \textcolor{comment}{/* stdout brought back */}
+547   \hyperlink{io_8c_affa00173da9bea48973a6ac887d505bb}{revertStdOut}();
+548 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=292pt]{tempf_8c_a7e47d73682b9a931fd9d680f6d495331_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=336pt]{tempf_8c_a7e47d73682b9a931fd9d680f6d495331_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{tempf_8c_a79074c63a5e46e7e5ae6648324ed3c69}{\index{tempf.\-c@{tempf.\-c}!temp\-Set\-Boundary@{temp\-Set\-Boundary}}
+\index{temp\-Set\-Boundary@{temp\-Set\-Boundary}!tempf.c@{tempf.\-c}}
+\subsubsection[{temp\-Set\-Boundary}]{\setlength{\rightskip}{0pt plus 5cm}void temp\-Set\-Boundary (
+\begin{DoxyParamCaption}
+\item[{int}]{coord, }
+\item[{int}]{boundary}
+\end{DoxyParamCaption}
+)}}\label{tempf_8c_a79074c63a5e46e7e5ae6648324ed3c69}
+This function sets boundary conditions for domain faces. 
+
+Definition at line 71 of file tempf.\-c.
+
+
+
+References bc\-Lower, bc\-Upper, temp\-Lower, and temp\-Upper.
+
+
+\begin{DoxyCode}
+72 \{
+73   \textcolor{keywordflow}{if} (coord == 0 && boundary == -1) \{
+74     \hyperlink{tempf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}[0] = \hyperlink{tempf_8c_a196355f9f84bb71de2c7f2817d245e20}{tempLower}[0];
+75     \hyperlink{tempf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}[0] = \hyperlink{tempf_8c_a196355f9f84bb71de2c7f2817d245e20}{tempLower}[0];
+76     \hyperlink{tempf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}[1] = \hyperlink{tempf_8c_a196355f9f84bb71de2c7f2817d245e20}{tempLower}[1];
+77     \hyperlink{tempf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}[1] = \hyperlink{tempf_8c_ad0a57dc1002e63ea4c360662e6019ef3}{tempUpper}[1];
+78     \hyperlink{tempf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}[2] = \hyperlink{tempf_8c_a196355f9f84bb71de2c7f2817d245e20}{tempLower}[2];
+79     \hyperlink{tempf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}[2] = \hyperlink{tempf_8c_ad0a57dc1002e63ea4c360662e6019ef3}{tempUpper}[2];
+80   \}
+81   \textcolor{keywordflow}{if} (coord == 0 && boundary == 1) \{
+82     \hyperlink{tempf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}[0] = \hyperlink{tempf_8c_ad0a57dc1002e63ea4c360662e6019ef3}{tempUpper}[0];
+83     \hyperlink{tempf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}[0] = \hyperlink{tempf_8c_ad0a57dc1002e63ea4c360662e6019ef3}{tempUpper}[0];
+84     \hyperlink{tempf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}[1] = \hyperlink{tempf_8c_a196355f9f84bb71de2c7f2817d245e20}{tempLower}[1];
+85     \hyperlink{tempf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}[1] = \hyperlink{tempf_8c_ad0a57dc1002e63ea4c360662e6019ef3}{tempUpper}[1];
+86     \hyperlink{tempf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}[2] = \hyperlink{tempf_8c_a196355f9f84bb71de2c7f2817d245e20}{tempLower}[2];
+87     \hyperlink{tempf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}[2] = \hyperlink{tempf_8c_ad0a57dc1002e63ea4c360662e6019ef3}{tempUpper}[2];
+88   \}
+89   \textcolor{keywordflow}{if} (coord == 1 && boundary == -1) \{
+90     \hyperlink{tempf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}[0] = \hyperlink{tempf_8c_a196355f9f84bb71de2c7f2817d245e20}{tempLower}[0];
+91     \hyperlink{tempf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}[0] = \hyperlink{tempf_8c_ad0a57dc1002e63ea4c360662e6019ef3}{tempUpper}[0];
+92     \hyperlink{tempf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}[1] = \hyperlink{tempf_8c_a196355f9f84bb71de2c7f2817d245e20}{tempLower}[1];
+93     \hyperlink{tempf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}[1] = \hyperlink{tempf_8c_a196355f9f84bb71de2c7f2817d245e20}{tempLower}[1];
+94     \hyperlink{tempf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}[2] = \hyperlink{tempf_8c_a196355f9f84bb71de2c7f2817d245e20}{tempLower}[2];
+95     \hyperlink{tempf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}[2] = \hyperlink{tempf_8c_ad0a57dc1002e63ea4c360662e6019ef3}{tempUpper}[2];
+96   \}
+97   \textcolor{keywordflow}{if} (coord == 1 && boundary == 1) \{
+98     \hyperlink{tempf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}[0] = \hyperlink{tempf_8c_a196355f9f84bb71de2c7f2817d245e20}{tempLower}[0];
+99     \hyperlink{tempf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}[0] = \hyperlink{tempf_8c_ad0a57dc1002e63ea4c360662e6019ef3}{tempUpper}[0];
+100     \hyperlink{tempf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}[1] = \hyperlink{tempf_8c_ad0a57dc1002e63ea4c360662e6019ef3}{tempUpper}[1];
+101     \hyperlink{tempf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}[1] = \hyperlink{tempf_8c_ad0a57dc1002e63ea4c360662e6019ef3}{tempUpper}[1];
+102     \hyperlink{tempf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}[2] = \hyperlink{tempf_8c_a196355f9f84bb71de2c7f2817d245e20}{tempLower}[2];
+103     \hyperlink{tempf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}[2] = \hyperlink{tempf_8c_ad0a57dc1002e63ea4c360662e6019ef3}{tempUpper}[2];
+104   \}
+105   \textcolor{keywordflow}{if} (coord == 2 && boundary == -1) \{
+106     \hyperlink{tempf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}[0] = \hyperlink{tempf_8c_a196355f9f84bb71de2c7f2817d245e20}{tempLower}[0];
+107     \hyperlink{tempf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}[0] = \hyperlink{tempf_8c_ad0a57dc1002e63ea4c360662e6019ef3}{tempUpper}[0];
+108     \hyperlink{tempf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}[1] = \hyperlink{tempf_8c_a196355f9f84bb71de2c7f2817d245e20}{tempLower}[1];
+109     \hyperlink{tempf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}[1] = \hyperlink{tempf_8c_ad0a57dc1002e63ea4c360662e6019ef3}{tempUpper}[1];
+110     \hyperlink{tempf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}[2] = \hyperlink{tempf_8c_a196355f9f84bb71de2c7f2817d245e20}{tempLower}[2];
+111     \hyperlink{tempf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}[2] = \hyperlink{tempf_8c_a196355f9f84bb71de2c7f2817d245e20}{tempLower}[2];
+112   \}
+113   \textcolor{keywordflow}{if} (coord == 2 && boundary == 1) \{
+114     \hyperlink{tempf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}[0] = \hyperlink{tempf_8c_a196355f9f84bb71de2c7f2817d245e20}{tempLower}[0];
+115     \hyperlink{tempf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}[0] = \hyperlink{tempf_8c_ad0a57dc1002e63ea4c360662e6019ef3}{tempUpper}[0];
+116     \hyperlink{tempf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}[1] = \hyperlink{tempf_8c_a196355f9f84bb71de2c7f2817d245e20}{tempLower}[1];
+117     \hyperlink{tempf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}[1] = \hyperlink{tempf_8c_ad0a57dc1002e63ea4c360662e6019ef3}{tempUpper}[1];
+118     \hyperlink{tempf_8c_a397798166a570960b5d468b6df8bf02c}{bcLower}[2] = \hyperlink{tempf_8c_ad0a57dc1002e63ea4c360662e6019ef3}{tempUpper}[2];
+119     \hyperlink{tempf_8c_aaea99b8c85fcedb15091dcac991999fd}{bcUpper}[2] = \hyperlink{tempf_8c_ad0a57dc1002e63ea4c360662e6019ef3}{tempUpper}[2];
+120   \}
+121 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{tempf_8c_a79074c63a5e46e7e5ae6648324ed3c69_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Variable Documentation}
+\hypertarget{tempf_8c_a1452a7f843e91ac3a1c29b82092d467c}{\index{tempf.\-c@{tempf.\-c}!A@{A}}
+\index{A@{A}!tempf.c@{tempf.\-c}}
+\subsubsection[{A}]{\setlength{\rightskip}{0pt plus 5cm}H\-Y\-P\-R\-E\-\_\-\-S\-Struct\-Matrix A}}\label{tempf_8c_a1452a7f843e91ac3a1c29b82092d467c}
+
+
+Definition at line 39 of file tempf.\-c.
+
+\hypertarget{tempf_8c_a74a523afdfebddf9b6b280e545977c5a}{\index{tempf.\-c@{tempf.\-c}!b@{b}}
+\index{b@{b}!tempf.c@{tempf.\-c}}
+\subsubsection[{b}]{\setlength{\rightskip}{0pt plus 5cm}H\-Y\-P\-R\-E\-\_\-\-S\-Struct\-Vector b}}\label{tempf_8c_a74a523afdfebddf9b6b280e545977c5a}
+
+
+Definition at line 40 of file tempf.\-c.
+
+\hypertarget{tempf_8c_a397798166a570960b5d468b6df8bf02c}{\index{tempf.\-c@{tempf.\-c}!bc\-Lower@{bc\-Lower}}
+\index{bc\-Lower@{bc\-Lower}!tempf.c@{tempf.\-c}}
+\subsubsection[{bc\-Lower}]{\setlength{\rightskip}{0pt plus 5cm}long long bc\-Lower\mbox{[}3\mbox{]}}}\label{tempf_8c_a397798166a570960b5d468b6df8bf02c}
+
+
+Definition at line 53 of file tempf.\-c.
+
+\hypertarget{tempf_8c_aaea99b8c85fcedb15091dcac991999fd}{\index{tempf.\-c@{tempf.\-c}!bc\-Upper@{bc\-Upper}}
+\index{bc\-Upper@{bc\-Upper}!tempf.c@{tempf.\-c}}
+\subsubsection[{bc\-Upper}]{\setlength{\rightskip}{0pt plus 5cm}long long bc\-Upper\mbox{[}3\mbox{]}}}\label{tempf_8c_aaea99b8c85fcedb15091dcac991999fd}
+
+
+Definition at line 54 of file tempf.\-c.
+
+\hypertarget{tempf_8c_a03e28be41881b703c836edbfe9b51b17}{\index{tempf.\-c@{tempf.\-c}!dt@{dt}}
+\index{dt@{dt}!tempf.c@{tempf.\-c}}
+\subsubsection[{dt}]{\setlength{\rightskip}{0pt plus 5cm}double dt}}\label{tempf_8c_a03e28be41881b703c836edbfe9b51b17}
+
+
+Definition at line 56 of file tempf.\-c.
+
+\hypertarget{tempf_8c_af2d53284d0549b262215b77eb3fc5cad}{\index{tempf.\-c@{tempf.\-c}!par\-A@{par\-A}}
+\index{par\-A@{par\-A}!tempf.c@{tempf.\-c}}
+\subsubsection[{par\-A}]{\setlength{\rightskip}{0pt plus 5cm}H\-Y\-P\-R\-E\-\_\-\-Par\-C\-S\-R\-Matrix par\-A}}\label{tempf_8c_af2d53284d0549b262215b77eb3fc5cad}
+
+
+Definition at line 43 of file tempf.\-c.
+
+\hypertarget{tempf_8c_a22c8c44999d3430aef3e02c8081b9d9e}{\index{tempf.\-c@{tempf.\-c}!parb@{parb}}
+\index{parb@{parb}!tempf.c@{tempf.\-c}}
+\subsubsection[{parb}]{\setlength{\rightskip}{0pt plus 5cm}H\-Y\-P\-R\-E\-\_\-\-Par\-Vector parb}}\label{tempf_8c_a22c8c44999d3430aef3e02c8081b9d9e}
+
+
+Definition at line 44 of file tempf.\-c.
+
+\hypertarget{tempf_8c_a2a202d5a6f9421afac04dc63cc35ce6f}{\index{tempf.\-c@{tempf.\-c}!parx@{parx}}
+\index{parx@{parx}!tempf.c@{tempf.\-c}}
+\subsubsection[{parx}]{\setlength{\rightskip}{0pt plus 5cm}H\-Y\-P\-R\-E\-\_\-\-Par\-Vector parx}}\label{tempf_8c_a2a202d5a6f9421afac04dc63cc35ce6f}
+
+
+Definition at line 45 of file tempf.\-c.
+
+\hypertarget{tempf_8c_a8e4efbbc574194c74f201b9328263d51}{\index{tempf.\-c@{tempf.\-c}!temp\-Graph@{temp\-Graph}}
+\index{temp\-Graph@{temp\-Graph}!tempf.c@{tempf.\-c}}
+\subsubsection[{temp\-Graph}]{\setlength{\rightskip}{0pt plus 5cm}H\-Y\-P\-R\-E\-\_\-\-S\-Struct\-Graph temp\-Graph}}\label{tempf_8c_a8e4efbbc574194c74f201b9328263d51}
+
+
+Definition at line 36 of file tempf.\-c.
+
+\hypertarget{tempf_8c_a306941a728f83331c95c2355cbad756e}{\index{tempf.\-c@{tempf.\-c}!temp\-Grid@{temp\-Grid}}
+\index{temp\-Grid@{temp\-Grid}!tempf.c@{tempf.\-c}}
+\subsubsection[{temp\-Grid}]{\setlength{\rightskip}{0pt plus 5cm}H\-Y\-P\-R\-E\-\_\-\-S\-Struct\-Grid temp\-Grid}}\label{tempf_8c_a306941a728f83331c95c2355cbad756e}
+
+
+Definition at line 35 of file tempf.\-c.
+
+\hypertarget{tempf_8c_a99cc2555bf46405acb3e2b14e8567604}{\index{tempf.\-c@{tempf.\-c}!temp\-Iter@{temp\-Iter}}
+\index{temp\-Iter@{temp\-Iter}!tempf.c@{tempf.\-c}}
+\subsubsection[{temp\-Iter}]{\setlength{\rightskip}{0pt plus 5cm}int temp\-Iter}}\label{tempf_8c_a99cc2555bf46405acb3e2b14e8567604}
+
+
+Definition at line 64 of file tempf.\-c.
+
+\hypertarget{tempf_8c_abac9e0ed06bb0a5fea5332d7c39f0b8e}{\index{tempf.\-c@{tempf.\-c}!temp\-Lambda@{temp\-Lambda}}
+\index{temp\-Lambda@{temp\-Lambda}!tempf.c@{tempf.\-c}}
+\subsubsection[{temp\-Lambda}]{\setlength{\rightskip}{0pt plus 5cm}double temp\-Lambda = 0.\-25}}\label{tempf_8c_abac9e0ed06bb0a5fea5332d7c39f0b8e}
+
+
+Definition at line 57 of file tempf.\-c.
+
+\hypertarget{tempf_8c_a196355f9f84bb71de2c7f2817d245e20}{\index{tempf.\-c@{tempf.\-c}!temp\-Lower@{temp\-Lower}}
+\index{temp\-Lower@{temp\-Lower}!tempf.c@{tempf.\-c}}
+\subsubsection[{temp\-Lower}]{\setlength{\rightskip}{0pt plus 5cm}long long temp\-Lower\mbox{[}3\mbox{]}}}\label{tempf_8c_a196355f9f84bb71de2c7f2817d245e20}
+
+
+Definition at line 52 of file tempf.\-c.
+
+\hypertarget{tempf_8c_a5d7b5d2a5e1ad21ae8f4bd43f0392276}{\index{tempf.\-c@{tempf.\-c}!temp\-N\-Parts@{temp\-N\-Parts}}
+\index{temp\-N\-Parts@{temp\-N\-Parts}!tempf.c@{tempf.\-c}}
+\subsubsection[{temp\-N\-Parts}]{\setlength{\rightskip}{0pt plus 5cm}int temp\-N\-Parts}}\label{tempf_8c_a5d7b5d2a5e1ad21ae8f4bd43f0392276}
+
+
+Definition at line 62 of file tempf.\-c.
+
+\hypertarget{tempf_8c_a61d9e9d52407e9c24553063b99088457}{\index{tempf.\-c@{tempf.\-c}!temp\-N\-Vars@{temp\-N\-Vars}}
+\index{temp\-N\-Vars@{temp\-N\-Vars}!tempf.c@{tempf.\-c}}
+\subsubsection[{temp\-N\-Vars}]{\setlength{\rightskip}{0pt plus 5cm}int temp\-N\-Vars}}\label{tempf_8c_a61d9e9d52407e9c24553063b99088457}
+
+
+Definition at line 61 of file tempf.\-c.
+
+\hypertarget{tempf_8c_a3b7e11fcbb7f9521ac3f553e1a0e292d}{\index{tempf.\-c@{tempf.\-c}!temp\-Object\-Type@{temp\-Object\-Type}}
+\index{temp\-Object\-Type@{temp\-Object\-Type}!tempf.c@{tempf.\-c}}
+\subsubsection[{temp\-Object\-Type}]{\setlength{\rightskip}{0pt plus 5cm}int temp\-Object\-Type}}\label{tempf_8c_a3b7e11fcbb7f9521ac3f553e1a0e292d}
+
+
+Definition at line 50 of file tempf.\-c.
+
+\hypertarget{tempf_8c_a0b22e7791e7e1c5dc3e0f61e9a6149eb}{\index{tempf.\-c@{tempf.\-c}!temp\-Precond@{temp\-Precond}}
+\index{temp\-Precond@{temp\-Precond}!tempf.c@{tempf.\-c}}
+\subsubsection[{temp\-Precond}]{\setlength{\rightskip}{0pt plus 5cm}H\-Y\-P\-R\-E\-\_\-\-Solver temp\-Precond}}\label{tempf_8c_a0b22e7791e7e1c5dc3e0f61e9a6149eb}
+
+
+Definition at line 48 of file tempf.\-c.
+
+\hypertarget{tempf_8c_a7d3217679c2aa0229a38f279a62863d7}{\index{tempf.\-c@{tempf.\-c}!temp\-Solver@{temp\-Solver}}
+\index{temp\-Solver@{temp\-Solver}!tempf.c@{tempf.\-c}}
+\subsubsection[{temp\-Solver}]{\setlength{\rightskip}{0pt plus 5cm}H\-Y\-P\-R\-E\-\_\-\-Solver temp\-Solver}}\label{tempf_8c_a7d3217679c2aa0229a38f279a62863d7}
+
+
+Definition at line 47 of file tempf.\-c.
+
+\hypertarget{tempf_8c_a8e2e31e96bb8622f2b457c7a631b0b17}{\index{tempf.\-c@{tempf.\-c}!temp\-Stencil@{temp\-Stencil}}
+\index{temp\-Stencil@{temp\-Stencil}!tempf.c@{tempf.\-c}}
+\subsubsection[{temp\-Stencil}]{\setlength{\rightskip}{0pt plus 5cm}H\-Y\-P\-R\-E\-\_\-\-S\-Struct\-Stencil temp\-Stencil}}\label{tempf_8c_a8e2e31e96bb8622f2b457c7a631b0b17}
+
+
+Definition at line 37 of file tempf.\-c.
+
+\hypertarget{tempf_8c_ad0a57dc1002e63ea4c360662e6019ef3}{\index{tempf.\-c@{tempf.\-c}!temp\-Upper@{temp\-Upper}}
+\index{temp\-Upper@{temp\-Upper}!tempf.c@{tempf.\-c}}
+\subsubsection[{temp\-Upper}]{\setlength{\rightskip}{0pt plus 5cm}long long temp\-Upper\mbox{[}3\mbox{]}}}\label{tempf_8c_ad0a57dc1002e63ea4c360662e6019ef3}
+
+
+Definition at line 52 of file tempf.\-c.
+
+\hypertarget{tempf_8c_a10ce94c724b037f8ef4c4d6c9bcbbb94}{\index{tempf.\-c@{tempf.\-c}!temp\-Vartypes@{temp\-Vartypes}}
+\index{temp\-Vartypes@{temp\-Vartypes}!tempf.c@{tempf.\-c}}
+\subsubsection[{temp\-Vartypes}]{\setlength{\rightskip}{0pt plus 5cm}H\-Y\-P\-R\-E\-\_\-\-S\-Struct\-Variable temp\-Vartypes\mbox{[}1\mbox{]} = \{ H\-Y\-P\-R\-E\-\_\-\-S\-S\-T\-R\-U\-C\-T\-\_\-\-V\-A\-R\-I\-A\-B\-L\-E\-\_\-\-N\-O\-D\-E \}}}\label{tempf_8c_a10ce94c724b037f8ef4c4d6c9bcbbb94}
+
+
+Definition at line 66 of file tempf.\-c.
+
+\hypertarget{tempf_8c_a2063913752083aa6b25d054e8d34dbc6}{\index{tempf.\-c@{tempf.\-c}!tfname@{tfname}}
+\index{tfname@{tfname}!tempf.c@{tempf.\-c}}
+\subsubsection[{tfname}]{\setlength{\rightskip}{0pt plus 5cm}char tfname\mbox{[}256\mbox{]}}}\label{tempf_8c_a2063913752083aa6b25d054e8d34dbc6}
+
+
+Definition at line 59 of file tempf.\-c.
+
+\hypertarget{tempf_8c_a1780e9c70637026d6fab31f63b3a193e}{\index{tempf.\-c@{tempf.\-c}!x@{x}}
+\index{x@{x}!tempf.c@{tempf.\-c}}
+\subsubsection[{x}]{\setlength{\rightskip}{0pt plus 5cm}H\-Y\-P\-R\-E\-\_\-\-S\-Struct\-Vector x}}\label{tempf_8c_a1780e9c70637026d6fab31f63b3a193e}
+
+
+Definition at line 41 of file tempf.\-c.
+

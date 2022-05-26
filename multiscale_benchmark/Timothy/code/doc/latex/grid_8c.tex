@@ -1,0 +1,201 @@
+\hypertarget{grid_8c}{\section{grid.\-c File Reference}
+\label{grid_8c}\index{grid.\-c@{grid.\-c}}
+}
+
+
+contains functions that build the computational grid  
+
+
+{\ttfamily \#include $<$stdio.\-h$>$}\\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$math.\-h$>$}\\*
+{\ttfamily \#include $<$inttypes.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}global.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}fields.\-h\char`\"{}}\\*
+Include dependency graph for grid.\-c\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{grid_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{grid_8c_aecb2e0f80fabf29dae32fdfb639deb15}{compute\-Grid\-Size} ()
+\item 
+void \hyperlink{grid_8c_a5e5be1f2bb1f6f6fcf08f2cb3bee3432}{allocate\-Grid} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+contains functions that build the computational grid 
+
+Definition in file \hyperlink{grid_8c_source}{grid.\-c}.
+
+
+
+\subsection{Function Documentation}
+\hypertarget{grid_8c_a5e5be1f2bb1f6f6fcf08f2cb3bee3432}{\index{grid.\-c@{grid.\-c}!allocate\-Grid@{allocate\-Grid}}
+\index{allocate\-Grid@{allocate\-Grid}!grid.c@{grid.\-c}}
+\subsubsection[{allocate\-Grid}]{\setlength{\rightskip}{0pt plus 5cm}void allocate\-Grid (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{grid_8c_a5e5be1f2bb1f6f6fcf08f2cb3bee3432}
+This function allocates grid arrays. 
+
+Definition at line 81 of file grid.\-c.
+
+
+
+References grid, grid\-Buffer, grid\-End\-Idx, grid\-Resolution, grid\-Size, grid\-Start\-Idx, M\-P\-Icoords, M\-P\-Irank, M\-P\-Isize, sdim, stop\-Run(), int64\-Vector3d\-::x, int64\-Vector3d\-::y, and int64\-Vector3d\-::z.
+
+
+\begin{DoxyCode}
+82 \{
+83   \textcolor{keywordtype}{int} i, j, k;
+84 
+85   \hyperlink{fields_8h_a9154f33f7786c05c61f4d519da14d501}{gridStartIdx} =
+86       (\textcolor{keyword}{struct }\hyperlink{structint64Vector3d}{int64Vector3d} *) malloc(\hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize} *
+87                       \textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} \hyperlink{structint64Vector3d}{int64Vector3d}));
+88   \hyperlink{fields_8h_a1d13a1c43b1a6eb6ca088b79ee681b48}{gridEndIdx} =
+89       (\textcolor{keyword}{struct }\hyperlink{structint64Vector3d}{int64Vector3d} *) malloc(\hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize} *
+90                       \textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} \hyperlink{structint64Vector3d}{int64Vector3d}));
+91 
+92   \textcolor{keywordflow}{for} (i = 0; i < \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}; i++) \{
+93     \hyperlink{fields_8h_a9154f33f7786c05c61f4d519da14d501}{gridStartIdx}[i].\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} = \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} * \hyperlink{global_8h_a8220294108e39b58632993a50a7dc4ca}{MPIcoords}[i][0];
+94     \hyperlink{fields_8h_a9154f33f7786c05c61f4d519da14d501}{gridStartIdx}[i].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} = \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} * \hyperlink{global_8h_a8220294108e39b58632993a50a7dc4ca}{MPIcoords}[i][1];
+95     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 3)
+96       \hyperlink{fields_8h_a9154f33f7786c05c61f4d519da14d501}{gridStartIdx}[i].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} = \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} * \hyperlink{global_8h_a8220294108e39b58632993a50a7dc4ca}{MPIcoords}[i][2];
+97     \textcolor{keywordflow}{else}
+98       \hyperlink{fields_8h_a9154f33f7786c05c61f4d519da14d501}{gridStartIdx}[i].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} = 0;
+99     \hyperlink{fields_8h_a1d13a1c43b1a6eb6ca088b79ee681b48}{gridEndIdx}[i].\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} = \hyperlink{fields_8h_a9154f33f7786c05c61f4d519da14d501}{gridStartIdx}[i].\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} + \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.
+      \hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} - 1;
+100     \hyperlink{fields_8h_a1d13a1c43b1a6eb6ca088b79ee681b48}{gridEndIdx}[i].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} = \hyperlink{fields_8h_a9154f33f7786c05c61f4d519da14d501}{gridStartIdx}[i].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} + \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.
+      \hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} - 1;
+101     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 3)
+102       \hyperlink{fields_8h_a1d13a1c43b1a6eb6ca088b79ee681b48}{gridEndIdx}[i].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} = \hyperlink{fields_8h_a9154f33f7786c05c61f4d519da14d501}{gridStartIdx}[i].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} + \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.
+      \hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} - 1;
+103     \textcolor{keywordflow}{else}
+104       \hyperlink{fields_8h_a1d13a1c43b1a6eb6ca088b79ee681b48}{gridEndIdx}[i].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} = 0;
+105   \}
+106 
+107   \textcolor{keywordflow}{if} (!
+108       (\hyperlink{fields_8h_a1c1a6cf56a04a8b0eae7801ff8ac941b}{gridBuffer} =
+109        (\textcolor{keyword}{struct} \hyperlink{structdoubleVector3d}{doubleVector3d} *) calloc(\hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} * 
+      \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} *
+110                     \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z},
+111                     \textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} \hyperlink{structdoubleVector3d}{doubleVector3d}))))
+112     \hyperlink{utils_8c_a07dd99a04f2723be164531a7a862fb67}{stopRun}(106, \textcolor{stringliteral}{"gridBuffer"}, \_\_FILE\_\_, \_\_LINE\_\_);
+113 
+114 
+115   \textcolor{keywordflow}{for} (i = 0; i < \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x}; i++)
+116     \textcolor{keywordflow}{for} (j = 0; j < \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y}; j++)
+117       \textcolor{keywordflow}{for} (k = 0; k < \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z}; k++) \{
+118     \hyperlink{fields_8h_af79ab52a96be6fa7217a13732bf00b27}{grid}(i, j, k).x =
+119         lowerGridCorner.x + \hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution} * (\hyperlink{fields_8h_a9154f33f7786c05c61f4d519da14d501}{gridStartIdx}[
+      \hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}].\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} +
+120                           i);
+121     \hyperlink{fields_8h_af79ab52a96be6fa7217a13732bf00b27}{grid}(i, j, k).y =
+122         lowerGridCorner.y + \hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution} * (\hyperlink{fields_8h_a9154f33f7786c05c61f4d519da14d501}{gridStartIdx}[
+      \hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}].\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} +
+123                           j);
+124     \hyperlink{fields_8h_af79ab52a96be6fa7217a13732bf00b27}{grid}(i, j, k).z =
+125         lowerGridCorner.z + \hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution} * (\hyperlink{fields_8h_a9154f33f7786c05c61f4d519da14d501}{gridStartIdx}[
+      \hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}].\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} +
+126                           k);
+127       \}
+128 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=238pt]{grid_8c_a5e5be1f2bb1f6f6fcf08f2cb3bee3432_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=332pt]{grid_8c_a5e5be1f2bb1f6f6fcf08f2cb3bee3432_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{grid_8c_aecb2e0f80fabf29dae32fdfb639deb15}{\index{grid.\-c@{grid.\-c}!compute\-Grid\-Size@{compute\-Grid\-Size}}
+\index{compute\-Grid\-Size@{compute\-Grid\-Size}!grid.c@{grid.\-c}}
+\subsubsection[{compute\-Grid\-Size}]{\setlength{\rightskip}{0pt plus 5cm}void compute\-Grid\-Size (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{grid_8c_aecb2e0f80fabf29dae32fdfb639deb15}
+This function computes the sizes of the grid. 
+
+Definition at line 38 of file grid.\-c.
+
+
+
+References box\-Volume, csize, csize\-In\-Units, gf\-H, global\-Grid\-Size, grid\-I, grid\-J, grid\-K, grid\-Resolution, grid\-Size, M\-P\-Idim, M\-P\-Irank, nx, ny, nz, sdim, upper\-Grid\-Corner, double\-Vector3d\-::x, int64\-Vector3d\-::x, double\-Vector3d\-::y, int64\-Vector3d\-::y, double\-Vector3d\-::z, and int64\-Vector3d\-::z.
+
+
+\begin{DoxyCode}
+39 \{
+40   \hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution} = \hyperlink{global_8h_a3b735e8520f1816ee73ee50daa3ef756}{csize} * \hyperlink{global_8h_a3b15d89e3952fa259e37b9906836a9f9}{gfH};
+41   \hyperlink{fields_8h_a341ea6bceeddfb9adf95b0f259c74f54}{boxVolume} = pow((\hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution} / \hyperlink{global_8h_a3b735e8520f1816ee73ee50daa3ef756}{csize}) * 
+      \hyperlink{global_8h_a5618d8682d7245e8770f85fbf8c2fda5}{csizeInUnits} * 0.0001, 3);
+42   lowerGridCorner.x = 0.0;
+43   lowerGridCorner.y = 0.0;
+44   lowerGridCorner.z = 0.0;
+45   \hyperlink{fields_8h_a4cd0d7a69ff25d3b90621720a512b524}{upperGridCorner}.\hyperlink{structdoubleVector3d_af88b946fb90d5f08b5fb740c70e98c10}{x} = (double) \hyperlink{global_8h_a02d47a4f36ec0bcce348696534567e30}{nx} - 1;
+46   \hyperlink{fields_8h_a4cd0d7a69ff25d3b90621720a512b524}{upperGridCorner}.\hyperlink{structdoubleVector3d_ab927965981178aa1fba979a37168db2a}{y} = (double) \hyperlink{global_8h_a9f4e20a91b26459133b83992e9d8d381}{ny} - 1;
+47   \hyperlink{fields_8h_a4cd0d7a69ff25d3b90621720a512b524}{upperGridCorner}.\hyperlink{structdoubleVector3d_ab3e6ed577a7c669c19de1f9c1b46c872}{z} = (double) \hyperlink{global_8h_ac2eda98bb6d7e89cc3239973db2800cf}{nz} - 1;
+48 
+49 
+50   \hyperlink{fields_8h_a3b16f16741e1e72c3829e9944c5537f4}{globalGridSize}.\hyperlink{structdoubleVector3d_af88b946fb90d5f08b5fb740c70e98c10}{x} = \hyperlink{fields_8h_a4cd0d7a69ff25d3b90621720a512b524}{upperGridCorner}.\hyperlink{structdoubleVector3d_af88b946fb90d5f08b5fb740c70e98c10}{x} - lowerGridCorner.x + 1;
+51   \hyperlink{fields_8h_a3b16f16741e1e72c3829e9944c5537f4}{globalGridSize}.\hyperlink{structdoubleVector3d_ab927965981178aa1fba979a37168db2a}{y} = \hyperlink{fields_8h_a4cd0d7a69ff25d3b90621720a512b524}{upperGridCorner}.\hyperlink{structdoubleVector3d_ab927965981178aa1fba979a37168db2a}{y} - lowerGridCorner.y + 1;
+52   \hyperlink{fields_8h_a3b16f16741e1e72c3829e9944c5537f4}{globalGridSize}.\hyperlink{structdoubleVector3d_ab3e6ed577a7c669c19de1f9c1b46c872}{z} = \hyperlink{fields_8h_a4cd0d7a69ff25d3b90621720a512b524}{upperGridCorner}.\hyperlink{structdoubleVector3d_ab3e6ed577a7c669c19de1f9c1b46c872}{z} - lowerGridCorner.z + 1;
+53 
+54   \hyperlink{fields_8h_a05417d7423c6910043c021f274f313e9}{gridI} = (int64\_t) ((\hyperlink{fields_8h_a3b16f16741e1e72c3829e9944c5537f4}{globalGridSize}.\hyperlink{structdoubleVector3d_af88b946fb90d5f08b5fb740c70e98c10}{x} + 1) / \hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution});
+55   \hyperlink{fields_8h_a82988efc62eb48ce01aff7e477f133ee}{gridJ} = (int64\_t) ((\hyperlink{fields_8h_a3b16f16741e1e72c3829e9944c5537f4}{globalGridSize}.\hyperlink{structdoubleVector3d_ab927965981178aa1fba979a37168db2a}{y} + 1) / \hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution});
+56   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 3)
+57     \hyperlink{fields_8h_ab9578aa866429a39273874dc7d3d9046}{gridK} = (int64\_t) ((\hyperlink{fields_8h_a3b16f16741e1e72c3829e9944c5537f4}{globalGridSize}.\hyperlink{structdoubleVector3d_ab3e6ed577a7c669c19de1f9c1b46c872}{z} + 1) / 
+      \hyperlink{fields_8h_a1c1b24172891a639f9cad84edebeaee9}{gridResolution});
+58   \textcolor{keywordflow}{else}
+59     \hyperlink{fields_8h_ab9578aa866429a39273874dc7d3d9046}{gridK} = 0;
+60 
+61   \hyperlink{fields_8h_a05417d7423c6910043c021f274f313e9}{gridI} = \hyperlink{fields_8h_a05417d7423c6910043c021f274f313e9}{gridI} + (\hyperlink{global_8h_a633835398408aaee46fd56809af73e6c}{MPIdim}[0] - \hyperlink{fields_8h_a05417d7423c6910043c021f274f313e9}{gridI} % \hyperlink{global_8h_a633835398408aaee46fd56809af73e6c}{MPIdim}[0]);
+62   \hyperlink{fields_8h_a82988efc62eb48ce01aff7e477f133ee}{gridJ} = gridJ + (\hyperlink{global_8h_a633835398408aaee46fd56809af73e6c}{MPIdim}[1] - gridJ % \hyperlink{global_8h_a633835398408aaee46fd56809af73e6c}{MPIdim}[1]);
+63   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 3)
+64     \hyperlink{fields_8h_ab9578aa866429a39273874dc7d3d9046}{gridK} = \hyperlink{fields_8h_ab9578aa866429a39273874dc7d3d9046}{gridK} + (\hyperlink{global_8h_a633835398408aaee46fd56809af73e6c}{MPIdim}[2] - \hyperlink{fields_8h_ab9578aa866429a39273874dc7d3d9046}{gridK} % \hyperlink{global_8h_a633835398408aaee46fd56809af73e6c}{MPIdim}[2]);
+65 
+66   \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} = \hyperlink{fields_8h_a05417d7423c6910043c021f274f313e9}{gridI} / \hyperlink{global_8h_a633835398408aaee46fd56809af73e6c}{MPIdim}[0];
+67   \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} = gridJ / \hyperlink{global_8h_a633835398408aaee46fd56809af73e6c}{MPIdim}[1];
+68   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 3)
+69     \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} = \hyperlink{fields_8h_ab9578aa866429a39273874dc7d3d9046}{gridK} / \hyperlink{global_8h_a633835398408aaee46fd56809af73e6c}{MPIdim}[2];
+70   \textcolor{keywordflow}{else}
+71     \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z} = 1;
+72 
+73   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank} == 0)
+74     printf(\textcolor{stringliteral}{"Grid size:%"} PRId64 \textcolor{stringliteral}{"x%"} PRId64 \textcolor{stringliteral}{"x%"} PRId64 \textcolor{stringliteral}{"\(\backslash\)n"}, \hyperlink{fields_8h_a05417d7423c6910043c021f274f313e9}{gridI}, gridJ,
+75        \hyperlink{fields_8h_ab9578aa866429a39273874dc7d3d9046}{gridK});
+76 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{grid_8c_aecb2e0f80fabf29dae32fdfb639deb15_icgraph}
+\end{center}
+\end{figure}
+
+

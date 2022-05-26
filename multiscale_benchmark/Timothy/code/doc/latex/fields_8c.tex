@@ -1,0 +1,224 @@
+\hypertarget{fields_8c}{\section{fields.\-c File Reference}
+\label{fields_8c}\index{fields.\-c@{fields.\-c}}
+}
+
+
+contains driving functions for the global fields  
+
+
+{\ttfamily \#include $<$stdio.\-h$>$}\\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$math.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}global.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}fields.\-h\char`\"{}}\\*
+Include dependency graph for fields.\-c\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{fields_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{fields_8c_af20f777e99b72945b22c053d2f7b8e46}{fields\-Init} ()
+\item 
+void \hyperlink{fields_8c_a8aa63d2a1c91ca03cb71cfc867e40c74}{fields\-Solve} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+contains driving functions for the global fields 
+
+Definition in file \hyperlink{fields_8c_source}{fields.\-c}.
+
+
+
+\subsection{Function Documentation}
+\hypertarget{fields_8c_af20f777e99b72945b22c053d2f7b8e46}{\index{fields.\-c@{fields.\-c}!fields\-Init@{fields\-Init}}
+\index{fields\-Init@{fields\-Init}!fields.c@{fields.\-c}}
+\subsubsection[{fields\-Init}]{\setlength{\rightskip}{0pt plus 5cm}void fields\-Init (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{fields_8c_af20f777e99b72945b22c053d2f7b8e46}
+This function intializes the fields. Various parameters are set and the Hypre initialization of the system is executed. 
+
+Definition at line 45 of file fields.\-c.
+
+
+
+References chem\-Env\-Init\-B\-C(), chem\-Env\-Init\-Solver(), chem\-Env\-Init\-System(), chem\-Field, density\-Field, field\-Addr, field\-B\-C, field\-Critical\-Level1, field\-Critical\-Level2, field\-Diff\-Coef, field\-Dt, field\-I\-C\-Mean, field\-I\-C\-Var, field\-Name, field\-Type, gf\-Dt, gfields, glucose, grid\-Size, hydrogen\-Ion, N\-C\-H\-E\-M, oxygen, S\-C\-A\-L\-A\-R\-\_\-\-F\-I\-E\-L\-D, seconds\-Per\-Step, temp\-Env\-Init\-B\-C(), temp\-Env\-Init\-Solver(), temp\-Env\-Init\-System(), temperature, temp\-Field, int64\-Vector3d\-::x, int64\-Vector3d\-::y, and int64\-Vector3d\-::z.
+
+
+\begin{DoxyCode}
+46 \{
+47   \textcolor{keywordtype}{int} nf, i;
+48   \textcolor{keywordtype}{int} chf;
+49 
+50   \textcolor{keywordflow}{if} (!\hyperlink{fields_8h_abe4692639a5f11507faff09f2d37efa8}{gfields})
+51     \textcolor{keywordflow}{return};
+52 
+53   nf = 0;
+54 
+55   strcpy(\hyperlink{fields_8h_a1a12b04329495ce82cf21a9d42b71f1c}{fieldName}[nf], \textcolor{stringliteral}{"density"});
+56   \hyperlink{fields_8h_a45d95417be1408a38916e94c79cb9e02}{fieldType}[nf] = \hyperlink{fields_8h_a5f8e3ee6c3157997836b1bbbecfba795}{SCALAR\_FIELD};
+57   \hyperlink{fields_8h_a6f2153921f2cf97a60e41a347ecaeb39}{fieldAddr}[nf] =
+58       (\textcolor{keywordtype}{double} *) calloc(\hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.
+      \hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z},
+59             \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double}));
+60   \hyperlink{fields_8h_ab5fe38cf4811c34fa9d1c8e4aa6340c2}{densityField} = (\textcolor{keywordtype}{double} *) \hyperlink{fields_8h_a6f2153921f2cf97a60e41a347ecaeb39}{fieldAddr}[nf];
+61   \textcolor{keywordflow}{for} (i = 0; i < \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z}; i++)
+62     \hyperlink{fields_8h_ab5fe38cf4811c34fa9d1c8e4aa6340c2}{densityField}[i] = 0.0;
+63   nf++;
+64 
+65   strcpy(\hyperlink{fields_8h_a1a12b04329495ce82cf21a9d42b71f1c}{fieldName}[nf], \textcolor{stringliteral}{"temp"});
+66   \hyperlink{fields_8h_a45d95417be1408a38916e94c79cb9e02}{fieldType}[nf] = \hyperlink{fields_8h_a5f8e3ee6c3157997836b1bbbecfba795}{SCALAR\_FIELD};
+67   \hyperlink{fields_8h_a6f2153921f2cf97a60e41a347ecaeb39}{fieldAddr}[nf] =
+68       (\textcolor{keywordtype}{double} *) calloc(\hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.
+      \hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z},
+69             \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double}));
+70   \hyperlink{fields_8h_afffa6ff788240a58e074a58603f3d11e}{tempField} = (\textcolor{keywordtype}{double} *) \hyperlink{fields_8h_a6f2153921f2cf97a60e41a347ecaeb39}{fieldAddr}[nf];
+71   \textcolor{keywordflow}{for} (i = 0; i < \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z}; i++)
+72     \hyperlink{fields_8h_afffa6ff788240a58e074a58603f3d11e}{tempField}[i] = 0.0;
+73   \hyperlink{fields_8h_ad4870e0beb9744bd643b6501c4505d81}{fieldDiffCoef}[nf] = 1 * 1e-5;
+74   \hyperlink{fields_8h_a80c6ee80e0f056adba2430ab0d21e58f}{fieldBC}[nf] = 42.0;
+75   \hyperlink{fields_8h_ad0fb86debb3e1b138683ff94a2f51f5b}{fieldICMean}[nf] = 36.0;
+76   \hyperlink{fields_8h_ad7e273c70cc0bf1510948fce547960f4}{fieldICVar}[nf] = 0;
+77 
+78   nf++;
+79 
+80   \textcolor{comment}{/* set default values for chemical parameters */}
+81   \textcolor{keywordflow}{for} (chf = 0; chf < \hyperlink{fields_8h_af4afd37668ae33da6377a17adff33029}{NCHEM}; chf++) \{
+82     \textcolor{keywordflow}{if} (chf == 0) \{
+83       strcpy(\hyperlink{fields_8h_a1a12b04329495ce82cf21a9d42b71f1c}{fieldName}[nf], \textcolor{stringliteral}{"oxygen"});
+84       \hyperlink{fields_8h_ae21d99cc23aefdfc02fbe62cd28784fb}{fieldDt}[nf] = \hyperlink{global_8h_aae6a1dda703fb50b7a8b0f4dc01d82c1}{gfDt};
+85       \hyperlink{fields_8h_a3d0360f40f207ac596765b891c46b285}{fieldCriticalLevel1}[nf] *= \hyperlink{global_8h_aae6a1dda703fb50b7a8b0f4dc01d82c1}{gfDt};   \textcolor{comment}{//*(boxVolume/cellVolume);}
+86       \hyperlink{fields_8h_a5534681dc803f20910d872026257fd75}{fieldCriticalLevel2}[nf] *= \hyperlink{global_8h_aae6a1dda703fb50b7a8b0f4dc01d82c1}{gfDt};   \textcolor{comment}{//*(boxVolume/cellVolume);}
+87     \}
+88     \textcolor{keywordflow}{if} (chf == 1) \{
+89       strcpy(\hyperlink{fields_8h_a1a12b04329495ce82cf21a9d42b71f1c}{fieldName}[nf], \textcolor{stringliteral}{"glucose"});
+90       \hyperlink{fields_8h_ae21d99cc23aefdfc02fbe62cd28784fb}{fieldDt}[nf] = \hyperlink{global_8h_aac71dcf068b84f2973571ab102920190}{secondsPerStep};
+91     \}
+92     \textcolor{keywordflow}{if} (chf == 2) \{
+93       strcpy(\hyperlink{fields_8h_a1a12b04329495ce82cf21a9d42b71f1c}{fieldName}[nf], \textcolor{stringliteral}{"hydrogenIon"});
+94       \hyperlink{fields_8h_ae21d99cc23aefdfc02fbe62cd28784fb}{fieldDt}[nf] = \hyperlink{global_8h_aac71dcf068b84f2973571ab102920190}{secondsPerStep};
+95     \}
+96     \hyperlink{fields_8h_a45d95417be1408a38916e94c79cb9e02}{fieldType}[nf] = \hyperlink{fields_8h_a5f8e3ee6c3157997836b1bbbecfba795}{SCALAR\_FIELD};
+97     \hyperlink{fields_8h_a6f2153921f2cf97a60e41a347ecaeb39}{fieldAddr}[nf] =
+98     (\textcolor{keywordtype}{double} *) calloc(\hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.
+      \hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z},
+99               \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double}));
+100     \hyperlink{fields_8h_adb9b18c97bd0384bf977ee57e604626a}{chemField}[chf] = (\textcolor{keywordtype}{double} *) \hyperlink{fields_8h_a6f2153921f2cf97a60e41a347ecaeb39}{fieldAddr}[nf];
+101     \textcolor{keywordflow}{for} (i = 0; i < \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a040359f45343ce6667f5c66fda5f50e3}{x} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.\hyperlink{structint64Vector3d_a0cbcba26311a97b8e0763317e105a918}{y} * \hyperlink{fields_8h_ae67bb9d09bd0919a0ccbc27b387cec72}{gridSize}.
+      \hyperlink{structint64Vector3d_a44624880ae3bb63041297b70cb33408b}{z}; i++)
+102       \hyperlink{fields_8h_adb9b18c97bd0384bf977ee57e604626a}{chemField}[chf][i] = 0.0;
+103     nf++;
+104   \}
+105 
+106   \textcolor{comment}{/* initialize temperature field */}
+107   \textcolor{keywordflow}{if} (\hyperlink{fields_8h_a0ac2a299549fcca3cd14e4c1ac2087d2}{temperature}) \{
+108     \hyperlink{tempf_8c_afdd72425d842d0527b7707235c6b1426}{tempEnvInitSystem}();
+109     \hyperlink{tempf_8c_aa500322cb37c8e4f6b5cdd19f7f4c52a}{tempEnvInitBC}();
+110     \hyperlink{tempf_8c_a03c57aff346d1ca0f30a1cbe5d74110d}{tempEnvInitSolver}();
+111   \}
+112 
+113   \textcolor{comment}{/* initialize chemical fields */}
+114   \textcolor{keywordflow}{for} (i = 0; i < \hyperlink{fields_8h_af4afd37668ae33da6377a17adff33029}{NCHEM}; i++) \{
+115     \textcolor{keywordflow}{if} (i == 0 && !\hyperlink{fields_8h_a67dd60f843bcdd47eb1503456d0da5de}{oxygen})
+116       \textcolor{keywordflow}{continue};
+117     \textcolor{keywordflow}{if} (i == 1 && !\hyperlink{fields_8h_aa70f92ad44ec1687a70b41b3c3e5fa45}{glucose})
+118       \textcolor{keywordflow}{continue};
+119     \textcolor{keywordflow}{if} (i == 2 && !\hyperlink{fields_8h_a0bd8292376c22b63b67fc99aa6f51986}{hydrogenIon})
+120       \textcolor{keywordflow}{continue};
+121     \hyperlink{chemf_8c_abc9d0a6b17feeff2a62eb6bb38c17ff4}{chemEnvInitSystem}(i);
+122     \hyperlink{chemf_8c_ae67d4d36ecee14805a0b6b0b134b0800}{chemEnvInitBC}(i);
+123     \hyperlink{chemf_8c_ad1be1b100191d6ffbd5c3cb0c42549d6}{chemEnvInitSolver}(i);
+124   \}
+125 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{fields_8c_af20f777e99b72945b22c053d2f7b8e46_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=318pt]{fields_8c_af20f777e99b72945b22c053d2f7b8e46_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{fields_8c_a8aa63d2a1c91ca03cb71cfc867e40c74}{\index{fields.\-c@{fields.\-c}!fields\-Solve@{fields\-Solve}}
+\index{fields\-Solve@{fields\-Solve}!fields.c@{fields.\-c}}
+\subsubsection[{fields\-Solve}]{\setlength{\rightskip}{0pt plus 5cm}void fields\-Solve (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{fields_8c_a8aa63d2a1c91ca03cb71cfc867e40c74}
+This is a driving function for global field solver. It is called in each step of the simulation. 
+
+Definition at line 131 of file fields.\-c.
+
+
+
+References chem\-Env\-Solve(), gfields, gf\-Iter, gf\-Iter\-Per\-Step, glucose, hydrogen\-Ion, N\-C\-H\-E\-M, oxygen, temp\-Env\-Solve(), temperature, and update\-Cell\-States().
+
+
+\begin{DoxyCode}
+132 \{
+133   \textcolor{keywordtype}{int} i;
+134   \textcolor{keywordflow}{if} (!\hyperlink{fields_8h_abe4692639a5f11507faff09f2d37efa8}{gfields})
+135     \textcolor{keywordflow}{return};
+136   \textcolor{keywordflow}{for} (\hyperlink{global_8h_ab2e483b60cc15741bd6281688f31edbc}{gfIter} = 0; \hyperlink{global_8h_ab2e483b60cc15741bd6281688f31edbc}{gfIter} < \hyperlink{global_8h_a4b76c15679db05e32f70c9804e186557}{gfIterPerStep}; \hyperlink{global_8h_ab2e483b60cc15741bd6281688f31edbc}{gfIter}++) \{
+137     \textcolor{comment}{/* update cell state (if more than one iteration) */}
+138     \textcolor{keywordflow}{if} (\hyperlink{global_8h_ab2e483b60cc15741bd6281688f31edbc}{gfIter} > 0)
+139       \hyperlink{cells_8c_aeb1f066ef0713a8a50eb1e58784a3d7b}{updateCellStates}();
+140     \textcolor{comment}{/* solve temperature field */}
+141     \textcolor{keywordflow}{if} (\hyperlink{fields_8h_a0ac2a299549fcca3cd14e4c1ac2087d2}{temperature})
+142       \hyperlink{tempf_8c_a7e47d73682b9a931fd9d680f6d495331}{tempEnvSolve}();
+143     \textcolor{comment}{/* solve chemical fields */}
+144     \textcolor{keywordflow}{for} (i = 0; i < \hyperlink{fields_8h_af4afd37668ae33da6377a17adff33029}{NCHEM}; i++) \{
+145       \textcolor{keywordflow}{if} (i == 0 && !\hyperlink{fields_8h_a67dd60f843bcdd47eb1503456d0da5de}{oxygen})
+146     \textcolor{keywordflow}{continue};
+147       \textcolor{keywordflow}{if} (i == 1 && !\hyperlink{fields_8h_aa70f92ad44ec1687a70b41b3c3e5fa45}{glucose})
+148     \textcolor{keywordflow}{continue};
+149       \textcolor{keywordflow}{if} (i == 2 && !\hyperlink{fields_8h_a0bd8292376c22b63b67fc99aa6f51986}{hydrogenIon})
+150     \textcolor{keywordflow}{continue};
+151       \hyperlink{chemf_8c_a1f8f7d186d46aafcd792aaf3bee655a7}{chemEnvSolve}(i);
+152     \}
+153   \}
+154 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{fields_8c_a8aa63d2a1c91ca03cb71cfc867e40c74_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=220pt]{fields_8c_a8aa63d2a1c91ca03cb71cfc867e40c74_icgraph}
+\end{center}
+\end{figure}
+
+

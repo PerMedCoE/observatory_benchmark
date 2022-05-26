@@ -1,0 +1,534 @@
+\hypertarget{io_8h}{\section{io.\-h File Reference}
+\label{io_8h}\index{io.\-h@{io.\-h}}
+}
+
+
+contains defines and declarations for I/\-O functions  
+
+
+This graph shows which files directly or indirectly include this file\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=112pt]{io_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structcolormapPoint__t}{colormap\-Point\-\_\-t}
+\item 
+struct \hyperlink{structcolormap__t}{colormap\-\_\-t}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{io_8h_a6ee98078df1e27286ab249d0ceb99dc9}{N\-P\-A\-R}~67
+\item 
+\#define \hyperlink{io_8h_a4b654506f18b8bfd61ad2a29a7e38c25}{R\-E\-A\-L}~1
+\item 
+\#define \hyperlink{io_8h_a0f4d394a3ab4e09bff60f714c66dc5ee}{S\-T\-R\-I\-N\-G}~2
+\item 
+\#define \hyperlink{io_8h_afeeffe52c8fd59db7c61cf8b02042dbf}{I\-N\-T}~3
+\item 
+\#define \hyperlink{io_8h_acaa7b8a7167a8214f499c71c413ddcca}{L\-O\-N\-G}~4
+\item 
+\#define \hyperlink{io_8h_afb3891492b67fa5ded53824df675ae9b}{I\-N\-T64\-\_\-\-T}~5
+\item 
+\#define \hyperlink{io_8h_a8747af38b86aa2bbcda2f1b1aa0888c2}{D\-O\-U\-B\-L\-E}~6
+\item 
+\#define \hyperlink{io_8h_a35cd67ba7bb0db8105eb6267467535d7}{C\-H\-A\-R}~7
+\item 
+\#define \hyperlink{io_8h_a923c26a2bcd7d39353bcf9c99c17011f}{N\-O\-U\-T}~10
+\item 
+\#define \hyperlink{io_8h_a46021ef32d7bff7c66e835cced0c90be}{N\-R\-S\-T\-P\-A\-R\-A\-M\-S}~32
+\item 
+\#define \hyperlink{io_8h_aae7e5362e39df9265f4fd78ffa61660a}{S\-C\-A\-L\-A\-R}~1
+\item 
+\#define \hyperlink{io_8h_ac6e89954deaa373db52a91ac6db50884}{V\-E\-C\-T\-O\-R}~2
+\item 
+\#define \hyperlink{io_8h_a70907c03cbcbc3e042d075b3c84d91ec}{F\-N\-L\-E\-N}~256
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{structcolormapPoint__t}{colormap\-Point\-\_\-t} \hyperlink{io_8h_a2bf5ae344b8526b236f7152ce0424670}{colormap\-Point}
+\item 
+typedef struct \hyperlink{structcolormap__t}{colormap\-\_\-t} \hyperlink{io_8h_af31b0606f3732d73efbeec4c33d3e5e3}{colormap}
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{io_8h_a86b8b5a8507bce265bbe328a32447980}{type\-Out} \mbox{[}\hyperlink{io_8h_a923c26a2bcd7d39353bcf9c99c17011f}{N\-O\-U\-T}\mbox{]}
+\item 
+char \hyperlink{io_8h_a29df2595853f2e873d779126d2e7d2bc}{name\-Out} \mbox{[}\hyperlink{io_8h_a923c26a2bcd7d39353bcf9c99c17011f}{N\-O\-U\-T}\mbox{]}\mbox{[}128\mbox{]}
+\item 
+int \hyperlink{io_8h_a4e59958ecda85fd1cd6ddf14deeee746}{dim\-Out} \mbox{[}\hyperlink{io_8h_a923c26a2bcd7d39353bcf9c99c17011f}{N\-O\-U\-T}\mbox{]}
+\item 
+void $\ast$ \hyperlink{io_8h_a08b4046db2036d43a19dce3ce0cadb36}{addr\-Out} \mbox{[}\hyperlink{io_8h_a923c26a2bcd7d39353bcf9c99c17011f}{N\-O\-U\-T}\mbox{]}
+\item 
+int64\-\_\-t \hyperlink{io_8h_a66273d8a7cd1312b428eaf603cd18429}{jump\-Out} \mbox{[}\hyperlink{io_8h_a923c26a2bcd7d39353bcf9c99c17011f}{N\-O\-U\-T}\mbox{]}
+\item 
+int \hyperlink{io_8h_acfc4e25c4d441223abcee38b91ab1fcd}{nf\-Out}
+\item 
+int \hyperlink{io_8h_a5aa91756dcd78ea9116f8f543c5acc1c}{type\-Rst} \mbox{[}\hyperlink{io_8h_a46021ef32d7bff7c66e835cced0c90be}{N\-R\-S\-T\-P\-A\-R\-A\-M\-S}\mbox{]}
+\item 
+int \hyperlink{io_8h_a885d38fceae8ca79b0a86cafefc0fc95}{size\-Rst} \mbox{[}\hyperlink{io_8h_a46021ef32d7bff7c66e835cced0c90be}{N\-R\-S\-T\-P\-A\-R\-A\-M\-S}\mbox{]}
+\item 
+void $\ast$ \hyperlink{io_8h_a36abc26396195827ce43113215befa91}{addr\-Rst} \mbox{[}\hyperlink{io_8h_a46021ef32d7bff7c66e835cced0c90be}{N\-R\-S\-T\-P\-A\-R\-A\-M\-S}\mbox{]}
+\item 
+int \hyperlink{io_8h_a4a59516cc3edb067909443da1a5512e0}{n\-Rst}
+\item 
+int \hyperlink{io_8h_a7cf22acdf967b03c9dae541c4dd8c082}{rst\-Sdim}
+\item 
+int \hyperlink{io_8h_a752504ab1ed4e359dd4521f8322b37cc}{rst\-Nx}
+\item 
+int \hyperlink{io_8h_afc8a3f4700458aebf6e5e5010053a837}{rst\-Ny}
+\item 
+int \hyperlink{io_8h_a960b3699e7c8c5bcde1eea5c8c88feb5}{rst\-Nz}
+\item 
+char \hyperlink{io_8h_a63a48c48ade2b5101ea40c246b5d222f}{rst\-Outdir} \mbox{[}128\mbox{]}
+\item 
+char \hyperlink{io_8h_af225a766ac48b88175af626f1710867e}{rst\-Rng} \mbox{[}3\mbox{]}
+\item 
+int64\-\_\-t \hyperlink{io_8h_ab31b158a3bd5d5f95a04447ccf10bcc7}{rst\-Nc}
+\item 
+int \hyperlink{io_8h_af07e8112e5a618b7d1259796e5c608f7}{rst\-Sim\-Start}
+\item 
+float \hyperlink{io_8h_a571ff6c64792898ece747b5b4ecc07f8}{rst\-Tstep}
+\item 
+float \hyperlink{io_8h_a40e90f7d74075ae57f9cf48966179d9d}{rst\-Sim\-Time}
+\item 
+float \hyperlink{io_8h_afcd968ae4452298b938320f6796ecfdc}{rst\-Frac}
+\item 
+float \hyperlink{io_8h_ad9ef3f701b1c2348ec41b841474758fe}{rst\-G1}
+\item 
+float \hyperlink{io_8h_aac50b3a1a32adf53bb30436b5df2a850}{rst\-S}
+\item 
+float \hyperlink{io_8h_a464e38bb4359b6c1d17bcf38bd1fe825}{rst\-G2}
+\item 
+float \hyperlink{io_8h_ab3d512aa88682213fda99a64197f3e5a}{rst\-M}
+\item 
+float \hyperlink{io_8h_a0aac255cc5cdc0cb61a0728328819f8c}{rst\-V}
+\item 
+float \hyperlink{io_8h_a4f0f79be9e6fa067183e0d8858d3d6bf}{rst\-Rd}
+\item 
+double \hyperlink{io_8h_ad0da1d27fbe926c073c22df722268c46}{rst\-H}
+\item 
+double \hyperlink{io_8h_aacff47df4e9beebda772cc2a8abc86dd}{rst\-Csize}
+\item 
+int \hyperlink{io_8h_a1dfe125ea6f4dc874d4649b666c99d6e}{one} =1
+\item 
+char \hyperlink{io_8h_ad9f8db6ae9021cac2544ddd5452cb0e5}{params} \mbox{[}\hyperlink{io_8h_a6ee98078df1e27286ab249d0ceb99dc9}{N\-P\-A\-R}\mbox{]}\mbox{[}64\mbox{]}
+\item 
+char \hyperlink{io_8h_ad32952f6130d8f77a9e4757789089ff8}{desc} \mbox{[}\hyperlink{io_8h_a6ee98078df1e27286ab249d0ceb99dc9}{N\-P\-A\-R}\mbox{]}\mbox{[}512\mbox{]}
+\item 
+void $\ast$ \hyperlink{io_8h_a134b8554414c4acb36ffa747d03fff42}{addr} \mbox{[}\hyperlink{io_8h_a6ee98078df1e27286ab249d0ceb99dc9}{N\-P\-A\-R}\mbox{]}
+\item 
+int \hyperlink{io_8h_af4cea48d2221cfea2b558f0d74cea769}{req} \mbox{[}\hyperlink{io_8h_a6ee98078df1e27286ab249d0ceb99dc9}{N\-P\-A\-R}\mbox{]}
+\item 
+int \hyperlink{io_8h_a5fc5ef6fd311d195b95bc6aae2e3db73}{set} \mbox{[}\hyperlink{io_8h_a6ee98078df1e27286ab249d0ceb99dc9}{N\-P\-A\-R}\mbox{]}
+\item 
+int \hyperlink{io_8h_a0370b064dcc0b679f87355defdd4a233}{type} \mbox{[}\hyperlink{io_8h_a6ee98078df1e27286ab249d0ceb99dc9}{N\-P\-A\-R}\mbox{]}
+\item 
+int \hyperlink{io_8h_a272218bccc7db8d17a220a2c73504e6d}{fd\-Save}
+\item 
+int \hyperlink{io_8h_aab7b1f442690f51cc090babdc8897d34}{fd\-New}
+\item 
+\hyperlink{io_8h_af31b0606f3732d73efbeec4c33d3e5e3}{colormap} $\ast$ \hyperlink{io_8h_a43afef85ae559d1e8c57f74313ab5e9a}{cmaps}
+\item 
+float \hyperlink{io_8h_aa773d9a6c0ccefaa0fc9ab66fec68ec1}{beta}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+contains defines and declarations for I/\-O functions 
+
+Definition in file \hyperlink{io_8h_source}{io.\-h}.
+
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{io_8h_a35cd67ba7bb0db8105eb6267467535d7}{\index{io.\-h@{io.\-h}!C\-H\-A\-R@{C\-H\-A\-R}}
+\index{C\-H\-A\-R@{C\-H\-A\-R}!io.h@{io.\-h}}
+\subsubsection[{C\-H\-A\-R}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\-H\-A\-R~7}}\label{io_8h_a35cd67ba7bb0db8105eb6267467535d7}
+
+
+Definition at line 35 of file io.\-h.
+
+\hypertarget{io_8h_a8747af38b86aa2bbcda2f1b1aa0888c2}{\index{io.\-h@{io.\-h}!D\-O\-U\-B\-L\-E@{D\-O\-U\-B\-L\-E}}
+\index{D\-O\-U\-B\-L\-E@{D\-O\-U\-B\-L\-E}!io.h@{io.\-h}}
+\subsubsection[{D\-O\-U\-B\-L\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define D\-O\-U\-B\-L\-E~6}}\label{io_8h_a8747af38b86aa2bbcda2f1b1aa0888c2}
+
+
+Definition at line 34 of file io.\-h.
+
+\hypertarget{io_8h_a70907c03cbcbc3e042d075b3c84d91ec}{\index{io.\-h@{io.\-h}!F\-N\-L\-E\-N@{F\-N\-L\-E\-N}}
+\index{F\-N\-L\-E\-N@{F\-N\-L\-E\-N}!io.h@{io.\-h}}
+\subsubsection[{F\-N\-L\-E\-N}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\-N\-L\-E\-N~256}}\label{io_8h_a70907c03cbcbc3e042d075b3c84d91ec}
+
+
+Definition at line 42 of file io.\-h.
+
+\hypertarget{io_8h_afeeffe52c8fd59db7c61cf8b02042dbf}{\index{io.\-h@{io.\-h}!I\-N\-T@{I\-N\-T}}
+\index{I\-N\-T@{I\-N\-T}!io.h@{io.\-h}}
+\subsubsection[{I\-N\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define I\-N\-T~3}}\label{io_8h_afeeffe52c8fd59db7c61cf8b02042dbf}
+
+
+Definition at line 31 of file io.\-h.
+
+\hypertarget{io_8h_afb3891492b67fa5ded53824df675ae9b}{\index{io.\-h@{io.\-h}!I\-N\-T64\-\_\-\-T@{I\-N\-T64\-\_\-\-T}}
+\index{I\-N\-T64\-\_\-\-T@{I\-N\-T64\-\_\-\-T}!io.h@{io.\-h}}
+\subsubsection[{I\-N\-T64\-\_\-\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define I\-N\-T64\-\_\-\-T~5}}\label{io_8h_afb3891492b67fa5ded53824df675ae9b}
+
+
+Definition at line 33 of file io.\-h.
+
+\hypertarget{io_8h_acaa7b8a7167a8214f499c71c413ddcca}{\index{io.\-h@{io.\-h}!L\-O\-N\-G@{L\-O\-N\-G}}
+\index{L\-O\-N\-G@{L\-O\-N\-G}!io.h@{io.\-h}}
+\subsubsection[{L\-O\-N\-G}]{\setlength{\rightskip}{0pt plus 5cm}\#define L\-O\-N\-G~4}}\label{io_8h_acaa7b8a7167a8214f499c71c413ddcca}
+
+
+Definition at line 32 of file io.\-h.
+
+\hypertarget{io_8h_a923c26a2bcd7d39353bcf9c99c17011f}{\index{io.\-h@{io.\-h}!N\-O\-U\-T@{N\-O\-U\-T}}
+\index{N\-O\-U\-T@{N\-O\-U\-T}!io.h@{io.\-h}}
+\subsubsection[{N\-O\-U\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define N\-O\-U\-T~10}}\label{io_8h_a923c26a2bcd7d39353bcf9c99c17011f}
+
+
+Definition at line 37 of file io.\-h.
+
+\hypertarget{io_8h_a6ee98078df1e27286ab249d0ceb99dc9}{\index{io.\-h@{io.\-h}!N\-P\-A\-R@{N\-P\-A\-R}}
+\index{N\-P\-A\-R@{N\-P\-A\-R}!io.h@{io.\-h}}
+\subsubsection[{N\-P\-A\-R}]{\setlength{\rightskip}{0pt plus 5cm}\#define N\-P\-A\-R~67}}\label{io_8h_a6ee98078df1e27286ab249d0ceb99dc9}
+
+
+Definition at line 28 of file io.\-h.
+
+\hypertarget{io_8h_a46021ef32d7bff7c66e835cced0c90be}{\index{io.\-h@{io.\-h}!N\-R\-S\-T\-P\-A\-R\-A\-M\-S@{N\-R\-S\-T\-P\-A\-R\-A\-M\-S}}
+\index{N\-R\-S\-T\-P\-A\-R\-A\-M\-S@{N\-R\-S\-T\-P\-A\-R\-A\-M\-S}!io.h@{io.\-h}}
+\subsubsection[{N\-R\-S\-T\-P\-A\-R\-A\-M\-S}]{\setlength{\rightskip}{0pt plus 5cm}\#define N\-R\-S\-T\-P\-A\-R\-A\-M\-S~32}}\label{io_8h_a46021ef32d7bff7c66e835cced0c90be}
+
+
+Definition at line 38 of file io.\-h.
+
+\hypertarget{io_8h_a4b654506f18b8bfd61ad2a29a7e38c25}{\index{io.\-h@{io.\-h}!R\-E\-A\-L@{R\-E\-A\-L}}
+\index{R\-E\-A\-L@{R\-E\-A\-L}!io.h@{io.\-h}}
+\subsubsection[{R\-E\-A\-L}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\-E\-A\-L~1}}\label{io_8h_a4b654506f18b8bfd61ad2a29a7e38c25}
+
+
+Definition at line 29 of file io.\-h.
+
+\hypertarget{io_8h_aae7e5362e39df9265f4fd78ffa61660a}{\index{io.\-h@{io.\-h}!S\-C\-A\-L\-A\-R@{S\-C\-A\-L\-A\-R}}
+\index{S\-C\-A\-L\-A\-R@{S\-C\-A\-L\-A\-R}!io.h@{io.\-h}}
+\subsubsection[{S\-C\-A\-L\-A\-R}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\-C\-A\-L\-A\-R~1}}\label{io_8h_aae7e5362e39df9265f4fd78ffa61660a}
+
+
+Definition at line 39 of file io.\-h.
+
+\hypertarget{io_8h_a0f4d394a3ab4e09bff60f714c66dc5ee}{\index{io.\-h@{io.\-h}!S\-T\-R\-I\-N\-G@{S\-T\-R\-I\-N\-G}}
+\index{S\-T\-R\-I\-N\-G@{S\-T\-R\-I\-N\-G}!io.h@{io.\-h}}
+\subsubsection[{S\-T\-R\-I\-N\-G}]{\setlength{\rightskip}{0pt plus 5cm}\#define S\-T\-R\-I\-N\-G~2}}\label{io_8h_a0f4d394a3ab4e09bff60f714c66dc5ee}
+
+
+Definition at line 30 of file io.\-h.
+
+\hypertarget{io_8h_ac6e89954deaa373db52a91ac6db50884}{\index{io.\-h@{io.\-h}!V\-E\-C\-T\-O\-R@{V\-E\-C\-T\-O\-R}}
+\index{V\-E\-C\-T\-O\-R@{V\-E\-C\-T\-O\-R}!io.h@{io.\-h}}
+\subsubsection[{V\-E\-C\-T\-O\-R}]{\setlength{\rightskip}{0pt plus 5cm}\#define V\-E\-C\-T\-O\-R~2}}\label{io_8h_ac6e89954deaa373db52a91ac6db50884}
+
+
+Definition at line 40 of file io.\-h.
+
+
+
+\subsection{Typedef Documentation}
+\hypertarget{io_8h_af31b0606f3732d73efbeec4c33d3e5e3}{\index{io.\-h@{io.\-h}!colormap@{colormap}}
+\index{colormap@{colormap}!io.h@{io.\-h}}
+\subsubsection[{colormap}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf colormap\-\_\-t}  {\bf colormap}}}\label{io_8h_af31b0606f3732d73efbeec4c33d3e5e3}
+\hypertarget{io_8h_a2bf5ae344b8526b236f7152ce0424670}{\index{io.\-h@{io.\-h}!colormap\-Point@{colormap\-Point}}
+\index{colormap\-Point@{colormap\-Point}!io.h@{io.\-h}}
+\subsubsection[{colormap\-Point}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf colormap\-Point\-\_\-t}  {\bf colormap\-Point}}}\label{io_8h_a2bf5ae344b8526b236f7152ce0424670}
+
+
+\subsection{Variable Documentation}
+\hypertarget{io_8h_a134b8554414c4acb36ffa747d03fff42}{\index{io.\-h@{io.\-h}!addr@{addr}}
+\index{addr@{addr}!io.h@{io.\-h}}
+\subsubsection[{addr}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ addr\mbox{[}{\bf N\-P\-A\-R}\mbox{]}}}\label{io_8h_a134b8554414c4acb36ffa747d03fff42}
+
+
+Definition at line 81 of file io.\-h.
+
+\hypertarget{io_8h_a08b4046db2036d43a19dce3ce0cadb36}{\index{io.\-h@{io.\-h}!addr\-Out@{addr\-Out}}
+\index{addr\-Out@{addr\-Out}!io.h@{io.\-h}}
+\subsubsection[{addr\-Out}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ addr\-Out\mbox{[}{\bf N\-O\-U\-T}\mbox{]}}}\label{io_8h_a08b4046db2036d43a19dce3ce0cadb36}
+
+
+Definition at line 47 of file io.\-h.
+
+\hypertarget{io_8h_a36abc26396195827ce43113215befa91}{\index{io.\-h@{io.\-h}!addr\-Rst@{addr\-Rst}}
+\index{addr\-Rst@{addr\-Rst}!io.h@{io.\-h}}
+\subsubsection[{addr\-Rst}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ addr\-Rst\mbox{[}{\bf N\-R\-S\-T\-P\-A\-R\-A\-M\-S}\mbox{]}}}\label{io_8h_a36abc26396195827ce43113215befa91}
+
+
+Definition at line 53 of file io.\-h.
+
+\hypertarget{io_8h_aa773d9a6c0ccefaa0fc9ab66fec68ec1}{\index{io.\-h@{io.\-h}!beta@{beta}}
+\index{beta@{beta}!io.h@{io.\-h}}
+\subsubsection[{beta}]{\setlength{\rightskip}{0pt plus 5cm}float beta}}\label{io_8h_aa773d9a6c0ccefaa0fc9ab66fec68ec1}
+
+
+Definition at line 103 of file io.\-h.
+
+\hypertarget{io_8h_a43afef85ae559d1e8c57f74313ab5e9a}{\index{io.\-h@{io.\-h}!cmaps@{cmaps}}
+\index{cmaps@{cmaps}!io.h@{io.\-h}}
+\subsubsection[{cmaps}]{\setlength{\rightskip}{0pt plus 5cm}{\bf colormap}$\ast$ cmaps}}\label{io_8h_a43afef85ae559d1e8c57f74313ab5e9a}
+
+
+Definition at line 102 of file io.\-h.
+
+\hypertarget{io_8h_ad32952f6130d8f77a9e4757789089ff8}{\index{io.\-h@{io.\-h}!desc@{desc}}
+\index{desc@{desc}!io.h@{io.\-h}}
+\subsubsection[{desc}]{\setlength{\rightskip}{0pt plus 5cm}char desc\mbox{[}{\bf N\-P\-A\-R}\mbox{]}\mbox{[}512\mbox{]}}}\label{io_8h_ad32952f6130d8f77a9e4757789089ff8}
+
+
+Definition at line 80 of file io.\-h.
+
+\hypertarget{io_8h_a4e59958ecda85fd1cd6ddf14deeee746}{\index{io.\-h@{io.\-h}!dim\-Out@{dim\-Out}}
+\index{dim\-Out@{dim\-Out}!io.h@{io.\-h}}
+\subsubsection[{dim\-Out}]{\setlength{\rightskip}{0pt plus 5cm}int dim\-Out\mbox{[}{\bf N\-O\-U\-T}\mbox{]}}}\label{io_8h_a4e59958ecda85fd1cd6ddf14deeee746}
+
+
+Definition at line 46 of file io.\-h.
+
+\hypertarget{io_8h_aab7b1f442690f51cc090babdc8897d34}{\index{io.\-h@{io.\-h}!fd\-New@{fd\-New}}
+\index{fd\-New@{fd\-New}!io.h@{io.\-h}}
+\subsubsection[{fd\-New}]{\setlength{\rightskip}{0pt plus 5cm}int fd\-New}}\label{io_8h_aab7b1f442690f51cc090babdc8897d34}
+
+
+Definition at line 87 of file io.\-h.
+
+\hypertarget{io_8h_a272218bccc7db8d17a220a2c73504e6d}{\index{io.\-h@{io.\-h}!fd\-Save@{fd\-Save}}
+\index{fd\-Save@{fd\-Save}!io.h@{io.\-h}}
+\subsubsection[{fd\-Save}]{\setlength{\rightskip}{0pt plus 5cm}int fd\-Save}}\label{io_8h_a272218bccc7db8d17a220a2c73504e6d}
+
+
+Definition at line 86 of file io.\-h.
+
+\hypertarget{io_8h_a66273d8a7cd1312b428eaf603cd18429}{\index{io.\-h@{io.\-h}!jump\-Out@{jump\-Out}}
+\index{jump\-Out@{jump\-Out}!io.h@{io.\-h}}
+\subsubsection[{jump\-Out}]{\setlength{\rightskip}{0pt plus 5cm}int64\-\_\-t jump\-Out\mbox{[}{\bf N\-O\-U\-T}\mbox{]}}}\label{io_8h_a66273d8a7cd1312b428eaf603cd18429}
+
+
+Definition at line 48 of file io.\-h.
+
+\hypertarget{io_8h_a29df2595853f2e873d779126d2e7d2bc}{\index{io.\-h@{io.\-h}!name\-Out@{name\-Out}}
+\index{name\-Out@{name\-Out}!io.h@{io.\-h}}
+\subsubsection[{name\-Out}]{\setlength{\rightskip}{0pt plus 5cm}char name\-Out\mbox{[}{\bf N\-O\-U\-T}\mbox{]}\mbox{[}128\mbox{]}}}\label{io_8h_a29df2595853f2e873d779126d2e7d2bc}
+
+
+Definition at line 45 of file io.\-h.
+
+\hypertarget{io_8h_acfc4e25c4d441223abcee38b91ab1fcd}{\index{io.\-h@{io.\-h}!nf\-Out@{nf\-Out}}
+\index{nf\-Out@{nf\-Out}!io.h@{io.\-h}}
+\subsubsection[{nf\-Out}]{\setlength{\rightskip}{0pt plus 5cm}int nf\-Out}}\label{io_8h_acfc4e25c4d441223abcee38b91ab1fcd}
+
+
+Definition at line 49 of file io.\-h.
+
+\hypertarget{io_8h_a4a59516cc3edb067909443da1a5512e0}{\index{io.\-h@{io.\-h}!n\-Rst@{n\-Rst}}
+\index{n\-Rst@{n\-Rst}!io.h@{io.\-h}}
+\subsubsection[{n\-Rst}]{\setlength{\rightskip}{0pt plus 5cm}int n\-Rst}}\label{io_8h_a4a59516cc3edb067909443da1a5512e0}
+
+
+Definition at line 54 of file io.\-h.
+
+\hypertarget{io_8h_a1dfe125ea6f4dc874d4649b666c99d6e}{\index{io.\-h@{io.\-h}!one@{one}}
+\index{one@{one}!io.h@{io.\-h}}
+\subsubsection[{one}]{\setlength{\rightskip}{0pt plus 5cm}int one =1}}\label{io_8h_a1dfe125ea6f4dc874d4649b666c99d6e}
+
+
+Definition at line 77 of file io.\-h.
+
+\hypertarget{io_8h_ad9f8db6ae9021cac2544ddd5452cb0e5}{\index{io.\-h@{io.\-h}!params@{params}}
+\index{params@{params}!io.h@{io.\-h}}
+\subsubsection[{params}]{\setlength{\rightskip}{0pt plus 5cm}char params\mbox{[}{\bf N\-P\-A\-R}\mbox{]}\mbox{[}64\mbox{]}}}\label{io_8h_ad9f8db6ae9021cac2544ddd5452cb0e5}
+
+
+Definition at line 79 of file io.\-h.
+
+\hypertarget{io_8h_af4cea48d2221cfea2b558f0d74cea769}{\index{io.\-h@{io.\-h}!req@{req}}
+\index{req@{req}!io.h@{io.\-h}}
+\subsubsection[{req}]{\setlength{\rightskip}{0pt plus 5cm}int req\mbox{[}{\bf N\-P\-A\-R}\mbox{]}}}\label{io_8h_af4cea48d2221cfea2b558f0d74cea769}
+
+
+Definition at line 82 of file io.\-h.
+
+\hypertarget{io_8h_aacff47df4e9beebda772cc2a8abc86dd}{\index{io.\-h@{io.\-h}!rst\-Csize@{rst\-Csize}}
+\index{rst\-Csize@{rst\-Csize}!io.h@{io.\-h}}
+\subsubsection[{rst\-Csize}]{\setlength{\rightskip}{0pt plus 5cm}double rst\-Csize}}\label{io_8h_aacff47df4e9beebda772cc2a8abc86dd}
+
+
+Definition at line 74 of file io.\-h.
+
+\hypertarget{io_8h_afcd968ae4452298b938320f6796ecfdc}{\index{io.\-h@{io.\-h}!rst\-Frac@{rst\-Frac}}
+\index{rst\-Frac@{rst\-Frac}!io.h@{io.\-h}}
+\subsubsection[{rst\-Frac}]{\setlength{\rightskip}{0pt plus 5cm}float rst\-Frac}}\label{io_8h_afcd968ae4452298b938320f6796ecfdc}
+
+
+Definition at line 66 of file io.\-h.
+
+\hypertarget{io_8h_ad9ef3f701b1c2348ec41b841474758fe}{\index{io.\-h@{io.\-h}!rst\-G1@{rst\-G1}}
+\index{rst\-G1@{rst\-G1}!io.h@{io.\-h}}
+\subsubsection[{rst\-G1}]{\setlength{\rightskip}{0pt plus 5cm}float rst\-G1}}\label{io_8h_ad9ef3f701b1c2348ec41b841474758fe}
+
+
+Definition at line 67 of file io.\-h.
+
+\hypertarget{io_8h_a464e38bb4359b6c1d17bcf38bd1fe825}{\index{io.\-h@{io.\-h}!rst\-G2@{rst\-G2}}
+\index{rst\-G2@{rst\-G2}!io.h@{io.\-h}}
+\subsubsection[{rst\-G2}]{\setlength{\rightskip}{0pt plus 5cm}float rst\-G2}}\label{io_8h_a464e38bb4359b6c1d17bcf38bd1fe825}
+
+
+Definition at line 69 of file io.\-h.
+
+\hypertarget{io_8h_ad0da1d27fbe926c073c22df722268c46}{\index{io.\-h@{io.\-h}!rst\-H@{rst\-H}}
+\index{rst\-H@{rst\-H}!io.h@{io.\-h}}
+\subsubsection[{rst\-H}]{\setlength{\rightskip}{0pt plus 5cm}double rst\-H}}\label{io_8h_ad0da1d27fbe926c073c22df722268c46}
+
+
+Definition at line 73 of file io.\-h.
+
+\hypertarget{io_8h_ab3d512aa88682213fda99a64197f3e5a}{\index{io.\-h@{io.\-h}!rst\-M@{rst\-M}}
+\index{rst\-M@{rst\-M}!io.h@{io.\-h}}
+\subsubsection[{rst\-M}]{\setlength{\rightskip}{0pt plus 5cm}float rst\-M}}\label{io_8h_ab3d512aa88682213fda99a64197f3e5a}
+
+
+Definition at line 70 of file io.\-h.
+
+\hypertarget{io_8h_ab31b158a3bd5d5f95a04447ccf10bcc7}{\index{io.\-h@{io.\-h}!rst\-Nc@{rst\-Nc}}
+\index{rst\-Nc@{rst\-Nc}!io.h@{io.\-h}}
+\subsubsection[{rst\-Nc}]{\setlength{\rightskip}{0pt plus 5cm}int64\-\_\-t rst\-Nc}}\label{io_8h_ab31b158a3bd5d5f95a04447ccf10bcc7}
+
+
+Definition at line 62 of file io.\-h.
+
+\hypertarget{io_8h_a752504ab1ed4e359dd4521f8322b37cc}{\index{io.\-h@{io.\-h}!rst\-Nx@{rst\-Nx}}
+\index{rst\-Nx@{rst\-Nx}!io.h@{io.\-h}}
+\subsubsection[{rst\-Nx}]{\setlength{\rightskip}{0pt plus 5cm}int rst\-Nx}}\label{io_8h_a752504ab1ed4e359dd4521f8322b37cc}
+
+
+Definition at line 57 of file io.\-h.
+
+\hypertarget{io_8h_afc8a3f4700458aebf6e5e5010053a837}{\index{io.\-h@{io.\-h}!rst\-Ny@{rst\-Ny}}
+\index{rst\-Ny@{rst\-Ny}!io.h@{io.\-h}}
+\subsubsection[{rst\-Ny}]{\setlength{\rightskip}{0pt plus 5cm}int rst\-Ny}}\label{io_8h_afc8a3f4700458aebf6e5e5010053a837}
+
+
+Definition at line 58 of file io.\-h.
+
+\hypertarget{io_8h_a960b3699e7c8c5bcde1eea5c8c88feb5}{\index{io.\-h@{io.\-h}!rst\-Nz@{rst\-Nz}}
+\index{rst\-Nz@{rst\-Nz}!io.h@{io.\-h}}
+\subsubsection[{rst\-Nz}]{\setlength{\rightskip}{0pt plus 5cm}int rst\-Nz}}\label{io_8h_a960b3699e7c8c5bcde1eea5c8c88feb5}
+
+
+Definition at line 59 of file io.\-h.
+
+\hypertarget{io_8h_a63a48c48ade2b5101ea40c246b5d222f}{\index{io.\-h@{io.\-h}!rst\-Outdir@{rst\-Outdir}}
+\index{rst\-Outdir@{rst\-Outdir}!io.h@{io.\-h}}
+\subsubsection[{rst\-Outdir}]{\setlength{\rightskip}{0pt plus 5cm}char rst\-Outdir\mbox{[}128\mbox{]}}}\label{io_8h_a63a48c48ade2b5101ea40c246b5d222f}
+
+
+Definition at line 60 of file io.\-h.
+
+\hypertarget{io_8h_a4f0f79be9e6fa067183e0d8858d3d6bf}{\index{io.\-h@{io.\-h}!rst\-Rd@{rst\-Rd}}
+\index{rst\-Rd@{rst\-Rd}!io.h@{io.\-h}}
+\subsubsection[{rst\-Rd}]{\setlength{\rightskip}{0pt plus 5cm}float rst\-Rd}}\label{io_8h_a4f0f79be9e6fa067183e0d8858d3d6bf}
+
+
+Definition at line 72 of file io.\-h.
+
+\hypertarget{io_8h_af225a766ac48b88175af626f1710867e}{\index{io.\-h@{io.\-h}!rst\-Rng@{rst\-Rng}}
+\index{rst\-Rng@{rst\-Rng}!io.h@{io.\-h}}
+\subsubsection[{rst\-Rng}]{\setlength{\rightskip}{0pt plus 5cm}char rst\-Rng\mbox{[}3\mbox{]}}}\label{io_8h_af225a766ac48b88175af626f1710867e}
+
+
+Definition at line 61 of file io.\-h.
+
+\hypertarget{io_8h_aac50b3a1a32adf53bb30436b5df2a850}{\index{io.\-h@{io.\-h}!rst\-S@{rst\-S}}
+\index{rst\-S@{rst\-S}!io.h@{io.\-h}}
+\subsubsection[{rst\-S}]{\setlength{\rightskip}{0pt plus 5cm}float rst\-S}}\label{io_8h_aac50b3a1a32adf53bb30436b5df2a850}
+
+
+Definition at line 68 of file io.\-h.
+
+\hypertarget{io_8h_a7cf22acdf967b03c9dae541c4dd8c082}{\index{io.\-h@{io.\-h}!rst\-Sdim@{rst\-Sdim}}
+\index{rst\-Sdim@{rst\-Sdim}!io.h@{io.\-h}}
+\subsubsection[{rst\-Sdim}]{\setlength{\rightskip}{0pt plus 5cm}int rst\-Sdim}}\label{io_8h_a7cf22acdf967b03c9dae541c4dd8c082}
+
+
+Definition at line 56 of file io.\-h.
+
+\hypertarget{io_8h_af07e8112e5a618b7d1259796e5c608f7}{\index{io.\-h@{io.\-h}!rst\-Sim\-Start@{rst\-Sim\-Start}}
+\index{rst\-Sim\-Start@{rst\-Sim\-Start}!io.h@{io.\-h}}
+\subsubsection[{rst\-Sim\-Start}]{\setlength{\rightskip}{0pt plus 5cm}int rst\-Sim\-Start}}\label{io_8h_af07e8112e5a618b7d1259796e5c608f7}
+
+
+Definition at line 63 of file io.\-h.
+
+\hypertarget{io_8h_a40e90f7d74075ae57f9cf48966179d9d}{\index{io.\-h@{io.\-h}!rst\-Sim\-Time@{rst\-Sim\-Time}}
+\index{rst\-Sim\-Time@{rst\-Sim\-Time}!io.h@{io.\-h}}
+\subsubsection[{rst\-Sim\-Time}]{\setlength{\rightskip}{0pt plus 5cm}float rst\-Sim\-Time}}\label{io_8h_a40e90f7d74075ae57f9cf48966179d9d}
+
+
+Definition at line 65 of file io.\-h.
+
+\hypertarget{io_8h_a571ff6c64792898ece747b5b4ecc07f8}{\index{io.\-h@{io.\-h}!rst\-Tstep@{rst\-Tstep}}
+\index{rst\-Tstep@{rst\-Tstep}!io.h@{io.\-h}}
+\subsubsection[{rst\-Tstep}]{\setlength{\rightskip}{0pt plus 5cm}float rst\-Tstep}}\label{io_8h_a571ff6c64792898ece747b5b4ecc07f8}
+
+
+Definition at line 64 of file io.\-h.
+
+\hypertarget{io_8h_a0aac255cc5cdc0cb61a0728328819f8c}{\index{io.\-h@{io.\-h}!rst\-V@{rst\-V}}
+\index{rst\-V@{rst\-V}!io.h@{io.\-h}}
+\subsubsection[{rst\-V}]{\setlength{\rightskip}{0pt plus 5cm}float rst\-V}}\label{io_8h_a0aac255cc5cdc0cb61a0728328819f8c}
+
+
+Definition at line 71 of file io.\-h.
+
+\hypertarget{io_8h_a5fc5ef6fd311d195b95bc6aae2e3db73}{\index{io.\-h@{io.\-h}!set@{set}}
+\index{set@{set}!io.h@{io.\-h}}
+\subsubsection[{set}]{\setlength{\rightskip}{0pt plus 5cm}int set\mbox{[}{\bf N\-P\-A\-R}\mbox{]}}}\label{io_8h_a5fc5ef6fd311d195b95bc6aae2e3db73}
+
+
+Definition at line 83 of file io.\-h.
+
+\hypertarget{io_8h_a885d38fceae8ca79b0a86cafefc0fc95}{\index{io.\-h@{io.\-h}!size\-Rst@{size\-Rst}}
+\index{size\-Rst@{size\-Rst}!io.h@{io.\-h}}
+\subsubsection[{size\-Rst}]{\setlength{\rightskip}{0pt plus 5cm}int size\-Rst\mbox{[}{\bf N\-R\-S\-T\-P\-A\-R\-A\-M\-S}\mbox{]}}}\label{io_8h_a885d38fceae8ca79b0a86cafefc0fc95}
+
+
+Definition at line 52 of file io.\-h.
+
+\hypertarget{io_8h_a0370b064dcc0b679f87355defdd4a233}{\index{io.\-h@{io.\-h}!type@{type}}
+\index{type@{type}!io.h@{io.\-h}}
+\subsubsection[{type}]{\setlength{\rightskip}{0pt plus 5cm}int type\mbox{[}{\bf N\-P\-A\-R}\mbox{]}}}\label{io_8h_a0370b064dcc0b679f87355defdd4a233}
+
+
+Definition at line 84 of file io.\-h.
+
+\hypertarget{io_8h_a86b8b5a8507bce265bbe328a32447980}{\index{io.\-h@{io.\-h}!type\-Out@{type\-Out}}
+\index{type\-Out@{type\-Out}!io.h@{io.\-h}}
+\subsubsection[{type\-Out}]{\setlength{\rightskip}{0pt plus 5cm}int type\-Out\mbox{[}{\bf N\-O\-U\-T}\mbox{]}}}\label{io_8h_a86b8b5a8507bce265bbe328a32447980}
+
+
+Definition at line 44 of file io.\-h.
+
+\hypertarget{io_8h_a5aa91756dcd78ea9116f8f543c5acc1c}{\index{io.\-h@{io.\-h}!type\-Rst@{type\-Rst}}
+\index{type\-Rst@{type\-Rst}!io.h@{io.\-h}}
+\subsubsection[{type\-Rst}]{\setlength{\rightskip}{0pt plus 5cm}int type\-Rst\mbox{[}{\bf N\-R\-S\-T\-P\-A\-R\-A\-M\-S}\mbox{]}}}\label{io_8h_a5aa91756dcd78ea9116f8f543c5acc1c}
+
+
+Definition at line 51 of file io.\-h.
+

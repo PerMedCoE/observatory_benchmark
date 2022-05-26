@@ -1,0 +1,484 @@
+\hypertarget{potential_8c}{\section{potential.\-c File Reference}
+\label{potential_8c}\index{potential.\-c@{potential.\-c}}
+}
+
+
+contains functions that compute the potential  
+
+
+{\ttfamily \#include $<$stdio.\-h$>$}\\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$float.\-h$>$}\\*
+{\ttfamily \#include $<$math.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}global.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}inline.\-h\char`\"{}}\\*
+Include dependency graph for potential.\-c\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{potential_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+double \hyperlink{potential_8c_a029d6c8547c6d860ab733c73bfbb07ee}{compute\-C\-C\-Potential} (int p1, int p2, int mode)
+\item 
+void \hyperlink{potential_8c_a5fe9cb7ae024bd3157bafc1b5fe3e2f7}{potential\-Traverse\-Subtree} (int p, struct \hyperlink{structbht__node}{bht\-\_\-node} $\ast$no)
+\item 
+void \hyperlink{potential_8c_a637d3e5960a44074c8f7f747af89eabf}{compute\-Remote\-Cells\-Potential} (int rp, struct \hyperlink{structbht__node}{bht\-\_\-node} $\ast$no)
+\item 
+void \hyperlink{potential_8c_a51c347ae780a718d855ac7ff303966e7}{compute\-Potential\-Field} ()
+\item 
+void \hyperlink{potential_8c_a5322a144394f3c5d451febe4366eee9d}{compute\-Potential} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+contains functions that compute the potential 
+
+Definition in file \hyperlink{potential_8c_source}{potential.\-c}.
+
+
+
+\subsection{Function Documentation}
+\hypertarget{potential_8c_a029d6c8547c6d860ab733c73bfbb07ee}{\index{potential.\-c@{potential.\-c}!compute\-C\-C\-Potential@{compute\-C\-C\-Potential}}
+\index{compute\-C\-C\-Potential@{compute\-C\-C\-Potential}!potential.c@{potential.\-c}}
+\subsubsection[{compute\-C\-C\-Potential}]{\setlength{\rightskip}{0pt plus 5cm}double compute\-C\-C\-Potential (
+\begin{DoxyParamCaption}
+\item[{int}]{p1, }
+\item[{int}]{p2, }
+\item[{int}]{mode}
+\end{DoxyParamCaption}
+)}}\label{potential_8c_a029d6c8547c6d860ab733c73bfbb07ee}
+This function computes potential for two neighbour cells. mode=0 -\/ computations for local cells mode=1 -\/ computations for remote cells 
+
+Definition at line 40 of file potential.\-c.
+
+
+
+References cells, csize, cell\-Data\-::density, h, h2, h3, statistics\-Data\-::mindist, recv\-Data, sdim, cell\-Data\-::size, part\-Data\-::size, statistics, x, cell\-Data\-::x, part\-Data\-::x, cell\-Data\-::y, part\-Data\-::y, cell\-Data\-::young, part\-Data\-::young, cell\-Data\-::z, and part\-Data\-::z.
+
+
+\begin{DoxyCode}
+41 \{
+42   \textcolor{keywordtype}{double} pot;
+43   \textcolor{keywordtype}{double} dist;
+44   \textcolor{keywordtype}{double} \hyperlink{structcellData_aba3c5d750d5dbd6e86c11ecaca62885e}{size};
+45   \textcolor{keywordtype}{double} g;
+46   \textcolor{keywordtype}{double} \hyperlink{tempf_8c_a1780e9c70637026d6fab31f63b3a193e}{x}, \hyperlink{structcellData_ab927965981178aa1fba979a37168db2a}{y}, \hyperlink{structcellData_ab3e6ed577a7c669c19de1f9c1b46c872}{z};
+47   \textcolor{keywordtype}{double} xc;
+48   \textcolor{keywordtype}{double} D;
+49   \textcolor{keywordtype}{double} poisson = 0.33;
+50   \textcolor{keywordtype}{double} \hyperlink{structcellData_ad0bd87a264e65d1c17ecc07049819f2c}{young};
+51 
+52   \textcolor{keywordflow}{if} (mode == 0 && p1 == p2)
+53     \textcolor{keywordflow}{return} 0.0;
+54 
+55   \textcolor{keywordflow}{if} (mode == 0) \{
+56     x = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p1].\hyperlink{structcellData_af88b946fb90d5f08b5fb740c70e98c10}{x};
+57     y = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p1].\hyperlink{structcellData_ab927965981178aa1fba979a37168db2a}{y};
+58     z = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p1].\hyperlink{structcellData_ab3e6ed577a7c669c19de1f9c1b46c872}{z};
+59     size = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p1].\hyperlink{structcellData_aba3c5d750d5dbd6e86c11ecaca62885e}{size};
+60     young = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p1].\hyperlink{structcellData_ad0bd87a264e65d1c17ecc07049819f2c}{young};
+61   \}
+62   \textcolor{keywordflow}{if} (mode == 1) \{
+63     x = \hyperlink{global_8h_af851c922de87975e63161d38332d6a56}{recvData}[p1].\hyperlink{structpartData_af88b946fb90d5f08b5fb740c70e98c10}{x};
+64     y = \hyperlink{global_8h_af851c922de87975e63161d38332d6a56}{recvData}[p1].\hyperlink{structpartData_ab927965981178aa1fba979a37168db2a}{y};
+65     z = \hyperlink{global_8h_af851c922de87975e63161d38332d6a56}{recvData}[p1].\hyperlink{structpartData_ab3e6ed577a7c669c19de1f9c1b46c872}{z};
+66     size = \hyperlink{global_8h_af851c922de87975e63161d38332d6a56}{recvData}[p1].\hyperlink{structpartData_aba3c5d750d5dbd6e86c11ecaca62885e}{size};
+67     young = \hyperlink{global_8h_af851c922de87975e63161d38332d6a56}{recvData}[p1].\hyperlink{structpartData_a47ec3689b1fd89ba8e75d9a9975ba63f}{young};
+68   \}
+69 
+70   \textcolor{comment}{/* compute the distance between two cells */}
+71   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 2)
+72     dist =
+73     sqrt((x - \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p2].x) * (x - \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p2].x) +
+74          (y - \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p2].y) * (y - \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p2].y));
+75   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 3)
+76     dist =
+77     sqrt((x - \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p2].x) * (x - \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p2].x) +
+78          (y - \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p2].y) * (y - \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p2].y) + (z -
+79                               \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p2].z) * (z -
+80                                       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}
+81                                       [p2].
+82                                       z));
+83 
+84   \textcolor{keywordflow}{if} (\hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_a78455d23ec97258967b76cbb2332b7be}{mindist} > dist)
+85     \hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_a78455d23ec97258967b76cbb2332b7be}{mindist} = dist;
+86 
+87   \textcolor{keywordflow}{if} (dist <= \hyperlink{global_8h_a8ee9be1b5aa75abae556de3088cba6d9}{h}) \{
+88 
+89     \textcolor{keywordtype}{double} r01, r02;
+90     \textcolor{keywordtype}{double} area;
+91     \textcolor{keywordtype}{double} sc;
+92 
+93     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 2)
+94       sc = \hyperlink{global_8h_ac2d9b75feeec68992c955b63e813e7ce}{h2};
+95     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 3)
+96       sc = \hyperlink{global_8h_adafe1d7389480b1a329b70b3c2baed11}{h3};
+97 
+98     \textcolor{keywordflow}{if} (mode == 0) \{
+99       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p1].\hyperlink{structcellData_a6f8c052f8417728038991f7f2826d38d}{density} +=
+100       sc * (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p2].\hyperlink{structcellData_aba3c5d750d5dbd6e86c11ecaca62885e}{size} / \hyperlink{global_8h_a3b735e8520f1816ee73ee50daa3ef756}{csize}) * sph\_kernel(dist);
+101     \}
+102     \textcolor{keywordflow}{if} (mode == 1) \{
+103       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p2].\hyperlink{structcellData_a6f8c052f8417728038991f7f2826d38d}{density} += sc * (size / \hyperlink{global_8h_a3b735e8520f1816ee73ee50daa3ef756}{csize}) * sph\_kernel(dist);
+104     \}
+105 
+106     xc = size + \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p2].\hyperlink{structcellData_aba3c5d750d5dbd6e86c11ecaca62885e}{size} - dist;
+107 
+108     \textcolor{keywordflow}{if} (xc <= 0.0)
+109       \textcolor{keywordflow}{return} 0.0;
+110 
+111     D = 0.75 * ((1.0 - poisson * poisson) / young +
+112         (1.0 - poisson * poisson / \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p2].young));
+113 
+114     \textcolor{comment}{/* adhesion */}
+115     r01 =
+116     (size * size - \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p2].\hyperlink{structcellData_aba3c5d750d5dbd6e86c11ecaca62885e}{size} * \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p2].\hyperlink{structcellData_aba3c5d750d5dbd6e86c11ecaca62885e}{size} +
+117      dist * dist) / (2 * dist);
+118     r02 = dist - r01;
+119 
+120     area =
+121     M\_PI *
+122     ((size * size * (size - r01) -
+123       (size * size * size - r01 * r01 * r01) / 3) +
+124      (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p2].size * \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p2].size * (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p2].size - r02) -
+125       (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p2].\hyperlink{structcellData_aba3c5d750d5dbd6e86c11ecaca62885e}{size} * \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p2].\hyperlink{structcellData_aba3c5d750d5dbd6e86c11ecaca62885e}{size} * \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p2].\hyperlink{structcellData_aba3c5d750d5dbd6e86c11ecaca62885e}{size} -
+126        r02 * r02 * r02) / 3));
+127 
+128     \textcolor{comment}{/* compute potential */}
+129     pot =
+130     (2.0 * pow(xc, 5 / 2) / (5.0 * D)) * sqrt((size * \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p2].size) /
+131                           (size +
+132                            \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p2].size)) +
+133     area * 0.1;
+134 
+135     \textcolor{keywordflow}{return} pot;
+136 
+137   \} \textcolor{keywordflow}{else}
+138     \textcolor{keywordflow}{return} 0.0;
+139 
+140 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{potential_8c_a029d6c8547c6d860ab733c73bfbb07ee_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{potential_8c_a5322a144394f3c5d451febe4366eee9d}{\index{potential.\-c@{potential.\-c}!compute\-Potential@{compute\-Potential}}
+\index{compute\-Potential@{compute\-Potential}!potential.c@{potential.\-c}}
+\subsubsection[{compute\-Potential}]{\setlength{\rightskip}{0pt plus 5cm}void compute\-Potential (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{potential_8c_a5322a144394f3c5d451febe4366eee9d}
+This is a driving routine for the potential computations. 
+
+Definition at line 287 of file potential.\-c.
+
+
+
+References compute\-Potential\-Field(), M\-P\-Irank, stat\-Out\-Step, and step.
+
+
+\begin{DoxyCode}
+288 \{
+289 \textcolor{preprocessor}{#ifdef DEBUG}
+290 \textcolor{preprocessor}{}  \textcolor{keywordflow}{if} (\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank} == 0 && !(\hyperlink{global_8h_abc16e65f240ed0c8f3e876e8732c0a33}{step} % \hyperlink{global_8h_aab9700fe12cc303ff43e1a35a210128e}{statOutStep})) \{
+291     printf(\textcolor{stringliteral}{" Potential computations..."});
+292     fflush(stdout);
+293   \}
+294 \textcolor{preprocessor}{#endif}
+295 \textcolor{preprocessor}{}
+296   \hyperlink{potential_8c_a51c347ae780a718d855ac7ff303966e7}{computePotentialField}();
+297 
+298 \textcolor{preprocessor}{#ifdef DEBUG}
+299 \textcolor{preprocessor}{}  \textcolor{keywordflow}{if} (\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank} == 0 && !(\hyperlink{global_8h_abc16e65f240ed0c8f3e876e8732c0a33}{step} % statOutStep)) \{
+300     printf(\textcolor{stringliteral}{"done\(\backslash\)n"});
+301     fflush(stdout);
+302   \}
+303 \textcolor{preprocessor}{#endif}
+304 \textcolor{preprocessor}{}\}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{potential_8c_a5322a144394f3c5d451febe4366eee9d_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=246pt]{potential_8c_a5322a144394f3c5d451febe4366eee9d_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{potential_8c_a51c347ae780a718d855ac7ff303966e7}{\index{potential.\-c@{potential.\-c}!compute\-Potential\-Field@{compute\-Potential\-Field}}
+\index{compute\-Potential\-Field@{compute\-Potential\-Field}!potential.c@{potential.\-c}}
+\subsubsection[{compute\-Potential\-Field}]{\setlength{\rightskip}{0pt plus 5cm}void compute\-Potential\-Field (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{potential_8c_a51c347ae780a718d855ac7ff303966e7}
+This function computes potential for all local cells. 
+
+Definition at line 209 of file potential.\-c.
+
+
+
+References bht\-\_\-root, cells, cells\-Exchange\-Init(), cells\-Exchange\-Wait(), bht\-\_\-node\-::child, compute\-Remote\-Cells\-Potential(), cell\-Data\-::density, bht\-\_\-node\-::father, h, leafs, lnc, statistics\-Data\-::maxsize, statistics\-Data\-::maxvel, statistics\-Data\-::mindist, statistics\-Data\-::minsize, statistics\-Data\-::minvel, nc, num\-Imp, nx, bht\-\_\-node\-::partnum, potential\-Traverse\-Subtree(), s, statistics, tnc, cell\-Data\-::v, and x.
+
+
+\begin{DoxyCode}
+210 \{
+211   \textcolor{keywordtype}{int} p, rp;
+212   \textcolor{keywordtype}{int} \hyperlink{global_8h_a874f74a4dc1c9a0cd9c6e0d79c298f55}{s};
+213   \textcolor{keyword}{struct }\hyperlink{structbht__node}{bht\_node} *no;
+214 
+215   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a0845b4b004824f1fe3cd69db1672fa15}{nc} > 1)
+216     \hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_a78455d23ec97258967b76cbb2332b7be}{mindist} = \hyperlink{global_8h_a02d47a4f36ec0bcce348696534567e30}{nx}; \textcolor{comment}{/* minimal distance is set to the box size */}
+217   \textcolor{keywordflow}{else}
+218     \hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_a78455d23ec97258967b76cbb2332b7be}{mindist} = 0.0;
+219   \hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_a1b9d00ac67b4ceca8e7747a50edc802b}{minvel} = DBL\_MAX;  \textcolor{comment}{/* minimal velocity is set to DBL\_MAX */}
+220   \hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_a485292d20f5d14bd18e83fef65976fb4}{maxvel} = 0;    \textcolor{comment}{/* maximal velocity is set to zero */}
+221   \hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_ad99dc4104d1898b6e593bbf331e41c69}{minsize} = DBL\_MAX;    \textcolor{comment}{/* minimal size is set to DBL\_MAX */}
+222   \hyperlink{global_8h_ad9c6b160d2d6fe545e8f9529b237838a}{statistics}.\hyperlink{structstatisticsData_a7383c898fd4cd4d862ca65d3713086cd}{maxsize} = 0;  \textcolor{comment}{/* maximal size is set to zero */}
+223 
+224   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc} == 0)
+225     \textcolor{keywordflow}{return};
+226 
+227   \textcolor{comment}{/* initiate asynchronous data transfers between processors */}
+228   \hyperlink{comm_8c_aa92fc6732720bc9accbbdef7fb02384f}{cellsExchangeInit}();
+229 
+230   \textcolor{comment}{/* loop over all local cells */}
+231   \textcolor{comment}{//#pragma omp parallel for private(p,s,no) schedule(dynamic)}
+232 \textcolor{preprocessor}{#pragma omp parallel for private(p,s,no)}
+233 \textcolor{preprocessor}{}  \textcolor{keywordflow}{for} (p = 0; p < \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}; p++) \{
+234 
+235     \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p].\hyperlink{structcellData_a6f8c052f8417728038991f7f2826d38d}{density} = 0.0;
+236     \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p].\hyperlink{structcellData_a3b90d5a73541ab9402511d87bed076ef}{v} = 0.0;
+237 
+238     \textcolor{comment}{/* set the pointer to the node that owns the cell */}
+239     no = \hyperlink{global_8h_a0681d5d05f66720bbcc34493ceff6fc3}{leafs}[p];
+240 
+241     \textcolor{comment}{/* traverse the tree (bottom-up) */}
+242     \textcolor{keywordflow}{while} (1) \{
+243 
+244       \textcolor{keywordflow}{if} (no->\hyperlink{structbht__node_ad327b7e4aaac3a9687feb283d05fabbe}{father} == NULL)
+245     \textcolor{keywordflow}{break};
+246 
+247       \textcolor{comment}{/* loop over siblings */}
+248       \textcolor{keywordflow}{for} (s = 0; s < \hyperlink{global_8h_a96f00f69e2102e1720c989a00c385d81}{tnc}; s++) \{
+249     \textcolor{comment}{/* "Son of my father but not my brother. It's me." Hairdresser */}
+250     \textcolor{keywordflow}{if} ((no->\hyperlink{structbht__node_ad327b7e4aaac3a9687feb283d05fabbe}{father}->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[s] == NULL) || (no->\hyperlink{structbht__node_ad327b7e4aaac3a9687feb283d05fabbe}{father}->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[s] == no)
+251         || (no->\hyperlink{structbht__node_ad327b7e4aaac3a9687feb283d05fabbe}{father}->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[s]->\hyperlink{structbht__node_a0c60ab00baa47c069768352b2f2b6d3d}{partnum} == -1))
+252       \textcolor{keywordflow}{continue};
+253     \textcolor{keywordflow}{if} (cellIntersectNode
+254         (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p].\hyperlink{tempf_8c_a1780e9c70637026d6fab31f63b3a193e}{x}, \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p].y, \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p].z, \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p].\hyperlink{global_8h_a8ee9be1b5aa75abae556de3088cba6d9}{h},
+255          no->\hyperlink{structbht__node_ad327b7e4aaac3a9687feb283d05fabbe}{father}->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[s])) \{
+256       \textcolor{comment}{/* traverse subtree of the sibling (up-bottom) */}
+257       \hyperlink{potential_8c_a5fe9cb7ae024bd3157bafc1b5fe3e2f7}{potentialTraverseSubtree}(p, no->\hyperlink{structbht__node_ad327b7e4aaac3a9687feb283d05fabbe}{father}->
+      \hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[s]);
+258     \}
+259       \}
+260 
+261       no = no->\hyperlink{structbht__node_ad327b7e4aaac3a9687feb283d05fabbe}{father};
+262       \textcolor{keywordflow}{if} (no->\hyperlink{structbht__node_ad327b7e4aaac3a9687feb283d05fabbe}{father} == NULL)
+263     \textcolor{keywordflow}{break};          \textcolor{comment}{/* this is the root node */}
+264       \textcolor{keywordflow}{if} (cellInsideNode(p, no))
+265     \textcolor{keywordflow}{break};
+266 
+267     \}
+268 
+269   \}
+270 
+271   \textcolor{comment}{/* wait for data transfers to finish */}
+272   \hyperlink{comm_8c_ac5b7dbd1157ef088c4e6f8a9f08fcc4b}{cellsExchangeWait}();
+273 
+274   \textcolor{comment}{/* loop over remote cells */}
+275   \textcolor{keywordflow}{for} (rp = 0; rp < \hyperlink{global_8h_a6e7ffc829c0f608016617f9057885a9f}{numImp}; rp++) \{
+276     \textcolor{comment}{/* start with the root node */}
+277     no = \hyperlink{global_8h_a6920a8c121a4a8d48989c8d923e4797e}{bht\_root};
+278     \textcolor{comment}{/* traverse the tree and compute potential (starting from the root) */}
+279     \hyperlink{potential_8c_a637d3e5960a44074c8f7f747af89eabf}{computeRemoteCellsPotential}(rp, no);
+280 
+281   \}
+282 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{potential_8c_a51c347ae780a718d855ac7ff303966e7_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{potential_8c_a51c347ae780a718d855ac7ff303966e7_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{potential_8c_a637d3e5960a44074c8f7f747af89eabf}{\index{potential.\-c@{potential.\-c}!compute\-Remote\-Cells\-Potential@{compute\-Remote\-Cells\-Potential}}
+\index{compute\-Remote\-Cells\-Potential@{compute\-Remote\-Cells\-Potential}!potential.c@{potential.\-c}}
+\subsubsection[{compute\-Remote\-Cells\-Potential}]{\setlength{\rightskip}{0pt plus 5cm}void compute\-Remote\-Cells\-Potential (
+\begin{DoxyParamCaption}
+\item[{int}]{rp, }
+\item[{struct {\bf bht\-\_\-node} $\ast$}]{no}
+\end{DoxyParamCaption}
+)}}\label{potential_8c_a637d3e5960a44074c8f7f747af89eabf}
+This function traverse the tree (up-\/bottom) and computes potential for remote cells. 
+
+Definition at line 176 of file potential.\-c.
+
+
+
+References cells, bht\-\_\-node\-::child, compute\-C\-C\-Potential(), h, bht\-\_\-node\-::leaf, lnc, bht\-\_\-node\-::partnum, recv\-Data, s, tnc, cell\-Data\-::v, and x.
+
+
+\begin{DoxyCode}
+177 \{
+178   \textcolor{keywordtype}{int} \hyperlink{global_8h_a874f74a4dc1c9a0cd9c6e0d79c298f55}{s};
+179 
+180   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc} == 0)
+181     \textcolor{keywordflow}{return};
+182   \textcolor{keywordflow}{if} (no->\hyperlink{structbht__node_a0c60ab00baa47c069768352b2f2b6d3d}{partnum} == -1)
+183     \textcolor{keywordflow}{return};
+184 
+185   \textcolor{comment}{/* compute potential if it is a leaf node */}
+186   \textcolor{keywordflow}{if} (no->\hyperlink{structbht__node_afdde1540721b0d5dbc4b234677b4ad8d}{leaf} == 1) \{
+187     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc} > 0)
+188       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[no->\hyperlink{structbht__node_a0c60ab00baa47c069768352b2f2b6d3d}{partnum}].\hyperlink{structcellData_a3b90d5a73541ab9402511d87bed076ef}{v} += \hyperlink{potential_8c_a029d6c8547c6d860ab733c73bfbb07ee}{computeCCPotential}(rp, no->
+      \hyperlink{structbht__node_a0c60ab00baa47c069768352b2f2b6d3d}{partnum}, 1);
+189     \textcolor{keywordflow}{return};
+190   \}
+191 
+192   \textcolor{comment}{/* loop over all siblings */}
+193   \textcolor{keywordflow}{for} (s = 0; s < \hyperlink{global_8h_a96f00f69e2102e1720c989a00c385d81}{tnc}; s++) \{
+194     \textcolor{comment}{/* continue if there is no child */}
+195     \textcolor{keywordflow}{if} (no->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[s] == NULL || no->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[s]->\hyperlink{structbht__node_a0c60ab00baa47c069768352b2f2b6d3d}{partnum} == -1)
+196       \textcolor{keywordflow}{continue};
+197     \textcolor{comment}{/* proceed if the child node and particle intersect */}
+198     \textcolor{keywordflow}{if} (!cellIntersectNode
+199     (\hyperlink{global_8h_af851c922de87975e63161d38332d6a56}{recvData}[rp].\hyperlink{tempf_8c_a1780e9c70637026d6fab31f63b3a193e}{x}, \hyperlink{global_8h_af851c922de87975e63161d38332d6a56}{recvData}[rp].y, \hyperlink{global_8h_af851c922de87975e63161d38332d6a56}{recvData}[rp].z, 
+      \hyperlink{global_8h_af851c922de87975e63161d38332d6a56}{recvData}[rp].\hyperlink{global_8h_a8ee9be1b5aa75abae556de3088cba6d9}{h},
+200      no->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[s]))
+201       \textcolor{keywordflow}{continue};
+202     \hyperlink{potential_8c_a637d3e5960a44074c8f7f747af89eabf}{computeRemoteCellsPotential}(rp, no->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[s]);
+203   \}
+204 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{potential_8c_a637d3e5960a44074c8f7f747af89eabf_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{potential_8c_a637d3e5960a44074c8f7f747af89eabf_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{potential_8c_a5fe9cb7ae024bd3157bafc1b5fe3e2f7}{\index{potential.\-c@{potential.\-c}!potential\-Traverse\-Subtree@{potential\-Traverse\-Subtree}}
+\index{potential\-Traverse\-Subtree@{potential\-Traverse\-Subtree}!potential.c@{potential.\-c}}
+\subsubsection[{potential\-Traverse\-Subtree}]{\setlength{\rightskip}{0pt plus 5cm}void potential\-Traverse\-Subtree (
+\begin{DoxyParamCaption}
+\item[{int}]{p, }
+\item[{struct {\bf bht\-\_\-node} $\ast$}]{no}
+\end{DoxyParamCaption}
+)}}\label{potential_8c_a5fe9cb7ae024bd3157bafc1b5fe3e2f7}
+This function traverses the subtree under given node looking for neighbour cells. 
+
+Definition at line 146 of file potential.\-c.
+
+
+
+References cells, bht\-\_\-node\-::child, compute\-C\-C\-Potential(), h, bht\-\_\-node\-::leaf, lnc, bht\-\_\-node\-::partnum, s, tnc, cell\-Data\-::v, and x.
+
+
+\begin{DoxyCode}
+147 \{
+148   \textcolor{keywordtype}{int} \hyperlink{global_8h_a874f74a4dc1c9a0cd9c6e0d79c298f55}{s};
+149 
+150   \textcolor{keywordflow}{if} (no->\hyperlink{structbht__node_a0c60ab00baa47c069768352b2f2b6d3d}{partnum} == -1)
+151     \textcolor{keywordflow}{return};
+152 
+153   \textcolor{comment}{/* if it is a leaf node we do not proceed to the siblings */}
+154   \textcolor{keywordflow}{if} (no->\hyperlink{structbht__node_afdde1540721b0d5dbc4b234677b4ad8d}{leaf} == 1) \{
+155     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc} > 0)
+156       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p].\hyperlink{structcellData_a3b90d5a73541ab9402511d87bed076ef}{v} += \hyperlink{potential_8c_a029d6c8547c6d860ab733c73bfbb07ee}{computeCCPotential}(p, no->\hyperlink{structbht__node_a0c60ab00baa47c069768352b2f2b6d3d}{partnum}, 0);
+157     \textcolor{keywordflow}{return};
+158   \}
+159 
+160   \textcolor{comment}{/* loop over siblings */}
+161   \textcolor{keywordflow}{for} (s = 0; s < \hyperlink{global_8h_a96f00f69e2102e1720c989a00c385d81}{tnc}; s++) \{
+162     \textcolor{comment}{/* if it is an empty child proceed to the next one */}
+163     \textcolor{keywordflow}{if} ((no->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[s] == NULL) || (no->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[s]->\hyperlink{structbht__node_a0c60ab00baa47c069768352b2f2b6d3d}{partnum} == -1))
+164       \textcolor{keywordflow}{continue};
+165     \textcolor{comment}{/* if there is no intersection with this child proceed to next one */}
+166     \textcolor{keywordflow}{if} (!cellIntersectNode
+167     (\hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p].\hyperlink{tempf_8c_a1780e9c70637026d6fab31f63b3a193e}{x}, \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p].y, \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p].z, \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p].\hyperlink{global_8h_a8ee9be1b5aa75abae556de3088cba6d9}{h}, no->
+      \hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[s]))
+168       \textcolor{keywordflow}{continue};
+169     \hyperlink{potential_8c_a5fe9cb7ae024bd3157bafc1b5fe3e2f7}{potentialTraverseSubtree}(p, no->\hyperlink{structbht__node_a79d661ac20d812ad17b1d7455ad9e031}{child}[s]);
+170   \}
+171 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{potential_8c_a5fe9cb7ae024bd3157bafc1b5fe3e2f7_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{potential_8c_a5fe9cb7ae024bd3157bafc1b5fe3e2f7_icgraph}
+\end{center}
+\end{figure}
+
+

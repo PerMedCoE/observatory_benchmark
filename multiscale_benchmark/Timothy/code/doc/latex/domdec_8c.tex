@@ -1,0 +1,792 @@
+\hypertarget{domdec_8c}{\section{domdec.\-c File Reference}
+\label{domdec_8c}\index{domdec.\-c@{domdec.\-c}}
+}
+
+
+contains domain decomposition functions  
+
+
+{\ttfamily \#include $<$stdio.\-h$>$}\\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}global.\-h\char`\"{}}\\*
+Include dependency graph for domdec.\-c\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=260pt]{domdec_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{domdec_8c_a646b3eaec99bfd258f4353ef2776d7eb}{ztn\-Return\-Dimension} (void $\ast$data, int $\ast$ierr)
+\item 
+void \hyperlink{domdec_8c_a5494b88a5d3049ebdaff2db552b62d88}{ztn\-Return\-Coords} (void $\ast$data, int \hyperlink{domdec_8c_a6c9a41a72d3fd2ab972e0ccfee7394ad}{num\-Gid\-Entries}, int \hyperlink{domdec_8c_ad836388e3004c88ef80be4e1cef479a5}{num\-Lid\-Entries}, Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R global\-Id, Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R local\-Id, double $\ast$geom\-Vec, int $\ast$ierr)
+\item 
+int \hyperlink{domdec_8c_ae16f55406fa663893e53bff6ec0d2891}{ztn\-Return\-Num\-Node} (void $\ast$data, int $\ast$ierr)
+\item 
+void \hyperlink{domdec_8c_afa9ccb22c460f072633a1033367a5da6}{ztn\-Return\-Owned\-Nodes} (void $\ast$data, int num\-G\-Id\-Entries, int num\-L\-Id\-Entries, Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R global\-Ids, Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R local\-Ids, int wgt\-Dim, float $\ast$obj\-Wgts, int $\ast$ierr)
+\item 
+int \hyperlink{domdec_8c_ae8ccac1e6575ca1ebe6ec4e9fde3625c}{ztn\-Return\-Particle\-Data\-Size} (void $\ast$data, int num\-G\-Id\-Entries, int num\-L\-Id\-Entries, Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R global\-Id, Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R local\-Id, int $\ast$ierr)
+\item 
+void \hyperlink{domdec_8c_a83bdab74033e8f1fb8a004c3f6a3b76c}{ztn\-Pack} (void $\ast$data, int num\-G\-Id\-Entries, int num\-L\-Id\-Entries, Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R global\-Id, Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R local\-Id, int dest, int size, char $\ast$buf, int $\ast$ierr)
+\item 
+void \hyperlink{domdec_8c_a7bb302f4a0beaad9c7c4f08162f1d66c}{ztn\-Pre} (void $\ast$data, int num\-G\-Id\-Entries, int num\-L\-Id\-Entries, int \hyperlink{domdec_8c_a63327cbfe51b3be8ccd7bd7947cf7768}{num\-Import}, Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R import\-Global\-Ids, Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R import\-Local\-Ids, int $\ast$\hyperlink{domdec_8c_aaf98961d02a34fd945de59d736ba66ce}{import\-Procs}, int $\ast$\hyperlink{domdec_8c_ac2fd1e8fdcde7633cb12cc36b7ffadc6}{import\-To\-Part}, int \hyperlink{domdec_8c_a71a7ca2f86ef16edaf1df524273e642a}{num\-Export}, Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R export\-Global\-Ids, Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R export\-Local\-Ids, int $\ast$\hyperlink{domdec_8c_a6992b2911e471d2452c8803e182fa4f1}{export\-Procs}, int $\ast$\hyperlink{domdec_8c_a51f5ba020bbcf6108262761504f19ed9}{export\-To\-Part}, int $\ast$ierr)
+\item 
+void \hyperlink{domdec_8c_aa46ced13f5fc202c3fcc841ff962a565}{ztn\-Mid} (void $\ast$data, int num\-G\-Id\-Entries, int num\-L\-Id\-Entries, int \hyperlink{domdec_8c_a63327cbfe51b3be8ccd7bd7947cf7768}{num\-Import}, Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R import\-Global\-Ids, Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R import\-Local\-Ids, int $\ast$\hyperlink{domdec_8c_aaf98961d02a34fd945de59d736ba66ce}{import\-Procs}, int $\ast$\hyperlink{domdec_8c_ac2fd1e8fdcde7633cb12cc36b7ffadc6}{import\-To\-Part}, int \hyperlink{domdec_8c_a71a7ca2f86ef16edaf1df524273e642a}{num\-Export}, Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R export\-Global\-Ids, Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R export\-Local\-Ids, int $\ast$\hyperlink{domdec_8c_a6992b2911e471d2452c8803e182fa4f1}{export\-Procs}, int $\ast$\hyperlink{domdec_8c_a51f5ba020bbcf6108262761504f19ed9}{export\-To\-Part}, int $\ast$ierr)
+\item 
+void \hyperlink{domdec_8c_a1e5da8ea3ac86aa8c5f131199f20e48d}{ztn\-Post} (void $\ast$data, int num\-G\-Id\-Entries, int num\-L\-Id\-Entries, int \hyperlink{domdec_8c_a63327cbfe51b3be8ccd7bd7947cf7768}{num\-Import}, Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R import\-Global\-Ids, Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R import\-Local\-Ids, int $\ast$\hyperlink{domdec_8c_aaf98961d02a34fd945de59d736ba66ce}{import\-Procs}, int $\ast$\hyperlink{domdec_8c_ac2fd1e8fdcde7633cb12cc36b7ffadc6}{import\-To\-Part}, int \hyperlink{domdec_8c_a71a7ca2f86ef16edaf1df524273e642a}{num\-Export}, Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R export\-Global\-Ids, Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R export\-Local\-Ids, int $\ast$\hyperlink{domdec_8c_a6992b2911e471d2452c8803e182fa4f1}{export\-Procs}, int $\ast$\hyperlink{domdec_8c_a51f5ba020bbcf6108262761504f19ed9}{export\-To\-Part}, int $\ast$ierr)
+\item 
+void \hyperlink{domdec_8c_aa2a71d2700b18abb4e381358df6967c5}{ztn\-Unpack} (void $\ast$data, int num\-G\-Id\-Entries, Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R global\-Id, int size, char $\ast$buf, int $\ast$ierr)
+\item 
+void \hyperlink{domdec_8c_ae7429f968958e491ffc5aa144f564e0a}{decomposition\-Init} (int argc, char $\ast$$\ast$argv, M\-P\-I\-\_\-\-Comm Comm)
+\item 
+void \hyperlink{domdec_8c_aa62cb73f52f03ee27da62ae952212ceb}{decomposition\-Execute} ()
+\item 
+void \hyperlink{domdec_8c_a8dd9c084f2af53a06d1629e840f13ee8}{decomposition\-Finalize} ()
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{domdec_8c_a428798c15a127930411bd3af43e3cdc7}{changes}
+\item 
+int \hyperlink{domdec_8c_a6c9a41a72d3fd2ab972e0ccfee7394ad}{num\-Gid\-Entries}
+\item 
+int \hyperlink{domdec_8c_ad836388e3004c88ef80be4e1cef479a5}{num\-Lid\-Entries}
+\item 
+int \hyperlink{domdec_8c_a63327cbfe51b3be8ccd7bd7947cf7768}{num\-Import}
+\item 
+Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R \hyperlink{domdec_8c_a7003e8d463d214680ced99e92a4e23c4}{import\-Global\-Gids}
+\item 
+Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R \hyperlink{domdec_8c_a1ac001377defa550d2fe2627224ddb46}{import\-Local\-Gids}
+\item 
+int $\ast$ \hyperlink{domdec_8c_aaf98961d02a34fd945de59d736ba66ce}{import\-Procs}
+\item 
+int $\ast$ \hyperlink{domdec_8c_ac2fd1e8fdcde7633cb12cc36b7ffadc6}{import\-To\-Part}
+\item 
+int \hyperlink{domdec_8c_a71a7ca2f86ef16edaf1df524273e642a}{num\-Export}
+\item 
+Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R \hyperlink{domdec_8c_ab47ca6ae0018cbdd0cdd75f8bbc1a1ca}{export\-Global\-Gids}
+\item 
+Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R \hyperlink{domdec_8c_a5582bb1e54eaea68a6c2ddba7ab07553}{export\-Local\-Gids}
+\item 
+int $\ast$ \hyperlink{domdec_8c_a6992b2911e471d2452c8803e182fa4f1}{export\-Procs}
+\item 
+int $\ast$ \hyperlink{domdec_8c_a51f5ba020bbcf6108262761504f19ed9}{export\-To\-Part}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+contains domain decomposition functions 
+
+Definition in file \hyperlink{domdec_8c_source}{domdec.\-c}.
+
+
+
+\subsection{Function Documentation}
+\hypertarget{domdec_8c_aa62cb73f52f03ee27da62ae952212ceb}{\index{domdec.\-c@{domdec.\-c}!decomposition\-Execute@{decomposition\-Execute}}
+\index{decomposition\-Execute@{decomposition\-Execute}!domdec.c@{domdec.\-c}}
+\subsubsection[{decomposition\-Execute}]{\setlength{\rightskip}{0pt plus 5cm}void decomposition\-Execute (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{domdec_8c_aa62cb73f52f03ee27da62ae952212ceb}
+This function calls the Zoltan's domain decomposition and migration functions. It is called at the beginning of each simulation step. 
+
+Definition at line 240 of file domdec.\-c.
+
+
+
+References changes, export\-Global\-Gids, export\-Local\-Gids, export\-Procs, export\-To\-Part, import\-Global\-Gids, import\-Local\-Gids, import\-Procs, import\-To\-Part, M\-P\-Isize, nc, num\-Export, num\-Gid\-Entries, num\-Import, num\-Lid\-Entries, stop\-Run(), and ztn.
+
+
+\begin{DoxyCode}
+241 \{
+242   \textcolor{keywordtype}{int} rc;
+243   \textcolor{keywordtype}{int} i;
+244 
+245   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a0845b4b004824f1fe3cd69db1672fa15}{nc} < \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize})
+246     \textcolor{keywordflow}{return};
+247 
+248   rc = Zoltan\_LB\_Partition(\hyperlink{global_8h_afc06c50b11f3b60d3738e669b612eb9c}{ztn},  \textcolor{comment}{/* input (all remaining fields are output) */}
+249                &\hyperlink{domdec_8c_a428798c15a127930411bd3af43e3cdc7}{changes}, \textcolor{comment}{/* 1 if partitioning was changed, 0 otherwise */}
+250                &\hyperlink{domdec_8c_a6c9a41a72d3fd2ab972e0ccfee7394ad}{numGidEntries}, \textcolor{comment}{/* number of integers used for a global ID */}
+251                &\hyperlink{domdec_8c_ad836388e3004c88ef80be4e1cef479a5}{numLidEntries}, \textcolor{comment}{/* number of integers used for a local ID */}
+252                &\hyperlink{domdec_8c_a63327cbfe51b3be8ccd7bd7947cf7768}{numImport}, \textcolor{comment}{/* number of objects to be sent to me */}
+253                &\hyperlink{domdec_8c_a7003e8d463d214680ced99e92a4e23c4}{importGlobalGids},   \textcolor{comment}{/* global IDs of objects to be sent to me */}
+254                &\hyperlink{domdec_8c_a1ac001377defa550d2fe2627224ddb46}{importLocalGids}, \textcolor{comment}{/* local IDs of objects to be sent to me */}
+255                &\hyperlink{domdec_8c_aaf98961d02a34fd945de59d736ba66ce}{importProcs}, \textcolor{comment}{/* process rank for source of each incoming object */}
+256                &\hyperlink{domdec_8c_ac2fd1e8fdcde7633cb12cc36b7ffadc6}{importToPart},   \textcolor{comment}{/* new partition for each incoming object */}
+257                &\hyperlink{domdec_8c_a71a7ca2f86ef16edaf1df524273e642a}{numExport}, \textcolor{comment}{/* number of objects I must send to other processes */}
+258                &\hyperlink{domdec_8c_ab47ca6ae0018cbdd0cdd75f8bbc1a1ca}{exportGlobalGids},   \textcolor{comment}{/* global IDs of the objects I must send */}
+259                &\hyperlink{domdec_8c_a5582bb1e54eaea68a6c2ddba7ab07553}{exportLocalGids}, \textcolor{comment}{/* local IDs of the objects I must send */}
+260                &\hyperlink{domdec_8c_a6992b2911e471d2452c8803e182fa4f1}{exportProcs}, \textcolor{comment}{/* process to which I send each of the objects */}
+261                &\hyperlink{domdec_8c_a51f5ba020bbcf6108262761504f19ed9}{exportToPart});  \textcolor{comment}{/* partition to which each object will belong */}
+262 
+263   \textcolor{keywordflow}{if} (rc != ZOLTAN\_OK)
+264     \hyperlink{utils_8c_a07dd99a04f2723be164531a7a862fb67}{stopRun}(112, NULL, \_\_FILE\_\_, \_\_LINE\_\_);
+265 
+266   \textcolor{comment}{/* free the arrays allocated by Zoltan\_LB\_Partiotion */}
+267   Zoltan\_LB\_Free\_Part(&\hyperlink{domdec_8c_a7003e8d463d214680ced99e92a4e23c4}{importGlobalGids}, &\hyperlink{domdec_8c_a1ac001377defa550d2fe2627224ddb46}{importLocalGids}, &
+      \hyperlink{domdec_8c_aaf98961d02a34fd945de59d736ba66ce}{importProcs},
+268               &\hyperlink{domdec_8c_ac2fd1e8fdcde7633cb12cc36b7ffadc6}{importToPart});
+269   Zoltan\_LB\_Free\_Part(&\hyperlink{domdec_8c_ab47ca6ae0018cbdd0cdd75f8bbc1a1ca}{exportGlobalGids}, &\hyperlink{domdec_8c_a5582bb1e54eaea68a6c2ddba7ab07553}{exportLocalGids}, &
+      \hyperlink{domdec_8c_a6992b2911e471d2452c8803e182fa4f1}{exportProcs},
+270               &\hyperlink{domdec_8c_a51f5ba020bbcf6108262761504f19ed9}{exportToPart});
+271 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=286pt]{domdec_8c_aa62cb73f52f03ee27da62ae952212ceb_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=270pt]{domdec_8c_aa62cb73f52f03ee27da62ae952212ceb_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{domdec_8c_a8dd9c084f2af53a06d1629e840f13ee8}{\index{domdec.\-c@{domdec.\-c}!decomposition\-Finalize@{decomposition\-Finalize}}
+\index{decomposition\-Finalize@{decomposition\-Finalize}!domdec.c@{domdec.\-c}}
+\subsubsection[{decomposition\-Finalize}]{\setlength{\rightskip}{0pt plus 5cm}void decomposition\-Finalize (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{domdec_8c_a8dd9c084f2af53a06d1629e840f13ee8}
+This function deactivates the Zoltan library. It is called at the end of the simulation. 
+
+Definition at line 277 of file domdec.\-c.
+
+
+
+References ztn.
+
+
+\begin{DoxyCode}
+278 \{
+279   Zoltan\_Destroy(&\hyperlink{global_8h_afc06c50b11f3b60d3738e669b612eb9c}{ztn});
+280 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=268pt]{domdec_8c_a8dd9c084f2af53a06d1629e840f13ee8_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{domdec_8c_ae7429f968958e491ffc5aa144f564e0a}{\index{domdec.\-c@{domdec.\-c}!decomposition\-Init@{decomposition\-Init}}
+\index{decomposition\-Init@{decomposition\-Init}!domdec.c@{domdec.\-c}}
+\subsubsection[{decomposition\-Init}]{\setlength{\rightskip}{0pt plus 5cm}void decomposition\-Init (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$$\ast$}]{argv, }
+\item[{M\-P\-I\-\_\-\-Comm}]{Comm}
+\end{DoxyParamCaption}
+)}}\label{domdec_8c_ae7429f968958e491ffc5aa144f564e0a}
+This function initializes the Zoltan library. It is called at the beginning of the simulation. 
+
+Definition at line 191 of file domdec.\-c.
+
+
+
+References cells, M\-P\-Irank, stop\-Run(), ztn, ztn\-Mid(), ztn\-Pack(), ztn\-Post(), ztn\-Pre(), ztn\-Return\-Coords(), ztn\-Return\-Dimension(), ztn\-Return\-Num\-Node(), ztn\-Return\-Owned\-Nodes(), ztn\-Return\-Particle\-Data\-Size(), and ztn\-Unpack().
+
+
+\begin{DoxyCode}
+192 \{
+193   \textcolor{keywordtype}{int} rc;
+194   \textcolor{keywordtype}{float} version;
+195 
+196   rc = Zoltan\_Initialize(argc, argv, &version);
+197   \textcolor{keywordflow}{if} (rc != ZOLTAN\_OK)
+198     \hyperlink{utils_8c_a07dd99a04f2723be164531a7a862fb67}{stopRun}(112, NULL, \_\_FILE\_\_, \_\_LINE\_\_);
+199 
+200   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank} == 0)
+201     printf(\textcolor{stringliteral}{"Zoltan Version %.3f. Initialized.\(\backslash\)n"}, version);
+202 
+203   \hyperlink{global_8h_afc06c50b11f3b60d3738e669b612eb9c}{ztn} = Zoltan\_Create(MPI\_COMM\_WORLD);
+204 
+205   Zoltan\_Set\_Param(\hyperlink{global_8h_afc06c50b11f3b60d3738e669b612eb9c}{ztn}, \textcolor{stringliteral}{"IMBALANCE\_TOL"}, \textcolor{stringliteral}{"2.0"});
+206   Zoltan\_Set\_Param(\hyperlink{global_8h_afc06c50b11f3b60d3738e669b612eb9c}{ztn}, \textcolor{stringliteral}{"LB\_METHOD"}, \textcolor{stringliteral}{"HSFC"});    \textcolor{comment}{/* Hilbert Space-Filling Curve Partitioning */}
+207   Zoltan\_Set\_Param(\hyperlink{global_8h_afc06c50b11f3b60d3738e669b612eb9c}{ztn}, \textcolor{stringliteral}{"NUM\_GID\_ENTRIES"}, \textcolor{stringliteral}{"1"}); \textcolor{comment}{/* global ID is 1 integer */}
+208   Zoltan\_Set\_Param(\hyperlink{global_8h_afc06c50b11f3b60d3738e669b612eb9c}{ztn}, \textcolor{stringliteral}{"NUM\_LID\_ENTRIES"}, \textcolor{stringliteral}{"1"}); \textcolor{comment}{/* local ID is 1 integer */}
+209   Zoltan\_Set\_Param(\hyperlink{global_8h_afc06c50b11f3b60d3738e669b612eb9c}{ztn}, \textcolor{stringliteral}{"OBJ\_WEIGHT\_DIM"}, \textcolor{stringliteral}{"1"});  \textcolor{comment}{/* we use object weights */}
+210   Zoltan\_Set\_Param(\hyperlink{global_8h_afc06c50b11f3b60d3738e669b612eb9c}{ztn}, \textcolor{stringliteral}{"DEBUG\_LEVEL"}, \textcolor{stringliteral}{"0"}); \textcolor{comment}{/* quiet mode; no output unless an error or warning is
+       produced */}
+211   Zoltan\_Set\_Param(\hyperlink{global_8h_afc06c50b11f3b60d3738e669b612eb9c}{ztn}, \textcolor{stringliteral}{"KEEP\_CUTS"}, \textcolor{stringliteral}{"1"});   \textcolor{comment}{/* save the cuts for later use */}
+212   Zoltan\_Set\_Param(\hyperlink{global_8h_afc06c50b11f3b60d3738e669b612eb9c}{ztn}, \textcolor{stringliteral}{"AUTO\_MIGRATE"}, \textcolor{stringliteral}{"1"});    \textcolor{comment}{/* use the auto migration mechanism */}
+213 
+214   Zoltan\_Set\_Fn(\hyperlink{global_8h_afc06c50b11f3b60d3738e669b612eb9c}{ztn}, ZOLTAN\_NUM\_GEOM\_FN\_TYPE,
+215         (\textcolor{keywordtype}{void} (*)()) \hyperlink{domdec_8c_a646b3eaec99bfd258f4353ef2776d7eb}{ztnReturnDimension}, \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells});
+216   Zoltan\_Set\_Fn(\hyperlink{global_8h_afc06c50b11f3b60d3738e669b612eb9c}{ztn}, ZOLTAN\_GEOM\_FN\_TYPE, (\textcolor{keywordtype}{void} (*)()) \hyperlink{domdec_8c_a5494b88a5d3049ebdaff2db552b62d88}{ztnReturnCoords},
+217         \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells});
+218   Zoltan\_Set\_Fn(\hyperlink{global_8h_afc06c50b11f3b60d3738e669b612eb9c}{ztn}, ZOLTAN\_NUM\_OBJ\_FN\_TYPE, (\textcolor{keywordtype}{void} (*)()) \hyperlink{domdec_8c_ae16f55406fa663893e53bff6ec0d2891}{ztnReturnNumNode},
+219         \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells});
+220   Zoltan\_Set\_Fn(\hyperlink{global_8h_afc06c50b11f3b60d3738e669b612eb9c}{ztn}, ZOLTAN\_OBJ\_LIST\_FN\_TYPE,
+221         (\textcolor{keywordtype}{void} (*)()) \hyperlink{domdec_8c_afa9ccb22c460f072633a1033367a5da6}{ztnReturnOwnedNodes}, \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells});
+222   Zoltan\_Set\_Fn(\hyperlink{global_8h_afc06c50b11f3b60d3738e669b612eb9c}{ztn}, ZOLTAN\_OBJ\_SIZE\_FN\_TYPE,
+223         (\textcolor{keywordtype}{void} (*)()) \hyperlink{domdec_8c_ae8ccac1e6575ca1ebe6ec4e9fde3625c}{ztnReturnParticleDataSize}, \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells});
+224   Zoltan\_Set\_Fn(\hyperlink{global_8h_afc06c50b11f3b60d3738e669b612eb9c}{ztn}, ZOLTAN\_PACK\_OBJ\_FN\_TYPE, (\textcolor{keywordtype}{void} (*)()) \hyperlink{domdec_8c_a83bdab74033e8f1fb8a004c3f6a3b76c}{ztnPack}, 
+      \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells});
+225   Zoltan\_Set\_Fn(\hyperlink{global_8h_afc06c50b11f3b60d3738e669b612eb9c}{ztn}, ZOLTAN\_UNPACK\_OBJ\_FN\_TYPE, (\textcolor{keywordtype}{void} (*)()) \hyperlink{domdec_8c_aa2a71d2700b18abb4e381358df6967c5}{ztnUnpack},
+226         \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells});
+227   Zoltan\_Set\_Fn(\hyperlink{global_8h_afc06c50b11f3b60d3738e669b612eb9c}{ztn}, ZOLTAN\_PRE\_MIGRATE\_PP\_FN\_TYPE, (\textcolor{keywordtype}{void} (*)()) \hyperlink{domdec_8c_a7bb302f4a0beaad9c7c4f08162f1d66c}{ztnPre},
+228         \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells});
+229   Zoltan\_Set\_Fn(\hyperlink{global_8h_afc06c50b11f3b60d3738e669b612eb9c}{ztn}, ZOLTAN\_MID\_MIGRATE\_PP\_FN\_TYPE, (\textcolor{keywordtype}{void} (*)()) \hyperlink{domdec_8c_aa46ced13f5fc202c3fcc841ff962a565}{ztnMid},
+230         \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells});
+231   Zoltan\_Set\_Fn(\hyperlink{global_8h_afc06c50b11f3b60d3738e669b612eb9c}{ztn}, ZOLTAN\_POST\_MIGRATE\_PP\_FN\_TYPE, (\textcolor{keywordtype}{void} (*)()) \hyperlink{domdec_8c_a1e5da8ea3ac86aa8c5f131199f20e48d}{ztnPost},
+232         \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells});
+233 
+234 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=344pt]{domdec_8c_ae7429f968958e491ffc5aa144f564e0a_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{domdec_8c_ae7429f968958e491ffc5aa144f564e0a_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{domdec_8c_aa46ced13f5fc202c3fcc841ff962a565}{\index{domdec.\-c@{domdec.\-c}!ztn\-Mid@{ztn\-Mid}}
+\index{ztn\-Mid@{ztn\-Mid}!domdec.c@{domdec.\-c}}
+\subsubsection[{ztn\-Mid}]{\setlength{\rightskip}{0pt plus 5cm}void ztn\-Mid (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{data, }
+\item[{int}]{num\-G\-Id\-Entries, }
+\item[{int}]{num\-L\-Id\-Entries, }
+\item[{int}]{num\-Import, }
+\item[{Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R}]{import\-Global\-Ids, }
+\item[{Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R}]{import\-Local\-Ids, }
+\item[{int $\ast$}]{import\-Procs, }
+\item[{int $\ast$}]{import\-To\-Part, }
+\item[{int}]{num\-Export, }
+\item[{Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R}]{export\-Global\-Ids, }
+\item[{Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R}]{export\-Local\-Ids, }
+\item[{int $\ast$}]{export\-Procs, }
+\item[{int $\ast$}]{export\-To\-Part, }
+\item[{int $\ast$}]{ierr}
+\end{DoxyParamCaption}
+)}}\label{domdec_8c_aa46ced13f5fc202c3fcc841ff962a565}
+Zoltan callback function. This function is executed after packing of send buffer and unpacking of receive buffer during migration. 
+
+Definition at line 140 of file domdec.\-c.
+
+
+
+References cell\-Data\-::gid, lnc, and num\-Export.
+
+
+\begin{DoxyCode}
+146 \{
+147   \textcolor{keywordtype}{int} pos, i;
+148   \textcolor{keyword}{struct }\hyperlink{structcellData}{cellData} *c = (\textcolor{keyword}{struct }\hyperlink{structcellData}{cellData} *) data;
+149   pos = 0;
+150   \textcolor{keywordflow}{for} (i = 0; i < \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}; i++) \{
+151     \textcolor{keywordflow}{if} (i != pos && c[i].\hyperlink{structcellData_abb4d4bd9231e9f994e87f32cc4fcfce8}{gid} != -1) \{
+152       c[pos] = c[i];
+153     \}
+154     \textcolor{keywordflow}{if} (c[i].\hyperlink{structcellData_abb4d4bd9231e9f994e87f32cc4fcfce8}{gid} != -1)
+155       pos++;
+156   \}
+157   lnc = lnc - \hyperlink{domdec_8c_a71a7ca2f86ef16edaf1df524273e642a}{numExport};
+158 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{domdec_8c_aa46ced13f5fc202c3fcc841ff962a565_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{domdec_8c_a83bdab74033e8f1fb8a004c3f6a3b76c}{\index{domdec.\-c@{domdec.\-c}!ztn\-Pack@{ztn\-Pack}}
+\index{ztn\-Pack@{ztn\-Pack}!domdec.c@{domdec.\-c}}
+\subsubsection[{ztn\-Pack}]{\setlength{\rightskip}{0pt plus 5cm}void ztn\-Pack (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{data, }
+\item[{int}]{num\-G\-Id\-Entries, }
+\item[{int}]{num\-L\-Id\-Entries, }
+\item[{Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R}]{global\-Id, }
+\item[{Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R}]{local\-Id, }
+\item[{int}]{dest, }
+\item[{int}]{size, }
+\item[{char $\ast$}]{buf, }
+\item[{int $\ast$}]{ierr}
+\end{DoxyParamCaption}
+)}}\label{domdec_8c_a83bdab74033e8f1fb8a004c3f6a3b76c}
+Zoltan callback function. This function packs data into a send buffer before migration. 
+
+Definition at line 115 of file domdec.\-c.
+
+
+
+References cell\-Data\-::gid.
+
+
+\begin{DoxyCode}
+118 \{
+119   \textcolor{keyword}{struct }\hyperlink{structcellData}{cellData} *c = (\textcolor{keyword}{struct }\hyperlink{structcellData}{cellData} *) data;
+120   memcpy(buf, &(c[localId[0]]), \textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} \hyperlink{structcellData}{cellData}));
+121   c[(int) (*localId)].\hyperlink{structcellData_abb4d4bd9231e9f994e87f32cc4fcfce8}{gid} = -1;  \textcolor{comment}{/* mark local particle as exported */}
+122 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{domdec_8c_a83bdab74033e8f1fb8a004c3f6a3b76c_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{domdec_8c_a1e5da8ea3ac86aa8c5f131199f20e48d}{\index{domdec.\-c@{domdec.\-c}!ztn\-Post@{ztn\-Post}}
+\index{ztn\-Post@{ztn\-Post}!domdec.c@{domdec.\-c}}
+\subsubsection[{ztn\-Post}]{\setlength{\rightskip}{0pt plus 5cm}void ztn\-Post (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{data, }
+\item[{int}]{num\-G\-Id\-Entries, }
+\item[{int}]{num\-L\-Id\-Entries, }
+\item[{int}]{num\-Import, }
+\item[{Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R}]{import\-Global\-Ids, }
+\item[{Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R}]{import\-Local\-Ids, }
+\item[{int $\ast$}]{import\-Procs, }
+\item[{int $\ast$}]{import\-To\-Part, }
+\item[{int}]{num\-Export, }
+\item[{Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R}]{export\-Global\-Ids, }
+\item[{Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R}]{export\-Local\-Ids, }
+\item[{int $\ast$}]{export\-Procs, }
+\item[{int $\ast$}]{export\-To\-Part, }
+\item[{int $\ast$}]{ierr}
+\end{DoxyParamCaption}
+)}}\label{domdec_8c_a1e5da8ea3ac86aa8c5f131199f20e48d}
+Zoltan callback function. This function is executed after migration of data between processes. 
+
+Definition at line 163 of file domdec.\-c.
+
+
+
+References lnc, and tlnc.
+
+
+\begin{DoxyCode}
+169 \{
+170   \textcolor{comment}{/* any post communication operations should go here */}
+171   \textcolor{comment}{/* gather number of cells from each process */}
+172   MPI\_Allgather(&\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}, 1, MPI\_LONG\_LONG, \hyperlink{global_8h_ac3c96b975a3376c555ad22a7d2688b2f}{tlnc}, 1, MPI\_LONG\_LONG,
+173         MPI\_COMM\_WORLD);
+174 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{domdec_8c_a1e5da8ea3ac86aa8c5f131199f20e48d_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{domdec_8c_a7bb302f4a0beaad9c7c4f08162f1d66c}{\index{domdec.\-c@{domdec.\-c}!ztn\-Pre@{ztn\-Pre}}
+\index{ztn\-Pre@{ztn\-Pre}!domdec.c@{domdec.\-c}}
+\subsubsection[{ztn\-Pre}]{\setlength{\rightskip}{0pt plus 5cm}void ztn\-Pre (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{data, }
+\item[{int}]{num\-G\-Id\-Entries, }
+\item[{int}]{num\-L\-Id\-Entries, }
+\item[{int}]{num\-Import, }
+\item[{Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R}]{import\-Global\-Ids, }
+\item[{Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R}]{import\-Local\-Ids, }
+\item[{int $\ast$}]{import\-Procs, }
+\item[{int $\ast$}]{import\-To\-Part, }
+\item[{int}]{num\-Export, }
+\item[{Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R}]{export\-Global\-Ids, }
+\item[{Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R}]{export\-Local\-Ids, }
+\item[{int $\ast$}]{export\-Procs, }
+\item[{int $\ast$}]{export\-To\-Part, }
+\item[{int $\ast$}]{ierr}
+\end{DoxyParamCaption}
+)}}\label{domdec_8c_a7bb302f4a0beaad9c7c4f08162f1d66c}
+Zoltan callback function. This function is executed before migration of data between processes. 
+
+Definition at line 127 of file domdec.\-c.
+
+
+\begin{DoxyCode}
+133 \{
+134   \textcolor{comment}{/* any pre communication operations should go here */}
+135 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{domdec_8c_a7bb302f4a0beaad9c7c4f08162f1d66c_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{domdec_8c_a5494b88a5d3049ebdaff2db552b62d88}{\index{domdec.\-c@{domdec.\-c}!ztn\-Return\-Coords@{ztn\-Return\-Coords}}
+\index{ztn\-Return\-Coords@{ztn\-Return\-Coords}!domdec.c@{domdec.\-c}}
+\subsubsection[{ztn\-Return\-Coords}]{\setlength{\rightskip}{0pt plus 5cm}void ztn\-Return\-Coords (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{data, }
+\item[{int}]{num\-Gid\-Entries, }
+\item[{int}]{num\-Lid\-Entries, }
+\item[{Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R}]{global\-Id, }
+\item[{Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R}]{local\-Id, }
+\item[{double $\ast$}]{geom\-Vec, }
+\item[{int $\ast$}]{ierr}
+\end{DoxyParamCaption}
+)}}\label{domdec_8c_a5494b88a5d3049ebdaff2db552b62d88}
+Zoltan callback function. This function returns the spatial coordinates of the cell identified by its global and local id. 
+
+Definition at line 61 of file domdec.\-c.
+
+
+
+References cells, sdim, cell\-Data\-::x, cell\-Data\-::y, and cell\-Data\-::z.
+
+
+\begin{DoxyCode}
+64 \{
+65   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 3) \{
+66     geomVec[0] = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[localId[0]].\hyperlink{structcellData_af88b946fb90d5f08b5fb740c70e98c10}{x};
+67     geomVec[1] = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[localId[0]].\hyperlink{structcellData_ab927965981178aa1fba979a37168db2a}{y};
+68     geomVec[2] = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[localId[0]].\hyperlink{structcellData_ab3e6ed577a7c669c19de1f9c1b46c872}{z};
+69   \}
+70   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 2) \{
+71     geomVec[0] = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[localId[0]].\hyperlink{structcellData_af88b946fb90d5f08b5fb740c70e98c10}{x};
+72     geomVec[1] = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[localId[0]].\hyperlink{structcellData_ab927965981178aa1fba979a37168db2a}{y};
+73   \}
+74 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{domdec_8c_a5494b88a5d3049ebdaff2db552b62d88_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{domdec_8c_a646b3eaec99bfd258f4353ef2776d7eb}{\index{domdec.\-c@{domdec.\-c}!ztn\-Return\-Dimension@{ztn\-Return\-Dimension}}
+\index{ztn\-Return\-Dimension@{ztn\-Return\-Dimension}!domdec.c@{domdec.\-c}}
+\subsubsection[{ztn\-Return\-Dimension}]{\setlength{\rightskip}{0pt plus 5cm}int ztn\-Return\-Dimension (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{data, }
+\item[{int $\ast$}]{ierr}
+\end{DoxyParamCaption}
+)}}\label{domdec_8c_a646b3eaec99bfd258f4353ef2776d7eb}
+Zoltan callback function. This function returns the dimension (2\-D or 3\-D) of the system. 
+
+Definition at line 50 of file domdec.\-c.
+
+
+
+References sdim.
+
+
+\begin{DoxyCode}
+51 \{
+52   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 3)
+53     \textcolor{keywordflow}{return} 3;
+54   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 2)
+55     \textcolor{keywordflow}{return} 2;
+56 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{domdec_8c_a646b3eaec99bfd258f4353ef2776d7eb_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{domdec_8c_ae16f55406fa663893e53bff6ec0d2891}{\index{domdec.\-c@{domdec.\-c}!ztn\-Return\-Num\-Node@{ztn\-Return\-Num\-Node}}
+\index{ztn\-Return\-Num\-Node@{ztn\-Return\-Num\-Node}!domdec.c@{domdec.\-c}}
+\subsubsection[{ztn\-Return\-Num\-Node}]{\setlength{\rightskip}{0pt plus 5cm}int ztn\-Return\-Num\-Node (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{data, }
+\item[{int $\ast$}]{ierr}
+\end{DoxyParamCaption}
+)}}\label{domdec_8c_ae16f55406fa663893e53bff6ec0d2891}
+Zoltan callback function. This function returns the number of cells assigned to this process. 
+
+Definition at line 79 of file domdec.\-c.
+
+
+
+References lnc.
+
+
+\begin{DoxyCode}
+80 \{
+81   \textcolor{keywordflow}{return} \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc};
+82 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{domdec_8c_ae16f55406fa663893e53bff6ec0d2891_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{domdec_8c_afa9ccb22c460f072633a1033367a5da6}{\index{domdec.\-c@{domdec.\-c}!ztn\-Return\-Owned\-Nodes@{ztn\-Return\-Owned\-Nodes}}
+\index{ztn\-Return\-Owned\-Nodes@{ztn\-Return\-Owned\-Nodes}!domdec.c@{domdec.\-c}}
+\subsubsection[{ztn\-Return\-Owned\-Nodes}]{\setlength{\rightskip}{0pt plus 5cm}void ztn\-Return\-Owned\-Nodes (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{data, }
+\item[{int}]{num\-G\-Id\-Entries, }
+\item[{int}]{num\-L\-Id\-Entries, }
+\item[{Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R}]{global\-Ids, }
+\item[{Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R}]{local\-Ids, }
+\item[{int}]{wgt\-Dim, }
+\item[{float $\ast$}]{obj\-Wgts, }
+\item[{int $\ast$}]{ierr}
+\end{DoxyParamCaption}
+)}}\label{domdec_8c_afa9ccb22c460f072633a1033367a5da6}
+Zoltan callback function. This function fills the tables of global ids, local ids and weights for all cells assigned to this process. 
+
+Definition at line 87 of file domdec.\-c.
+
+
+
+References cells, cell\-Data\-::gid, and lnc.
+
+
+\begin{DoxyCode}
+90 \{
+91   \textcolor{keywordtype}{int} i;
+92   \textcolor{keyword}{struct }cell *p = (\textcolor{keyword}{struct }cell *) data;
+93   \textcolor{keywordflow}{for} (i = 0; i < \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}; i++) \{
+94     globalIds[i * numGIdEntries] = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[i].\hyperlink{structcellData_abb4d4bd9231e9f994e87f32cc4fcfce8}{gid};
+95     localIds[i * numLIdEntries] = i;
+96     objWgts[i] = 1.0;
+97     \textcolor{comment}{//if(nc==1 || step==0) obj\_wgts[i]=1.0;}
+98     \textcolor{comment}{//else obj\_wgts[i]=cells[i].density;}
+99   \}
+100 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{domdec_8c_afa9ccb22c460f072633a1033367a5da6_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{domdec_8c_ae8ccac1e6575ca1ebe6ec4e9fde3625c}{\index{domdec.\-c@{domdec.\-c}!ztn\-Return\-Particle\-Data\-Size@{ztn\-Return\-Particle\-Data\-Size}}
+\index{ztn\-Return\-Particle\-Data\-Size@{ztn\-Return\-Particle\-Data\-Size}!domdec.c@{domdec.\-c}}
+\subsubsection[{ztn\-Return\-Particle\-Data\-Size}]{\setlength{\rightskip}{0pt plus 5cm}int ztn\-Return\-Particle\-Data\-Size (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{data, }
+\item[{int}]{num\-G\-Id\-Entries, }
+\item[{int}]{num\-L\-Id\-Entries, }
+\item[{Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R}]{global\-Id, }
+\item[{Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R}]{local\-Id, }
+\item[{int $\ast$}]{ierr}
+\end{DoxyParamCaption}
+)}}\label{domdec_8c_ae8ccac1e6575ca1ebe6ec4e9fde3625c}
+Zoltan callback function. This function returns the size of a data structure used for keeping the data of a single cell. 
+
+Definition at line 105 of file domdec.\-c.
+
+
+\begin{DoxyCode}
+108 \{
+109   \textcolor{keywordflow}{return} \textcolor{keyword}{sizeof}(\textcolor{keyword}{struct }\hyperlink{structcellData}{cellData});
+110 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{domdec_8c_ae8ccac1e6575ca1ebe6ec4e9fde3625c_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{domdec_8c_aa2a71d2700b18abb4e381358df6967c5}{\index{domdec.\-c@{domdec.\-c}!ztn\-Unpack@{ztn\-Unpack}}
+\index{ztn\-Unpack@{ztn\-Unpack}!domdec.c@{domdec.\-c}}
+\subsubsection[{ztn\-Unpack}]{\setlength{\rightskip}{0pt plus 5cm}void ztn\-Unpack (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{data, }
+\item[{int}]{num\-G\-Id\-Entries, }
+\item[{Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R}]{global\-Id, }
+\item[{int}]{size, }
+\item[{char $\ast$}]{buf, }
+\item[{int $\ast$}]{ierr}
+\end{DoxyParamCaption}
+)}}\label{domdec_8c_aa2a71d2700b18abb4e381358df6967c5}
+Zoltan callback function. This function unpacks data from the receive buffer. 
+
+Definition at line 179 of file domdec.\-c.
+
+
+
+References lnc.
+
+
+\begin{DoxyCode}
+181 \{
+182   \textcolor{keyword}{struct }\hyperlink{structcellData}{cellData} *c = (\textcolor{keyword}{struct }\hyperlink{structcellData}{cellData} *) data;
+183   memcpy(&c[\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}], buf, \textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} \hyperlink{structcellData}{cellData}));
+184   lnc++;
+185 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{domdec_8c_aa2a71d2700b18abb4e381358df6967c5_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Variable Documentation}
+\hypertarget{domdec_8c_a428798c15a127930411bd3af43e3cdc7}{\index{domdec.\-c@{domdec.\-c}!changes@{changes}}
+\index{changes@{changes}!domdec.c@{domdec.\-c}}
+\subsubsection[{changes}]{\setlength{\rightskip}{0pt plus 5cm}int changes}}\label{domdec_8c_a428798c15a127930411bd3af43e3cdc7}
+
+
+Definition at line 33 of file domdec.\-c.
+
+\hypertarget{domdec_8c_ab47ca6ae0018cbdd0cdd75f8bbc1a1ca}{\index{domdec.\-c@{domdec.\-c}!export\-Global\-Gids@{export\-Global\-Gids}}
+\index{export\-Global\-Gids@{export\-Global\-Gids}!domdec.c@{domdec.\-c}}
+\subsubsection[{export\-Global\-Gids}]{\setlength{\rightskip}{0pt plus 5cm}Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R export\-Global\-Gids}}\label{domdec_8c_ab47ca6ae0018cbdd0cdd75f8bbc1a1ca}
+
+
+Definition at line 42 of file domdec.\-c.
+
+\hypertarget{domdec_8c_a5582bb1e54eaea68a6c2ddba7ab07553}{\index{domdec.\-c@{domdec.\-c}!export\-Local\-Gids@{export\-Local\-Gids}}
+\index{export\-Local\-Gids@{export\-Local\-Gids}!domdec.c@{domdec.\-c}}
+\subsubsection[{export\-Local\-Gids}]{\setlength{\rightskip}{0pt plus 5cm}Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R export\-Local\-Gids}}\label{domdec_8c_a5582bb1e54eaea68a6c2ddba7ab07553}
+
+
+Definition at line 43 of file domdec.\-c.
+
+\hypertarget{domdec_8c_a6992b2911e471d2452c8803e182fa4f1}{\index{domdec.\-c@{domdec.\-c}!export\-Procs@{export\-Procs}}
+\index{export\-Procs@{export\-Procs}!domdec.c@{domdec.\-c}}
+\subsubsection[{export\-Procs}]{\setlength{\rightskip}{0pt plus 5cm}int$\ast$ export\-Procs}}\label{domdec_8c_a6992b2911e471d2452c8803e182fa4f1}
+
+
+Definition at line 44 of file domdec.\-c.
+
+\hypertarget{domdec_8c_a51f5ba020bbcf6108262761504f19ed9}{\index{domdec.\-c@{domdec.\-c}!export\-To\-Part@{export\-To\-Part}}
+\index{export\-To\-Part@{export\-To\-Part}!domdec.c@{domdec.\-c}}
+\subsubsection[{export\-To\-Part}]{\setlength{\rightskip}{0pt plus 5cm}int$\ast$ export\-To\-Part}}\label{domdec_8c_a51f5ba020bbcf6108262761504f19ed9}
+
+
+Definition at line 45 of file domdec.\-c.
+
+\hypertarget{domdec_8c_a7003e8d463d214680ced99e92a4e23c4}{\index{domdec.\-c@{domdec.\-c}!import\-Global\-Gids@{import\-Global\-Gids}}
+\index{import\-Global\-Gids@{import\-Global\-Gids}!domdec.c@{domdec.\-c}}
+\subsubsection[{import\-Global\-Gids}]{\setlength{\rightskip}{0pt plus 5cm}Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R import\-Global\-Gids}}\label{domdec_8c_a7003e8d463d214680ced99e92a4e23c4}
+
+
+Definition at line 37 of file domdec.\-c.
+
+\hypertarget{domdec_8c_a1ac001377defa550d2fe2627224ddb46}{\index{domdec.\-c@{domdec.\-c}!import\-Local\-Gids@{import\-Local\-Gids}}
+\index{import\-Local\-Gids@{import\-Local\-Gids}!domdec.c@{domdec.\-c}}
+\subsubsection[{import\-Local\-Gids}]{\setlength{\rightskip}{0pt plus 5cm}Z\-O\-L\-T\-A\-N\-\_\-\-I\-D\-\_\-\-P\-T\-R import\-Local\-Gids}}\label{domdec_8c_a1ac001377defa550d2fe2627224ddb46}
+
+
+Definition at line 38 of file domdec.\-c.
+
+\hypertarget{domdec_8c_aaf98961d02a34fd945de59d736ba66ce}{\index{domdec.\-c@{domdec.\-c}!import\-Procs@{import\-Procs}}
+\index{import\-Procs@{import\-Procs}!domdec.c@{domdec.\-c}}
+\subsubsection[{import\-Procs}]{\setlength{\rightskip}{0pt plus 5cm}int$\ast$ import\-Procs}}\label{domdec_8c_aaf98961d02a34fd945de59d736ba66ce}
+
+
+Definition at line 39 of file domdec.\-c.
+
+\hypertarget{domdec_8c_ac2fd1e8fdcde7633cb12cc36b7ffadc6}{\index{domdec.\-c@{domdec.\-c}!import\-To\-Part@{import\-To\-Part}}
+\index{import\-To\-Part@{import\-To\-Part}!domdec.c@{domdec.\-c}}
+\subsubsection[{import\-To\-Part}]{\setlength{\rightskip}{0pt plus 5cm}int$\ast$ import\-To\-Part}}\label{domdec_8c_ac2fd1e8fdcde7633cb12cc36b7ffadc6}
+
+
+Definition at line 40 of file domdec.\-c.
+
+\hypertarget{domdec_8c_a71a7ca2f86ef16edaf1df524273e642a}{\index{domdec.\-c@{domdec.\-c}!num\-Export@{num\-Export}}
+\index{num\-Export@{num\-Export}!domdec.c@{domdec.\-c}}
+\subsubsection[{num\-Export}]{\setlength{\rightskip}{0pt plus 5cm}int num\-Export}}\label{domdec_8c_a71a7ca2f86ef16edaf1df524273e642a}
+
+
+Definition at line 41 of file domdec.\-c.
+
+\hypertarget{domdec_8c_a6c9a41a72d3fd2ab972e0ccfee7394ad}{\index{domdec.\-c@{domdec.\-c}!num\-Gid\-Entries@{num\-Gid\-Entries}}
+\index{num\-Gid\-Entries@{num\-Gid\-Entries}!domdec.c@{domdec.\-c}}
+\subsubsection[{num\-Gid\-Entries}]{\setlength{\rightskip}{0pt plus 5cm}int num\-Gid\-Entries}}\label{domdec_8c_a6c9a41a72d3fd2ab972e0ccfee7394ad}
+
+
+Definition at line 34 of file domdec.\-c.
+
+\hypertarget{domdec_8c_a63327cbfe51b3be8ccd7bd7947cf7768}{\index{domdec.\-c@{domdec.\-c}!num\-Import@{num\-Import}}
+\index{num\-Import@{num\-Import}!domdec.c@{domdec.\-c}}
+\subsubsection[{num\-Import}]{\setlength{\rightskip}{0pt plus 5cm}int num\-Import}}\label{domdec_8c_a63327cbfe51b3be8ccd7bd7947cf7768}
+
+
+Definition at line 36 of file domdec.\-c.
+
+\hypertarget{domdec_8c_ad836388e3004c88ef80be4e1cef479a5}{\index{domdec.\-c@{domdec.\-c}!num\-Lid\-Entries@{num\-Lid\-Entries}}
+\index{num\-Lid\-Entries@{num\-Lid\-Entries}!domdec.c@{domdec.\-c}}
+\subsubsection[{num\-Lid\-Entries}]{\setlength{\rightskip}{0pt plus 5cm}int num\-Lid\-Entries}}\label{domdec_8c_ad836388e3004c88ef80be4e1cef479a5}
+
+
+Definition at line 35 of file domdec.\-c.
+

@@ -1,0 +1,137 @@
+\hypertarget{vessel_8c}{\section{vessel.\-c File Reference}
+\label{vessel_8c}\index{vessel.\-c@{vessel.\-c}}
+}
+
+
+contains functions defining virtual vessels  
+
+
+{\ttfamily \#include $<$stdio.\-h$>$}\\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$mpi.\-h$>$}\\*
+{\ttfamily \#include $<$math.\-h$>$}\\*
+{\ttfamily \#include $<$inttypes.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}global.\-h\char`\"{}}\\*
+Include dependency graph for vessel.\-c\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{vessel_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{vessel_8c_accdae882382e0a49c5eca672da3fe794}{init\-Vessel} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+contains functions defining virtual vessels 
+
+Definition in file \hyperlink{vessel_8c_source}{vessel.\-c}.
+
+
+
+\subsection{Function Documentation}
+\hypertarget{vessel_8c_accdae882382e0a49c5eca672da3fe794}{\index{vessel.\-c@{vessel.\-c}!init\-Vessel@{init\-Vessel}}
+\index{init\-Vessel@{init\-Vessel}!vessel.c@{vessel.\-c}}
+\subsubsection[{init\-Vessel}]{\setlength{\rightskip}{0pt plus 5cm}int init\-Vessel (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{vessel_8c_accdae882382e0a49c5eca672da3fe794}
+This functions builds a tube vessel from spheres. 
+
+Definition at line 38 of file vessel.\-c.
+
+
+
+References cells, csize, lnc, M\-P\-Irank, nx, ny, nz, cell\-Data\-::size, x, cell\-Data\-::x, cell\-Data\-::y, and cell\-Data\-::z.
+
+
+\begin{DoxyCode}
+39 \{
+40   \textcolor{keywordtype}{int} i, j, k;
+41   \textcolor{keywordtype}{int} lenght;
+42   \textcolor{keywordtype}{int} nEndothelial;
+43   \textcolor{keywordtype}{int} nRings;
+44   \textcolor{keywordtype}{double} intersect;
+45   \textcolor{keywordtype}{double} circumradius;
+46   \textcolor{keywordtype}{double} startPoint[3];
+47   \textcolor{keywordtype}{double} direction[3];
+48   \textcolor{keywordtype}{double} point[3];
+49   \textcolor{keywordtype}{double} radius[3];
+50   \textcolor{keywordtype}{double} t;
+51   \textcolor{keywordtype}{double} angle;
+52 
+53   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank} == 0) \{
+54 
+55     startPoint[0] = \hyperlink{global_8h_a02d47a4f36ec0bcce348696534567e30}{nx} / 2.0;
+56     startPoint[1] = \hyperlink{global_8h_a9f4e20a91b26459133b83992e9d8d381}{ny} / 2.0;
+57     startPoint[2] = 0.05 * \hyperlink{global_8h_ac2eda98bb6d7e89cc3239973db2800cf}{nz};
+58 
+59     direction[0] = 0.0;
+60     direction[1] = 0.0;
+61     direction[2] = 0.1;
+62 
+63     t = sqrt(direction[0] * direction[0] + direction[1] * direction[1] +
+64          direction[2] * direction[2]);
+65 
+66     direction[0] /= t * 2 * \hyperlink{global_8h_a3b735e8520f1816ee73ee50daa3ef756}{csize} * (1.0 - intersect);
+67     direction[1] /= t * 2 * \hyperlink{global_8h_a3b735e8520f1816ee73ee50daa3ef756}{csize} * (1.0 - intersect);
+68     direction[2] /= t * 2 * \hyperlink{global_8h_a3b735e8520f1816ee73ee50daa3ef756}{csize} * (1.0 - intersect);
+69 
+70     lenght = \hyperlink{global_8h_ac2eda98bb6d7e89cc3239973db2800cf}{nz};
+71     nEndothelial = 8;
+72     intersect = 0.2;
+73 
+74     circumradius =
+75     (2 * \hyperlink{global_8h_a3b735e8520f1816ee73ee50daa3ef756}{csize} * (1.0 - intersect)) / (2 *
+76                        sin(M\_PI /
+77                            (\textcolor{keywordtype}{double}) nEndothelial));
+78     printf(\textcolor{stringliteral}{"circumradius=%f\(\backslash\)n"}, circumradius);
+79 
+80     nRings = lenght / (2 * \hyperlink{global_8h_a3b735e8520f1816ee73ee50daa3ef756}{csize} * (1.0 - intersect));
+81 
+82     printf(\textcolor{stringliteral}{"nRings=%d\(\backslash\)n"}, nRings);
+83     printf(\textcolor{stringliteral}{"lnc=%"} PRId64 \textcolor{stringliteral}{"\(\backslash\)n"}, \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc});
+84 
+85     angle = (360 / nEndothelial) * (M\_PI / 180);
+86 
+87     radius[0] = 0.0;
+88     radius[1] = 1.0;
+89     radius[2] = 0.0;
+90 
+91     \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc} = 0;
+92 
+93     \textcolor{keywordflow}{for} (i = 0; i < nRings; i++) \{
+94       point[0] = startPoint[0];
+95       point[1] = startPoint[1];
+96       point[2] = startPoint[2];
+97       \textcolor{keywordflow}{for} (j = 0; j < nEndothelial; j++) \{
+98     \textcolor{keywordtype}{double} \hyperlink{tempf_8c_a1780e9c70637026d6fab31f63b3a193e}{x}, y;
+99     \textcolor{keywordtype}{double} alpha;
+100     x = radius[0];
+101     y = radius[1];
+102     alpha = j * angle;
+103     radius[0] = x * cos(alpha) - y * sin(alpha);
+104     radius[1] = x * sin(alpha) + y * cos(alpha);
+105     radius[2] = 0.0;    \textcolor{comment}{//i*csize*(1.0-intersect);}
+106     t = sqrt(pow(radius[0], 2) + pow(radius[1], 2) +
+107          pow(radius[2], 2));
+108     radius[0] /= t;
+109     radius[1] /= t;
+110     radius[2] /= t;
+111     radius[2] = i * \hyperlink{global_8h_a3b735e8520f1816ee73ee50daa3ef756}{csize} * (1.0 - intersect);
+112     \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}].\hyperlink{structcellData_af88b946fb90d5f08b5fb740c70e98c10}{x} = point[0] + circumradius * radius[0];
+113     \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}].\hyperlink{structcellData_ab927965981178aa1fba979a37168db2a}{y} = point[1] + circumradius * radius[1];
+114     \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}].\hyperlink{structcellData_ab3e6ed577a7c669c19de1f9c1b46c872}{z} = point[2] + radius[2];
+115     \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[\hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}].\hyperlink{structcellData_aba3c5d750d5dbd6e86c11ecaca62885e}{size} = \hyperlink{global_8h_a3b735e8520f1816ee73ee50daa3ef756}{csize};
+116     \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}++;
+117       \}
+118     \}
+119 
+120   \}
+121 \}
+\end{DoxyCode}

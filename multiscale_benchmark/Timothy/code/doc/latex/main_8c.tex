@@ -1,0 +1,129 @@
+\hypertarget{main_8c}{\section{main.\-c File Reference}
+\label{main_8c}\index{main.\-c@{main.\-c}}
+}
+
+
+contains the main simulation loop  
+
+
+{\ttfamily \#include $<$stdio.\-h$>$}\\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$string.\-h$>$}\\*
+{\ttfamily \#include $<$mpi.\-h$>$}\\*
+{\ttfamily \#include $<$omp.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}global.\-h\char`\"{}}\\*
+Include dependency graph for main.\-c\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{main_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{main_8c_a3c04138a5bfe5d72780bb7e82a18e627}{main} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+contains the main simulation loop 
+
+Definition in file \hyperlink{main_8c_source}{main.\-c}.
+
+
+
+\subsection{Function Documentation}
+\hypertarget{main_8c_a3c04138a5bfe5d72780bb7e82a18e627}{\index{main.\-c@{main.\-c}!main@{main}}
+\index{main@{main}!main.c@{main.\-c}}
+\subsubsection[{main}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$$\ast$}]{argv}
+\end{DoxyParamCaption}
+)}}\label{main_8c_a3c04138a5bfe5d72780bb7e82a18e627}
+This function intializes M\-P\-I, calls Timothy initialization and allocation functions. It also contains the main simulation loop where all important simulation steps are called. 
+
+Definition at line 40 of file main.\-c.
+
+
+
+References cells\-Cleanup(), comm\-Cleanup(), compute\-Potential(), compute\-Potential\-Gradient(), create\-Export\-List(), decomposition\-Execute(), decomposition\-Finalize(), fields\-Solve(), init\-Cells\-To\-Grid\-Exchange(), interpolate\-Fields\-To\-Cells(), io\-Write\-Fields(), io\-Write\-Step\-Pov\-Ray(), io\-Write\-Step\-V\-T\-K(), M\-P\-Irank, M\-P\-Isize, nsteps, O\-M\-Pthreads, povout, print\-Step\-Num(), random\-Stream\-Free(), rst\-Out\-Step, save\-Rst\-File(), seconds\-Per\-Step, sim\-Start, sim\-Time, simulation\-Init(), statistics\-Print(), stat\-Out\-Step, step, tree\-Build(), tree\-Free(), update\-Cell\-Positions(), update\-Cell\-States(), vnfout, vtkout, vtk\-Out\-Step, and wait\-Cells\-To\-Grid\-Exchange().
+
+
+\begin{DoxyCode}
+41 \{
+42 
+43   MPI\_Init(&argc, &argv);
+44   MPI\_Comm\_size(MPI\_COMM\_WORLD, &\hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize});
+45   MPI\_Comm\_rank(MPI\_COMM\_WORLD, &\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank});
+46 
+47   \hyperlink{global_8h_ae5f15194d70ca4e470e6f3cb85510c65}{OMPthreads} = omp\_get\_max\_threads();
+48 
+49   \hyperlink{init_8c_a6a28d9c038b4ef73a4e2177db89d40aa}{simulationInit}(argc, argv);
+50 
+51   \textcolor{keywordflow}{for} (\hyperlink{global_8h_abc16e65f240ed0c8f3e876e8732c0a33}{step} = 0; \hyperlink{global_8h_abc16e65f240ed0c8f3e876e8732c0a33}{step} < \hyperlink{global_8h_aa2414080b021dbb9b56eeaeedec0ffa2}{nsteps}; \hyperlink{global_8h_abc16e65f240ed0c8f3e876e8732c0a33}{step}++) \{
+52 
+53     \textcolor{keywordflow}{if} (!(\hyperlink{global_8h_abc16e65f240ed0c8f3e876e8732c0a33}{step} % \hyperlink{global_8h_aab9700fe12cc303ff43e1a35a210128e}{statOutStep}))
+54       \hyperlink{io_8c_ab4b7e8aa2cbdca10e277ad22f547b682}{printStepNum}();
+55 
+56     \hyperlink{domdec_8c_aa62cb73f52f03ee27da62ae952212ceb}{decompositionExecute}();
+57     \hyperlink{tree_8c_a3c43e59861e6c6097d82a34ceef3b8a3}{treeBuild}();
+58     \hyperlink{comm_8c_a191bffd6b8283bf118dec0d0422fa2b3}{createExportList}();
+59     \hyperlink{interp_8c_ad862fb7e08b1dee6d784a09a26978ada}{initCellsToGridExchange}();
+60     \hyperlink{potential_8c_a5322a144394f3c5d451febe4366eee9d}{computePotential}();
+61     \hyperlink{gradient_8c_af107568230af4c30034d76d9f629a1e8}{computePotentialGradient}();
+62 
+63     \hyperlink{interp_8c_ac7fd669461f281bbaceac377028fb722}{waitCellsToGridExchange}();
+64     \hyperlink{fields_8c_a8aa63d2a1c91ca03cb71cfc867e40c74}{fieldsSolve}();
+65     \hyperlink{interp_8c_a7f8b42e40580516283e6f43ce7fe6389}{interpolateFieldsToCells}();
+66 
+67     \textcolor{keywordflow}{if} (!(\hyperlink{global_8h_abc16e65f240ed0c8f3e876e8732c0a33}{step} % statOutStep))
+68       \hyperlink{stats_8c_ad55f3e7d6510f60dd4688172ff7e92ca}{statisticsPrint}();
+69 
+70     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a42a935b4eec9242e09d47fc1c2b6dba3}{simStart})
+71       \hyperlink{global_8h_ad188f0f25b4773be09b6eb6babe59f59}{simTime} += \hyperlink{global_8h_aac71dcf068b84f2973571ab102920190}{secondsPerStep} / 3600.0;  \textcolor{comment}{/* biological process time in hours */}
+72 
+73     \textcolor{keywordflow}{if} (!(\hyperlink{global_8h_abc16e65f240ed0c8f3e876e8732c0a33}{step} % \hyperlink{global_8h_a6d101f941d5825146f98cc07dac9cb28}{vtkOutStep})) \{
+74       \textcolor{keywordflow}{if} (\hyperlink{global_8h_a4a2046f20ca195391d5fcb98a02aedf6}{vtkout})
+75     \hyperlink{io_8c_a5ce8a223424e836ad19b68f97d70fe7c}{ioWriteStepVTK}(\hyperlink{global_8h_abc16e65f240ed0c8f3e876e8732c0a33}{step});
+76       \textcolor{keywordflow}{if} (\hyperlink{global_8h_a6d848b22ca9b60b1e8ec33fdcfbd91b8}{povout})
+77     \hyperlink{io_8c_a56b26b234deba24147c430b001e59483}{ioWriteStepPovRay}(\hyperlink{global_8h_abc16e65f240ed0c8f3e876e8732c0a33}{step}, 0);
+78       \textcolor{keywordflow}{if} (\hyperlink{global_8h_a5d38ae5aec75c8ebfafe34914471b32a}{vnfout})
+79     \hyperlink{io_8c_ab0cbd99d5921b8e5ebca76c15df87e29}{ioWriteFields}(\hyperlink{global_8h_abc16e65f240ed0c8f3e876e8732c0a33}{step});
+80     \}
+81 
+82     \hyperlink{cells_8c_a227256c7da11efa2b4eacedf0a9f37c8}{updateCellPositions}();
+83     \hyperlink{cells_8c_aeb1f066ef0713a8a50eb1e58784a3d7b}{updateCellStates}();
+84     \hyperlink{comm_8c_abdd72f1d40c6c4bf47ad78c4f3c349d5}{commCleanup}();
+85     \hyperlink{tree_8c_acfd9d286d8821139e83371e46e7f5e51}{treeFree}();
+86 
+87     \textcolor{keywordflow}{if} (!(\hyperlink{global_8h_abc16e65f240ed0c8f3e876e8732c0a33}{step} % \hyperlink{global_8h_a4207e6152bc8f1176e0be5efccbe7491}{rstOutStep}))
+88       \hyperlink{io_8c_a2c89483e97a24f7e79b42c1bb656821f}{saveRstFile}();
+89   \}
+90 
+91   MPI\_Barrier(MPI\_COMM\_WORLD);
+92 
+93   \hyperlink{domdec_8c_a8dd9c084f2af53a06d1629e840f13ee8}{decompositionFinalize}();
+94   \hyperlink{random_8c_a6fa9b56c4b67d20243dd33ac0baba0be}{randomStreamFree}();
+95   \hyperlink{cells_8c_aead37c061c3f1ec47259afaf2783029f}{cellsCleanup}();
+96 
+97   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank} == 0)
+98     printf(\textcolor{stringliteral}{"\(\backslash\)nEnd of simulation run.\(\backslash\)n"});
+99 
+100   MPI\_Finalize();
+101 
+102   \textcolor{keywordflow}{return} 0;
+103 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{main_8c_a3c04138a5bfe5d72780bb7e82a18e627_cgraph}
+\end{center}
+\end{figure}
+
+

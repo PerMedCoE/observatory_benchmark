@@ -1,0 +1,616 @@
+\hypertarget{comm_8c}{\section{comm.\-c File Reference}
+\label{comm_8c}\index{comm.\-c@{comm.\-c}}
+}
+
+
+contains communication functions  
+
+
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}global.\-h\char`\"{}}\\*
+Include dependency graph for comm.\-c\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=196pt]{comm_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structexpData}{exp\-Data}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{comm_8c_a93da5acfae81b763e797f8562d49ca64}{M\-A\-X\-\_\-\-E\-X\-P\-O\-R\-T\-E\-D\-\_\-\-P\-E\-R\-\_\-\-P\-R\-O\-C}~2$\ast$\hyperlink{global_8h_a2de426dd266cfdaaf6fb52ba3dc2740a}{max\-Cells\-Per\-Proc}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{comm_8c_a0a0b21ecf1a24a3cae73074d6bf6c68e}{comm\-\_\-compare\-\_\-exp\-\_\-list} (const void $\ast$a, const void $\ast$\hyperlink{tempf_8c_a74a523afdfebddf9b6b280e545977c5a}{b})
+\item 
+void \hyperlink{comm_8c_a191bffd6b8283bf118dec0d0422fa2b3}{create\-Export\-List} ()
+\item 
+void \hyperlink{comm_8c_abdd72f1d40c6c4bf47ad78c4f3c349d5}{comm\-Cleanup} ()
+\item 
+void \hyperlink{comm_8c_aa92fc6732720bc9accbbdef7fb02384f}{cells\-Exchange\-Init} ()
+\item 
+void \hyperlink{comm_8c_ac5b7dbd1157ef088c4e6f8a9f08fcc4b}{cells\-Exchange\-Wait} ()
+\item 
+void \hyperlink{comm_8c_a206e073b7e35f281184b3487b3bbc055}{dens\-Pot\-Exchange\-Init} ()
+\item 
+void \hyperlink{comm_8c_afebf59220f4170178e5fb828d569aaab}{dens\-Pot\-Exchange\-Wait} ()
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+M\-P\-I\-\_\-\-Request $\ast$ \hyperlink{comm_8c_a827e028e778c94dd2e816ae6077a3198}{req\-Send}
+\item 
+M\-P\-I\-\_\-\-Request $\ast$ \hyperlink{comm_8c_ad7a9f44424272a25979b199886bdce73}{req\-Recv}
+\item 
+int64\-\_\-t $\ast$ \hyperlink{comm_8c_a16d801f1b7f6a598f31107a146b11f16}{send\-Offset}
+\item 
+int64\-\_\-t $\ast$ \hyperlink{comm_8c_a4f0cc30ef1f6185ba3d6406343e1a574}{recv\-Offset}
+\item 
+struct \hyperlink{structexpData}{exp\-Data} $\ast$ \hyperlink{comm_8c_a6f7e234508139d1113a2f60a1b36c04a}{exp\-List}
+\item 
+int $\ast$ \hyperlink{comm_8c_a073b7079fe649b9ae1b5c4056ccaa4fb}{recv\-Count}
+\item 
+int $\ast$ \hyperlink{comm_8c_aed19f012b3fe7ae1966dcc8b89cdf7b2}{send\-Count}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+contains communication functions 
+
+Definition in file \hyperlink{comm_8c_source}{comm.\-c}.
+
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{comm_8c_a93da5acfae81b763e797f8562d49ca64}{\index{comm.\-c@{comm.\-c}!M\-A\-X\-\_\-\-E\-X\-P\-O\-R\-T\-E\-D\-\_\-\-P\-E\-R\-\_\-\-P\-R\-O\-C@{M\-A\-X\-\_\-\-E\-X\-P\-O\-R\-T\-E\-D\-\_\-\-P\-E\-R\-\_\-\-P\-R\-O\-C}}
+\index{M\-A\-X\-\_\-\-E\-X\-P\-O\-R\-T\-E\-D\-\_\-\-P\-E\-R\-\_\-\-P\-R\-O\-C@{M\-A\-X\-\_\-\-E\-X\-P\-O\-R\-T\-E\-D\-\_\-\-P\-E\-R\-\_\-\-P\-R\-O\-C}!comm.c@{comm.\-c}}
+\subsubsection[{M\-A\-X\-\_\-\-E\-X\-P\-O\-R\-T\-E\-D\-\_\-\-P\-E\-R\-\_\-\-P\-R\-O\-C}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\-A\-X\-\_\-\-E\-X\-P\-O\-R\-T\-E\-D\-\_\-\-P\-E\-R\-\_\-\-P\-R\-O\-C~2$\ast${\bf max\-Cells\-Per\-Proc}}}\label{comm_8c_a93da5acfae81b763e797f8562d49ca64}
+
+
+Definition at line 48 of file comm.\-c.
+
+
+
+\subsection{Function Documentation}
+\hypertarget{comm_8c_aa92fc6732720bc9accbbdef7fb02384f}{\index{comm.\-c@{comm.\-c}!cells\-Exchange\-Init@{cells\-Exchange\-Init}}
+\index{cells\-Exchange\-Init@{cells\-Exchange\-Init}!comm.c@{comm.\-c}}
+\subsubsection[{cells\-Exchange\-Init}]{\setlength{\rightskip}{0pt plus 5cm}void cells\-Exchange\-Init (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{comm_8c_aa92fc6732720bc9accbbdef7fb02384f}
+This function initiate sending and receiving cells' data between processes. 
+
+Definition at line 177 of file comm.\-c.
+
+
+
+References exp\-Data\-::cell, cells, part\-Data\-::h, h, lnc, M\-P\-Irank, M\-P\-Isize, nc, num\-Exp, num\-Imp, recv\-Count, recv\-Data, recv\-Offset, req\-Recv, req\-Send, send\-Count, send\-Data, send\-Offset, cell\-Data\-::size, part\-Data\-::size, tlnc, cell\-Data\-::x, part\-Data\-::x, cell\-Data\-::y, part\-Data\-::y, part\-Data\-::young, cell\-Data\-::z, and part\-Data\-::z.
+
+
+\begin{DoxyCode}
+178 \{
+179   \textcolor{keywordtype}{int} i;
+180 
+181   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a0845b4b004824f1fe3cd69db1672fa15}{nc} < \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize} || \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize} == 1)
+182     \textcolor{keywordflow}{return};
+183 
+184   \textcolor{comment}{/* allocate communication buffers */}
+185   \hyperlink{global_8h_ac928fbed09198ca6c116fb58a115b594}{sendData} = (\textcolor{keyword}{struct }\hyperlink{structpartData}{partData} *) malloc(\hyperlink{global_8h_a4c3c9a79704128f7fcc9ebf4bdd9e3fc}{numExp} * \textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} 
+      \hyperlink{structpartData}{partData}));
+186   \hyperlink{global_8h_af851c922de87975e63161d38332d6a56}{recvData} = (\textcolor{keyword}{struct }\hyperlink{structpartData}{partData} *) malloc(\hyperlink{global_8h_a6e7ffc829c0f608016617f9057885a9f}{numImp} * \textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} 
+      \hyperlink{structpartData}{partData}));
+187   \hyperlink{comm_8c_a827e028e778c94dd2e816ae6077a3198}{reqSend} = (MPI\_Request *) malloc(\textcolor{keyword}{sizeof}(MPI\_Request) * \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize});
+188   \hyperlink{comm_8c_ad7a9f44424272a25979b199886bdce73}{reqRecv} = (MPI\_Request *) malloc(\textcolor{keyword}{sizeof}(MPI\_Request) * \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize});
+189 
+190   \textcolor{comment}{/* create reduced particle data buffer for exporting */}
+191   \textcolor{keywordflow}{for} (i = 0; i < \hyperlink{global_8h_a4c3c9a79704128f7fcc9ebf4bdd9e3fc}{numExp}; i++) \{
+192     \hyperlink{global_8h_ac928fbed09198ca6c116fb58a115b594}{sendData}[i].\hyperlink{structpartData_af88b946fb90d5f08b5fb740c70e98c10}{x} = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[\hyperlink{comm_8c_a6f7e234508139d1113a2f60a1b36c04a}{expList}[i].\hyperlink{structexpData_af00601a22186810a9e6d16efb75862ce}{cell}].\hyperlink{structcellData_af88b946fb90d5f08b5fb740c70e98c10}{x};
+193     \hyperlink{global_8h_ac928fbed09198ca6c116fb58a115b594}{sendData}[i].\hyperlink{structpartData_ab927965981178aa1fba979a37168db2a}{y} = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[\hyperlink{comm_8c_a6f7e234508139d1113a2f60a1b36c04a}{expList}[i].\hyperlink{structexpData_af00601a22186810a9e6d16efb75862ce}{cell}].\hyperlink{structcellData_ab927965981178aa1fba979a37168db2a}{y};
+194     \hyperlink{global_8h_ac928fbed09198ca6c116fb58a115b594}{sendData}[i].\hyperlink{structpartData_ab3e6ed577a7c669c19de1f9c1b46c872}{z} = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[\hyperlink{comm_8c_a6f7e234508139d1113a2f60a1b36c04a}{expList}[i].\hyperlink{structexpData_af00601a22186810a9e6d16efb75862ce}{cell}].\hyperlink{structcellData_ab3e6ed577a7c669c19de1f9c1b46c872}{z};
+195     \hyperlink{global_8h_ac928fbed09198ca6c116fb58a115b594}{sendData}[i].\hyperlink{structpartData_aba3c5d750d5dbd6e86c11ecaca62885e}{size} = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[\hyperlink{comm_8c_a6f7e234508139d1113a2f60a1b36c04a}{expList}[i].\hyperlink{structexpData_af00601a22186810a9e6d16efb75862ce}{cell}].\hyperlink{structcellData_aba3c5d750d5dbd6e86c11ecaca62885e}{size};
+196     \hyperlink{global_8h_ac928fbed09198ca6c116fb58a115b594}{sendData}[i].\hyperlink{structpartData_a8ee9be1b5aa75abae556de3088cba6d9}{h} = \hyperlink{global_8h_a8ee9be1b5aa75abae556de3088cba6d9}{h};
+197     \hyperlink{global_8h_ac928fbed09198ca6c116fb58a115b594}{sendData}[i].\hyperlink{structpartData_a47ec3689b1fd89ba8e75d9a9975ba63f}{young} = (double) \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[\hyperlink{comm_8c_a6f7e234508139d1113a2f60a1b36c04a}{expList}[i].cell].
+      \hyperlink{structpartData_a47ec3689b1fd89ba8e75d9a9975ba63f}{young};
+198   \}
+199 
+200   \textcolor{comment}{/* send cells - asynchronous MPI call */}
+201   \textcolor{keywordflow}{for} (i = 0; i < \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}; i++) \{
+202     \textcolor{keywordflow}{if} (\hyperlink{comm_8c_aed19f012b3fe7ae1966dcc8b89cdf7b2}{sendCount}[i] == 0 || \hyperlink{global_8h_ac3c96b975a3376c555ad22a7d2688b2f}{tlnc}[i] == 0 || \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc} == 0)
+203       \textcolor{keywordflow}{continue};
+204     MPI\_Isend(&\hyperlink{global_8h_ac928fbed09198ca6c116fb58a115b594}{sendData}[\hyperlink{comm_8c_a16d801f1b7f6a598f31107a146b11f16}{sendOffset}[i]],
+205           \hyperlink{comm_8c_aed19f012b3fe7ae1966dcc8b89cdf7b2}{sendCount}[i] * \textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} \hyperlink{structpartData}{partData}), MPI\_BYTE, i, 
+      \hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank},
+206           MPI\_COMM\_WORLD, &\hyperlink{comm_8c_a827e028e778c94dd2e816ae6077a3198}{reqSend}[i]);
+207   \}
+208 
+209   \textcolor{comment}{/* receive cells - asynchronous MPI call */}
+210   \textcolor{keywordflow}{for} (i = 0; i < \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}; i++) \{
+211     \textcolor{keywordflow}{if} (\hyperlink{comm_8c_a073b7079fe649b9ae1b5c4056ccaa4fb}{recvCount}[i] == 0 || \hyperlink{global_8h_ac3c96b975a3376c555ad22a7d2688b2f}{tlnc}[i] == 0 || \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc} == 0)
+212       \textcolor{keywordflow}{continue};
+213     MPI\_Irecv(&\hyperlink{global_8h_af851c922de87975e63161d38332d6a56}{recvData}[\hyperlink{comm_8c_a4f0cc30ef1f6185ba3d6406343e1a574}{recvOffset}[i]],
+214           \hyperlink{comm_8c_a073b7079fe649b9ae1b5c4056ccaa4fb}{recvCount}[i] * \textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} \hyperlink{structpartData}{partData}), MPI\_BYTE, i, i,
+215           MPI\_COMM\_WORLD, &\hyperlink{comm_8c_ad7a9f44424272a25979b199886bdce73}{reqRecv}[i]);
+216   \}
+217 
+218 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{comm_8c_aa92fc6732720bc9accbbdef7fb02384f_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{comm_8c_ac5b7dbd1157ef088c4e6f8a9f08fcc4b}{\index{comm.\-c@{comm.\-c}!cells\-Exchange\-Wait@{cells\-Exchange\-Wait}}
+\index{cells\-Exchange\-Wait@{cells\-Exchange\-Wait}!comm.c@{comm.\-c}}
+\subsubsection[{cells\-Exchange\-Wait}]{\setlength{\rightskip}{0pt plus 5cm}void cells\-Exchange\-Wait (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{comm_8c_ac5b7dbd1157ef088c4e6f8a9f08fcc4b}
+This function waits for cells' data exchange completion. 
+
+Definition at line 223 of file comm.\-c.
+
+
+
+References lnc, M\-P\-Isize, nc, recv\-Count, req\-Recv, req\-Send, send\-Count, send\-Data, stop\-Run(), and tlnc.
+
+
+\begin{DoxyCode}
+224 \{
+225   \textcolor{keywordtype}{int} i;
+226   MPI\_Status status;
+227 
+228   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a0845b4b004824f1fe3cd69db1672fa15}{nc} < \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize} || \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize} == 1)
+229     \textcolor{keywordflow}{return};
+230 
+231   \textcolor{comment}{/* wait for send completion */}
+232   \textcolor{keywordflow}{for} (i = 0; i < \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}; i++) \{
+233     \textcolor{keywordflow}{if} (\hyperlink{comm_8c_aed19f012b3fe7ae1966dcc8b89cdf7b2}{sendCount}[i] == 0 || \hyperlink{global_8h_ac3c96b975a3376c555ad22a7d2688b2f}{tlnc}[i] == 0 || \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc} == 0)
+234       \textcolor{keywordflow}{continue};
+235     \textcolor{keywordflow}{if} (MPI\_Wait(&\hyperlink{comm_8c_a827e028e778c94dd2e816ae6077a3198}{reqSend}[i], &status) != MPI\_SUCCESS)
+236       \hyperlink{utils_8c_a07dd99a04f2723be164531a7a862fb67}{stopRun}(103, \textcolor{stringliteral}{"reqSend"}, \_\_FILE\_\_, \_\_LINE\_\_);
+237   \}
+238 
+239   \textcolor{comment}{/* wait for receive completion */}
+240   \textcolor{keywordflow}{for} (i = 0; i < \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}; i++) \{
+241     \textcolor{keywordflow}{if} (\hyperlink{comm_8c_a073b7079fe649b9ae1b5c4056ccaa4fb}{recvCount}[i] == 0 || \hyperlink{global_8h_ac3c96b975a3376c555ad22a7d2688b2f}{tlnc}[i] == 0 || \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc} == 0)
+242       \textcolor{keywordflow}{continue};
+243     \textcolor{keywordflow}{if} (MPI\_Wait(&\hyperlink{comm_8c_ad7a9f44424272a25979b199886bdce73}{reqRecv}[i], &status) != MPI\_SUCCESS)
+244       \hyperlink{utils_8c_a07dd99a04f2723be164531a7a862fb67}{stopRun}(103, \textcolor{stringliteral}{"reqRecv"}, \_\_FILE\_\_, \_\_LINE\_\_);
+245   \}
+246 
+247   \textcolor{comment}{/* some of the buffers can be deallocated here */}
+248   free(\hyperlink{global_8h_ac928fbed09198ca6c116fb58a115b594}{sendData});
+249   free(\hyperlink{comm_8c_a827e028e778c94dd2e816ae6077a3198}{reqSend});
+250   free(\hyperlink{comm_8c_ad7a9f44424272a25979b199886bdce73}{reqRecv});
+251 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=272pt]{comm_8c_ac5b7dbd1157ef088c4e6f8a9f08fcc4b_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{comm_8c_ac5b7dbd1157ef088c4e6f8a9f08fcc4b_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{comm_8c_a0a0b21ecf1a24a3cae73074d6bf6c68e}{\index{comm.\-c@{comm.\-c}!comm\-\_\-compare\-\_\-exp\-\_\-list@{comm\-\_\-compare\-\_\-exp\-\_\-list}}
+\index{comm\-\_\-compare\-\_\-exp\-\_\-list@{comm\-\_\-compare\-\_\-exp\-\_\-list}!comm.c@{comm.\-c}}
+\subsubsection[{comm\-\_\-compare\-\_\-exp\-\_\-list}]{\setlength{\rightskip}{0pt plus 5cm}int comm\-\_\-compare\-\_\-exp\-\_\-list (
+\begin{DoxyParamCaption}
+\item[{const void $\ast$}]{a, }
+\item[{const void $\ast$}]{b}
+\end{DoxyParamCaption}
+)}}\label{comm_8c_a0a0b21ecf1a24a3cae73074d6bf6c68e}
+This function is a comparison function used for sorting export list table. 
+
+Definition at line 54 of file comm.\-c.
+
+
+\begin{DoxyCode}
+55 \{
+56   \textcolor{keywordflow}{return} ((\textcolor{keyword}{struct} \hyperlink{structexpData}{expData} *) a)->proc - ((\textcolor{keyword}{struct }\hyperlink{structexpData}{expData} *) \hyperlink{tempf_8c_a74a523afdfebddf9b6b280e545977c5a}{b})->proc;
+57 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{comm_8c_a0a0b21ecf1a24a3cae73074d6bf6c68e_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{comm_8c_abdd72f1d40c6c4bf47ad78c4f3c349d5}{\index{comm.\-c@{comm.\-c}!comm\-Cleanup@{comm\-Cleanup}}
+\index{comm\-Cleanup@{comm\-Cleanup}!comm.c@{comm.\-c}}
+\subsubsection[{comm\-Cleanup}]{\setlength{\rightskip}{0pt plus 5cm}void comm\-Cleanup (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{comm_8c_abdd72f1d40c6c4bf47ad78c4f3c349d5}
+This function deallocates all communication buffers and auxiliary tables. 
+
+Definition at line 156 of file comm.\-c.
+
+
+
+References M\-P\-Isize, nc, recv\-Count, recv\-Data, recv\-Dens\-Pot\-Data, recv\-Offset, send\-Count, and send\-Offset.
+
+
+\begin{DoxyCode}
+157 \{
+158   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a0845b4b004824f1fe3cd69db1672fa15}{nc} < \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize} || \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize} == 1)
+159     \textcolor{keywordflow}{return};
+160 
+161   free(\hyperlink{global_8h_af851c922de87975e63161d38332d6a56}{recvData});
+162   free(\hyperlink{global_8h_ac5932521dec6ac9c4208cb0312e002de}{recvDensPotData});
+163 
+164   free(\hyperlink{comm_8c_a6f7e234508139d1113a2f60a1b36c04a}{expList});
+165 
+166   free(\hyperlink{comm_8c_a073b7079fe649b9ae1b5c4056ccaa4fb}{recvCount});
+167   free(\hyperlink{comm_8c_aed19f012b3fe7ae1966dcc8b89cdf7b2}{sendCount});
+168 
+169   free(\hyperlink{comm_8c_a16d801f1b7f6a598f31107a146b11f16}{sendOffset});
+170   free(\hyperlink{comm_8c_a4f0cc30ef1f6185ba3d6406343e1a574}{recvOffset});
+171 
+172 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=234pt]{comm_8c_abdd72f1d40c6c4bf47ad78c4f3c349d5_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{comm_8c_a191bffd6b8283bf118dec0d0422fa2b3}{\index{comm.\-c@{comm.\-c}!create\-Export\-List@{create\-Export\-List}}
+\index{create\-Export\-List@{create\-Export\-List}!comm.c@{comm.\-c}}
+\subsubsection[{create\-Export\-List}]{\setlength{\rightskip}{0pt plus 5cm}void create\-Export\-List (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{comm_8c_a191bffd6b8283bf118dec0d0422fa2b3}
+This function uses Zoltan's library function Zoltan\-\_\-\-L\-B\-\_\-\-Box\-\_\-\-Assign to find possible intersections of cells' neighbourhoods and other processes' geometries. 
+
+Definition at line 64 of file comm.\-c.
+
+
+
+References exp\-Data\-::cell, cells, comm\-\_\-compare\-\_\-exp\-\_\-list(), h, cell\-Data\-::halo, lnc, M\-A\-X\-\_\-\-E\-X\-P\-O\-R\-T\-E\-D\-\_\-\-P\-E\-R\-\_\-\-P\-R\-O\-C, M\-P\-Irank, M\-P\-Isize, nc, num\-Exp, num\-Imp, exp\-Data\-::proc, recv\-Count, recv\-Offset, sdim, send\-Count, send\-Offset, stop\-Run(), tlnc, cell\-Data\-::x, cell\-Data\-::y, cell\-Data\-::z, and ztn.
+
+
+\begin{DoxyCode}
+65 \{
+66 
+67   \textcolor{keywordtype}{int} i, p;
+68   \textcolor{keywordtype}{int} procs[\hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}];
+69   \textcolor{keywordtype}{int} numprocs;
+70 
+71   \hyperlink{global_8h_a4c3c9a79704128f7fcc9ebf4bdd9e3fc}{numExp} = 0;
+72   \hyperlink{global_8h_a6e7ffc829c0f608016617f9057885a9f}{numImp} = 0;
+73   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a0845b4b004824f1fe3cd69db1672fa15}{nc} < \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize} || \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize} == 1)
+74     \textcolor{keywordflow}{return};
+75 
+76   \hyperlink{comm_8c_a6f7e234508139d1113a2f60a1b36c04a}{expList} =
+77       (\textcolor{keyword}{struct }\hyperlink{structexpData}{expData} *) malloc(\textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} \hyperlink{structexpData}{expData}) *
+78                 \hyperlink{comm_8c_a93da5acfae81b763e797f8562d49ca64}{MAX\_EXPORTED\_PER\_PROC});
+79   \hyperlink{comm_8c_a073b7079fe649b9ae1b5c4056ccaa4fb}{recvCount} = (\textcolor{keywordtype}{int} *) calloc(\hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}, \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{int}));
+80   \hyperlink{comm_8c_aed19f012b3fe7ae1966dcc8b89cdf7b2}{sendCount} = (\textcolor{keywordtype}{int} *) calloc(\hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}, \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{int}));
+81   \hyperlink{comm_8c_a16d801f1b7f6a598f31107a146b11f16}{sendOffset} = (int64\_t *) calloc(\hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}, \textcolor{keyword}{sizeof}(int64\_t));
+82   \hyperlink{comm_8c_a4f0cc30ef1f6185ba3d6406343e1a574}{recvOffset} = (int64\_t *) calloc(\hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}, \textcolor{keyword}{sizeof}(int64\_t));
+83 
+84   \textcolor{comment}{/* loop over local cells */}
+85   \textcolor{comment}{/*#pragma omp parallel for private(procs) */}
+86   \textcolor{keywordflow}{for} (p = 0; p < \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc}; p++) \{
+87     \textcolor{keywordtype}{double} xmin, xmax, ymin, ymax, zmin, zmax;
+88     \textcolor{keywordtype}{double} r;
+89 
+90     \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p].\hyperlink{structcellData_a80ff3fcc4d03d0b1b01559839d12df5b}{halo} = 0;
+91 
+92     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a0845b4b004824f1fe3cd69db1672fa15}{nc} < \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize})
+93       \textcolor{keywordflow}{continue};
+94 
+95     r = \hyperlink{global_8h_a8ee9be1b5aa75abae556de3088cba6d9}{h} * 1.5;
+96 
+97     \textcolor{comment}{/* compute neighbourhood box */}
+98     xmin = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p].\hyperlink{structcellData_af88b946fb90d5f08b5fb740c70e98c10}{x} - r;
+99     xmax = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p].\hyperlink{structcellData_af88b946fb90d5f08b5fb740c70e98c10}{x} + r;
+100     ymin = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p].\hyperlink{structcellData_ab927965981178aa1fba979a37168db2a}{y} - r;
+101     ymax = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p].\hyperlink{structcellData_ab927965981178aa1fba979a37168db2a}{y} + r;
+102     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a2f8118c1bfdf986827e156210c33cbab}{sdim} == 3) \{
+103       zmin = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p].\hyperlink{structcellData_ab3e6ed577a7c669c19de1f9c1b46c872}{z} - r;
+104       zmax = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p].\hyperlink{structcellData_ab3e6ed577a7c669c19de1f9c1b46c872}{z} + r;
+105     \} \textcolor{keywordflow}{else} \{
+106       zmin = 0.0;
+107       zmax = 0.0;
+108     \}
+109 
+110     \textcolor{comment}{/* look for possible neighbours */}
+111     Zoltan\_LB\_Box\_Assign(\hyperlink{global_8h_afc06c50b11f3b60d3738e669b612eb9c}{ztn}, xmin, ymin, zmin, xmax, ymax, zmax, procs,
+112              &numprocs);
+113 
+114     \textcolor{comment}{/* loop over receivers */}
+115     \textcolor{keywordflow}{for} (i = 0; i < numprocs; i++) \{
+116       \textcolor{keywordflow}{if} (procs[i] == \hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank} || \hyperlink{global_8h_ac3c96b975a3376c555ad22a7d2688b2f}{tlnc}[procs[i]] == 0)
+117     \textcolor{keywordflow}{continue};
+118       \hyperlink{comm_8c_a6f7e234508139d1113a2f60a1b36c04a}{expList}[\hyperlink{global_8h_a4c3c9a79704128f7fcc9ebf4bdd9e3fc}{numExp}].\hyperlink{structexpData_af00601a22186810a9e6d16efb75862ce}{cell} = p;
+119       \hyperlink{comm_8c_a6f7e234508139d1113a2f60a1b36c04a}{expList}[\hyperlink{global_8h_a4c3c9a79704128f7fcc9ebf4bdd9e3fc}{numExp}].\hyperlink{structexpData_a7e9d757c9982bd721d598bad366fbe62}{proc} = procs[i];
+120       \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[p].\hyperlink{structcellData_a80ff3fcc4d03d0b1b01559839d12df5b}{halo} = \hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank} + 1;
+121       \hyperlink{comm_8c_aed19f012b3fe7ae1966dcc8b89cdf7b2}{sendCount}[procs[i]]++;
+122       \hyperlink{global_8h_a4c3c9a79704128f7fcc9ebf4bdd9e3fc}{numExp}++;
+123       \textcolor{comment}{/* upps! too many refugees */}
+124       \textcolor{keywordflow}{if} (\hyperlink{global_8h_a4c3c9a79704128f7fcc9ebf4bdd9e3fc}{numExp} >= \hyperlink{comm_8c_a93da5acfae81b763e797f8562d49ca64}{MAX\_EXPORTED\_PER\_PROC})
+125     \hyperlink{utils_8c_a07dd99a04f2723be164531a7a862fb67}{stopRun}(110, NULL, \_\_FILE\_\_, \_\_LINE\_\_);
+126     \}
+127   \}
+128 
+129   \textcolor{comment}{/* sort export list with respect to process number */}
+130   qsort(\hyperlink{comm_8c_a6f7e234508139d1113a2f60a1b36c04a}{expList}, \hyperlink{global_8h_a4c3c9a79704128f7fcc9ebf4bdd9e3fc}{numExp}, \textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} \hyperlink{structexpData}{expData}), 
+      \hyperlink{comm_8c_a0a0b21ecf1a24a3cae73074d6bf6c68e}{comm\_compare\_exp\_list});
+131 
+132   \textcolor{comment}{/* distribute the information on transfer sizes between each process */}
+133   MPI\_Alltoall(\hyperlink{comm_8c_aed19f012b3fe7ae1966dcc8b89cdf7b2}{sendCount}, 1, MPI\_INT, \hyperlink{comm_8c_a073b7079fe649b9ae1b5c4056ccaa4fb}{recvCount}, 1, MPI\_INT,
+134            MPI\_COMM\_WORLD);
+135 
+136   \textcolor{comment}{/* compute send offsets */}
+137   \hyperlink{comm_8c_a16d801f1b7f6a598f31107a146b11f16}{sendOffset}[0] = 0;
+138   \textcolor{keywordflow}{for} (i = 1; i < \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}; i++)
+139     \hyperlink{comm_8c_a16d801f1b7f6a598f31107a146b11f16}{sendOffset}[i] = \hyperlink{comm_8c_a16d801f1b7f6a598f31107a146b11f16}{sendOffset}[i - 1] + \hyperlink{comm_8c_aed19f012b3fe7ae1966dcc8b89cdf7b2}{sendCount}[i - 1];
+140 
+141   \textcolor{comment}{/* compute receive offsets */}
+142   \hyperlink{comm_8c_a4f0cc30ef1f6185ba3d6406343e1a574}{recvOffset}[0] = 0;
+143   \textcolor{keywordflow}{for} (i = 1; i < \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}; i++)
+144     \hyperlink{comm_8c_a4f0cc30ef1f6185ba3d6406343e1a574}{recvOffset}[i] = \hyperlink{comm_8c_a4f0cc30ef1f6185ba3d6406343e1a574}{recvOffset}[i - 1] + \hyperlink{comm_8c_a073b7079fe649b9ae1b5c4056ccaa4fb}{recvCount}[i - 1];
+145 
+146   \textcolor{comment}{/* count cells to be imported */}
+147   \textcolor{keywordflow}{for} (i = 0; i < \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}; i++)
+148     \hyperlink{global_8h_a6e7ffc829c0f608016617f9057885a9f}{numImp} += \hyperlink{comm_8c_a073b7079fe649b9ae1b5c4056ccaa4fb}{recvCount}[i];
+149 
+150 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=330pt]{comm_8c_a191bffd6b8283bf118dec0d0422fa2b3_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=242pt]{comm_8c_a191bffd6b8283bf118dec0d0422fa2b3_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{comm_8c_a206e073b7e35f281184b3487b3bbc055}{\index{comm.\-c@{comm.\-c}!dens\-Pot\-Exchange\-Init@{dens\-Pot\-Exchange\-Init}}
+\index{dens\-Pot\-Exchange\-Init@{dens\-Pot\-Exchange\-Init}!comm.c@{comm.\-c}}
+\subsubsection[{dens\-Pot\-Exchange\-Init}]{\setlength{\rightskip}{0pt plus 5cm}void dens\-Pot\-Exchange\-Init (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{comm_8c_a206e073b7e35f281184b3487b3bbc055}
+This function initiate sending and receiving density and potential values between processes. 
+
+Definition at line 257 of file comm.\-c.
+
+
+
+References exp\-Data\-::cell, cells, cell\-Data\-::density, dens\-Pot\-Data\-::density, lnc, M\-P\-Irank, M\-P\-Isize, nc, num\-Exp, num\-Imp, recv\-Count, recv\-Dens\-Pot\-Data, recv\-Offset, req\-Recv, req\-Send, send\-Count, send\-Dens\-Pot\-Data, send\-Offset, tlnc, cell\-Data\-::v, and dens\-Pot\-Data\-::v.
+
+
+\begin{DoxyCode}
+258 \{
+259   \textcolor{keywordtype}{int} i;
+260 
+261   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a0845b4b004824f1fe3cd69db1672fa15}{nc} < \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize} || \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize} == 1)
+262     \textcolor{keywordflow}{return};
+263 
+264   \textcolor{comment}{/* allocate communication buffers */}
+265   \hyperlink{global_8h_a5b0d78dc19924c0af131438356bfcdbd}{sendDensPotData} =
+266       (\textcolor{keyword}{struct }\hyperlink{structdensPotData}{densPotData} *) malloc(\hyperlink{global_8h_a4c3c9a79704128f7fcc9ebf4bdd9e3fc}{numExp} * \textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} 
+      \hyperlink{structdensPotData}{densPotData}));
+267   \hyperlink{global_8h_ac5932521dec6ac9c4208cb0312e002de}{recvDensPotData} =
+268       (\textcolor{keyword}{struct }\hyperlink{structdensPotData}{densPotData} *) malloc(\hyperlink{global_8h_a6e7ffc829c0f608016617f9057885a9f}{numImp} * \textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} 
+      \hyperlink{structdensPotData}{densPotData}));
+269   \hyperlink{comm_8c_a827e028e778c94dd2e816ae6077a3198}{reqSend} = (MPI\_Request *) malloc(\textcolor{keyword}{sizeof}(MPI\_Request) * \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize});
+270   \hyperlink{comm_8c_ad7a9f44424272a25979b199886bdce73}{reqRecv} = (MPI\_Request *) malloc(\textcolor{keyword}{sizeof}(MPI\_Request) * \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize});
+271 
+272   \textcolor{comment}{/* create density and potential buffer for exporting */}
+273   \textcolor{keywordflow}{for} (i = 0; i < \hyperlink{global_8h_a4c3c9a79704128f7fcc9ebf4bdd9e3fc}{numExp}; i++) \{
+274     \hyperlink{global_8h_a5b0d78dc19924c0af131438356bfcdbd}{sendDensPotData}[i].\hyperlink{structdensPotData_a3b90d5a73541ab9402511d87bed076ef}{v} = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[\hyperlink{comm_8c_a6f7e234508139d1113a2f60a1b36c04a}{expList}[i].\hyperlink{structexpData_af00601a22186810a9e6d16efb75862ce}{cell}].
+      \hyperlink{structcellData_a3b90d5a73541ab9402511d87bed076ef}{v};
+275     \hyperlink{global_8h_a5b0d78dc19924c0af131438356bfcdbd}{sendDensPotData}[i].\hyperlink{structdensPotData_a6f8c052f8417728038991f7f2826d38d}{density} = \hyperlink{global_8h_a56da06a03aa369ca203be968cb56d16c}{cells}[\hyperlink{comm_8c_a6f7e234508139d1113a2f60a1b36c04a}{expList}[i].
+      \hyperlink{structexpData_af00601a22186810a9e6d16efb75862ce}{cell}].\hyperlink{structcellData_a6f8c052f8417728038991f7f2826d38d}{density};
+276   \}
+277 
+278   \textcolor{comment}{/* send data - asynchronous MPI call */}
+279   \textcolor{keywordflow}{for} (i = 0; i < \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}; i++) \{
+280     \textcolor{keywordflow}{if} (\hyperlink{comm_8c_aed19f012b3fe7ae1966dcc8b89cdf7b2}{sendCount}[i] == 0 || \hyperlink{global_8h_ac3c96b975a3376c555ad22a7d2688b2f}{tlnc}[i] == 0 || \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc} == 0)
+281       \textcolor{keywordflow}{continue};
+282     MPI\_Isend(&\hyperlink{global_8h_a5b0d78dc19924c0af131438356bfcdbd}{sendDensPotData}[\hyperlink{comm_8c_a16d801f1b7f6a598f31107a146b11f16}{sendOffset}[i]],
+283           \hyperlink{comm_8c_aed19f012b3fe7ae1966dcc8b89cdf7b2}{sendCount}[i] * \textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} \hyperlink{structdensPotData}{densPotData}), MPI\_BYTE, i,
+284           \hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank}, MPI\_COMM\_WORLD, &\hyperlink{comm_8c_a827e028e778c94dd2e816ae6077a3198}{reqSend}[i]);
+285   \}
+286 
+287   \textcolor{comment}{/* receive data - asynchronous MPI call */}
+288   \textcolor{keywordflow}{for} (i = 0; i < \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}; i++) \{
+289     \textcolor{keywordflow}{if} (\hyperlink{comm_8c_a073b7079fe649b9ae1b5c4056ccaa4fb}{recvCount}[i] == 0 || \hyperlink{global_8h_ac3c96b975a3376c555ad22a7d2688b2f}{tlnc}[i] == 0 || \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc} == 0)
+290       \textcolor{keywordflow}{continue};
+291     MPI\_Irecv(&\hyperlink{global_8h_ac5932521dec6ac9c4208cb0312e002de}{recvDensPotData}[\hyperlink{comm_8c_a4f0cc30ef1f6185ba3d6406343e1a574}{recvOffset}[i]],
+292           \hyperlink{comm_8c_a073b7079fe649b9ae1b5c4056ccaa4fb}{recvCount}[i] * \textcolor{keyword}{sizeof}(\textcolor{keyword}{struct} \hyperlink{structdensPotData}{densPotData}), MPI\_BYTE, i, i,
+293           MPI\_COMM\_WORLD, &\hyperlink{comm_8c_ad7a9f44424272a25979b199886bdce73}{reqRecv}[i]);
+294   \}
+295 
+296 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{comm_8c_a206e073b7e35f281184b3487b3bbc055_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{comm_8c_afebf59220f4170178e5fb828d569aaab}{\index{comm.\-c@{comm.\-c}!dens\-Pot\-Exchange\-Wait@{dens\-Pot\-Exchange\-Wait}}
+\index{dens\-Pot\-Exchange\-Wait@{dens\-Pot\-Exchange\-Wait}!comm.c@{comm.\-c}}
+\subsubsection[{dens\-Pot\-Exchange\-Wait}]{\setlength{\rightskip}{0pt plus 5cm}void dens\-Pot\-Exchange\-Wait (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{comm_8c_afebf59220f4170178e5fb828d569aaab}
+This function waits for density and potential data exchange completion. 
+
+Definition at line 301 of file comm.\-c.
+
+
+
+References lnc, M\-P\-Isize, nc, recv\-Count, req\-Recv, req\-Send, send\-Count, send\-Dens\-Pot\-Data, stop\-Run(), and tlnc.
+
+
+\begin{DoxyCode}
+302 \{
+303   \textcolor{keywordtype}{int} i;
+304   MPI\_Status status;
+305 
+306   \textcolor{keywordflow}{if} (\hyperlink{global_8h_a0845b4b004824f1fe3cd69db1672fa15}{nc} < \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize} || \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize} == 1)
+307     \textcolor{keywordflow}{return};
+308 
+309   \textcolor{comment}{// Wait for send completion}
+310   \textcolor{keywordflow}{for} (i = 0; i < \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}; i++) \{
+311     \textcolor{keywordflow}{if} (\hyperlink{comm_8c_aed19f012b3fe7ae1966dcc8b89cdf7b2}{sendCount}[i] == 0 || \hyperlink{global_8h_ac3c96b975a3376c555ad22a7d2688b2f}{tlnc}[i] == 0 || \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc} == 0)
+312       \textcolor{keywordflow}{continue};
+313     \textcolor{keywordflow}{if} (MPI\_Wait(&\hyperlink{comm_8c_a827e028e778c94dd2e816ae6077a3198}{reqSend}[i], &status) != MPI\_SUCCESS)
+314       \hyperlink{utils_8c_a07dd99a04f2723be164531a7a862fb67}{stopRun}(103, \textcolor{stringliteral}{"sending"}, \_\_FILE\_\_, \_\_LINE\_\_);
+315   \}
+316 
+317   \textcolor{comment}{// Wait for receive completion}
+318   \textcolor{keywordflow}{for} (i = 0; i < \hyperlink{global_8h_a0d7d02544d01ceac87c9d5cadc3af0df}{MPIsize}; i++) \{
+319     \textcolor{keywordflow}{if} (\hyperlink{comm_8c_a073b7079fe649b9ae1b5c4056ccaa4fb}{recvCount}[i] == 0 || \hyperlink{global_8h_ac3c96b975a3376c555ad22a7d2688b2f}{tlnc}[i] == 0 || \hyperlink{global_8h_a7065c019590815f10169c219f358e7d0}{lnc} == 0)
+320       \textcolor{keywordflow}{continue};
+321     \textcolor{keywordflow}{if} (MPI\_Wait(&\hyperlink{comm_8c_ad7a9f44424272a25979b199886bdce73}{reqRecv}[i], &status) != MPI\_SUCCESS)
+322       \hyperlink{utils_8c_a07dd99a04f2723be164531a7a862fb67}{stopRun}(103, \textcolor{stringliteral}{"receiving"}, \_\_FILE\_\_, \_\_LINE\_\_);
+323   \}
+324 
+325   \textcolor{comment}{/* some of the buffers can be deallocated */}
+326   free(\hyperlink{global_8h_a5b0d78dc19924c0af131438356bfcdbd}{sendDensPotData});
+327   free(\hyperlink{comm_8c_a827e028e778c94dd2e816ae6077a3198}{reqSend});
+328   free(\hyperlink{comm_8c_ad7a9f44424272a25979b199886bdce73}{reqRecv});
+329 \}
+\end{DoxyCode}
+
+
+Here is the call graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=286pt]{comm_8c_afebf59220f4170178e5fb828d569aaab_cgraph}
+\end{center}
+\end{figure}
+
+
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{comm_8c_afebf59220f4170178e5fb828d569aaab_icgraph}
+\end{center}
+\end{figure}
+
+
+
+
+\subsection{Variable Documentation}
+\hypertarget{comm_8c_a6f7e234508139d1113a2f60a1b36c04a}{\index{comm.\-c@{comm.\-c}!exp\-List@{exp\-List}}
+\index{exp\-List@{exp\-List}!comm.c@{comm.\-c}}
+\subsubsection[{exp\-List}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf exp\-Data}$\ast$ exp\-List}}\label{comm_8c_a6f7e234508139d1113a2f60a1b36c04a}
+
+
+Definition at line 43 of file comm.\-c.
+
+\hypertarget{comm_8c_a073b7079fe649b9ae1b5c4056ccaa4fb}{\index{comm.\-c@{comm.\-c}!recv\-Count@{recv\-Count}}
+\index{recv\-Count@{recv\-Count}!comm.c@{comm.\-c}}
+\subsubsection[{recv\-Count}]{\setlength{\rightskip}{0pt plus 5cm}int$\ast$ recv\-Count}}\label{comm_8c_a073b7079fe649b9ae1b5c4056ccaa4fb}
+
+
+Definition at line 45 of file comm.\-c.
+
+\hypertarget{comm_8c_a4f0cc30ef1f6185ba3d6406343e1a574}{\index{comm.\-c@{comm.\-c}!recv\-Offset@{recv\-Offset}}
+\index{recv\-Offset@{recv\-Offset}!comm.c@{comm.\-c}}
+\subsubsection[{recv\-Offset}]{\setlength{\rightskip}{0pt plus 5cm}int64\-\_\-t$\ast$ recv\-Offset}}\label{comm_8c_a4f0cc30ef1f6185ba3d6406343e1a574}
+
+
+Definition at line 41 of file comm.\-c.
+
+\hypertarget{comm_8c_ad7a9f44424272a25979b199886bdce73}{\index{comm.\-c@{comm.\-c}!req\-Recv@{req\-Recv}}
+\index{req\-Recv@{req\-Recv}!comm.c@{comm.\-c}}
+\subsubsection[{req\-Recv}]{\setlength{\rightskip}{0pt plus 5cm}M\-P\-I\-\_\-\-Request$\ast$ req\-Recv}}\label{comm_8c_ad7a9f44424272a25979b199886bdce73}
+
+
+Definition at line 38 of file comm.\-c.
+
+\hypertarget{comm_8c_a827e028e778c94dd2e816ae6077a3198}{\index{comm.\-c@{comm.\-c}!req\-Send@{req\-Send}}
+\index{req\-Send@{req\-Send}!comm.c@{comm.\-c}}
+\subsubsection[{req\-Send}]{\setlength{\rightskip}{0pt plus 5cm}M\-P\-I\-\_\-\-Request$\ast$ req\-Send}}\label{comm_8c_a827e028e778c94dd2e816ae6077a3198}
+
+
+Definition at line 37 of file comm.\-c.
+
+\hypertarget{comm_8c_aed19f012b3fe7ae1966dcc8b89cdf7b2}{\index{comm.\-c@{comm.\-c}!send\-Count@{send\-Count}}
+\index{send\-Count@{send\-Count}!comm.c@{comm.\-c}}
+\subsubsection[{send\-Count}]{\setlength{\rightskip}{0pt plus 5cm}int$\ast$ send\-Count}}\label{comm_8c_aed19f012b3fe7ae1966dcc8b89cdf7b2}
+
+
+Definition at line 46 of file comm.\-c.
+
+\hypertarget{comm_8c_a16d801f1b7f6a598f31107a146b11f16}{\index{comm.\-c@{comm.\-c}!send\-Offset@{send\-Offset}}
+\index{send\-Offset@{send\-Offset}!comm.c@{comm.\-c}}
+\subsubsection[{send\-Offset}]{\setlength{\rightskip}{0pt plus 5cm}int64\-\_\-t$\ast$ send\-Offset}}\label{comm_8c_a16d801f1b7f6a598f31107a146b11f16}
+
+
+Definition at line 40 of file comm.\-c.
+

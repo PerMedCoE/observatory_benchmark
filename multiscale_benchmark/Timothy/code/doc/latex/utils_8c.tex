@@ -1,0 +1,341 @@
+\hypertarget{utils_8c}{\section{utils.\-c File Reference}
+\label{utils_8c}\index{utils.\-c@{utils.\-c}}
+}
+
+
+contains various utility functions  
+
+
+{\ttfamily \#include $<$stdio.\-h$>$}\\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$string.\-h$>$}\\*
+{\ttfamily \#include $<$inttypes.\-h$>$}\\*
+{\ttfamily \#include $<$mpi.\-h$>$}\\*
+{\ttfamily \#include $<$unistd.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}global.\-h\char`\"{}}\\*
+Include dependency graph for utils.\-c\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{utils_8c__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{utils_8c_a2a1ed8bec6b019999fd7a7adff8899a2}{check\-Endiannes} ()
+\item 
+void \hyperlink{utils_8c_a5521647d705d1b38d62f6c497d6ce8dc}{swap\-\_\-\-Nbyte} (char $\ast$data, int n, int \hyperlink{global_8h_ac51334f57ef8b81c0629c9421798c344}{m})
+\item 
+void \hyperlink{utils_8c_a07dd99a04f2723be164531a7a862fb67}{stop\-Run} (int ierr, char $\ast$name, char $\ast$file, int line)
+\item 
+size\-\_\-t \hyperlink{utils_8c_ae16592f39d6cd608a9c9681400be731b}{get\-Memory\-Per\-Process} (int32\-\_\-t lsize)
+\item 
+void \hyperlink{utils_8c_a6ffc4e1c282c2f9e13f230a2d1ffe783}{get\-Local\-Rank\-And\-Size} (int rank, int size, int32\-\_\-t $\ast$lrank, int32\-\_\-t $\ast$lsize)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+contains various utility functions 
+
+Definition in file \hyperlink{utils_8c_source}{utils.\-c}.
+
+
+
+\subsection{Function Documentation}
+\hypertarget{utils_8c_a2a1ed8bec6b019999fd7a7adff8899a2}{\index{utils.\-c@{utils.\-c}!check\-Endiannes@{check\-Endiannes}}
+\index{check\-Endiannes@{check\-Endiannes}!utils.c@{utils.\-c}}
+\subsubsection[{check\-Endiannes}]{\setlength{\rightskip}{0pt plus 5cm}int check\-Endiannes (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{utils_8c_a2a1ed8bec6b019999fd7a7adff8899a2}
+This function checks the endiannes of the system 
+
+Definition at line 45 of file utils.\-c.
+
+
+
+References endian.
+
+
+\begin{DoxyCode}
+46 \{
+47   \textcolor{keyword}{volatile} uint32\_t i = 0x01234567;
+48   \textcolor{comment}{/* return 0 for big endian, 1 for little endian. */}
+49   \hyperlink{global_8h_a4f31d79e5388508ff9b17230b6cad8d7}{endian} = (*((uint8\_t *) (&i))) == 0x67;
+50   \textcolor{keywordflow}{return} 0;
+51 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{utils_8c_a2a1ed8bec6b019999fd7a7adff8899a2_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{utils_8c_a6ffc4e1c282c2f9e13f230a2d1ffe783}{\index{utils.\-c@{utils.\-c}!get\-Local\-Rank\-And\-Size@{get\-Local\-Rank\-And\-Size}}
+\index{get\-Local\-Rank\-And\-Size@{get\-Local\-Rank\-And\-Size}!utils.c@{utils.\-c}}
+\subsubsection[{get\-Local\-Rank\-And\-Size}]{\setlength{\rightskip}{0pt plus 5cm}void get\-Local\-Rank\-And\-Size (
+\begin{DoxyParamCaption}
+\item[{int}]{rank, }
+\item[{int}]{size, }
+\item[{int32\-\_\-t $\ast$}]{lrank, }
+\item[{int32\-\_\-t $\ast$}]{lsize}
+\end{DoxyParamCaption}
+)}}\label{utils_8c_a6ffc4e1c282c2f9e13f230a2d1ffe783}
+This function detects number of processes on each node and assignes local node ranks for each process. Assumptions\-: number of processes per node is equal accross nodes. This functions is system dependent. Supported platforms\-: linux, A\-I\-X, Blue Gene/\-Q. 
+
+Definition at line 193 of file utils.\-c.
+
+
+
+References s.
+
+
+\begin{DoxyCode}
+195 \{
+196   \textcolor{keywordtype}{int} i;
+197   int32\_t r, \hyperlink{global_8h_a874f74a4dc1c9a0cd9c6e0d79c298f55}{s};
+198 \textcolor{preprocessor}{#if defined(\_\_bg\_\_) && defined(\_\_bgq\_\_)}
+199 \textcolor{preprocessor}{}  s = Kernel\_ProcessCount();
+200   r = Kernel\_MyTcoord();
+201 \textcolor{preprocessor}{#else}
+202 \textcolor{preprocessor}{}  \textcolor{keywordtype}{int} pnamelen;
+203   \textcolor{keywordtype}{char} pname[MPI\_MAX\_PROCESSOR\_NAME];
+204   \textcolor{keywordtype}{char} pnametable[size][MPI\_MAX\_PROCESSOR\_NAME];
+205   MPI\_Get\_processor\_name(pname, &pnamelen);
+206   MPI\_Allgather(pname, MPI\_MAX\_PROCESSOR\_NAME, MPI\_CHAR, pnametable,
+207         MPI\_MAX\_PROCESSOR\_NAME, MPI\_CHAR, MPI\_COMM\_WORLD);
+208   r = 0;
+209   s = 0;
+210   \textcolor{keywordflow}{for} (i = 0; i < size; i++)
+211     \textcolor{keywordflow}{if} (!strcmp(pnametable[rank], pnametable[i])) \{
+212       \textcolor{keywordflow}{if} (i < rank)
+213     r++;
+214       s++;
+215     \}
+216 \textcolor{preprocessor}{#endif}
+217 \textcolor{preprocessor}{}  *lrank = r;
+218   *lsize = \hyperlink{global_8h_a874f74a4dc1c9a0cd9c6e0d79c298f55}{s};
+219 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{utils_8c_a6ffc4e1c282c2f9e13f230a2d1ffe783_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{utils_8c_ae16592f39d6cd608a9c9681400be731b}{\index{utils.\-c@{utils.\-c}!get\-Memory\-Per\-Process@{get\-Memory\-Per\-Process}}
+\index{get\-Memory\-Per\-Process@{get\-Memory\-Per\-Process}!utils.c@{utils.\-c}}
+\subsubsection[{get\-Memory\-Per\-Process}]{\setlength{\rightskip}{0pt plus 5cm}size\-\_\-t get\-Memory\-Per\-Process (
+\begin{DoxyParamCaption}
+\item[{int32\-\_\-t}]{lsize}
+\end{DoxyParamCaption}
+)}}\label{utils_8c_ae16592f39d6cd608a9c9681400be731b}
+This function detects the amount of addressable memory available for each process. Assumptions\-: each process allocates similar amount of data. This functions is system dependent. Supported platforms\-: linux, A\-I\-X, Blue Gene/\-Q. 
+
+Definition at line 167 of file utils.\-c.
+
+
+\begin{DoxyCode}
+168 \{
+169 \textcolor{preprocessor}{#if defined(\_\_bg\_\_) && defined(\_\_bgq\_\_)}
+170 \textcolor{preprocessor}{}  Personality\_t pers;
+171   int32\_t msize;
+172   Kernel\_GetPersonality(&pers, \textcolor{keyword}{sizeof}(pers));
+173   msize = pers.DDR\_Config.DDRSizeMB;
+174 \textcolor{preprocessor}{#else}
+175 \textcolor{preprocessor}{}\textcolor{preprocessor}{#if defined(\_AIX)}
+176 \textcolor{preprocessor}{}  \textcolor{keywordtype}{int} msize = sysconf(\_SC\_AIX\_REALMEM) / 1024;
+177 \textcolor{preprocessor}{#endif              }\textcolor{comment}{/* aix */}\textcolor{preprocessor}{}
+178 \textcolor{preprocessor}{}\textcolor{preprocessor}{#if defined(\_\_linux\_\_) || defined(\_\_linux) || defined(linux) || defined(\_\_gnu\_linux\_\_)}
+179 \textcolor{preprocessor}{}  \textcolor{keywordtype}{long} psize = sysconf(\_SC\_PAGE\_SIZE);
+180   \textcolor{keywordtype}{long} npages = sysconf(\_SC\_PHYS\_PAGES);
+181   \textcolor{keywordtype}{long} msize = psize * npages / (1024 * 1024);
+182 \textcolor{preprocessor}{#endif              }\textcolor{comment}{/*linux */}\textcolor{preprocessor}{}
+183 \textcolor{preprocessor}{}\textcolor{preprocessor}{#endif              }\textcolor{comment}{/* bgq */}\textcolor{preprocessor}{}
+184 \textcolor{preprocessor}{}  \textcolor{keywordflow}{return} msize / lsize;
+185 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{utils_8c_ae16592f39d6cd608a9c9681400be731b_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{utils_8c_a07dd99a04f2723be164531a7a862fb67}{\index{utils.\-c@{utils.\-c}!stop\-Run@{stop\-Run}}
+\index{stop\-Run@{stop\-Run}!utils.c@{utils.\-c}}
+\subsubsection[{stop\-Run}]{\setlength{\rightskip}{0pt plus 5cm}void stop\-Run (
+\begin{DoxyParamCaption}
+\item[{int}]{ierr, }
+\item[{char $\ast$}]{name, }
+\item[{char $\ast$}]{file, }
+\item[{int}]{line}
+\end{DoxyParamCaption}
+)}}\label{utils_8c_a07dd99a04f2723be164531a7a862fb67}
+This function is used to handle various critical errors. 
+
+Definition at line 72 of file utils.\-c.
+
+
+
+References M\-P\-Irank.
+
+
+\begin{DoxyCode}
+73 \{
+74   \textcolor{keywordflow}{switch} (ierr) \{
+75   \textcolor{keywordflow}{case} 100:
+76     fprintf(stderr, \textcolor{stringliteral}{"Bad %s dimensions at %s, line %d\(\backslash\)n"}, name, file,
+77         line);
+78     \textcolor{keywordflow}{break};
+79   \textcolor{keywordflow}{case} 101:
+80     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank} == 0)
+81       fprintf(stderr,
+82           \textcolor{stringliteral}{"Number of processes must be a power of two at %s, line %d\(\backslash\)n"},
+83           file, line);
+84     \textcolor{keywordflow}{break};
+85   \textcolor{keywordflow}{case} 102:
+86     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank} == 0) \{
+87       fprintf(stderr,
+88           \textcolor{stringliteral}{"Bad or missing Program parameters, at %s, line %d\(\backslash\)n"}, file,
+89           line);
+90       fprintf(stderr, \textcolor{stringliteral}{"Usage:\(\backslash\)n"});
+91       fprintf(stderr, \textcolor{stringliteral}{"mpiexec -n NPROC ./timothy -p <ParameterFile>\(\backslash\)n"});
+92     \}
+93     \textcolor{keywordflow}{break};
+94   \textcolor{keywordflow}{case} 103:
+95     fprintf(stderr, \textcolor{stringliteral}{"Failed %s MPI message at %s, line %d.\(\backslash\)n"}, name, file,
+96         line);
+97     \textcolor{keywordflow}{break};
+98   \textcolor{keywordflow}{case} 106:
+99     fprintf(stderr,
+100         \textcolor{stringliteral}{"Failed to allocate memory for %s array at %s, line %d\(\backslash\)n"},
+101         name, file, line);
+102     \textcolor{keywordflow}{break};
+103   \textcolor{keywordflow}{case} 107:
+104     fprintf(stderr, \textcolor{stringliteral}{"Too many exported particles. Adjust parameters.\(\backslash\)n"});
+105     \textcolor{keywordflow}{break};
+106   \textcolor{keywordflow}{case} 108:
+107     fprintf(stderr,
+108         \textcolor{stringliteral}{"Size of float does not divide the statistics table size.\(\backslash\)n"});
+109     \textcolor{keywordflow}{break};
+110   \textcolor{keywordflow}{case} 109:
+111     fprintf(stderr, \textcolor{stringliteral}{"Max. number of cells per process exceeded.\(\backslash\)n"});
+112     \textcolor{keywordflow}{break};
+113   \textcolor{keywordflow}{case} 110:
+114     fprintf(stderr, \textcolor{stringliteral}{"Too many exported cells on process %d. Abort.\(\backslash\)n"},
+115         \hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank});
+116     \textcolor{keywordflow}{break};
+117   \textcolor{keywordflow}{case} 111:
+118     fprintf(stderr,
+119         \textcolor{stringliteral}{"Error while reading simulation parameters. MAXMOVE out of range.\(\backslash\)n"});
+120     \textcolor{keywordflow}{break};
+121   \textcolor{keywordflow}{case} 112:
+122     fprintf(stderr, \textcolor{stringliteral}{"Error in Zoltan library at %s, line %d.\(\backslash\)n"}, file,
+123         line);
+124     \textcolor{keywordflow}{break};
+125   \textcolor{keywordflow}{case} 113:
+126     fprintf(stderr,
+127         \textcolor{stringliteral}{"Error while opening povray output file at %s, line %d.\(\backslash\)n"},
+128         file, line);
+129     \textcolor{keywordflow}{break};
+130   \textcolor{keywordflow}{case} 114:
+131     fprintf(stderr, \textcolor{stringliteral}{"Field parameter %s missing at %s, line %d.\(\backslash\)n"}, name,
+132         file, line);
+133     \textcolor{keywordflow}{break};
+134   \textcolor{keywordflow}{case} 115:
+135     fprintf(stderr,
+136         \textcolor{stringliteral}{"Number of cells in the restart file is larger than MAXCELLS parameter at %s, line %d.\(\backslash\)n"},
+137         file, line);
+138     \textcolor{keywordflow}{break};
+139   \textcolor{keywordflow}{case} 116:
+140     fprintf(stderr, \textcolor{stringliteral}{"Bad value for parameter %s at %s, line %d.\(\backslash\)n"}, name,
+141         file, line);
+142     \textcolor{keywordflow}{break};
+143   \textcolor{keywordflow}{case} 666:
+144     fprintf(stderr, \textcolor{stringliteral}{"Some devilish error at %s, line %d (lcf)\(\backslash\)n"}, file,
+145         line);
+146     \textcolor{keywordflow}{break};
+147   \textcolor{keywordflow}{case} 898:
+148     fprintf(stderr, \textcolor{stringliteral}{"Error. tree\_create\_child\_node()\(\backslash\)n"});
+149     \textcolor{keywordflow}{break};
+150   \textcolor{keywordflow}{case} 999:
+151     \textcolor{keywordflow}{break};
+152   \textcolor{keywordflow}{default}:
+153     \textcolor{keywordflow}{if} (\hyperlink{global_8h_a710288ab7d2734acc4566a87a645325d}{MPIrank} == 0)
+154       fprintf(stderr, \textcolor{stringliteral}{"Error at %s, line %d\(\backslash\)n"}, file, line);
+155     \textcolor{keywordflow}{break};
+156   \}
+157   fflush(stderr);
+158   MPI\_Finalize();
+159   exit(1);
+160 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{utils_8c_a07dd99a04f2723be164531a7a862fb67_icgraph}
+\end{center}
+\end{figure}
+
+
+\hypertarget{utils_8c_a5521647d705d1b38d62f6c497d6ce8dc}{\index{utils.\-c@{utils.\-c}!swap\-\_\-\-Nbyte@{swap\-\_\-\-Nbyte}}
+\index{swap\-\_\-\-Nbyte@{swap\-\_\-\-Nbyte}!utils.c@{utils.\-c}}
+\subsubsection[{swap\-\_\-\-Nbyte}]{\setlength{\rightskip}{0pt plus 5cm}void swap\-\_\-\-Nbyte (
+\begin{DoxyParamCaption}
+\item[{char $\ast$}]{data, }
+\item[{int}]{n, }
+\item[{int}]{m}
+\end{DoxyParamCaption}
+)}}\label{utils_8c_a5521647d705d1b38d62f6c497d6ce8dc}
+This function swaps endiannes within a table of n elements of a given size m (given in bytes). 
+
+Definition at line 57 of file utils.\-c.
+
+
+
+References m.
+
+
+\begin{DoxyCode}
+58 \{
+59   \textcolor{keywordtype}{int} i, j;
+60   \textcolor{keywordtype}{char} old\_data[16];
+61 
+62   \textcolor{keywordflow}{for} (j = 0; j < n; j++) \{
+63     memcpy(&old\_data[0], &data[j * \hyperlink{global_8h_ac51334f57ef8b81c0629c9421798c344}{m}], m);
+64     \textcolor{keywordflow}{for} (i = 0; i < \hyperlink{global_8h_ac51334f57ef8b81c0629c9421798c344}{m}; i++)
+65       data[j * m + i] = old\_data[m - i - 1];
+66   \}
+67 \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{utils_8c_a5521647d705d1b38d62f6c497d6ce8dc_icgraph}
+\end{center}
+\end{figure}
+
+

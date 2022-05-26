@@ -1,0 +1,9 @@
+<map id="fields.h" name="fields.h">
+<area shape="rect" id="node2" href="$cells_8c.html" title="contains functions which control current states and evolution of cells " alt="" coords="5,80,64,107"/>
+<area shape="rect" id="node3" href="$chemf_8c.html" title="contains functions used for solving chemical global fields " alt="" coords="89,80,159,107"/>
+<area shape="rect" id="node4" href="$fields_8c.html" title="contains driving functions for the global fields " alt="" coords="183,80,247,107"/>
+<area shape="rect" id="node5" href="$grid_8c.html" title="contains functions that build the computational grid " alt="" coords="271,80,325,107"/>
+<area shape="rect" id="node6" href="$interp_8c.html" title="contains grid to cellular data interpolation functions " alt="" coords="350,80,415,107"/>
+<area shape="rect" id="node7" href="$io_8c.html" title="contains I/O functions " alt="" coords="440,80,483,107"/>
+<area shape="rect" id="node8" href="$tempf_8c.html" title="contains functions used for solving temperature field " alt="" coords="507,80,573,107"/>
+</map>

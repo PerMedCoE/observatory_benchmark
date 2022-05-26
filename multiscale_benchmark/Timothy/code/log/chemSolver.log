@@ -1,0 +1,16 @@
+                                            relative
+               residual        factor       residual
+               --------        ------       --------
+    Initial    5.098710e+01                 1.000000e+00
+    Cycle  1   2.236865e+03    43.871205     4.387120e+01 
+
+
+ Average Convergence Factor = 43.871205
+
+     Complexity:    grid = 1.000000
+                operator = 1.000000
+                   cycle = 1.000000
+
+
+
+<C*b,b>: -1.161303e+01

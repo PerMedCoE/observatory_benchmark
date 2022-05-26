@@ -1,0 +1,20 @@
+<map id="global.h" name="global.h">
+<area shape="rect" id="node2" href="$cells_8c.html" title="contains functions which control current states and evolution of cells " alt="" coords="5,80,64,107"/>
+<area shape="rect" id="node3" href="$chemf_8c.html" title="contains functions used for solving chemical global fields " alt="" coords="89,80,159,107"/>
+<area shape="rect" id="node4" href="$comm_8c.html" title="contains communication functions " alt="" coords="183,80,252,107"/>
+<area shape="rect" id="node5" href="$domdec_8c.html" title="contains domain decomposition functions " alt="" coords="277,80,355,107"/>
+<area shape="rect" id="node6" href="$fields_8c.html" title="contains driving functions for the global fields " alt="" coords="380,80,444,107"/>
+<area shape="rect" id="node7" href="$gradient_8c.html" title="contains functions that compute potential gradient " alt="" coords="469,80,547,107"/>
+<area shape="rect" id="node8" href="$grid_8c.html" title="contains functions that build the computational grid " alt="" coords="571,80,625,107"/>
+<area shape="rect" id="node9" href="$init_8c.html" title="contains initialization functions " alt="" coords="651,80,701,107"/>
+<area shape="rect" id="node10" href="$interp_8c.html" title="contains grid to cellular data interpolation functions " alt="" coords="726,80,791,107"/>
+<area shape="rect" id="node11" href="$io_8c.html" title="contains I/O functions " alt="" coords="816,80,859,107"/>
+<area shape="rect" id="node12" href="$main_8c.html" title="contains the main simulation loop " alt="" coords="883,80,944,107"/>
+<area shape="rect" id="node13" href="$potential_8c.html" title="contains functions that compute the potential " alt="" coords="968,80,1049,107"/>
+<area shape="rect" id="node14" href="$random_8c.html" title="contains functions which handle the RNG " alt="" coords="1075,80,1151,107"/>
+<area shape="rect" id="node15" href="$stats_8c.html" title="contains functions computing and printing simulation statisctical information " alt="" coords="1175,80,1237,107"/>
+<area shape="rect" id="node16" href="$tempf_8c.html" title="contains functions used for solving temperature field " alt="" coords="1263,80,1329,107"/>
+<area shape="rect" id="node17" href="$tree_8c.html" title="contains tree build functions " alt="" coords="1354,80,1408,107"/>
+<area shape="rect" id="node18" href="$utils_8c.html" title="contains various utility functions " alt="" coords="1433,80,1489,107"/>
+<area shape="rect" id="node19" href="$vessel_8c.html" title="contains functions defining virtual vessels " alt="" coords="1514,80,1584,107"/>
+</map>
