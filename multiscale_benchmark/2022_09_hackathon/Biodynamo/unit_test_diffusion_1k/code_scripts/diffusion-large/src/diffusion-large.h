@@ -68,6 +68,34 @@ class ExportConcentration : public StandaloneOperationImpl {
   DiffusionGrid *dg_;
 };
 
+/// Consume substance at Agent position
+class Consumption : public Behavior {
+  BDM_BEHAVIOR_HEADER(Consumption, Behavior, 0);
+
+ public:
+  Consumption() = default;
+  explicit Consumption(const std::string &substance, real_t quantity = 1)
+      : quantity_(quantity) {
+    dgrid_ = Simulation::GetActive()->GetResourceManager()->GetDiffusionGrid(
+        substance);
+  }
+
+  virtual ~Consumption() = default;
+
+  void Initialize(const NewAgentEvent &event) override { return; }
+
+  void Run(Agent *agent) override {
+    auto &position = agent->GetPosition();
+    auto concentration = dgrid_->GetConcentration(position);
+    auto quantity = std::min(quantity_, concentration);
+    dgrid_->ChangeConcentrationBy(position, -quantity);
+  }
+
+ private:
+  DiffusionGrid *dgrid_ = nullptr;
+  real_t quantity_ = 1;
+};
+
 inline int Simulate(int argc, const char **argv) {
   // ------------------------------------------------------------------
   // Define simulation parameters
@@ -147,7 +175,7 @@ inline int Simulate(int argc, const char **argv) {
     Cell *cell = new Cell(pos);
     cell->SetDiameter(10);
     cell->AddBehavior(
-        new Secretion("Substance", -sink * param->simulation_time_step));
+        new Consumption("Substance", sink * param->simulation_time_step));
     return cell;
   };
   ModelInitializer::Grid3D(10, domain_size / 12, create_cell);
