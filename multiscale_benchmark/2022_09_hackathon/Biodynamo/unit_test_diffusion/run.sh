@@ -3,6 +3,9 @@
 # This script runs the diffusion unit test and moves the results to the
 # correct folder.
 
+# Retun if any command fails
+set -e
+
 # Check if BioDynaMo is sourced by checking if the environment variable
 # BDMSYS is set
 if [ -z "$BDMSYS" ]; then
