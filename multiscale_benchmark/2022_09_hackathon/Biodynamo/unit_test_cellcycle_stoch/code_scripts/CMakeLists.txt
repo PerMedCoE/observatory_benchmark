@@ -33,13 +33,3 @@ bdm_add_executable(${CMAKE_PROJECT_NAME}
                    HEADERS ${PROJECT_HEADERS}
                    SOURCES ${PROJECT_SOURCES}
                    LIBRARIES ${BDM_REQUIRED_LIBRARIES})
-
-# Consider all files in test/ for GoogleTests.
-include_directories("test")
-file(GLOB_RECURSE TEST_SOURCES test/*.cc)
-file(GLOB_RECURSE TEST_HEADERS test/*.h)
-
-bdm_add_test(${CMAKE_PROJECT_NAME}-test
-             SOURCES ${TEST_SOURCES}
-             HEADERS ${TEST_HEADERS}
-             LIBRARIES ${BDM_REQUIRED_LIBRARIES} ${CMAKE_PROJECT_NAME})
