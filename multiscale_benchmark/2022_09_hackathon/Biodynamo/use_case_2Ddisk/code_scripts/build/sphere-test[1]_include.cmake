@@ -1,0 +1,5 @@
+if(EXISTS "/Users/marcodurante/observatory_benchmark/multiscale_benchmark/2022_09_hackathon/Biodynamo/use_case_2Ddisk/code_scripts/build/sphere-test[1]_tests.cmake")
+  include("/Users/marcodurante/observatory_benchmark/multiscale_benchmark/2022_09_hackathon/Biodynamo/use_case_2Ddisk/code_scripts/build/sphere-test[1]_tests.cmake")
+else()
+  add_test(sphere-test_NOT_BUILT sphere-test_NOT_BUILT)
+endif()
