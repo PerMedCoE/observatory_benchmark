@@ -142,7 +142,6 @@ struct Growth : public Behavior {
       // if yes cell grows if no then cell does not grow.
       if (cell->GetVolume() < cell->GetVmax()) {
         double alpha = 1.0;
-        double beta = 2.0;
         //cell->ChangeVolume(cell->GetVmax() - cell->GetVolume());
         cell->ChangeVolume(alpha * cell->GetVolume()*((cell->GetVmax() - cell->GetVolume())/cell->GetVmax()));
       }
@@ -158,7 +157,7 @@ inline int Simulate(int argc, const char** argv) {
   auto set_param = [](Param* param) {
     param->bound_space = Param::BoundSpaceMode::kOpen;
     param->min_bound = 0;
-    param->max_bound = 1440;  // cube of 100*100*100
+    param->max_bound = 3200;  // cube of 100*100*100
   };   
     
   // Create a new simulation
@@ -167,8 +166,6 @@ inline int Simulate(int argc, const char** argv) {
   auto *scheduler = simulation.GetScheduler();  // Get the Scheduler
   auto* param = simulation.GetParam();
   auto* myrand = simulation.GetRandom();
-
-  size_t nb_of_cells = 3249;  // number of cells in the simulation
   
    double nn = 570;
    for (size_t i = 10 ; i < nn; i += 20.0) {
@@ -198,7 +195,7 @@ inline int Simulate(int argc, const char** argv) {
 
   // Run simulation for one timestep
   // time steps are in tenths of an hour for a total of 48 hours equivalent in time steps.
-  simulation.GetScheduler()->Simulate(480);
+  simulation.GetScheduler()->Simulate(3100);
 
   scheduler->PrintInfo(std::cout);
   
