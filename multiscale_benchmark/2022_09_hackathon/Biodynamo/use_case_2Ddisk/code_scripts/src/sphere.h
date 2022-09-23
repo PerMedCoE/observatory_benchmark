@@ -168,15 +168,17 @@ inline int Simulate(int argc, const char** argv) {
   auto* param = simulation.GetParam();
   auto* myrand = simulation.GetRandom();
 
-  size_t nb_of_cells = 144;  // number of cells in the simulation
+  size_t nb_of_cells = 3249;  // number of cells in the simulation
   
-  for (size_t i = 0; i < nb_of_cells; ++i) {
-    double x_coord = myrand->Uniform(param->min_bound, param->max_bound);
-    double y_coord = myrand->Uniform(param->min_bound, param->max_bound);
+   double nn = 570;
+   for (size_t i = 10 ; i < nn; i += 20.0) {
+    double x_coord = i;
+    for (size_t j = 10 ; j < nn; j += 20.0) {
+        double y_coord = j;
     
     MyCell* cell = new MyCell({x_coord, y_coord, 0});
     
-    cell->SetDiameter(10.0);
+    cell->SetDiameter(20.0);
     cell->SetVinit(cell->GetVolume());
     cell->SetVrel(100.0);
     double x = cell->GetVolume() * 2.0;
@@ -186,6 +188,7 @@ inline int Simulate(int argc, const char** argv) {
     cell->SetCanDivide(true);
     cell->AddBehavior(new Growth());
     rm->AddAgent(cell);  // put the created cell in our cells structure
+    }
   }
 
   // Check if the cells have moved along the z direction and, if so, move them back
