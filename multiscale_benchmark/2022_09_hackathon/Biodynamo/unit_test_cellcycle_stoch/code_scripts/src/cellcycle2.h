@@ -11,8 +11,8 @@
 // regarding copyright ownership.
 //
 // -----------------------------------------------------------------------------
-#ifndef CELLCYCLE1_H_
-#define CELLCYCLE1_H_
+#ifndef CELLCYCLE2_H_
+#define CELLCYCLE2_H_
 
 #include "biodynamo.h"
 
@@ -195,4 +195,4 @@ inline int Simulate(int argc, const char** argv) {
 
 }  // namespace bdm
 
-#endif  // CELLCYCLE1_H_
+#endif  // CELLCYCLE2_H_
