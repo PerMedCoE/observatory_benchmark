@@ -32,4 +32,4 @@ bdm run
 
 # Move the results to the correct folder
 mv output/chemotaxis/metadata $DIR/results
-mv output/position.csv $DIR/results
+[ -f output/position.csv ] && mv output/position.csv $DIR/results
