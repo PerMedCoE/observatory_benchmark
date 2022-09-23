@@ -27,10 +27,11 @@ inline int Simulate(int argc, const char** argv) {
     param->bound_space = Param::BoundSpaceMode::kClosed;
     param->min_bound = -30;
     param->max_bound = 30;
+    param->statistics = true;
   };
 
   Simulation simulation(argc, argv, set_param);
-  auto *scheduler = simulation.GetScheduler();
+  auto* scheduler = simulation.GetScheduler();
 
   double const cell_diameter = 10.;  // um
   double const PI = 3.14159265;
@@ -68,7 +69,6 @@ inline int Simulate(int argc, const char** argv) {
   track_pos_op->frequency_ = 1;  // 0.1 min
   scheduler->ScheduleOp(track_pos_op);
 
-
   // Move behaviour
   auto* behavior_op = scheduler->GetOps("behavior")[0];
   behavior_op->frequency_ = 1;  // Set behaviors' frequency
@@ -84,8 +84,7 @@ inline int Simulate(int argc, const char** argv) {
   }
 
   for (size_t i = 0; i < cell_positions.size(); i++) {
-    file << i
-         << "\t " << cell_positions[i] << std::endl;
+    file << i << "\t " << cell_positions[i] << std::endl;
   }
 
   file.close();
