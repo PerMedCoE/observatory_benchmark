@@ -29,6 +29,7 @@ inline int Simulate(int argc, const char** argv) {
     param->max_bound = 30;
     param->export_visualization = false;
     param->visualize_agents["Moving_cell"] = {};
+    param->statistics = true;
   };
 
   Simulation simulation(argc, argv, set_param);
