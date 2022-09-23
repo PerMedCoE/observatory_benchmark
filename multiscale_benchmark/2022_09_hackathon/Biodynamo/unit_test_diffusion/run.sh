@@ -31,5 +31,5 @@ fi
 bdm run
 
 # Move the results to the correct folder
-mv output/concentration.csv $DIR/results
 mv output/diffusion-small/metadata $DIR/results
+[ -f output/concentration.csv ] && mv output/concentration.csv $DIR/results

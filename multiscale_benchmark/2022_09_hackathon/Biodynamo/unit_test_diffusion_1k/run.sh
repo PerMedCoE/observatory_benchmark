@@ -31,6 +31,6 @@ fi
 bdm run
 
 # Move the results to the correct folder
-mv output/concentration_all.csv $DIR/results
-mv output/concentration_avg.csv $DIR/results
 mv output/diffusion-large/metadata $DIR/results
+[ -f output/concentration_all.csv ] && mv output/concentration_all.csv $DIR/results
+[ -f output/concentration_avg.csv ] && mv output/concentration_avg.csv $DIR/results

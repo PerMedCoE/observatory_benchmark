@@ -101,6 +101,8 @@ inline int Simulate(int argc, const char **argv) {
   // Define simulation parameters
   // ------------------------------------------------------------------
 
+  // Export to CSV (introduces overhead)
+  bool export_to_csv = false;
   // Boundary concentrations [uM]
   double c_0 = 10;
   // Diffusion coefficient [uM^2/min]
@@ -184,20 +186,22 @@ inline int Simulate(int argc, const char **argv) {
   // Operation to export continuum values to file
   // ------------------------------------------------------------------
 
-  OperationRegistry::GetInstance()->AddOperationImpl(
-      "ExportConcentration", OpComputeTarget::kCpu,
-      new ExportConcentration(param->output_dir + "/concentration_all.csv",
-                              param->output_dir + "/concentration_avg.csv",
-                              rm->GetDiffusionGrid("Substance")));
-  auto *export_concentration = NewOperation("ExportConcentration");
-  scheduler->ScheduleOp(export_concentration, OpType::kPreSchedule);
+  if (export_to_csv) {
+    OperationRegistry::GetInstance()->AddOperationImpl(
+        "ExportConcentration", OpComputeTarget::kCpu,
+        new ExportConcentration(param->output_dir + "/concentration_all.csv",
+                                param->output_dir + "/concentration_avg.csv",
+                                rm->GetDiffusionGrid("Substance")));
+    auto *export_concentration = NewOperation("ExportConcentration");
+    scheduler->ScheduleOp(export_concentration, OpType::kPreSchedule);
+  }
 
   // ------------------------------------------------------------------
   // Run simulation
   // ------------------------------------------------------------------
 
-  scheduler->PrintInfo(std::cout);  // Print information about the simulation
   scheduler->Simulate(n_steps);
+  scheduler->PrintInfo(std::cout);  // Print information about the simulation
 
   std::cout << "Simulation completed successfully!" << std::endl;
   return 0;
