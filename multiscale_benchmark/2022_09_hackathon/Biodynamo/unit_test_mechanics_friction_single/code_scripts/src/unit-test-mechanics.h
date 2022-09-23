@@ -27,6 +27,7 @@ inline int Simulate(int argc, const char** argv) {
     param->bound_space = Param::BoundSpaceMode::kClosed;
     param->min_bound = -30;
     param->max_bound = 30;
+    param->statistics = true;
   };
 
   Simulation simulation(argc, argv, set_param);
