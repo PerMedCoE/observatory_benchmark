@@ -11,8 +11,8 @@
 // regarding copyright ownership.
 //
 // -----------------------------------------------------------------------------
-#ifndef UNIT_TEST_MECHANICS_H_
-#define UNIT_TEST_MECHANICS_H_
+#ifndef UNIT_TEST_MECHANICS_TWO_CELLS_H_
+#define UNIT_TEST_MECHANICS_TWO_CELLS_H_
 
 #include "behaviours.h"
 #include "biodynamo.h"
@@ -27,42 +27,45 @@ inline int Simulate(int argc, const char** argv) {
     param->bound_space = Param::BoundSpaceMode::kClosed;
     param->min_bound = -30;
     param->max_bound = 30;
+    param->export_visualization = false;
+    param->visualize_agents["Moving_cell"] = {};
     param->statistics = true;
   };
 
   Simulation simulation(argc, argv, set_param);
-  auto *scheduler = simulation.GetScheduler();
+  auto* scheduler = simulation.GetScheduler();
 
   double const cell_diameter = 10.;  // um
   double const PI = 3.14159265;
   double const cell_volume = 4. / 3. * PI * pow(cell_diameter / 2., 3);  // um^3
   double const cell_density = pow(10, -15);  // 1kg/m^3 = 10^-15g/um^3
   double const cell_mass = cell_volume * cell_density;
+  int number_of_cells = 2;
 
   auto* rm = simulation.GetResourceManager();
-  auto* cell = new Moving_cell({0.0, 0.0, 0.0});
-  cell->SetDiameter(10.);
-  cell->SetMass(cell_mass);
-  cell->SetSpeed({1.0, 0.0, 0.0});  // Movement along x-axis, 1um/0.1min
-  cell->AddBehavior(new Move());
+  auto* cell1 = new Moving_cell({-15.0, 0.0, 0.0});  // Cells' centers 30um
+                                                     // apart
+  auto* cell2 = new Moving_cell({15.0, 0.0, 0.0});
+  cell1->SetDiameter(10.);
+  cell1->SetMass(cell_mass);
+  cell1->SetSpeed({1.0, 0.0, 0.0});  // Movement along x-axis, 1um/0.1min
+  cell1->AddBehavior(new Move());
+  cell1->SetId(0);
+  cell2->SetDiameter(10.);
+  cell2->SetMass(cell_mass);
+  cell2->SetSpeed(
+      {-1.0, 0.0,
+       0.0});  // Movement along x-axis, negative directions 1um/0.1min
+  cell2->AddBehavior(new Move());
+  cell2->SetId(1);
 
-  rm->AddAgent(cell);
-
-  // Simulate dissipative force (e.g. friction from extracellular matrix)
-  auto* friction = NewOperation("dissipative_force");
-  // F_loc = m*Dv/Dt = m*(1um/Dt * 1/Dt) = m Newton (for Dt = 1)
-  // friction coeff = 0.1 F_loc
-
-  double friction_coefficient = 0.1;
-  friction->GetImplementation<DissipativeForce>()->friction_coefficient_ =
-      friction_coefficient;
-  friction->frequency_ = 1;  // 0.1 min
-  scheduler->ScheduleOp(friction);
+  rm->AddAgent(cell1);
+  rm->AddAgent(cell2);
 
   // Track positions
   const int time_steps = 100;
 
-  std::vector<Double3> cell_positions;
+  std::vector<std::vector<Double3>> cell_positions(number_of_cells);
   auto* track_pos_op = NewOperation("track_position");
   track_pos_op->GetImplementation<TrackPosition>()->positions_ =
       &cell_positions;
@@ -83,8 +86,11 @@ inline int Simulate(int argc, const char** argv) {
     file.open("positions.csv");
   }
 
-  for (size_t i = 0; i < cell_positions.size(); i++) {
-    file << i << "\t " << cell_positions[i] << std::endl;
+  for (size_t j = 0; j < time_steps; j++) {
+    for (size_t i = 0; i < cell_positions.size(); i++) {
+      file << j << "\t " << cell_positions[i][j];
+    }
+    file << std::endl;
   }
 
   file.close();
@@ -94,4 +100,4 @@ inline int Simulate(int argc, const char** argv) {
 
 }  // namespace bdm
 
-#endif  // UNIT_TEST_MECHANICS_H_
+#endif  // UNIT_TEST_MECHANICS_TWO_CELLS_H_

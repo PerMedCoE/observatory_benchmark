@@ -5,16 +5,15 @@
 ***********************************************
 
 [1mGeneral[0m
-Command				: ./build/unit-test-mechanics 
-Simulation name			: unit-test-mechanics
-Total simulation runtime	: 14 ms
-Peak memory usage (MB)		: 162.785
+Command				: ./build/unit-test-mechanics-two-cells 
+Simulation name			: unit-test-mechanics-two-cells
+Total simulation runtime	: 12 ms
+Peak memory usage (MB)		: 163.574
 Number of iterations executed	: 100
-Number of agents		: 1
-Output directory		: output/unit-test-mechanics
+Number of agents		: 2
+Output directory		: output/unit-test-mechanics-two-cells
   size				:   0B
 BioDynaMo version:		: v1.03.15-9589c6e2
-BioDynaMo real type:		: double
 
 ***********************************************
 
@@ -24,11 +23,10 @@ behavior: 0
 bound space: 0
 diffusion: 0
 discretization: 0
-dissipative_force: 0
 load balancing: 0
 mechanical forces: 0
 set up iteration: 0
-tear down iteration: 3
+tear down iteration: 1
 track_position: 0
 update environment: 0
 update staticness: 0
@@ -38,16 +36,16 @@ visualize: 0
 ***********************************************
 
 [1mThread Info[0m
-max_threads		: 4
+max_threads		: 8
 num_numa nodes		: 1
-thread to numa mapping	: 0 0 0 0 
-thread id in numa node	: 0 1 2 3 
-num threads per numa	: 4 
+thread to numa mapping	: 0 0 0 0 0 0 0 0 
+thread id in numa node	: 0 1 2 3 4 5 6 7 
+num threads per numa	: 8 
 
 ***********************************************
 
 [1mAgents per numa node[0m
-numa node 0 -> size: 1
+numa node 0 -> size: 2
 
 ***********************************************
 
@@ -112,6 +110,7 @@ numa node 0 -> size: 1
         "visualization_export_generate_pvsm": true,
         "visualization_interval": 1,
         "visualize_agents": {
+            "Moving_cell": [],
             "_typename": "map<string,set<string> >"
         },
         "visualize_diffusion": []

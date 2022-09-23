@@ -5,32 +5,30 @@
 ***********************************************
 
 [1mGeneral[0m
-Command				: ./build/unit-test-mechanics 
-Simulation name			: unit-test-mechanics
-Total simulation runtime	: 14 ms
-Peak memory usage (MB)		: 162.785
-Number of iterations executed	: 100
-Number of agents		: 1
-Output directory		: output/unit-test-mechanics
+Command				: ./build/cellcycle2 
+Simulation name			: cellcycle2
+Total simulation runtime	: 28 ms
+Peak memory usage (MB)		: 179.359
+Number of iterations executed	: 480
+Number of agents		: 2
+Output directory		: output/cellcycle2
   size				:   0B
-BioDynaMo version:		: v1.03.15-9589c6e2
+BioDynaMo version:		: v1.03.65-0c884685
 BioDynaMo real type:		: double
 
 ***********************************************
 
 [1mTotal execution time per operation[0m
-agent ops: 0
+agent ops: 2
 behavior: 0
 bound space: 0
 diffusion: 0
 discretization: 0
-dissipative_force: 0
 load balancing: 0
 mechanical forces: 0
-set up iteration: 0
-tear down iteration: 3
-track_position: 0
-update environment: 0
+set up iteration: 3
+tear down iteration: 5
+update environment: 10
 update staticness: 0
 update time series: 0
 visualize: 0
@@ -38,16 +36,16 @@ visualize: 0
 ***********************************************
 
 [1mThread Info[0m
-max_threads		: 4
+max_threads		: 8
 num_numa nodes		: 1
-thread to numa mapping	: 0 0 0 0 
-thread id in numa node	: 0 1 2 3 
-num threads per numa	: 4 
+thread to numa mapping	: 0 0 0 0 0 0 0 0 
+thread id in numa node	: 0 1 2 3 4 5 6 7 
+num threads per numa	: 8 
 
 ***********************************************
 
 [1mAgents per numa node[0m
-numa node 0 -> size: 1
+numa node 0 -> size: 2
 
 ***********************************************
 
@@ -62,11 +60,9 @@ numa node 0 -> size: 1
     },
     "bdm::Param": {
         "_typename": "bdm::Param",
-        "agent_uid_defragmentation_high_watermark": 0.9,
-        "agent_uid_defragmentation_low_watermark": 0.5,
         "backup_file": "",
         "backup_interval": 1800,
-        "bound_space": 1,
+        "bound_space": 0,
         "cache_neighbors": false,
         "calculate_gradients": true,
         "compute_target": "cpu",
@@ -79,11 +75,11 @@ numa node 0 -> size: 1
         "export_visualization": false,
         "insitu_visualization": false,
         "mapped_data_array_mode": 0,
-        "max_bound": 30,
+        "max_bound": 100,
         "mem_mgr_aligned_pages_shift": 5,
         "mem_mgr_growth_rate": 1.1,
         "mem_mgr_max_mem_per_thread_factor": 1,
-        "min_bound": -30,
+        "min_bound": 0,
         "minimize_memory_while_rebalancing": true,
         "nanoflann_depth": 10,
         "numerical_ode_solver": 1,
@@ -91,7 +87,7 @@ numa node 0 -> size: 1
         "output_dir": "output",
         "plot_memory_layout": false,
         "preferred_gpu": 0,
-        "pv_insitu_pipeline": "/Users/marcodurante/biodynamo/build/include/core/visualization/paraview/default_insitu_pipeline.py",
+        "pv_insitu_pipeline": "/Users/tobias/tmp/biodynamo/build/include/core/visualization/paraview/default_insitu_pipeline.py",
         "pv_insitu_pipelinearguments": "",
         "random_seed": 4357,
         "remove_output_dir_contents": true,

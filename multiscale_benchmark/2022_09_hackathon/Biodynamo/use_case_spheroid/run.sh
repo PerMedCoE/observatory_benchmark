@@ -1,8 +1,7 @@
 #!/bin/bash
 
-# This script runs the mechanics friction single unit test and moves the results
-# to the correct folder.
-
+# This script runs the spheroid and moves the results to the
+# correct folder.
 
 # Retun if any command fails
 set -e
@@ -18,7 +17,7 @@ fi
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 # Go to the folder where the simulation is located
-cd $DIR/code_scripts
+cd $DIR/code_scripts/spheroid
 
 # If the directories `build` and `output` exist, delete them
 if [ -d "build" ]; then
@@ -31,12 +30,11 @@ fi
 # Run the simulation
 bdm run
 
-# Create the results dir if it does not exist yet
-RESULTS=$DIR/results
-if [ ! -d "$RESULTS" ]; then
-    mkdir $RESULTS
-fi
-
 # Move the results to the correct folder
-mv positions.csv $RESULTS
-mv output/unit-test-mechanics/metadata $DIR/results
+mv output/spheroid/metadata $DIR/results
+[ -f output/spheroid/time-series-data.json ] && \
+  mv output/spheroid/time-series-data.json $DIR/results
+[ -f output/spheroid/spheroid.png ] && \
+  mv output/spheroid/spheroid.png $DIR/results
+[ -f output/spheroid/spheroid.svg ] && \
+  mv output/spheroid/spheroid.svg $DIR/results
