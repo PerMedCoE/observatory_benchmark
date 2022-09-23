@@ -31,7 +31,7 @@ inline int Simulate(int argc, const char** argv) {
   };
 
   Simulation simulation(argc, argv, set_param);
-  auto* scheduler = simulation.GetScheduler();
+  auto *scheduler = simulation.GetScheduler();
 
   double const cell_diameter = 10.;  // um
   double const PI = 3.14159265;

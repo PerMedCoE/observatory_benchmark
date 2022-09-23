@@ -1,7 +1,8 @@
 #!/bin/bash
 
-# This script runs the friction test and moves the results to the
-# correct folder.
+# This script runs the mechanics friction single unit test and moves the results
+# to the correct folder.
+
 
 # Retun if any command fails
 set -e
@@ -30,5 +31,12 @@ fi
 # Run the simulation
 bdm run
 
+# Create the results dir if it does not exist yet
+RESULTS=$DIR/results
+if [ ! -d "$RESULTS" ]; then
+    mkdir $RESULTS
+fi
+
 # Move the results to the correct folder
+mv positions.csv $RESULTS
 mv output/unit-test-mechanics/metadata $DIR/results
