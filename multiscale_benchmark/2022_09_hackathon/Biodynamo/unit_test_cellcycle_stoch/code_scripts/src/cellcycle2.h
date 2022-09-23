@@ -142,7 +142,6 @@ struct Growth : public Behavior {
       // if yes cell grows if no then cell does not grow.
       if (cell->GetVolume() < cell->GetVmax()) {
         double alpha = 1.0;
-        double beta = 2.0;
         //cell->ChangeVolume(cell->GetVmax() - cell->GetVolume());
         cell->ChangeVolume(alpha * cell->GetVolume()*((cell->GetVmax() - cell->GetVolume())/cell->GetVmax())*gaus);
       }
@@ -165,9 +164,8 @@ inline int Simulate(int argc, const char** argv) {
   Simulation simulation(argc, argv);
   auto* rm = simulation.GetResourceManager();
   auto *scheduler = simulation.GetScheduler();  // Get the Scheduler
-  auto* param = simulation.GetParam();
 
-  size_t nb_of_cells = 10;  // number of cells in the simulation
+  size_t nb_of_cells = 1;  // number of cells in the simulation
   
   for (size_t i = 0; i < nb_of_cells; ++i) {
     MyCell* cell = new MyCell({30, 30, 30});
