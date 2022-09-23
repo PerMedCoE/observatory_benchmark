@@ -15,6 +15,7 @@
 #define SPHERE_H_
 
 #include "biodynamo.h"
+#include "custom_ops.h"
 
 namespace bdm {
 
@@ -186,6 +187,11 @@ inline int Simulate(int argc, const char** argv) {
     cell->AddBehavior(new Growth());
     rm->AddAgent(cell);  // put the created cell in our cells structure
   }
+
+  // Check if the cells have moved along the z direction and, if so, move them back
+  auto* move_cells_back = NewOperation("move_cells_plane");
+  move_cells_back->frequency_ = 1;  // 0.1 min
+  simulation.GetScheduler()->ScheduleOp(move_cells_back);
 
   // Run simulation for one timestep
   // time steps are in tenths of an hour for a total of 48 hours equivalent in time steps.
