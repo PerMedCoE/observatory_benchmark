@@ -17,7 +17,7 @@ fi
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 # Go to the folder where the simulation is located
-cd $DIR/code_scripts/diffusion-small
+cd $DIR/code_scripts/chemotaxis
 
 # If the directories `build` and `output` exist, delete them
 if [ -d "build" ]; then
@@ -31,5 +31,5 @@ fi
 bdm run
 
 # Move the results to the correct folder
-mv output/diffusion-small/metadata $DIR/results
-[ -f output/concentration.csv ] && mv output/concentration.csv $DIR/results
+mv output/chemotaxis/metadata $DIR/results
+[ -f output/position.csv ] && mv output/position.csv $DIR/results

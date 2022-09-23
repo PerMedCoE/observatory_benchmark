@@ -7,8 +7,8 @@
 [1mGeneral[0m
 Command				: ./build/diffusion-small 
 Simulation name			: diffusion-small
-Total simulation runtime	: 1271 ms
-Peak memory usage (MB)		: 185
+Total simulation runtime	: 37 ms
+Peak memory usage (MB)		: 184.781
 Number of iterations executed	: 1000
 Number of agents		: 1
 Diffusion grids
@@ -24,17 +24,16 @@ BioDynaMo real type:		: double
 ***********************************************
 
 [1mTotal execution time per operation[0m
-ExportConcentration: 975
-agent ops: 48
+agent ops: 4
 behavior: 0
 bound space: 0
-diffusion: 72
+diffusion: 4
 discretization: 0
-load balancing: 0
+load balancing: 1
 mechanical forces: 0
-set up iteration: 57
-tear down iteration: 42
-update environment: 65
+set up iteration: 4
+tear down iteration: 3
+update environment: 12
 update staticness: 0
 update time series: 0
 visualize: 0

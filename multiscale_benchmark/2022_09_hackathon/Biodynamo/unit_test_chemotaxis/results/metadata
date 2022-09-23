@@ -5,18 +5,18 @@
 ***********************************************
 
 [1mGeneral[0m
-Command				: ./build/diffusion-large 
-Simulation name			: diffusion-large
-Total simulation runtime	: 246 ms
-Peak memory usage (MB)		: 188.156
+Command				: ./build/chemotaxis 
+Simulation name			: chemotaxis
+Total simulation runtime	: 154 ms
+Peak memory usage (MB)		: 187.719
 Number of iterations executed	: 1000
-Number of agents		: 1000
+Number of agents		: 1
 Diffusion grids
   Substance:
 	Resolution		: 12
-	Size			: 240 x 240 x 240
+	Size			: 120 x 120 x 120
 	Voxels			: 1728
-Output directory		: output/diffusion-large
+Output directory		: output/chemotaxis
   size				:   0B
 BioDynaMo version:		: v1.03.65-0c884685
 BioDynaMo real type:		: double
@@ -24,16 +24,17 @@ BioDynaMo real type:		: double
 ***********************************************
 
 [1mTotal execution time per operation[0m
-agent ops: 87
+SourceTerm: 0
+agent ops: 17
 behavior: 0
 bound space: 0
-diffusion: 35
+diffusion: 34
 discretization: 0
-load balancing: 1
+load balancing: 0
 mechanical forces: 0
-set up iteration: 39
-tear down iteration: 17
-update environment: 50
+set up iteration: 27
+tear down iteration: 21
+update environment: 35
 update staticness: 0
 update time series: 0
 visualize: 0
@@ -50,7 +51,7 @@ num threads per numa	: 8
 ***********************************************
 
 [1mAgents per numa node[0m
-numa node 0 -> size: 1000
+numa node 0 -> size: 1
 
 ***********************************************
 
@@ -80,11 +81,11 @@ numa node 0 -> size: 1000
         "export_visualization": false,
         "insitu_visualization": false,
         "mapped_data_array_mode": 0,
-        "max_bound": 120,
+        "max_bound": 60,
         "mem_mgr_aligned_pages_shift": 5,
         "mem_mgr_growth_rate": 1.1,
         "mem_mgr_max_mem_per_thread_factor": 1,
-        "min_bound": -120,
+        "min_bound": -60,
         "minimize_memory_while_rebalancing": true,
         "nanoflann_depth": 10,
         "numerical_ode_solver": 1,
