@@ -27,7 +27,7 @@ inline int Simulate(int argc, const char** argv) {
     param->bound_space = Param::BoundSpaceMode::kClosed;
     param->min_bound = -30;
     param->max_bound = 30;
-    param->export_visualization = true;
+    param->export_visualization = false;
     param->visualize_agents["Moving_cell"] = {};
   };
 
