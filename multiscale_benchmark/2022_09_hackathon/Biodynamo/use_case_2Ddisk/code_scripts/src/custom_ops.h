@@ -2,7 +2,6 @@
 #define CUSTOM_OPS_H_
 
 #include "biodynamo.h"
-#include "moving_cell.h"
 
 namespace bdm {
 
