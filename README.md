@@ -58,7 +58,7 @@ After exhaustive literature review and feature-wise comparison, we ended up with
 | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
 |**Scope**|CBM|CBM, others|CBM|CBM|CBM|CBM|CBM|CBM|
 |**Shared memory (OpenMP)**|Y|Y|Y|Y|Y|Y|Y|Y|
-|**Distributed memory (MPI)**|N|Y|Y|Y|Y|N|Y|Y|
+|**Distributed memory (MPI)**|N|Y|Y|Y|N|N|Y|Y|
 |**Language**|C++|C++|C++|C++, CUDA, python|C++|C++|C|C++|
 |**Open source**|Y|Y|Source-available software|Y|Y|Source-available software|Y|Y|
 |**Format**|Executable|CTest Executable|Executable|Executable|Executable|Executable|Executable|Executable|
