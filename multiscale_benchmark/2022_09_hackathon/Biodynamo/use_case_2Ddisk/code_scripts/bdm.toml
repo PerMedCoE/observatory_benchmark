@@ -1,7 +1,0 @@
-[visualization]
-export = true
-interval = 1
-
-[[visualize_agent]]
-  name = "MyCell"
-  additional_data_members = [ "volume_","vmax_","cycle_","delt_","vrel_" ]
