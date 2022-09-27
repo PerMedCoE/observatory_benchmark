@@ -86,11 +86,9 @@ inline int Simulate(int argc, const char** argv) {
     simulation.GetScheduler()->ScheduleOp(move_cells_back);
 
     // Count number of cells every 30 min (half hour = 5 time steps)
-    std::vector<size_t> total_cells;
     auto* count_cells = NewOperation("count_cells");
     int count_cell_freq = 5;
     count_cells->frequency_ = count_cell_freq;
-    count_cells->GetImplementation<CountCells>()->total_cells_ = &total_cells;
     simulation.GetScheduler()->ScheduleOp(count_cells);
 
     // Set time series freq (will measure the size of the uniform grid environment)
@@ -107,7 +105,7 @@ inline int Simulate(int argc, const char** argv) {
     // Run simulation for 310 hours (1 timestep = 0.1 hours)
     simulation.GetScheduler()->Simulate(3100);  // 3100
 
-    // scheduler->PrintInfo(std::cout);
+    scheduler->PrintInfo(std::cout);
 
     // Export cell number
     std::ofstream file1;
@@ -115,8 +113,10 @@ inline int Simulate(int argc, const char** argv) {
       file1.open("total_cells.csv");
     }
 
-    for (size_t i = 0; i < total_cells.size(); i++) {
-      file1 << i * count_cell_freq << "\t " << total_cells[i] << std::endl;
+    std::vector<size_t> cells_measurements = count_cells->GetImplementation<CountCells>()->GetMeasurements();
+
+    for (size_t i = 0; i < cells_measurements.size(); i++) {
+      file1 << i * count_cell_freq << "\t " << cells_measurements[i] << std::endl;
     }
 
     file1.close();
