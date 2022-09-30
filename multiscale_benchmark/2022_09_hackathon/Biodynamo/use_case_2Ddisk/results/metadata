@@ -1,0 +1,134 @@
+
+***********************************************
+***********************************************
+[1mSimulation Metadata:[0m
+***********************************************
+
+[1mGeneral[0m
+Command				: ./build/sphere 
+Simulation name			: sphere
+Total simulation runtime	: 31716 ms
+Peak memory usage (MB)		: 199.691
+Number of iterations executed	: 3100
+Number of agents		: 96769
+Output directory		: output/sphere
+  size				:  32K
+BioDynaMo version:		: v1.03.87-5684f317
+BioDynaMo real type:		: double
+
+***********************************************
+
+[1mTotal execution time per operation[0m
+agent ops: 28456
+behavior: 1
+bound space: 0
+diffusion: 2
+discretization: 0
+load balancing: 1
+mechanical forces: 0
+move_cells_plane: 3
+set up iteration: 72
+tear down iteration: 97
+update environment: 2729
+update staticness: 2
+update time series: 2
+visualize: 1
+
+***********************************************
+
+[1mThread Info[0m
+max_threads		: 8
+num_numa nodes		: 1
+thread to numa mapping	: 0 0 0 0 0 0 0 0 
+thread id in numa node	: 0 1 2 3 4 5 6 7 
+num threads per numa	: 8 
+
+***********************************************
+
+[1mAgents per numa node[0m
+numa node 0 -> size: 96769
+
+***********************************************
+
+[1mParameters[0m
+{
+    "bdm::OptimizationParam": {
+        "_typename": "bdm::OptimizationParam",
+        "algorithm": "",
+        "max_iterations": 100,
+        "params": [],
+        "repetition": 1
+    },
+    "bdm::Param": {
+        "_typename": "bdm::Param",
+        "backup_file": "",
+        "backup_interval": 1800,
+        "bound_space": 0,
+        "cache_neighbors": false,
+        "calculate_gradients": true,
+        "compute_target": "cpu",
+        "debug_numa": false,
+        "detect_static_agents": false,
+        "diffusion_boundary_condition": "open",
+        "diffusion_method": "euler",
+        "environment": "uniform_grid",
+        "execution_order": 0,
+        "export_visualization": false,
+        "insitu_visualization": false,
+        "mapped_data_array_mode": 0,
+        "max_bound": 2000,
+        "mem_mgr_aligned_pages_shift": 5,
+        "mem_mgr_growth_rate": 1.1,
+        "mem_mgr_max_mem_per_thread_factor": 1,
+        "min_bound": -2000,
+        "minimize_memory_while_rebalancing": true,
+        "nanoflann_depth": 10,
+        "numerical_ode_solver": 1,
+        "opencl_debug": false,
+        "output_dir": "output",
+        "plot_memory_layout": false,
+        "preferred_gpu": 0,
+        "pv_insitu_pipeline": "/Users/marcodurante/biodynamo_addDemoMonolayerGrowth/build/include/core/visualization/paraview/default_insitu_pipeline.py",
+        "pv_insitu_pipelinearguments": "",
+        "random_seed": 4357,
+        "remove_output_dir_contents": true,
+        "restore_file": "",
+        "root_visualization": false,
+        "scheduling_batch_size": 1000,
+        "show_simulation_step": 0,
+        "simulation_max_displacement": 100,
+        "simulation_time_step": 0.1,
+        "statistics": true,
+        "thread_safety_mechanism": 1,
+        "unibn_bucketsize": 16,
+        "unschedule_default_operations": [],
+        "use_bdm_mem_mgr": true,
+        "use_progress_bar": true,
+        "visualization_compress_pv_files": true,
+        "visualization_engine": "paraview",
+        "visualization_export_generate_pvsm": true,
+        "visualization_interval": 500,
+        "visualize_agents": {
+            "CyclingCell": [],
+            "_typename": "map<string,set<string> >"
+        },
+        "visualize_diffusion": []
+    },
+    "bdm::SimParam": {
+        "_typename": "bdm::SimParam",
+        "attraction_coeff": 0.001,
+        "cell_diam": 20,
+        "neighbours_threshold": 20,
+        "nn": 1140,
+        "pos0": -560,
+        "posN": 570,
+        "repulsion_coeff": 300,
+        "t0": 14,
+        "total_time": 310,
+        "ts_freq": 200
+    }
+}
+***********************************************
+***********************************************
+
+

@@ -32,3 +32,5 @@ bdm run
 
 # Move the results to the correct folder
 mv output/sphere/metadata $DIR/results
+mv $DIR/code_scripts/output/sphere/result.* $DIR/results
+mv $DIR/code_scripts/output/sphere/*.json $DIR/results

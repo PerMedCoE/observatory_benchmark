@@ -11,6 +11,23 @@
 // regarding copyright ownership.
 //
 // -----------------------------------------------------------------------------
-#include "sphere.h"
 
-int main(int argc, const char** argv) { return bdm::Simulate(argc, argv); }
+#ifndef CELL_CELL_FORCE_H_
+#define CELL_CELL_FORCE_H_
+
+#include "biodynamo.h"
+#include "core/interaction_force.h"
+
+namespace bdm {
+
+class CellCellForce : public InteractionForce {
+ public:
+  CellCellForce() {}
+  virtual ~CellCellForce() {}
+
+  virtual Real4 Calculate(const Agent* lhs, const Agent* rhs) const override;
+};
+
+}  // namespace bdm
+
+#endif

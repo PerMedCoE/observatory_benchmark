@@ -12,27 +12,12 @@
 //
 // -----------------------------------------------------------------------------
 
-#ifndef CUSTOM_OPS_H_
-#define CUSTOM_OPS_H_
-
-#include "biodynamo.h"
-#include "core/environment/uniform_grid_environment.h"
+#include "monolayer_growth.h"
 
 namespace bdm {
 
-// Brings cells back to the xy plane (i.e. z = 0)
-struct MoveCellsPlane : public AgentOperationImpl {
-  BDM_OP_HEADER(MoveCellsPlane);
-
-  void operator()(Agent* agent) override {
-    Real3 cell_position = agent->GetPosition();
-    if (cell_position[2] != 0.0) {
-      cell_position[2] = 0.0;
-      agent->SetPosition(cell_position);
-    }
-  }
-};
+const ParamGroupUid SimParam::kUid = ParamGroupUidGenerator::Get()->NewUid();
 
 }  // namespace bdm
 
-#endif
+int main(int argc, const char** argv) { return bdm::Simulate(argc, argv); }
