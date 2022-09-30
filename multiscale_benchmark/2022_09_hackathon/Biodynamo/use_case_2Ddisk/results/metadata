@@ -7,31 +7,31 @@
 [1mGeneral[0m
 Command				: ./build/sphere 
 Simulation name			: sphere
-Total simulation runtime	: 118938 ms
-Peak memory usage (MB)		: 201.008
+Total simulation runtime	: 31716 ms
+Peak memory usage (MB)		: 199.691
 Number of iterations executed	: 3100
-Number of agents		: 81956
+Number of agents		: 96769
 Output directory		: output/sphere
-  size				:   0B
-BioDynaMo version:		: v1.03.15-9589c6e2
+  size				:  32K
+BioDynaMo version:		: v1.03.87-5684f317
+BioDynaMo real type:		: double
 
 ***********************************************
 
 [1mTotal execution time per operation[0m
-agent ops: 116710
+agent ops: 28456
 behavior: 1
-bound space: 2
-count_cells: 0
+bound space: 0
 diffusion: 2
-discretization: 2
+discretization: 0
 load balancing: 1
-mechanical forces: 2
-move_cells_plane: 1
-set up iteration: 55
-tear down iteration: 1841
-update environment: 0
-update staticness: 1
-update time series: 1
+mechanical forces: 0
+move_cells_plane: 3
+set up iteration: 72
+tear down iteration: 97
+update environment: 2729
+update staticness: 2
+update time series: 2
 visualize: 1
 
 ***********************************************
@@ -46,7 +46,7 @@ num threads per numa	: 8
 ***********************************************
 
 [1mAgents per numa node[0m
-numa node 0 -> size: 81956
+numa node 0 -> size: 96769
 
 ***********************************************
 
@@ -61,8 +61,6 @@ numa node 0 -> size: 81956
     },
     "bdm::Param": {
         "_typename": "bdm::Param",
-        "agent_uid_defragmentation_high_watermark": 0.9,
-        "agent_uid_defragmentation_low_watermark": 0.5,
         "backup_file": "",
         "backup_interval": 1800,
         "bound_space": 0,
@@ -90,7 +88,7 @@ numa node 0 -> size: 81956
         "output_dir": "output",
         "plot_memory_layout": false,
         "preferred_gpu": 0,
-        "pv_insitu_pipeline": "/Users/marcodurante/biodynamo/build/include/core/visualization/paraview/default_insitu_pipeline.py",
+        "pv_insitu_pipeline": "/Users/marcodurante/biodynamo_addDemoMonolayerGrowth/build/include/core/visualization/paraview/default_insitu_pipeline.py",
         "pv_insitu_pipelinearguments": "",
         "random_seed": 4357,
         "remove_output_dir_contents": true,
@@ -99,22 +97,35 @@ numa node 0 -> size: 81956
         "scheduling_batch_size": 1000,
         "show_simulation_step": 0,
         "simulation_max_displacement": 100,
-        "simulation_time_step": 0.01,
+        "simulation_time_step": 0.1,
         "statistics": true,
         "thread_safety_mechanism": 1,
         "unibn_bucketsize": 16,
         "unschedule_default_operations": [],
         "use_bdm_mem_mgr": true,
-        "use_progress_bar": false,
+        "use_progress_bar": true,
         "visualization_compress_pv_files": true,
         "visualization_engine": "paraview",
         "visualization_export_generate_pvsm": true,
         "visualization_interval": 500,
         "visualize_agents": {
-            "MyCell": [],
+            "CyclingCell": [],
             "_typename": "map<string,set<string> >"
         },
         "visualize_diffusion": []
+    },
+    "bdm::SimParam": {
+        "_typename": "bdm::SimParam",
+        "attraction_coeff": 0.001,
+        "cell_diam": 20,
+        "neighbours_threshold": 20,
+        "nn": 1140,
+        "pos0": -560,
+        "posN": 570,
+        "repulsion_coeff": 300,
+        "t0": 14,
+        "total_time": 310,
+        "ts_freq": 200
     }
 }
 ***********************************************
