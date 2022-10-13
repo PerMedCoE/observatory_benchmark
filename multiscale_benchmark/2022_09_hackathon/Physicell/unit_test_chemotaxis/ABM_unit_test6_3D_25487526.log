@@ -1,0 +1,1225 @@
+Using config file data/ABM_unit_test6_3D.xml ... 
+1
+dc? 1
+User parameters in XML config file: 
+Bool parameters:: 
+
+Int parameters:: 
+random_seed: 0 [dimensionless]
+number_of_cells: 0 [none]
+
+Double parameters:: 
+
+String parameters:: 
+
+
+which boundaries?
+1 1 1 1 1 1
+
+Microenvironment summary: microenvironment: 
+
+Mesh information: 
+type: uniform Cartesian
+Domain: [-60,60] micron x [-60,60] micron x [-60,60] micron
+   resolution: dx = 20 micron
+   voxels: 216
+   voxel faces: 0
+   volume: 1.728e+06 cubic micron
+Densities: (1 total)
+   oxygen:
+     units: dimensionless
+     diffusion coefficient: 2000 micron^2 / min
+     decay rate: 0 min^-1
+     diffusion length scale: 4.47214e+07 micron
+     initial condition: 0 dimensionless
+     boundary condition: 6022 dimensionless (enabled: true)
+
+Pre-processing type 0 named agent
+Processing agent ... 
+  --------- attachment_elastic_constant = 0.01
+Warning: when processing motility for agent cells: 
+	Both chemotaxis and advanced_chemotaxis are enabled.
+	The settings for advanced_chemotaxis override those of chemotaxis.
+Cells of type agent use advanced chemotaxis: 
+	 d_bias (before normalization) = 1 * grad(oxygen)
+Signals: 
+=======
+0 : oxygen
+1 : intracellular oxygen
+2 : oxygen gradient
+3 : pressure
+4 : volume
+5 : contact with agent
+6 : contact with live cell
+7 : contact with dead cell
+8 : contact with basement membrane
+9 : damage
+10 : dead
+11 : total attack time
+12 : time
+13 : custom:sample
+
+
+Behaviors: 
+=========
+0 : oxygen secretion
+1 : oxygen secretion target
+2 : oxygen uptake
+3 : oxygen export
+4 : cycle entry
+5 : exit from cycle phase 1
+6 : exit from cycle phase 2
+7 : exit from cycle phase 3
+8 : exit from cycle phase 4
+9 : exit from cycle phase 5
+10 : apoptosis
+11 : necrosis
+12 : migration speed
+13 : migration bias
+14 : migration persistence time
+15 : chemotactic response to oxygen
+16 : cell-cell adhesion
+17 : cell-cell adhesion elastic constant
+18 : adhesive affinity to agent
+19 : relative maximum adhesion distance
+20 : cell-cell repulsion
+21 : cell-BM adhesion
+22 : cell-BM repulsion
+23 : phagocytose dead cell
+24 : phagocytose agent
+25 : attack agent
+26 : fuse to agent
+27 : transform to agent
+28 : custom:sample
+
+
+0 :: type:0 name: agent
+	 cycle model: Live (code=5)
+		Phase 0: Live
+		Cycle transitions: 
+		-----------------
+		Live --> Live w mean duration inf min
+	 death models: 
+		0 : Apoptosis (code=100) with rate 5.31667e-05 1/min
+		death phase transitions: 
+		------------------------
+		Apoptotic --> Debris w mean duration 516 min
+		1 : Necrosis (code=101) with rate 0 1/min
+		death phase transitions: 
+		------------------------
+		Necrotic (swelling) --> Necrotic (lysed) w mean duration 1e-16 min
+		Necrotic (lysed) --> Debris w mean duration 86400 min
+	 key functions: 
+		 migration bias rule: true
+		 custom rule: false
+		 phenotype rule: true
+		 volume update function: true
+		 mechanics function: true
+		 contact function: false
+	motility (enabled: true in 3D)
+		speed: 1 micron/min
+		bias: 1 
+		persistence time: 1 min
+		chemotaxis (enabled: false)
+			along 1 * grad(oxygen) 
+	mechanics:
+		cell_cell_adhesion_strength: 0.4
+		cell_cell_repulsion_strength: 10
+		rel max adhesion dist: 1.25
+		cell_BM_adhesion_strength: 4
+		cell_BM_repulsion_strength: 10
+		attachment_elastic_constant: 0.01
+		attachment_rate: 10
+		detachment_rate: 0
+	custom data: 
+		sample: 1 dimensionless
+	custom vector data: 
+			NOTE: custom vector data will eventually be merged with custom data
+Loading cells from CSV file ./data/cells1.csv ... 
+Creating agent (type=0) at 0 0 0 
+Using PhysiCell version 1.10.4
+	Please cite DOI: 10.1371/journal.pcbi.1005991
+	Project website: http://PhysiCell.MathCancer.org
+
+See ALL_CITATIONS.txt for this list.
+current simulated time: 0 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 1.6318e-05 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 2.2087e-05 seconds 
+
+
+Using method diffusion_decay_solver__constant_coefficients_LOD_3D (implicit 3-D LOD with Thomas Algorithm) ... 
+
+Warning: Attempted to set a cycle exit rate outside the bounds of the cell's cycle model
+         Ignoring it, but you should fix this.
+current simulated time: 1 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0111785 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0112056 seconds 
+
+current simulated time: 2 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00545578 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0166661 seconds 
+
+current simulated time: 3 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00501591 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0216868 seconds 
+
+current simulated time: 4 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00511179 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0268031 seconds 
+
+current simulated time: 5 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0044446 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0312525 seconds 
+
+current simulated time: 6 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00463746 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0358945 seconds 
+
+Warning: Attempted to set a cycle exit rate outside the bounds of the cell's cycle model
+         Ignoring it, but you should fix this.
+current simulated time: 7 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00491437 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0408135 seconds 
+
+current simulated time: 8 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00736343 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0481813 seconds 
+
+current simulated time: 9 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00451281 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0526986 seconds 
+
+current simulated time: 10 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00466551 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0573689 seconds 
+
+current simulated time: 11 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00566343 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0630369 seconds 
+
+current simulated time: 12 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00440625 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0674478 seconds 
+
+Warning: Attempted to set a cycle exit rate outside the bounds of the cell's cycle model
+         Ignoring it, but you should fix this.
+current simulated time: 13 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00453597 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0719883 seconds 
+
+current simulated time: 14 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00463181 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.076625 seconds 
+
+current simulated time: 15 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00464612 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0812757 seconds 
+
+current simulated time: 16 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00474767 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0860281 seconds 
+
+current simulated time: 17 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00464559 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0906783 seconds 
+
+current simulated time: 18 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00485119 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.095535 seconds 
+
+Warning: Attempted to set a cycle exit rate outside the bounds of the cell's cycle model
+         Ignoring it, but you should fix this.
+current simulated time: 19 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00480191 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.100342 seconds 
+
+current simulated time: 20 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00446848 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.104815 seconds 
+
+current simulated time: 21 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0058887 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.110709 seconds 
+
+current simulated time: 22 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00993436 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.120649 seconds 
+
+current simulated time: 23 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00435416 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.125008 seconds 
+
+current simulated time: 24 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00455657 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.12957 seconds 
+
+Warning: Attempted to set a cycle exit rate outside the bounds of the cell's cycle model
+         Ignoring it, but you should fix this.
+current simulated time: 25 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00432841 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.133904 seconds 
+
+current simulated time: 26 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00376834 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.137678 seconds 
+
+current simulated time: 27 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00281537 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.140498 seconds 
+
+current simulated time: 28 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00279481 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.143298 seconds 
+
+current simulated time: 29 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00275492 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.146058 seconds 
+
+current simulated time: 30 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00280171 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.148864 seconds 
+
+Warning: Attempted to set a cycle exit rate outside the bounds of the cell's cycle model
+         Ignoring it, but you should fix this.
+current simulated time: 31 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00384729 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.152716 seconds 
+
+current simulated time: 32 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0028006 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.155522 seconds 
+
+current simulated time: 33 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00281182 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.158338 seconds 
+
+current simulated time: 34 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00422712 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.16257 seconds 
+
+current simulated time: 35 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00294981 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.165526 seconds 
+
+current simulated time: 36 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00311802 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.16865 seconds 
+
+Warning: Attempted to set a cycle exit rate outside the bounds of the cell's cycle model
+         Ignoring it, but you should fix this.
+current simulated time: 37 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00282823 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.171484 seconds 
+
+current simulated time: 38 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00284519 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.174335 seconds 
+
+current simulated time: 39 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0028102 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.17715 seconds 
+
+current simulated time: 40 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00283116 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.179987 seconds 
+
+current simulated time: 41 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00313001 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.183122 seconds 
+
+current simulated time: 42 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00282032 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.185948 seconds 
+
+Warning: Attempted to set a cycle exit rate outside the bounds of the cell's cycle model
+         Ignoring it, but you should fix this.
+current simulated time: 43 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00289001 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.188844 seconds 
+
+current simulated time: 44 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00283334 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.191682 seconds 
+
+current simulated time: 45 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00282626 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.194514 seconds 
+
+current simulated time: 46 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00283741 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.197357 seconds 
+
+current simulated time: 47 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00282258 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.200185 seconds 
+
+current simulated time: 48 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0032055 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.203396 seconds 
+
+Warning: Attempted to set a cycle exit rate outside the bounds of the cell's cycle model
+         Ignoring it, but you should fix this.
+current simulated time: 49 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00282119 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.206222 seconds 
+
+current simulated time: 50 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00279883 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.209026 seconds 
+
+current simulated time: 51 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00308212 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.212114 seconds 
+
+current simulated time: 52 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00298392 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.215103 seconds 
+
+current simulated time: 53 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00319681 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.218305 seconds 
+
+current simulated time: 54 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00280778 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.221119 seconds 
+
+Warning: Attempted to set a cycle exit rate outside the bounds of the cell's cycle model
+         Ignoring it, but you should fix this.
+current simulated time: 55 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.002808 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.223932 seconds 
+
+current simulated time: 56 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0027852 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.226723 seconds 
+
+current simulated time: 57 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00278526 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.229513 seconds 
+
+current simulated time: 58 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00278539 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.232304 seconds 
+
+current simulated time: 59 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00276842 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.235078 seconds 
+
+current simulated time: 60 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00487828 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.239961 seconds 
+
+Warning: Attempted to set a cycle exit rate outside the bounds of the cell's cycle model
+         Ignoring it, but you should fix this.
+current simulated time: 61 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00449937 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.244466 seconds 
+
+current simulated time: 62 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00485576 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.249327 seconds 
+
+current simulated time: 63 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00370011 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.253033 seconds 
+
+current simulated time: 64 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00420434 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.257243 seconds 
+
+current simulated time: 65 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0036584 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.260907 seconds 
+
+current simulated time: 66 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00362004 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.264532 seconds 
+
+Warning: Attempted to set a cycle exit rate outside the bounds of the cell's cycle model
+         Ignoring it, but you should fix this.
+current simulated time: 67 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00361946 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.268157 seconds 
+
+current simulated time: 68 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00368379 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.271846 seconds 
+
+current simulated time: 69 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00365077 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.275502 seconds 
+
+current simulated time: 70 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0034091 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.278916 seconds 
+
+current simulated time: 71 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00396977 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.282892 seconds 
+
+Warning and FYI: Very small vectors are normalized to 0 vector
+
+current simulated time: 72 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00357216 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.286469 seconds 
+
+Warning: Attempted to set a cycle exit rate outside the bounds of the cell's cycle model
+         Ignoring it, but you should fix this.
+current simulated time: 73 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00347476 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.289949 seconds 
+
+current simulated time: 74 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00385393 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.293809 seconds 
+
+current simulated time: 75 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00362545 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.29744 seconds 
+
+current simulated time: 76 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00353094 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.300976 seconds 
+
+current simulated time: 77 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00354585 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.304527 seconds 
+
+current simulated time: 78 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0035563 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.308089 seconds 
+
+Warning: Attempted to set a cycle exit rate outside the bounds of the cell's cycle model
+         Ignoring it, but you should fix this.
+current simulated time: 79 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00346773 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.311562 seconds 
+
+current simulated time: 80 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0042506 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.315818 seconds 
+
+current simulated time: 81 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00399934 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.319823 seconds 
+
+current simulated time: 82 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0036104 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.323439 seconds 
+
+current simulated time: 83 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00367924 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.327123 seconds 
+
+current simulated time: 84 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00708615 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.334215 seconds 
+
+Warning: Attempted to set a cycle exit rate outside the bounds of the cell's cycle model
+         Ignoring it, but you should fix this.
+current simulated time: 85 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00427347 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.338494 seconds 
+
+current simulated time: 86 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00414789 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.342647 seconds 
+
+current simulated time: 87 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00358147 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.346234 seconds 
+
+current simulated time: 88 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00365022 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.349889 seconds 
+
+current simulated time: 89 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00376813 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.353663 seconds 
+
+current simulated time: 90 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0035044 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.357173 seconds 
+
+Warning: Attempted to set a cycle exit rate outside the bounds of the cell's cycle model
+         Ignoring it, but you should fix this.
+current simulated time: 91 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00407244 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.36125 seconds 
+
+current simulated time: 92 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00378978 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.365046 seconds 
+
+current simulated time: 93 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00697106 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.372022 seconds 
+
+current simulated time: 94 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00353004 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.375557 seconds 
+
+current simulated time: 95 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0035388 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.379102 seconds 
+
+current simulated time: 96 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0041819 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.383289 seconds 
+
+Warning: Attempted to set a cycle exit rate outside the bounds of the cell's cycle model
+         Ignoring it, but you should fix this.
+current simulated time: 97 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00345451 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.386749 seconds 
+
+current simulated time: 98 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00359236 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.390346 seconds 
+
+current simulated time: 99 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00349536 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.393847 seconds 
+
+current simulated time: 100 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0035756 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.397428 seconds 
+
+current simulated time: 101 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00412584 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.401559 seconds 
+
+current simulated time: 102 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00350338 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.405068 seconds 
+
+Warning: Attempted to set a cycle exit rate outside the bounds of the cell's cycle model
+         Ignoring it, but you should fix this.
+current simulated time: 103 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00355261 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.408626 seconds 
+
+current simulated time: 104 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00362536 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.412257 seconds 
+
+current simulated time: 105 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00358491 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.415847 seconds 
+
+current simulated time: 106 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00354803 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.4194 seconds 
+
+current simulated time: 107 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00349059 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.422896 seconds 
+
+current simulated time: 108 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00486993 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.427772 seconds 
+
+Warning: Attempted to set a cycle exit rate outside the bounds of the cell's cycle model
+         Ignoring it, but you should fix this.
+current simulated time: 109 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00365925 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.431437 seconds 
+
+current simulated time: 110 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0037183 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.43516 seconds 
+
+current simulated time: 111 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00402356 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.43919 seconds 
+
+current simulated time: 112 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00359127 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.442787 seconds 
+
+current simulated time: 113 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00380151 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.446594 seconds 
+
+current simulated time: 114 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00361154 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.450211 seconds 
+
+Warning: Attempted to set a cycle exit rate outside the bounds of the cell's cycle model
+         Ignoring it, but you should fix this.
+current simulated time: 115 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00367639 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.453893 seconds 
+
+current simulated time: 116 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00356974 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.457469 seconds 
+
+current simulated time: 117 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00344269 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.460917 seconds 
+
+current simulated time: 118 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00347763 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.4644 seconds 
+
+current simulated time: 119 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00351548 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.467922 seconds 
+
+current simulated time: 120 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00359072 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.471518 seconds 
+
+Warning: Attempted to set a cycle exit rate outside the bounds of the cell's cycle model
+         Ignoring it, but you should fix this.
+current simulated time: 121 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00397735 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.475501 seconds 
+
+current simulated time: 122 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00345376 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.478961 seconds 
+
+current simulated time: 123 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00355812 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.482525 seconds 
+
+current simulated time: 124 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00356996 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.4861 seconds 
+
+current simulated time: 125 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00356497 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.489671 seconds 
+
+current simulated time: 126 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00353317 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.49321 seconds 
+
+Warning: Attempted to set a cycle exit rate outside the bounds of the cell's cycle model
+         Ignoring it, but you should fix this.
+current simulated time: 127 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0036149 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.49683 seconds 
+
+current simulated time: 128 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00367265 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.500508 seconds 
+
+current simulated time: 129 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0120102 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.512524 seconds 
+
+current simulated time: 130 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00353906 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.516069 seconds 
+
+current simulated time: 131 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00409357 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.520168 seconds 
+
+current simulated time: 132 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00791831 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.528093 seconds 
+
+Warning: Attempted to set a cycle exit rate outside the bounds of the cell's cycle model
+         Ignoring it, but you should fix this.
+current simulated time: 133 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00354542 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.531645 seconds 
+
+current simulated time: 134 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0036158 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.535267 seconds 
+
+current simulated time: 135 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00354352 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.538817 seconds 
+
+current simulated time: 136 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00367385 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.542496 seconds 
+
+current simulated time: 137 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00366143 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.546162 seconds 
+
+current simulated time: 138 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00351025 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.549679 seconds 
+
+Warning: Attempted to set a cycle exit rate outside the bounds of the cell's cycle model
+         Ignoring it, but you should fix this.
+current simulated time: 139 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0035382 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.553222 seconds 
+
+current simulated time: 140 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00346234 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.556691 seconds 
+
+current simulated time: 141 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00398844 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.560686 seconds 
+
+current simulated time: 142 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00357639 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.564268 seconds 
+
+current simulated time: 143 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00374583 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.56802 seconds 
+
+current simulated time: 144 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00383981 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.571865 seconds 
+
+Warning: Attempted to set a cycle exit rate outside the bounds of the cell's cycle model
+         Ignoring it, but you should fix this.
+current simulated time: 145 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0039129 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.575784 seconds 
+
+current simulated time: 146 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00369405 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.579484 seconds 
+
+current simulated time: 147 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00392606 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.583416 seconds 
+
+current simulated time: 148 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00401215 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.587433 seconds 
+
+current simulated time: 149 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00371693 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.591156 seconds 
+
+current simulated time: 150 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00349491 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.594657 seconds 
+
+Warning: Attempted to set a cycle exit rate outside the bounds of the cell's cycle model
+         Ignoring it, but you should fix this.
+current simulated time: 151 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00429221 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.598955 seconds 
+
+current simulated time: 152 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0045874 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.603548 seconds 
+
+current simulated time: 153 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00378686 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.607341 seconds 
+
+current simulated time: 154 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00360356 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.61095 seconds 
+
+current simulated time: 155 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00408189 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.615037 seconds 
+
+current simulated time: 156 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00433851 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.619381 seconds 
+
+Warning: Attempted to set a cycle exit rate outside the bounds of the cell's cycle model
+         Ignoring it, but you should fix this.
+current simulated time: 157 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00395488 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.623341 seconds 
+
+current simulated time: 158 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00370735 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.627054 seconds 
+
+current simulated time: 159 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00350321 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.630563 seconds 
+
+current simulated time: 160 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00426596 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.634835 seconds 
+
+current simulated time: 161 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00416523 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.639005 seconds 
+
+current simulated time: 162 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00355081 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.642562 seconds 
+
+Warning: Attempted to set a cycle exit rate outside the bounds of the cell's cycle model
+         Ignoring it, but you should fix this.
+current simulated time: 163 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00387411 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.646441 seconds 
+
+current simulated time: 164 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00375725 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.650204 seconds 
+
+current simulated time: 165 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00377684 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.653986 seconds 
+
+current simulated time: 166 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00373391 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.657725 seconds 
+
+current simulated time: 167 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00377975 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.66151 seconds 
+
+current simulated time: 168 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00431881 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.665834 seconds 
+
+Warning: Attempted to set a cycle exit rate outside the bounds of the cell's cycle model
+         Ignoring it, but you should fix this.
+current simulated time: 169 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00904783 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.674888 seconds 
+
+current simulated time: 170 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00402656 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.67892 seconds 
+
+current simulated time: 171 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00427156 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.683197 seconds 
+
+current simulated time: 172 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00389399 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.687097 seconds 
+
+current simulated time: 173 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00342209 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.690525 seconds 
+
+current simulated time: 174 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00372753 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.694258 seconds 
+
+Warning: Attempted to set a cycle exit rate outside the bounds of the cell's cycle model
+         Ignoring it, but you should fix this.
+current simulated time: 175 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00469341 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.698957 seconds 
+
+current simulated time: 176 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00384305 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.702805 seconds 
+
+current simulated time: 177 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00374254 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.706553 seconds 
+
+current simulated time: 178 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0042224 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.710781 seconds 
+
+current simulated time: 179 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00353597 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.714322 seconds 
+
+current simulated time: 180 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00370704 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.718035 seconds 
+
+Warning: Attempted to set a cycle exit rate outside the bounds of the cell's cycle model
+         Ignoring it, but you should fix this.
+current simulated time: 181 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00426116 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.722301 seconds 
+
+current simulated time: 182 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00462472 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.726931 seconds 
+
+current simulated time: 183 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0035963 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.730533 seconds 
+
+current simulated time: 184 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00567742 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.736215 seconds 
+
+current simulated time: 185 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00378622 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.740006 seconds 
+
+current simulated time: 186 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00390285 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.743914 seconds 
+
+Warning: Attempted to set a cycle exit rate outside the bounds of the cell's cycle model
+         Ignoring it, but you should fix this.
+current simulated time: 187 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00355797 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.747476 seconds 
+
+current simulated time: 188 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00355568 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.751036 seconds 
+
+current simulated time: 189 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00345667 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.754498 seconds 
+
+current simulated time: 190 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00349989 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.758002 seconds 
+
+current simulated time: 191 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00382887 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.761836 seconds 
+
+current simulated time: 192 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00351604 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.765356 seconds 
+
+Warning: Attempted to set a cycle exit rate outside the bounds of the cell's cycle model
+         Ignoring it, but you should fix this.
+current simulated time: 193 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00362964 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.768991 seconds 
+
+current simulated time: 194 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00349264 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.772488 seconds 
+
+current simulated time: 195 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00356479 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.776057 seconds 
+
+current simulated time: 196 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00346702 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.779529 seconds 
+
+current simulated time: 197 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00339311 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.782927 seconds 
+
+current simulated time: 198 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00375468 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.786686 seconds 
+
+Warning: Attempted to set a cycle exit rate outside the bounds of the cell's cycle model
+         Ignoring it, but you should fix this.
+current simulated time: 199 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00351091 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.790202 seconds 
+
+current simulated time: 200 min (max: 200 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00372174 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.793928 seconds 
+
+
+Total simulation runtime: 
+0 days, 0 hours, 0 minutes, and 0.808019 seconds 
