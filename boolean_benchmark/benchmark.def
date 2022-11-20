@@ -1,0 +1,54 @@
+Bootstrap: docker
+From: ubuntu:22.04
+
+
+%post
+    apt -qq update
+    apt -yq install git make cmake g++ flex bison python3-pip python3-setuptools python3-numpy wget libxml2-dev libopenmpi-dev
+    
+    wget https://sourceforge.net/projects/sbml/files/libsbml/5.19.0/stable/libSBML-5.19.0-core-plus-packages-src.tar.gz
+    tar -zxf libSBML-5.19.0-core-plus-packages-src.tar.gz
+    cd libSBML-5.19.0-Source
+    mkdir build
+    cd build
+    cmake -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_INSTALL_LIBDIR=/usr/lib \
+    -DCMAKE_CXX_COMPILER=g++ \
+    -DCMAKE_C_COMPILER=gcc \
+    -DCMAKE_CXX_STANDARD_LIBRARIES=-lxml2 \
+    -DWITH_SWIG=OFF \
+    -DLIBXML_LIBRARY=/usr/lib \
+    -DLIBXML_INCLUDE_DIR=/usr/include/libxml2 \
+    -DENABLE_COMP=ON \
+    -DENABLE_FBC=ON \
+    -DENABLE_GROUPS=ON \
+    -DENABLE_LAYOUT=ON \
+    -DENABLE_MULTI=ON \
+    -DENABLE_QUAL=ON \
+    -DENABLE_RENDER=ON \
+    -DENABLE_DISTRIB=ON \
+    ..
+    make -j 10
+    make install
+    cd ../..
+    rm -fr libSBML-5.19.0-Source
+    
+    git clone https://github.com/vincent-noel/MaBoSS-env-2.0/
+    cd MaBoSS-env-2.0
+    cd engine/src
+    make MPI_COMPAT=1 SBML_COMPAT=1 CXX=mpic++ install -j 10
+    make MPI_COMPAT=1 SBML_COMPAT=1 CXX=mpic++ MAXNODES=128 install -j 10
+    make MPI_COMPAT=1 SBML_COMPAT=1 CXX=mpic++ MAXNODES=256 install -j 10
+    make MPI_COMPAT=1 SBML_COMPAT=1 CXX=mpic++ MAXNODES=512 install -j 10
+    mv ../pub/* /usr/bin
+
+    cd ../python
+    cp -r ../src cmaboss
+    pip3 install .
+    cd ../../..
+    rm -fr MaBoSS-env-2.0
+    
+    pip3 install git+https://github.com/vincent-noel/pyMaBoSS
+    
+%files
+    fp.py /usr/bin/fp.py

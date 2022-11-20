@@ -1,0 +1,642 @@
+Node IL1_In {
+
+	logic = (IL1_In);
+	rate_up = @logic ? $u_IL1_In : 0;
+	rate_down = @logic ? 0 : $d_IL1_In;
+}
+Node IL12_In {
+
+	logic = (IL12_In);
+	rate_up = @logic ? $u_IL12_In : 0;
+	rate_down = @logic ? 0 : $d_IL12_In;
+}
+
+Node IL23_In {
+
+	logic = (IL23_In);
+	rate_up = @logic ? $u_IL23_In : 0;
+	rate_down = @logic ? 0 : $d_IL23_In;
+}
+
+Node TGFB_In {
+
+	logic = (TGFB_In);
+	rate_up = @logic ? $u_TGFB_In : 0;
+	rate_down = @logic ? 0 : $d_TGFB_In;
+}
+
+Node IL6_Aut {
+
+	logic = (PI3K_b1 & PI3K_b2);
+	rate_up = @logic ? $u_IL6_Aut : 0;
+	rate_down = @logic ? 0 : $d_IL6_Aut;
+}
+
+Node STAT1 {
+
+	logic = (!IL12R & IL6R) | (IL12R);
+	rate_up = @logic ? $u_STAT1 : 0;
+	rate_down = @logic ? 0 : $d_STAT1;
+}
+
+Node Tbet {
+
+	logic = (!STAT1 & Tbet) | (STAT1 & !Tbet & AP1 & NFAT1 & NFKB & !Blimp1_b1 & !RUNX1_b1) | (STAT1 & !Tbet & AP1 & NFAT1 & NFKB & !Blimp1_b1 & RUNX1_b1 & !RUNX1_b2) | (STAT1 & !Tbet & AP1 & NFAT1 & NFKB & Blimp1_b1 & !Blimp1_b2 & !RUNX1_b1) | (STAT1 & !Tbet & AP1 & NFAT1 & NFKB & Blimp1_b1 & !Blimp1_b2 & RUNX1_b1 & !RUNX1_b2) | (STAT1 & Tbet);
+	rate_up = @logic ? $u_Tbet : 0;
+	rate_down = @logic ? 0 : $d_Tbet;
+}
+
+Node IFNg {
+
+	logic = (STAT1 & Tbet & STAT4 & AP1 & NFAT1 & RunX3 & Eomes);
+	rate_up = @logic ? $u_IFNg : 0;
+	rate_down = @logic ? 0 : $d_IFNg;
+}
+
+Node IL12RB1 {
+
+
+	rate_up = $u_IL12RB1;
+	rate_down = 0;
+}
+
+Node IL12RB2 {
+
+
+	rate_up = $u_IL12RB2;
+	rate_down = 0;
+}
+
+Node IL12R {
+
+	logic = (IL12_In & IL12RB1 & IL12RB2);
+	rate_up = @logic ? $u_IL12R : 0;
+	rate_down = @logic ? 0 : $d_IL12R;
+}
+
+Node STAT4 {
+
+	logic = (IL12R);
+	rate_up = @logic ? $u_STAT4 : 0;
+	rate_down = @logic ? 0 : $d_STAT4;
+}
+
+Node IL1RAP {
+
+
+	rate_up = $u_IL1RAP;
+	rate_down = 0;
+}
+
+Node IL1R1 {
+
+
+	rate_up = $u_IL1R1;
+	rate_down = 0;
+}
+
+Node STAT3 {
+
+	logic = (!IL1R & AP1 & NFKB & !IL23R & IL6R) | (!IL1R & AP1 & NFKB & IL23R) | (IL1R & AP1 & NFKB);
+	rate_up = @logic ? $u_STAT3 : 0;
+	rate_down = @logic ? 0 : $d_STAT3;
+}
+
+Node IL21 {
+
+	logic = (STAT3 & NFAT1 & c_Maf);
+	rate_up = @logic ? $u_IL21 : 0;
+	rate_down = @logic ? 0 : $d_IL21;
+}
+
+Node IL17A {
+
+	logic = (STAT3 & RORGt & AP1 & IRF4 & AHR & NFAT2A_b1 & NFAT2A_b2 & !STAT5B_b1 & Smad2 & RORA) | (STAT3 & RORGt & AP1 & IRF4 & AHR & NFAT2A_b1 & NFAT2A_b2 & STAT5B_b1 & !STAT5B_b2 & Smad2 & RORA) | (STAT3 & RORGt & AP1 & IRF4 & AHR & NFAT2A_b1 & NFAT2A_b2 & STAT5B_b1 & STAT5B_b2 & Smad2 & !STAT5A_b1 & RORA) | (STAT3 & RORGt & AP1 & IRF4 & AHR & NFAT2A_b1 & NFAT2A_b2 & STAT5B_b1 & STAT5B_b2 & Smad2 & STAT5A_b1 & !STAT5A_b2 & RORA);
+	rate_up = @logic ? $u_IL17A : 0;
+	rate_down = @logic ? 0 : $d_IL17A;
+}
+
+Node IL17F {
+
+	logic = (!STAT1 & STAT3 & RORGt & AP1 & NFAT1 & Blimp1_b1 & Blimp1_b2 & IRF4 & AHR & !STAT5B_b1) | (!STAT1 & STAT3 & RORGt & AP1 & NFAT1 & Blimp1_b1 & Blimp1_b2 & IRF4 & AHR & STAT5B_b1 & !STAT5B_b2) | (!STAT1 & STAT3 & RORGt & AP1 & NFAT1 & Blimp1_b1 & Blimp1_b2 & IRF4 & AHR & STAT5B_b1 & STAT5B_b2 & !STAT5A_b1) | (!STAT1 & STAT3 & RORGt & AP1 & NFAT1 & Blimp1_b1 & Blimp1_b2 & IRF4 & AHR & STAT5B_b1 & STAT5B_b2 & STAT5A_b1 & !STAT5A_b2) | (STAT1 & RORGt & AP1 & NFAT1 & Blimp1_b1 & Blimp1_b2 & IRF4 & AHR & !STAT5B_b1) | (STAT1 & RORGt & AP1 & NFAT1 & Blimp1_b1 & Blimp1_b2 & IRF4 & AHR & STAT5B_b1 & !STAT5B_b2) | (STAT1 & RORGt & AP1 & NFAT1 & Blimp1_b1 & Blimp1_b2 & IRF4 & AHR & STAT5B_b1 & STAT5B_b2 & !STAT5A_b1) | (STAT1 & RORGt & AP1 & NFAT1 & Blimp1_b1 & Blimp1_b2 & IRF4 & AHR & STAT5B_b1 & STAT5B_b2 & STAT5A_b1 & !STAT5A_b2);
+	rate_up = @logic ? $u_IL17F : 0;
+	rate_down = @logic ? 0 : $d_IL17F;
+}
+
+Node RORGt {
+
+	logic = (!Tbet & !STAT3 & AP1 & NFAT1 & IRF4 & RUNX1_b1) | (!Tbet & STAT3 & RUNX1_b1) | (Tbet & STAT3 & RUNX1_b1);
+	rate_up = @logic ? $u_RORGt : 0;
+	rate_down = @logic ? 0 : $d_RORGt;
+}
+
+Node TCR_b1 {
+
+	logic = (!TCR_b1 & Lck & MHCII_b1) | (TCR_b1 & !TCR_b2 & Lck & MHCII_b1) | (TCR_b1 & TCR_b2);
+	rate_up = @logic ? $u_TCR_b1 : 0;
+	rate_down = @logic ? 0 : $d_TCR_b1;
+}
+
+Node TCR_b2 {
+
+	logic = (TCR_b1 & Lck & MHCII_b1 & MHCII_b2);
+	rate_up = @logic ? $u_TCR_b2 : 0;
+	rate_down = @logic ? 0 : $d_TCR_b2;
+}
+
+Node IL1R {
+
+	logic = (IL1_In & IL1RAP & IL1R1);
+	rate_up = @logic ? $u_IL1R : 0;
+	rate_down = @logic ? 0 : $d_IL1R;
+}
+
+Node CD28 {
+
+	logic = (Lck & CD80);
+	rate_up = @logic ? $u_CD28 : 0;
+	rate_down = @logic ? 0 : $d_CD28;
+}
+
+Node Lck {
+
+	logic = (TCR_b1 & TCR_b2 & CD4);
+	rate_up = @logic ? $u_Lck : 0;
+	rate_down = @logic ? 0 : $d_Lck;
+}
+
+Node CD4 {
+
+	logic = (CD4);
+	rate_up = @logic ? $u_CD4 : 0;
+	rate_down = @logic ? 0 : $d_CD4;
+}
+
+Node Zap70 {
+
+	logic = (TCR_b1 & TCR_b2 & Lck);
+	rate_up = @logic ? $u_Zap70 : 0;
+	rate_down = @logic ? 0 : $d_Zap70;
+}
+
+Node Lat {
+
+	logic = (Zap70);
+	rate_up = @logic ? $u_Lat : 0;
+	rate_down = @logic ? 0 : $d_Lat;
+}
+
+Node VAV {
+
+	logic = (!CD28 & Zap70 & Lat) | (CD28);
+	rate_up = @logic ? $u_VAV : 0;
+	rate_down = @logic ? 0 : $d_VAV;
+}
+
+Node PI3K_b1 {
+
+	logic = (!TCR_b1 & PI3K_b1 & PI3K_b2) | (TCR_b1 & !IL1R & PI3K_b1 & PI3K_b2) | (TCR_b1 & IL1R & !CD28 & PI3K_b1 & PI3K_b2) | (TCR_b1 & IL1R & CD28 & !PI3K_b1 & RAS) | (TCR_b1 & IL1R & CD28 & PI3K_b1 & !PI3K_b2 & RAS) | (TCR_b1 & IL1R & CD28 & PI3K_b1 & PI3K_b2);
+	rate_up = @logic ? $u_PI3K_b1 : 0;
+	rate_down = @logic ? 0 : $d_PI3K_b1;
+}
+
+Node PI3K_b2 {
+
+	logic = (TCR_b1 & TCR_b2 & IL1R & CD28 & PI3K_b1 & RAS);
+	rate_up = @logic ? $u_PI3K_b2 : 0;
+	rate_down = @logic ? 0 : $d_PI3K_b2;
+}
+
+Node SOS {
+
+	logic = (!CD28 & Lat) | (CD28);
+	rate_up = @logic ? $u_SOS : 0;
+	rate_down = @logic ? 0 : $d_SOS;
+}
+
+Node PLCG {
+
+	logic = (Lat);
+	rate_up = @logic ? $u_PLCG : 0;
+	rate_down = @logic ? 0 : $d_PLCG;
+}
+
+Node Rac {
+
+	logic = (VAV);
+	rate_up = @logic ? $u_Rac : 0;
+	rate_down = @logic ? 0 : $d_Rac;
+}
+
+Node PIP2 {
+
+	logic = (PIP2);
+	rate_up = @logic ? $u_PIP2 : 0;
+	rate_down = @logic ? 0 : $d_PIP2;
+}
+
+Node PTEN {
+
+	logic = (FOXP3);
+	rate_up = @logic ? $u_PTEN : 0;
+	rate_down = @logic ? 0 : $d_PTEN;
+}
+
+Node PIP3 {
+
+	logic = (PI3K_b1 & !PI3K_b2 & PIP2 & !PTEN) | (PI3K_b1 & PI3K_b2 & PIP2);
+	rate_up = @logic ? $u_PIP3 : 0;
+	rate_down = @logic ? 0 : $d_PIP3;
+}
+
+Node IP3 {
+
+	logic = (PLCG & PIP2);
+	rate_up = @logic ? $u_IP3 : 0;
+	rate_down = @logic ? 0 : $d_IP3;
+}
+
+Node DAG {
+
+	logic = (PLCG & PIP2);
+	rate_up = @logic ? $u_DAG : 0;
+	rate_down = @logic ? 0 : $d_DAG;
+}
+
+Node PKCO {
+
+	logic = (!PIP3 & DAG) | (PIP3);
+	rate_up = @logic ? $u_PKCO : 0;
+	rate_down = @logic ? 0 : $d_PKCO;
+}
+
+Node RAS {
+
+	logic = (!SOS & DAG) | (SOS);
+	rate_up = @logic ? $u_RAS : 0;
+	rate_down = @logic ? 0 : $d_RAS;
+}
+
+Node ERK1_2 {
+
+	logic = (RAS & ITK_b1);
+	rate_up = @logic ? $u_ERK1_2 : 0;
+	rate_down = @logic ? 0 : $d_ERK1_2;
+}
+
+Node c_Fos {
+
+	logic = (ERK1_2);
+	rate_up = @logic ? $u_c_Fos : 0;
+	rate_down = @logic ? 0 : $d_c_Fos;
+}
+
+Node AP1 {
+
+	logic = (c_Fos & c_Jun);
+	rate_up = @logic ? $u_AP1 : 0;
+	rate_down = @logic ? 0 : $d_AP1;
+}
+
+Node MEKK1 {
+
+	logic = (!Rac & RAS) | (Rac);
+	rate_up = @logic ? $u_MEKK1 : 0;
+	rate_down = @logic ? 0 : $d_MEKK1;
+}
+
+Node TAK1 {
+
+	logic = (!PKCO & TRAF6) | (PKCO);
+	rate_up = @logic ? $u_TAK1 : 0;
+	rate_down = @logic ? 0 : $d_TAK1;
+}
+
+Node c_Jun {
+
+	logic = (!MEKK1 & TAK1) | (MEKK1);
+	rate_up = @logic ? $u_c_Jun : 0;
+	rate_down = @logic ? 0 : $d_c_Jun;
+}
+
+Node NFAT1 {
+
+	logic = (IP3);
+	rate_up = @logic ? $u_NFAT1 : 0;
+	rate_down = @logic ? 0 : $d_NFAT1;
+}
+
+Node NFKB {
+
+	logic = (IKK);
+	rate_up = @logic ? $u_NFKB : 0;
+	rate_down = @logic ? 0 : $d_NFKB;
+}
+
+Node IKK {
+
+	logic = (!PKCO & TAK1) | (PKCO);
+	rate_up = @logic ? $u_IKK : 0;
+	rate_down = @logic ? 0 : $d_IKK;
+}
+
+Node c_Maf {
+
+	logic = (STAT3);
+	rate_up = @logic ? $u_c_Maf : 0;
+	rate_down = @logic ? 0 : $d_c_Maf;
+}
+
+Node Myd88 {
+
+	logic = (IL1R);
+	rate_up = @logic ? $u_Myd88 : 0;
+	rate_down = @logic ? 0 : $d_Myd88;
+}
+
+Node IRAK1_4 {
+
+	logic = (Myd88);
+	rate_up = @logic ? $u_IRAK1_4 : 0;
+	rate_down = @logic ? 0 : $d_IRAK1_4;
+}
+
+Node TRAF6 {
+
+	logic = (IRAK1_4);
+	rate_up = @logic ? $u_TRAF6 : 0;
+	rate_down = @logic ? 0 : $d_TRAF6;
+}
+
+Node Blimp1_b1 {
+
+	logic = (!STAT4 & !STAT3 & Blimp1_b1 & Blimp1_b2) | (!STAT4 & STAT3 & !Blimp1_b1 & STAT5B_b1) | (!STAT4 & STAT3 & Blimp1_b1 & !Blimp1_b2 & STAT5B_b1) | (!STAT4 & STAT3 & Blimp1_b1 & Blimp1_b2) | (STAT4 & !Blimp1_b1 & STAT5B_b1) | (STAT4 & Blimp1_b1 & !Blimp1_b2 & STAT5B_b1) | (STAT4 & Blimp1_b1 & Blimp1_b2);
+	rate_up = @logic ? $u_Blimp1_b1 : 0;
+	rate_down = @logic ? 0 : $d_Blimp1_b1;
+}
+
+Node Blimp1_b2 {
+
+	logic = (STAT3 & Blimp1_b1 & STAT5B_b1);
+	rate_up = @logic ? $u_Blimp1_b2 : 0;
+	rate_down = @logic ? 0 : $d_Blimp1_b2;
+}
+
+Node RunX3 {
+
+	logic = (Tbet);
+	rate_up = @logic ? $u_RunX3 : 0;
+	rate_down = @logic ? 0 : $d_RunX3;
+}
+
+Node Eomes {
+
+	logic = (RunX3);
+	rate_up = @logic ? $u_Eomes : 0;
+	rate_down = @logic ? 0 : $d_Eomes;
+}
+
+Node IRF4 {
+
+	logic = (AP1 & NFKB);
+	rate_up = @logic ? $u_IRF4 : 0;
+	rate_down = @logic ? 0 : $d_IRF4;
+}
+
+Node AHR {
+
+	logic = (STAT3);
+	rate_up = @logic ? $u_AHR : 0;
+	rate_down = @logic ? 0 : $d_AHR;
+}
+
+Node MHCII_b1 {
+
+	logic = (MHCII_b1);
+	rate_up = @logic ? $u_MHCII_b1 : 0;
+	rate_down = @logic ? 0 : $d_MHCII_b1;
+}
+
+Node MHCII_b2 {
+
+	logic = (MHCII_b1 & MHCII_b2);
+	rate_up = @logic ? $u_MHCII_b2 : 0;
+	rate_down = @logic ? 0 : $d_MHCII_b2;
+}
+
+Node CD80 {
+
+	logic = (CD80);
+	rate_up = @logic ? $u_CD80 : 0;
+	rate_down = @logic ? 0 : $d_CD80;
+}
+
+Node NFAT2 {
+
+	logic = (IP3);
+	rate_up = @logic ? $u_NFAT2 : 0;
+	rate_down = @logic ? 0 : $d_NFAT2;
+}
+
+Node NFAT4 {
+
+	logic = (IP3);
+	rate_up = @logic ? $u_NFAT4 : 0;
+	rate_down = @logic ? 0 : $d_NFAT4;
+}
+
+Node NFAT2A_b1 {
+
+	logic = (!NFAT1 & NFAT2A_b1 & NFAT2A_b2) | (NFAT1 & !NFAT2 & !NFAT4 & NFAT2A_b1 & NFAT2A_b2) | (NFAT1 & !NFAT2 & NFAT4 & !NFAT2A_b1 & !FOXP3 & ITK_b1) | (NFAT1 & !NFAT2 & NFAT4 & NFAT2A_b1 & !NFAT2A_b2 & !FOXP3 & ITK_b1) | (NFAT1 & !NFAT2 & NFAT4 & NFAT2A_b1 & NFAT2A_b2) | (NFAT1 & NFAT2 & !NFAT2A_b1 & !FOXP3 & ITK_b1) | (NFAT1 & NFAT2 & NFAT2A_b1 & !NFAT2A_b2 & !FOXP3 & ITK_b1) | (NFAT1 & NFAT2 & NFAT2A_b1 & NFAT2A_b2);
+	rate_up = @logic ? $u_NFAT2A_b1 : 0;
+	rate_down = @logic ? 0 : $d_NFAT2A_b1;
+}
+
+Node NFAT2A_b2 {
+
+	logic = (!NFAT1 & NFAT2A_b1 & NFAT2A_b2 & ITK_b1) | (NFAT1 & NFAT2A_b1 & NFAT2A_b2 & !FOXP3 & ITK_b1);
+	rate_up = @logic ? $u_NFAT2A_b2 : 0;
+	rate_down = @logic ? 0 : $d_NFAT2A_b2;
+}
+
+Node FOXP3 {
+
+	logic = (!STAT1 & !RORGt & !NFAT1 & FOXP3) | (!STAT1 & !RORGt & NFAT1 & !FOXP3 & STAT5B_b1 & STAT5B_b2 & Smad2) | (!STAT1 & !RORGt & NFAT1 & FOXP3) | (!STAT1 & RORGt & FOXP3) | (STAT1 & FOXP3);
+	rate_up = @logic ? $u_FOXP3 : 0;
+	rate_down = @logic ? 0 : $d_FOXP3;
+}
+
+Node IL2R_b1 {
+
+	logic = (!IL2R_b1 & IL2RB & CGC & IL2) | (IL2R_b1 & !IL2R_b2 & IL2RB & CGC & IL2) | (IL2R_b1 & IL2R_b2);
+	rate_up = @logic ? $u_IL2R_b1 : 0;
+	rate_down = @logic ? 0 : $d_IL2R_b1;
+}
+
+Node IL2R_b2 {
+
+	logic = (IL2R_b1 & IL2RA & IL2RB & CGC & IL2);
+	rate_up = @logic ? $u_IL2R_b2 : 0;
+	rate_down = @logic ? 0 : $d_IL2R_b2;
+}
+
+Node IL2RA {
+
+	logic = (NFKB & NFAT2A_b1 & !FOXP3 & STAT5B_b1 & !SATB1) | (NFKB & NFAT2A_b1 & FOXP3 & !STAT5B_b1 & Smad2 & !SATB1) | (NFKB & NFAT2A_b1 & FOXP3 & STAT5B_b1 & !SATB1);
+	rate_up = @logic ? $u_IL2RA : 0;
+	rate_down = @logic ? 0 : $d_IL2RA;
+}
+
+Node IL2RB {
+
+
+	rate_up = $u_IL2RB;
+	rate_down = 0;
+}
+
+Node STAT5B_b1 {
+
+	logic = (!ERK1_2) | (ERK1_2 & !IL2R_b1 & STAT5B_b1 & STAT5B_b2) | (ERK1_2 & IL2R_b1);
+	rate_up = @logic ? $u_STAT5B_b1 : 0;
+	rate_down = @logic ? 0 : $d_STAT5B_b1;
+}
+
+Node STAT5B_b2 {
+
+	logic = (!ERK1_2 & STAT5B_b1);
+	rate_up = @logic ? $u_STAT5B_b2 : 0;
+	rate_down = @logic ? 0 : $d_STAT5B_b2;
+}
+
+Node CGC {
+
+
+	rate_up = $u_CGC;
+	rate_down = 0;
+}
+
+Node IL2 {
+
+	logic = (AP1 & NFAT1 & NFKB & !FOXP3 & !SATB1);
+	rate_up = @logic ? $u_IL2 : 0;
+	rate_down = @logic ? 0 : $d_IL2;
+}
+
+Node Smad2 {
+
+	logic = (TGFBR);
+	rate_up = @logic ? $u_Smad2 : 0;
+	rate_down = @logic ? 0 : $d_Smad2;
+}
+
+Node STAT5A_b1 {
+
+	logic = (!IL12R & !IL1R & STAT5A_b1 & STAT5A_b2) | (!IL12R & IL1R & !IL2R_b1 & STAT5A_b1 & STAT5A_b2) | (!IL12R & IL1R & IL2R_b1) | (IL12R & !IL2R_b1 & STAT5A_b1 & STAT5A_b2) | (IL12R & IL2R_b1);
+	rate_up = @logic ? $u_STAT5A_b1 : 0;
+	rate_down = @logic ? 0 : $d_STAT5A_b1;
+}
+
+Node STAT5A_b2 {
+
+	logic = (IL12R & IL1R & IL2R_b1 & STAT5A_b1);
+	rate_up = @logic ? $u_STAT5A_b2 : 0;
+	rate_down = @logic ? 0 : $d_STAT5A_b2;
+}
+
+Node GP130 {
+
+
+	rate_up = $u_GP130;
+	rate_down = 0;
+}
+
+Node IL23R {
+
+	logic = (!IL23_In & STAT3 & RORGt & Myd88) | (IL23_In & !IL12RB1 & STAT3 & RORGt & Myd88) | (IL23_In & IL12RB1 & STAT3 & RORGt & !Myd88 & GP130) | (IL23_In & IL12RB1 & STAT3 & RORGt & Myd88);
+	rate_up = @logic ? $u_IL23R : 0;
+	rate_down = @logic ? 0 : $d_IL23R;
+}
+
+Node FOXP3_2 {
+
+	logic = (IL1R & !MINA);
+	rate_up = @logic ? $u_FOXP3_2 : 0;
+	rate_down = @logic ? 0 : $d_FOXP3_2;
+}
+
+Node SATB1 {
+
+	logic = (RORGt & !FOXP3_2);
+	rate_up = @logic ? $u_SATB1 : 0;
+	rate_down = @logic ? 0 : $d_SATB1;
+}
+
+Node MINA {
+
+	logic = (RORGt & !STAT5A_b1);
+	rate_up = @logic ? $u_MINA : 0;
+	rate_down = @logic ? 0 : $d_MINA;
+}
+
+Node RUNX1_b1 {
+
+	logic = (!STAT3 & RUNX1_b1 & RUNX1_b2) | (STAT3);
+	rate_up = @logic ? $u_RUNX1_b1 : 0;
+	rate_down = @logic ? 0 : $d_RUNX1_b1;
+}
+
+Node RUNX1_b2 {
+
+	logic = (STAT3 & RORGt & RUNX1_b1);
+	rate_up = @logic ? $u_RUNX1_b2 : 0;
+	rate_down = @logic ? 0 : $d_RUNX1_b2;
+}
+
+Node RORA {
+
+	logic = (STAT3 & RORGt & IRF4 & IL23R & RUNX1_b1 & RUNX1_b2);
+	rate_up = @logic ? $u_RORA : 0;
+	rate_down = @logic ? 0 : $d_RORA;
+}
+
+Node IL6R {
+
+	logic = (!IL6_Aut & GP130 & IL6_In) | (IL6_Aut & GP130);
+	rate_up = @logic ? $u_IL6R : 0;
+	rate_down = @logic ? 0 : $d_IL6R;
+}
+
+Node TGFBR {
+
+	logic = (TGFB_In);
+	rate_up = @logic ? $u_TGFBR : 0;
+	rate_down = @logic ? 0 : $d_TGFBR;
+}
+
+Node IL6_In {
+
+	logic = (IL6_In);
+	rate_up = @logic ? $u_IL6_In : 0;
+	rate_down = @logic ? 0 : $d_IL6_In;
+}
+
+Node CXCR4 {
+
+	logic = (!IL12R) | (IL12R & !IL1R);
+	rate_up = @logic ? $u_CXCR4 : 0;
+	rate_down = @logic ? 0 : $d_CXCR4;
+}
+
+Node ITK_b1 {
+
+	logic = (!TCR_b1 & ITK_b1 & ITK_b2) | (TCR_b1 & !TCR_b2 & ITK_b1 & ITK_b2) | (TCR_b1 & TCR_b2);
+	rate_up = @logic ? $u_ITK_b1 : 0;
+	rate_down = @logic ? 0 : $d_ITK_b1;
+}
+
+Node ITK_b2 {
+
+	logic = (TCR_b1 & TCR_b2 & CXCR4 & ITK_b1);
+	rate_up = @logic ? $u_ITK_b2 : 0;
+	rate_down = @logic ? 0 : $d_ITK_b2;
+}
