@@ -33,9 +33,11 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 */
 
-#include <cmath>
-
 #include "GrowthModifier.hpp"
+
+#include "StochasticDurationCellCycleModel.hpp"
+
+#include <cmath>
 
 template<unsigned DIM>
 GrowthModifier<DIM>::GrowthModifier()
@@ -75,7 +77,7 @@ void GrowthModifier<DIM>::UpdateCellData(AbstractCellPopulation<DIM,DIM>& rCellP
          ++pCell)
     {
         double cellVolume = rCellPopulation.GetVolumeOfCell(*pCell);
-        pCell->GetCellData()->SetItem("volume", cellVolume);
+        pCell->GetCellData()->SetItem("Volume", cellVolume);
     }
     
     // Set target radius for each cell
@@ -83,16 +85,34 @@ void GrowthModifier<DIM>::UpdateCellData(AbstractCellPopulation<DIM,DIM>& rCellP
          pCell != rCellPopulation.End();
          ++pCell)
     {
-        double initialTargetArea = 0.5; // todo: fix magic number from target area modifier
-        double targetArea = pCell->GetCellData()->GetItem("target area");
-        double sizeFactor = targetArea / initialTargetArea;
+        // Get current cell age in minutes
+        double cellAge = pCell->GetAge() * 60.0;
 
+        // Get G1 duration in minutes
+        auto pCellCycleModel = static_cast<StochasticDurationCellCycleModel*>(pCell->GetCellCycleModel());
+        double phaseG1Duration = pCellCycleModel->GetG1Duration() * 60.0;
+
+        // Compute target relative volume %
+        double targetRelativeVolume {0.0};
+
+        if (cellAge < phaseG1Duration)
+        {
+            targetRelativeVolume = 100.0;
+
+        } else {
+            double age = cellAge - phaseG1Duration;
+            targetRelativeVolume = 100.0 + 0.2850 * age - 0.0002 * age * age;
+        }
+
+        // Compute target radius
         double initialRadius = 0.5; // todo: fix magic number from test setup
         double initialVolume = (4.0 * M_PI * initialRadius * initialRadius * initialRadius) / 3.0;
-        double targetVolume = initialVolume * sizeFactor;
+        double targetVolume = (targetRelativeVolume * initialVolume) / 100.0;
         double targetRadius = std::cbrt((3.0 * targetVolume) / (4.0 * M_PI));
 
+        // Set target radius
         pCell->GetCellData()->SetItem("Radius", targetRadius);
+        pCell->GetCellData()->SetItem("TargetVolume", targetVolume);
     }
 
     rCellPopulation.Update(); // Update node radii from cell radii

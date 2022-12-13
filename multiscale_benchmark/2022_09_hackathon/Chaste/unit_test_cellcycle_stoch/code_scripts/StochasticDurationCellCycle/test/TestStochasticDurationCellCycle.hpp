@@ -46,7 +46,6 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "NodeBasedCellPopulation.hpp"
 #include "NodesOnlyMesh.hpp"
 #include "OffLatticeSimulation.hpp"
-#include "SimpleTargetAreaModifier.hpp"
 #include "SphereGeometryBoundaryCondition.hpp"
 #include "StemCellProliferativeType.hpp"
 #include "WildTypeCellMutationState.hpp"
@@ -128,9 +127,6 @@ public:
          simulator.AddForce(pForce);
 
         // Add simulation modifiers
-        MAKE_PTR(SimpleTargetAreaModifier<3>, pTargetAreaModifier); // calculates target area
-        simulator.AddSimulationModifier(pTargetAreaModifier);
-
         MAKE_PTR(GrowthModifier<3>, pGrowthModifier); // records volume, sizes radii proportional to target area
         simulator.AddSimulationModifier(pGrowthModifier);
 

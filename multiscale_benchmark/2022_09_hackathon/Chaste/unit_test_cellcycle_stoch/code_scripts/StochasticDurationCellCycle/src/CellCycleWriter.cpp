@@ -56,7 +56,7 @@ CellCycleWriter<ELEMENT_DIM, SPACE_DIM>::CellCycleWriter()
 template<unsigned ELEMENT_DIM, unsigned SPACE_DIM>
 double CellCycleWriter<ELEMENT_DIM, SPACE_DIM>::GetCellDataForVtkOutput(CellPtr pCell, AbstractCellPopulation<ELEMENT_DIM, SPACE_DIM>* pCellPopulation)
 {
-    double cellVolume = pCell->GetCellData()->GetItem("volume");
+    double cellVolume = pCell->GetCellData()->GetItem("Volume");
     return cellVolume;
 }
 
@@ -109,11 +109,11 @@ void CellCycleWriter<ELEMENT_DIM, SPACE_DIM>::VisitCell(CellPtr pCell, AbstractC
             NEVER_REACHED;
     }
 
-    double targetArea = pCell->GetCellData()->GetItem("target area");
-    *this->mpOutStream << targetArea << " ";
+    double relativeVolume = pCell->GetCellData()->GetItem("TargetVolume");
+    *this->mpOutStream << relativeVolume << " ";
 
-    double cellVolume = pCell->GetCellData()->GetItem("volume");
-    *this->mpOutStream << cellVolume << " ";
+    double volume = pCell->GetCellData()->GetItem("Volume");
+    *this->mpOutStream << volume << " ";
 }
 
 // Explicit instantiation

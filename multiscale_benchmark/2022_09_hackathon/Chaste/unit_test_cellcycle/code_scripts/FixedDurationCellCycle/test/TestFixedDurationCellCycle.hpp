@@ -46,7 +46,6 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "NodeBasedCellPopulation.hpp"
 #include "NodesOnlyMesh.hpp"
 #include "OffLatticeSimulation.hpp"
-#include "SimpleTargetAreaModifier.hpp"
 #include "SphereGeometryBoundaryCondition.hpp"
 #include "StemCellProliferativeType.hpp"
 #include "WildTypeCellMutationState.hpp"
@@ -76,7 +75,7 @@ public:
         NodesOnlyMesh<3> mesh;
 
         // Length is dimensionless and based on typical cell diameter i.e. approx 10 um
-        double maxInteractionRadius = 1.5; // 15 um neighbour interaction distance
+        double maxInteractionRadius = 3.0; // 30 um neighbour interaction distance
         mesh.ConstructNodesWithoutMesh(nodes, maxInteractionRadius);
 
         // Create cell cycle model
@@ -128,9 +127,6 @@ public:
          simulator.AddForce(pForce);
 
         // Add simulation modifiers
-        MAKE_PTR(SimpleTargetAreaModifier<3>, pTargetAreaModifier); // calculates target area
-        simulator.AddSimulationModifier(pTargetAreaModifier);
-
         MAKE_PTR(GrowthModifier<3>, pGrowthModifier); // records volume, sizes radii proportional to target area
         simulator.AddSimulationModifier(pGrowthModifier);
 
