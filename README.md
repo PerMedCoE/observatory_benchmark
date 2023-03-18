@@ -409,7 +409,7 @@ As an objective, we set to have the phases with these times (G0/G1: 7 hours, S: 
 
 <!-- ![Figure 1. Cell counts for the three cell populations tools after 120 minutes of simulation for Chaste (A), PhysiCell (B) and Timothy (C). Note that the x-axis in panels A and B are in minutes and in panel C is in hours and that y-axis have different ranges across panels.](https://github.com/PerMedCoE/observatory_benchmark/raw/main/figures/prelim/Fig1.svg) -->
 
-**Figure 2.1.2.a: Simulated time of the volume dynamics targeted in this unit test. The data matrix of this curve can be found in the GitHub website ([https://github.com/PerMedCoE/observatory_benchmark/tree/main/multiscale_benchmark/2022_09_hackathon/experimental_data/unit_test_cellcycle](https://github.com/PerMedCoE/observatory_benchmark/tree/main/multiscale_benchmark/2022_09_hackathon/experimental_data/unit_test_cellcycle))**
+**Figure 2.1.2.a: Simulated time of the volume dynamics targeted in this unit test. The data matrix of this curve can be found in the [dedicated GitHub website](https://github.com/PerMedCoE/observatory_benchmark/tree/main/multiscale_benchmark/2022_09_hackathon/experimental_data/unit_test_cellcycle)**
 
 In this case, the difference of the volume changes of Chaste and PhysiCell can be explained by the different types of functions used to increase this volume (Figure 2.1.2.b). While Chaste has a linear increase of volume in the G1 phase, PhysiCell has non-linear one across the S, G2 and M phases. Both of them divide the volume at the end of the M phase, but with some time differences that increase at each cycle.
 
@@ -473,7 +473,7 @@ b) Use cases
 
 With this use case we aimed at simulating a one-cell-thick monolayer of cells growing on a surface. This use case gathered functions that we had tested in different unit tests as the cell cycle and mechanics ones in a different, more complex setup.
 
-As an objective, we set to simulate experimental results from a 1998 work (Brú *et al.*, 1998) also reported in other works (Drasdo and Hoehme, 2005; Hoehme and Drasdo, 2010) (Figure 2.1.2.g) and available in the GitHub website ([https://github.com/PerMedCoE/observatory_benchmark/tree/main/multiscale_benchmark/2022_09_hackathon/experimental_data/use_case_2Ddisk](https://github.com/PerMedCoE/observatory_benchmark/tree/main/multiscale_benchmark/2022_09_hackathon/experimental_data/use_case_2Ddisk)).
+As an objective, we set to simulate experimental results from a 1998 work (Brú *et al.*, 1998) also reported in other works (Drasdo and Hoehme, 2005; Hoehme and Drasdo, 2010) (Figure 2.1.2.g) and available in the [dedicated GitHub website](https://github.com/PerMedCoE/observatory_benchmark/tree/main/multiscale_benchmark/2022_09_hackathon/experimental_data/use_case_2Ddisk).
 
 ![Figure 2.1.2.g: Copy of Figure 1 from Drasdo and Hoehme (2005) where the monolayer data of interest are full circles.](https://github.com/PerMedCoE/observatory_benchmark/raw/main/figures/comm1/Imagen7.png)
 
@@ -487,11 +487,11 @@ For this use case we had data from BioDynamo, PhysiCell and TiSim that we wanted
 
 Interestingly, from Figure 2.1.2.h, we can see that the slopes from each tool are different. This may be caused by the different models of cell cycle or mechanics among tools and/or by a different growth dynamic in the first 14 days of simulation.
 
-2. Spheroid without diffusion
+1. Spheroid without diffusion
 
 With this use case we aimed at simulating a hanging drop experiment growing on a volume of collagen. Again, this use case gathered functions that we had tested in different unit tests as the cell cycle, mechanics and diffusion ones in a different, more complex setup.
 
-As an objective, we set to simulate experimental results from a 1986 work (Freyer and Sutherland, 1986) also reported in other works (Drasdo and Hoehme, 2005; Hoehme and Drasdo, 2010) and available here ([https://github.com/PerMedCoE/observatory_benchmark/tree/main/multiscale_benchmark/2022_09_hackathon/experimental_data/use_case_spheroid_diff](https://github.com/PerMedCoE/observatory_benchmark/tree/main/multiscale_benchmark/2022_09_hackathon/experimental_data/use_case_spheroid_diff)).
+As an objective, we set to simulate experimental results from a 1986 work (Freyer and Sutherland, 1986) also reported in other works (Drasdo and Hoehme, 2005; Hoehme and Drasdo, 2010) and available [here](https://github.com/PerMedCoE/observatory_benchmark/tree/main/multiscale_benchmark/2022_09_hackathon/experimental_data/use_case_spheroid_diff).
 
 This was also the use case that was closest to the one used in the preliminary benchmark presented in D3.3, where we aimed at using Chaste, PhysiCell and Timothy to simulate the growth of a cell population in the shape of a spheroid and its response to the presence of oxygen for two hours of walltime. Cells would grow until reaching a threshold level where oxygen could not get in the middle of the spheroid, causing cell death.
 
@@ -521,7 +521,7 @@ Both of these use cases focus on the behaviour at steady state, but another inte
 
 #### 2.2.2. Benchmark framework
 
-We are developing a singularity image with scripts implementing the previously described use cases, and the methods to perform statistics on performance. This framework has been implemented for MaBoSS, with a first selection of models and associated ground-truth results. The singularity image of the framework is already available on the github repository of the observatory benchmark ([https://github.com/PerMedCoE/observatory_benchmark/tree/main/Boolean_benchmark](https://github.com/PerMedCoE/observatory_benchmark/tree/main/boolean_benchmark)).
+We are developing a singularity image with scripts implementing the previously described use cases, and the methods to perform statistics on performance. This framework has been implemented for MaBoSS, with a first selection of models and associated ground-truth results. The singularity image of the framework is already available on the [dedicated GitHub repository](https://github.com/PerMedCoE/observatory_benchmark/tree/main/boolean_benchmark).
 
 #### 2.2.3. Next steps of the community benchmark
 
@@ -539,7 +539,9 @@ To systematise the selection of tools to be benchmarked and the community possib
 
 The current benchmarking effort thus includes:
 
-1. Linear optimization problem solvers, such as Gurobi ([https://www.gurobi.com/](https://www.gurobi.com/)), CPLEX ([https://www.ibm.com/analytics/cplex-optimizer](https://www.ibm.com/analytics/cplex-optimizer)), CLP ([https://github.com/coin-or/Clp](https://github.com/coin-or/Clp)), GLPK ([https://www.gnu.org/software/glpk/](https://www.gnu.org/software/glpk/)), Tulip (Anjos *et al.*, 2021), OSQP ([https://osqp.org/](https://osqp.org/)), and others.
+1. Linear optimization problem solvers.
+
+Some of the linear optimization problem solvers used are Gurobi ([https://www.gurobi.com/](https://www.gurobi.com/)), CPLEX ([https://www.ibm.com/analytics/cplex-optimizer](https://www.ibm.com/analytics/cplex-optimizer)), CLP ([https://github.com/coin-or/Clp](https://github.com/coin-or/Clp)), GLPK ([https://www.gnu.org/software/glpk/](https://www.gnu.org/software/glpk/)), Tulip (Anjos *et al.*, 2021), OSQP ([https://osqp.org/](https://osqp.org/)), and others.
 
 COBREXA.jl is well-suited base package for executing the benchmarks, as the ecosystem allows direct use of a wide spectrum of available solver software through the JuMP interface (over 40 individual solvers are listed at [https://jump.dev/JuMP.jl/stable/installation/#Supported-solvers](https://jump.dev/JuMP.jl/stable/installation/#Supported-solvers)).
 
@@ -549,9 +551,9 @@ We observed interesting speedups resulting from application of new quadratic opt
 
 **Figure 2.3.a: Example output of linear optimizer performance benchmark as driven by COBREXA.jl to solve a basic constraint-based metabolic modelling problem on 7 selected models. Missing solver entries represent solver failures on the model.**
 
-2. Implementations of individual analysis methods in the specific constraint-based modelling packages that were selected for comparison.
+1. Implementations of individual analysis methods in the specific constraint-based modelling packages that were selected for comparison.
 
-We collected the results as a large feature matrix with a plan to publish it on OpenEBench site if the visualisation support for feature matrices can be achieved; otherwise likely publishing by different means, such as the GitHub repository ([https://github.com/PerMedCoE/observatory_benchmark](https://github.com/PerMedCoE/observatory_benchmark)).
+We collected the results as a large feature matrix with a plan to publish it on OpenEBench site if the visualisation support for feature matrices can be achieved; otherwise likely publishing by different means, such as this [GitHub repository](https://github.com/PerMedCoE/observatory_benchmark).
 
 3. Efficiency and parallelization potential of the individual constraint-based modelling packages.
 
@@ -972,7 +974,7 @@ Van Liedekerke,P. *et al.* (2015) Simulating tissue mechanics with agent-based m
 **Initial conditions**:
 
 - 1 cell
-- Cell cycle of 4 phases: G0/G1 -> S -> G2 -> M (look at MulticellDS preprint (Friedman *et al.*, 2016), its cell cycle suppfile under the “Separated flow cytometry” name ([https://figshare.com/articles/journal_contribution/Supported_MultiCellDS_Cell_Cycle_Models/4269263/1](https://figshare.com/articles/journal_contribution/Supported_MultiCellDS_Cell_Cycle_Models/4269263/1)))
+- Cell cycle of 4 phases: G0/G1 -> S -> G2 -> M (look at MulticellDS preprint (Friedman *et al.*, 2016), [its cell cycle suppfile under the “Separated flow cytometry” name](https://figshare.com/articles/journal_contribution/Supported_MultiCellDS_Cell_Cycle_Models/4269263/1)
 - Fixed duration: G0/G1: 7 hours, S: 6 hours, G2: 3 hours, M: 2 hours, Total 18 h
 - The cell shapes should be spheres, unless the tool allows for different shapes.
 - The cell should not die.
