@@ -1,6 +1,39 @@
 # PerMedCoE community benchmarks
 
-[TOC]
+- [PerMedCoE community benchmarks](#permedcoe-community-benchmarks)
+  * [Executive Summary](#executive-summary)
+  * [1. Introduction](#1-introduction)
+  * [2. Tool observatory and benchmarks](#2-tool-observatory-and-benchmarks)
+    + [2.1. Cell population modelling](#21-cell-population-modelling)
+      - [2.1.1. Preparing the hackathon](#211-preparing-the-hackathon)
+      - [2.1.2. Multiscale tools benchmarking hackathon](#212-multiscale-tools-benchmarking-hackathon)
+      - [2.1.3. Perspectives](#213-perspectives)
+    + [2.2. Boolean modelling](#22-boolean-modelling)
+      - [2.2.1. Use cases](#221-use-cases)
+      - [2.2.2. Benchmark framework](#222-benchmark-framework)
+      - [2.2.3. Next steps of the community benchmark](#223-next-steps-of-the-community-benchmark)
+    + [2.3. Constraint-based modelling](#23-constraint-based-modelling)
+      - [2.3.1. Benchmark framework](#231-benchmark-framework)
+      - [2.3.2. Next steps of the community benchmark](#232-next-steps-of-the-community-benchmark)
+    + [2.4. CellNOpt/CARNIVAL benchmarks](#24-cellnopt-carnival-benchmarks)
+      - [2.4.1. Benchmark framework](#241-benchmark-framework)
+  * [3. Conclusions and future work](#3-conclusions-and-future-work)
+  * [4. References](#4-references)
+- [Appendix 1: Unit tests and use cases description](#appendix-1--unit-tests-and-use-cases-description)
+  * [Unit tests](#unit-tests)
+    + [*Cell cycle, fixed duration*](#-cell-cycle--fixed-duration-)
+    + [*Cell cycle, stochastic duration*](#-cell-cycle--stochastic-duration-)
+    + [*Diffusion of molecules, one cell as sink*](#-diffusion-of-molecules--one-cell-as-sink-)
+    + [*Diffusion of molecules, 1k cells as sinks*](#-diffusion-of-molecules--1k-cells-as-sinks-)
+    + [*Mechanics, movement of a cell with friction*](#-mechanics--movement-of-a-cell-with-friction-)
+    + [*Mechanics, two cells pushing each other*](#-mechanics--two-cells-pushing-each-other-)
+    + [*One cell with chemotaxis*](#-one-cell-with-chemotaxis-)
+  * [Use cases](#use-cases)
+    + [*2D monolayer without diffusion*](#-2d-monolayer-without-diffusion-)
+    + [*Spheroid without diffusion*](#-spheroid-without-diffusion-)
+    + [*Spheroid with diffusion*](#-spheroid-with-diffusion-)
+
+<!-- <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small> -->
 
 ## Executive Summary
 
