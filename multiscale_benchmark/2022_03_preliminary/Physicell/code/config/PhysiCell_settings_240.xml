@@ -74,12 +74,12 @@
 
 <PhysiCell_settings version="devel-version">
 	<domain>
-		<x_min>-240</x_min>
-		<x_max>240</x_max>
-		<y_min>-240</y_min>
-		<y_max>240</y_max>
-		<z_min>-240</z_min>
-		<z_max>240</z_max>
+		<x_min>-20</x_min>
+		<x_max>20</x_max>
+		<y_min>-20</y_min>
+		<y_max>20</y_max>
+		<z_min>-20</z_min>
+		<z_max>20</z_max>
 		<dx>20</dx>
 		<dy>20</dy>
 		<dz>20</dz>
