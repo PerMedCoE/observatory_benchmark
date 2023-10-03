@@ -88,7 +88,7 @@ inline int Simulate(int argc, const char **argv) {
   // ------------------------------------------------------------------
 
   // Export to CSV (introduces overhead)
-  bool export_to_csv = false;
+  bool export_to_csv = true;
   // Boundary concentrations [uM]
   double c_0 = 10;
   // Diffusion coefficient [uM^2/min]
@@ -174,8 +174,8 @@ inline int Simulate(int argc, const char **argv) {
   // Run simulation
   // ------------------------------------------------------------------
 
-  scheduler->Simulate(n_steps);
   scheduler->PrintInfo(std::cout);  // Print information about the simulation
+  scheduler->Simulate(n_steps);
 
   std::cout << "Simulation completed successfully!" << std::endl;
   return 0;
