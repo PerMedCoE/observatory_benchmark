@@ -200,6 +200,17 @@ inline void DefineAndRegisterCollectors() {
     return tmp;
   };
   ts->AddCollector("state4", new Counter<double>(is_state_4), get_time);
+
+  // Define how to count the agents in state 4
+  auto count_all = [](Agent *a) {
+    auto *cell = bdm_static_cast<MyCell *>(a);
+    if (cell) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  ts->AddCollector("all", new Counter<double>(count_all), get_time);
 }
 
 inline void PlotAndSaveTimeseries() {
@@ -211,14 +222,23 @@ inline void PlotAndSaveTimeseries() {
   ts->SaveJson(Concat(sim->GetOutputDir(), "/time-series-data.json"));
 
   // Create a bdm LineGraph that visualizes the TimeSeries data
-  bdm::experimental::LineGraph g(ts, "Spheroid", "Time", "Number of agents",
-                                 true);
-  g.Add("state1", "State 1", "L", kBlue, 1.0);
-  g.Add("state2", "State 2", "L", kGreen, 1.0);
-  g.Add("state3", "State 3", "L", kRed, 1.0);
-  g.Add("state4", "State 4", "L", kOrange, 1.0);
-  g.Draw();
-  g.SaveAs(Concat(sim->GetOutputDir(), "/spheroid"), {".svg", ".png"});
+  {
+    bdm::experimental::LineGraph g(ts, "Spheroid", "Time", "Number of agents",
+                                   true);
+    g.Add("state1", "State 1", "L", kBlue, 1.0);
+    g.Add("state2", "State 2", "L", kGreen, 1.0);
+    g.Add("state3", "State 3", "L", kRed, 1.0);
+    g.Add("state4", "State 4", "L", kOrange, 1.0);
+    g.Draw();
+    g.SaveAs(Concat(sim->GetOutputDir(), "/spheroid"), {".svg", ".png"});
+  }
+  {
+    bdm::experimental::LineGraph g(ts, "Spheroid", "Time", "Number of agents",
+                                   true);
+    g.Add("all", "All states", "L", kBlue, 1.0);
+    g.Draw();
+    g.SaveAs(Concat(sim->GetOutputDir(), "/all-cells"), {".svg", ".png"});
+  }
 }
 
 inline int Simulate(int argc, const char **argv) {
@@ -226,8 +246,6 @@ inline int Simulate(int argc, const char **argv) {
   // Define simulation parameters
   // ------------------------------------------------------------------
 
-  // Export to CSV (introduces overhead)
-  bool export_to_csv = false;
   // Boundary concentrations [uM]
   double c_0 = 10;
   // Diffusion coefficient [uM^2/min]
@@ -277,9 +295,7 @@ inline int Simulate(int argc, const char **argv) {
   };
 
   Simulation simulation(argc, argv, set_param);
-  auto *rm = simulation.GetResourceManager();   // Get the ResourceManager
   auto *scheduler = simulation.GetScheduler();  // Get the Scheduler
-  auto *param = simulation.GetParam();          // Get the Parameters
 
   // ------------------------------------------------------------------
   // Add initial spheroid

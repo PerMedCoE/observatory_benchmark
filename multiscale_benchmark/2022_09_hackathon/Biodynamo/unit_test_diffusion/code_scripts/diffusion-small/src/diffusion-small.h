@@ -54,6 +54,29 @@ class ExportConcentration : public StandaloneOperationImpl {
   DiffusionGrid *dg_;
 };
 
+/// Operation to update outer diffusion grid
+class ProvideSubstance : public StandaloneOperationImpl {
+  BDM_OP_HEADER(ProvideSubstance);
+
+ public:
+  ProvideSubstance(DiffusionGrid *dg, double amount)
+      : amount_(amount), dg_(dg){};
+
+  void operator()() override {
+    assert(dg_->GetNumBoxes() == 27);
+    for (size_t idx = 0; idx < dg_->GetNumBoxes(); idx++) {
+      if (idx == 9 + 5 - 1) {  // 9 (one layer), 5 (middle box), 1 (offset)
+        continue;
+      }
+      dg_->ChangeConcentrationBy(idx, amount_);
+    }
+  };
+
+ private:
+  double amount_;
+  DiffusionGrid *dg_;
+};
+
 /// Consume substance at Agent position
 class Consumption : public Behavior {
   BDM_BEHAVIOR_HEADER(Consumption, Behavior, 0);
@@ -88,15 +111,17 @@ inline int Simulate(int argc, const char **argv) {
   // ------------------------------------------------------------------
 
   // Export to CSV (introduces overhead)
-  bool export_to_csv = false;
+  bool export_to_csv = true;
   // Boundary concentrations [uM]
-  double c_0 = 10;
+  double c_0 = 0;
   // Diffusion coefficient [uM^2/min]
   double D = 2000;
   // Sink term [uM/min] <NOTE / WARNING THIS VALUE DEVIATES FROM THE TASK
   // DESCRIPTION. LARGER VALUES FOR SINK DO NOT RESULT IN A PHYSICAL STATE.>
   // double sink = 20 / 0.01;
   double sink = 0.2 / 0.01;
+  // Boundary amounts
+  double boundary_source = 0.1 / 0.01;
   // Simulation time [min]
   double t_max = 10;
   // Time step [min]
@@ -158,7 +183,7 @@ inline int Simulate(int argc, const char **argv) {
   rm->AddAgent(cell);
 
   // ------------------------------------------------------------------
-  // Operation to export continuum values to file
+  // Operations
   // ------------------------------------------------------------------
 
   if (export_to_csv) {
@@ -169,13 +194,18 @@ inline int Simulate(int argc, const char **argv) {
     auto *export_concentration = NewOperation("ExportConcentration");
     scheduler->ScheduleOp(export_concentration, OpType::kPreSchedule);
   }
+  OperationRegistry::GetInstance()->AddOperationImpl(
+      "ProvideSubstance", OpComputeTarget::kCpu,
+      new ProvideSubstance(rm->GetDiffusionGrid("Substance"), boundary_source));
+  auto *export_concentration = NewOperation("ProvideSubstance");
+  scheduler->ScheduleOp(export_concentration, OpType::kPostSchedule);
 
   // ------------------------------------------------------------------
   // Run simulation
   // ------------------------------------------------------------------
 
-  scheduler->Simulate(n_steps);
   scheduler->PrintInfo(std::cout);  // Print information about the simulation
+  scheduler->Simulate(n_steps);
 
   std::cout << "Simulation completed successfully!" << std::endl;
   return 0;
