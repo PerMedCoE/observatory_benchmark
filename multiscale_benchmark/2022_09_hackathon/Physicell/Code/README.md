@@ -25,20 +25,13 @@ Visit http://MathCancer.org/blog for the latest tutorials and help.
                      Use "make" to compile it. 
 
    * **`project-name`** choices:
-      * template 
-      * biorobots-sample 
-      * cancer-biorobots-sample 
-      * cancer-immune-sample
-      * celltypes3-sample 
-      * heterogeneity-sample 
-      * pred-prey-farmer 
-      * virus-macrophage-sample 
-      * worm-sample
-      * ode-energy-sample 
-      * physiboss-cell-lines-sample 
-      * cancer-metabolism-sample
-      * interaction-sample
-
+	* single_diffusion
+	* many_diffusion
+	* mechanics_movement
+	* mechanics_pushing
+	* fixed_cell_cycle
+	* stochastic_cell_cylcle
+	* monolayer
 **`make list-projects`** : list all available sample projects 
 
 **`make clean`**         : removes all .o files and the executable, so that the next "make" recompiles the entire project 
