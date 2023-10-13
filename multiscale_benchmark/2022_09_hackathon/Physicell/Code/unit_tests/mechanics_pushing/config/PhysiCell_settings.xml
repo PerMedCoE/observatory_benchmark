@@ -27,7 +27,7 @@
 	</parallel> 
 	
 	<save>
-		<folder>../output/mechanics_pushing_out</folder>  
+		<folder>../output/mechanics_pushing</folder>  
 
 		<full_data>
 			<interval units="min">0.1</interval>

@@ -30,7 +30,7 @@
 		<folder>../output/diffusion_1k</folder>  
 
 		<full_data>
-			<interval units="min">1</interval>
+			<interval units="min">0.1</interval>
 			<enable>true</enable>
 		</full_data>
 		
