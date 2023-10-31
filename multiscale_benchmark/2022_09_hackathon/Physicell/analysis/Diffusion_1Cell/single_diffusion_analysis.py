@@ -13,7 +13,7 @@ def create_parser():
     
     parser.add_argument("data_folder", action="store", help="folder were the output data is stored")
     
-    parser.add_argument("--gifout", action="store", dest="gif_out", default="/physicell_single_diffusion.gif",
+    parser.add_argument("--gifout", action="store", dest="gif_out", default="physicell_single_diffusion.gif",
                         help="File name to save the gif")
                         
     parser.add_argument("--csvout", action="store", dest="csv_fname", default="/microenv_single_diffusion.csv",
@@ -66,7 +66,7 @@ def generate_pngs(output_folder,csv_out):
         cbar = fig.colorbar(sc,shrink=0.7)
         # Show the plot
         num_ite = t*100
-        plt.title("Timestep: "+f'{t:.2f}')
+        plt.title("Diffusion of molecules, one cell as sink: Physicell Timestep: "+f'{t:.2f}')
         plt.savefig(output_folder+"/diff_timepoint"+str(int(num_ite))+".png")
         plt.close()
 def generate_first_last(output_folder,csv_out):
@@ -97,7 +97,7 @@ def generate_gif(output_folder,csv_out,gif_out):
     frames = [Image.open(image) for image in sorted(glob.glob(f"{output_folder}/*.png"),key=get_key)]
 
     frame_one = frames[0]
-    frame_one.save(output_folder+gif_out, format="GIF", append_images=frames,
+    frame_one.save(gif_out, format="GIF", append_images=frames,
                save_all=True, duration=100, loop=0)
     
 if __name__ == '__main__':

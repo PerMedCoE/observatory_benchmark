@@ -18,10 +18,10 @@ def create_parser():
                         
     parser.add_argument("--csvout", action="store", dest="csv_fname", default="/cells_volumes.csv",
                         help="File name to store the summary table used for the plot")
-    parser.add_argument("-g","--generate-gif", action="store_true")
+    parser.add_argument("-p","--generate-png", action="store_true")
     parser.add_argument("-c","--generate-csv", action="store_true")
     return parser
-def generate_csv(data_folder,csv_fname,generate_csv):
+def generate_csv(data_folder,csv_fname):
     files = Path(data_folder).glob('*output*_cells.mat')
     mcds = multicellds.Settings(data_folder+"/PhysiCell_settings.xml")
     df_cell = pd.DataFrame(columns = ['x','y','z',"dt",'radius'])
@@ -40,8 +40,10 @@ def generate_csv(data_folder,csv_fname,generate_csv):
     return df_cell
 
 
-def create_png(physicell_data,output_folder):
+def create_png(csv_fname,output_folder):
+    physicell_data = pd.read_csv(output_folder+"/"+csv_fname,index_col=0).sort_values(by=['dt']).reset_index(drop=True)
     fig,ax = plt.subplots()
+
     physicell_data['dt'] = physicell_data['dt']/60
     pc_init_vol = physicell_data.iloc[0,4]
     dts= []
@@ -102,10 +104,14 @@ def create_png(physicell_data,output_folder):
     # plt.plot(dts,vols,label="PhysiCell",color='green' ,linewidth=2)
     ax.legend(bbox_to_anchor = (1.0,1.0),loc='upper left')
     plt.tight_layout()
-    plt.savefig(output_folder+"/stochastic_cell_cycle_volumes.png")
+    plt.savefig("stochastic_cell_cycle_volumes.png")
     plt.show()
 if __name__ == '__main__':
     parser = create_parser()
     args = parser.parse_args()
-    physicell_data = generate_csv(args.data_folder,args.csv_fname,args.generate_csv)
-    create_png(physicell_data,args.data_folder)
+    # physicell_data = generate_csv(args.data_folder,args.csv_fname,args.generate_csv)
+    # create_png(physicell_data,args.data_folder)
+    if args.generate_csv:
+        generate_csv(args.data_folder,args.csv_fname)
+    if args.generate_png:
+        create_png(args.csv_fname,args.data_folder)

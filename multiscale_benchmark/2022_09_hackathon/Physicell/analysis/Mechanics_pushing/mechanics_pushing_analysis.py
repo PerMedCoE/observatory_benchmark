@@ -13,7 +13,7 @@ def create_parser():
     
     parser.add_argument("data_folder", action="store", help="folder were the output data is stored")
     
-    parser.add_argument("--gifout", action="store", dest="gif_out", default="/physicell_cells_positions.gif",
+    parser.add_argument("--gifout", action="store", dest="gif_out", default="physicell_cells_positions.gif",
                         help="File name to save the gif")
                         
     parser.add_argument("--csvout", action="store", dest="csv_fname", default="/cells_position_time.csv",
@@ -64,7 +64,7 @@ def generate_pngs(data_folder,csv_fname):
         ax.set_ylim([-10.0, 11.0])
         # Show the plot
         num_ite = t*100
-        plt.title("Timestep: "f"{t:.1f}""\n Two cells pushing")
+        plt.title("PhysiCell Two cells pushing Timestep: "f"{t:.1f}""")
         plt.legend()
         plt.savefig(data_folder+"/positions_timepoint"+str(int(num_ite))+".png")
         plt.close()
@@ -79,7 +79,7 @@ def generate_gif(output_folder,csv_out,gif_out):
     frames = [Image.open(image) for image in sorted(glob.glob(f"{output_folder}/*.png"),key=get_key)]
 
     frame_one = frames[0]
-    frame_one.save(output_folder+gif_out, format="GIF", append_images=frames,
+    frame_one.save(gif_out, format="GIF", append_images=frames,
                save_all=True, duration=200, loop=0)
 
 

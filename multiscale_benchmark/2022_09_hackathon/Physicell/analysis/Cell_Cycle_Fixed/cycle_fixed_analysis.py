@@ -56,7 +56,7 @@ def create_png(physicell_data,output_folder):
     plt.plot(dts,vols,label="PhysiCell",color='green' ,linewidth=2)
     plt.xlabel(xlabel="Time (hours)",fontsize=12,color = '#262626')
     plt.ylabel(ylabel="Percentage of initial volume",fontsize=12,color = '#262626')
-    plt.title(label = 'Fixed Cell Cycle Total Volume',color = '#262626')
+    plt.title(label = 'PhysiCell Fixed Cell Cycle Total Volume',color = '#262626')
 
     for i in [0,1,2]:
         rect1 = matplotlib.patches.Rectangle((18*i,50),
@@ -93,7 +93,7 @@ def create_png(physicell_data,output_folder):
     # plt.plot(dts,vols,label="PhysiCell",color='green' ,linewidth=2)
     ax.legend(bbox_to_anchor = (1.0,1.0),loc='upper left')
     plt.tight_layout()
-    plt.savefig(output_folder+"/fixed_cell_cycle_volumes.png")
+    plt.savefig("fixed_cell_cycle_volumes.png")
     plt.show()
 if __name__ == '__main__':
     parser = create_parser()

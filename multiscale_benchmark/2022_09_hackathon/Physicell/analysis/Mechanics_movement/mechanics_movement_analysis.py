@@ -10,14 +10,14 @@ from matplotlib.animation import FuncAnimation
 import matplotlib.pyplot as plt
 
 def create_parser():
-    parser = argparse.ArgumentParser(description="Perform analysis of Physicell 1k Cell diffusion unit test")
+    parser = argparse.ArgumentParser(description="Perform analysis of Physicell Mechanics (Friction) Movement of a cell")
     
     parser.add_argument("data_folder", action="store", help="folder were the output data is stored")
     
-    parser.add_argument("--gifout", action="store", dest="gif_out", default="/physicell_cell_positions.gif",
+    parser.add_argument("--gifout", action="store", dest="gif_out", default="physicell_cell_positions.gif",
                         help="File name to save the gif")
                         
-    parser.add_argument("--csvout", action="store", dest="csv_fname", default="/cell_position_time.csv",
+    parser.add_argument("--csvout", action="store", dest="csv_fname", default="cell_position_time.csv",
                         help="File name to store the summary table used for the plot")
     parser.add_argument("-g","--generate-gif", action="store_true")
     parser.add_argument("-c","--generate-csv", action="store_true")
@@ -50,7 +50,7 @@ def generate_gif(output_folder,csv_fname,gif):
         ax.set_xlabel('X')
         ax.set_ylabel('Y')
         ax.scatter(data.iloc[frame]['x'], data.iloc[frame]['y'], c='b', marker='o')
-        ax.set_title("timepoint: " + str(frame))
+        ax.set_title("PhysiCell Movement of a cell (Friction) Timepoint: " + str(frame))
         return ax
     data = pd.read_csv(output_folder+"/"+csv_fname,index_col=0).sort_values(by=['dt']).reset_index(drop=True)
     fig = plt.figure()
@@ -65,7 +65,7 @@ def generate_gif(output_folder,csv_fname,gif):
     anim = FuncAnimation(fig, update, frames=len(data), interval=0.1)
 
     # Save the animation as a GIF
-    anim.save(output_folder+"/"+gif, writer='Pillow')
+    anim.save(gif, writer='Pillow')
 
 
 
@@ -76,8 +76,8 @@ if __name__ == '__main__':
     data_folder = args.data_folder
     csv_fname = args.csv_fname
     gif_fname = args.gif_out
-    generate_position_timestep_csv(data_folder,csv_fname)
-    generate_gif(data_folder,csv_fname,gif_fname)
+    # generate_position_timestep_csv(data_folder,csv_fname)
+    # generate_gif(data_folder,csv_fname,gif_fname)
     print(args.generate_csv,args.generate_gif)
     if args.generate_csv:
         generate_position_timestep_csv(data_folder,csv_fname)

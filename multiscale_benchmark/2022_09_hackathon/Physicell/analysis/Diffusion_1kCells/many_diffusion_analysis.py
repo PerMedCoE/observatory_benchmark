@@ -13,7 +13,7 @@ def create_parser():
     
     parser.add_argument("data_folder", action="store", help="folder were the output data is stored")
     
-    parser.add_argument("--gifout", action="store", dest="gif_out", default="/physicell_many_diffusion.gif",
+    parser.add_argument("--gifout", action="store", dest="gif_out", default="physicell_many_diffusion.gif",
                         help="File name to save the gif")
                         
     parser.add_argument("--csvout", action="store", dest="csv_fname", default="/microenv_many_diffusion.csv",
@@ -77,7 +77,7 @@ def generate_gif(output_folder,csv_out,gif_out):
     frames = [Image.open(image) for image in sorted(glob.glob(f"{output_folder}/*.png"),key=get_key)]
 
     frame_one = frames[0]
-    frame_one.save(output_folder+gif_out, format="GIF", append_images=frames,
+    frame_one.save(gif_out, format="GIF", append_images=frames,
                save_all=True, duration=100, loop=0)
     
 if __name__ == '__main__':
