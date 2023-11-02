@@ -7,28 +7,26 @@ from sklearn.preprocessing import MinMaxScaler
 
 # Load data into a pandas dataframe
 
-# data = pd.read_csv("/home/thalia/BSC/NEW_BENCH/Physicell_template/mechanics_movement/position_step.csv",index_col=0).sort_values(by=['dt']).reset_index(drop=True)
-# data_biod = pd.read_csv("/home/thalia/BSC/observatory_benchmark/multiscale_benchmark/2022_09_hackathon/Biodynamo/unit_test_mechanics_friction_single/results/positions.csv"
-# ,header = None,sep='\t|,',engine='python')
-# data_biod = data_biod.rename(columns={1: "x", 2: "y", 3: "z"})
-
 
 def get_physicell_df(file):
-    df = pd.read_csv(file,index_col=0).sort_values(by=['dt']).reset_index(drop=True)
-    # Normalize distances in DataFrame 1
-    df['dx'] = abs(df['x'] - df['x'].shift(1))
+    df = pd.read_csv(file,index_col=0,float_precision='round_trip').sort_values(by=['dt']).reset_index(drop=True)
+    pc_dist =  abs(df[df['id']==0]['x'].reset_index() - df[df['id']==1]['x'].reset_index())
+    pc_dista= df[df['id']==0]['radius'].reset_index() + df[df['id']==1]['radius'].reset_index()['radius']
+    # +2*df[df['id']==0]['radius']  
+    pc_dist.rename({"x":"distance"},inplace=True,axis=1)
+    pc_dist.drop("index",axis=1,inplace=True)
+    # print(df[df['id']==0]['radius'])
+    print(pc_dist)
 
-    # The first row of the 'distances' column will be NaN, you can replace it with 0 if needed
-    df['dx'].fillna(0, inplace=True)
     return df
 
 def get_biodynamo_df(file):
-    df = pd.read_csv(file,index_col=0,header = None,sep='\t|,',engine='python').rename(columns={1: "x", 2: "y", 3: "z"})
-    df['dx'] = abs(df['x'] - df['x'].shift(1))
+    df = pd.read_csv(file,index_col=0,header = None,sep='\t|,',engine='python').rename(columns={1: "x1", 4: "x2"})
+    df['dx'] = abs(df["x1"] - df["x2"])
 
-    # The first row of the 'distances' column will be NaN, you can replace it with 0 if needed
-    df['dx'].fillna(0, inplace=True)
-
+    # # The first row of the 'distances' column will be NaN, you can replace it with 0 if needed
+    # df['dx'].fillna(0, inplace=True)
+    print(df)
     return df
 def get_tisim_df(file):
     # df= pd.read_csv(file,delimiter="\t",names = ['timestep','diff'],header=0)
@@ -73,42 +71,21 @@ def main():
 
     # Specify at least 3 folder paths as arguments
     parser.add_argument("--pc-csv", action="store", dest = "pc_csv",help="Path to the PhysiCell position over time csv",
-                        default="../Physicell/output/mechanics_friction/cell_position_time.csv")
+                        default="../Physicell/output/mechanics_pushing/cells_position_time.csv")
     parser.add_argument("--bd-csv",action="store", dest = "bd_csv" ,help="Path to BioDynaMo position over time csv",
-                    default="../Biodynamo/unit_test_mechanics_friction_single/results/positions.csv")
+                    default="../Biodynamo/unit_test_mechanics_pushing/results/positions.csv")
     parser.add_argument("--ch-csv",action="store", dest = "ch_csv", help="Path to Chaste position over time csv",
-                    default="../Chaste/unit_test_mechanics_friction/results/node_locations.dat")
+                    default="../Chaste/unit_test_mechanics_pushing/results/results.viznodelocations")
     # parser.add_argument("--ts-csv", help="Path to TiSim concentration over time csv")
     
     args = parser.parse_args()
     
 
 
-    pc_conc = get_physicell_df(args.pc_csv)
-    bd_conc = get_biodynamo_df(args.bd_csv)
-    ch_conc = get_chaste_df(args.ch_csv)
+    pc_df = get_physicell_df(args.pc_csv)
+    bd_df = get_biodynamo_df(args.bd_csv)
+    # ch_conc = get_chaste_df(args.ch_csv)
 
-    plot_distance_moved(pc_conc,bd_conc,ch_conc)
-    def update(frame, sphere_df, cube_df,triangle_df):
-        ax.clear()
-        ax.set_xlim([-15.0, 15.0])
-        ax.set_ylim([-15.0, 15.00])
-        ax.set_xlabel('X')
-        ax.set_ylabel('Y')
-        ax.scatter(sphere_df.iloc[frame]['x'], sphere_df.iloc[frame]['y'], c='b', marker='o',label="Physicell")
-        ax.scatter(cube_df.iloc[frame]['x'], cube_df.iloc[frame]['y'], c='r', marker='s',label="BioDynamo")
-        ax.scatter(triangle_df.iloc[frame][1], triangle_df.iloc[frame][2], c='yellow', marker='s',label="Chaste")
-        ax.legend()
-        return ax
-    fig = plt.figure()
-    ax = fig.add_subplot(111)
-    ax.set_xlim([-21.0, 21.0])
-    ax.set_ylim([-1.0, 1.0])
-    ax.set_xlabel('X')
-    ax.set_ylabel('Y')
-
-    anim = FuncAnimation(fig, update, frames=len(bd_conc), fargs=(pc_conc, bd_conc,ch_conc), interval=50)
-    anim.save('mechanics_movement.gif', writer='Pillow')
 
 if __name__ == "__main__":
     main()
