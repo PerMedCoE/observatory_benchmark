@@ -11,12 +11,16 @@ from sklearn.preprocessing import MinMaxScaler
 def get_physicell_df(file):
     df = pd.read_csv(file,index_col=0,float_precision='round_trip').sort_values(by=['dt']).reset_index(drop=True)
     pc_dist =  abs(df[df['id']==0]['x'].reset_index() - df[df['id']==1]['x'].reset_index())
-    pc_dista= df[df['id']==0]['radius'].reset_index() + df[df['id']==1]['radius'].reset_index()['radius']
+    pc_dista= df[df['id']==0]['radius'].reset_index()
     # +2*df[df['id']==0]['radius']  
     pc_dist['dt'] = df['dt'].unique()
+    pa= df[df['id']==0]['radius'].reset_index() + df[df['id']==1]['radius'].reset_index()
+    pc_dist['radius'] = pa["radius"]
+    
     pc_dist.rename({"x":"dx"},inplace=True,axis=1)
     pc_dist.drop("index",axis=1,inplace=True)
-    # print(df[df['id']==0]['radius'])
+    pc_dist['dxx'] = abs(pc_dist['dx'] - pc_dist['radius'])
+    print(pc_dist)
     return pc_dist
 
 def get_biodynamo_df(file):
@@ -42,7 +46,7 @@ def get_chaste_df(file):
 def plot_distance_moved(pc_data,bd_data,ch_data,ts_data):
     scaler = MinMaxScaler()
 
-    pc_data['normalized_distance'] = scaler.fit_transform(pc_data[["dx"]])
+    pc_data['normalized_distance'] = scaler.fit_transform(pc_data[["dxx"]])
 
     # Normalize distances in DataFrame 2
     bd_data['normalized_distance'] = scaler.fit_transform(bd_data[['dx']])
@@ -55,6 +59,7 @@ def plot_distance_moved(pc_data,bd_data,ch_data,ts_data):
     plt.plot(pc_data.index,pc_data['normalized_distance'],label="PhysiCell", color= 'green',alpha = 0.5)
     plt.plot(bd_data.index,bd_data['normalized_distance'],label="Biodynamo",color= 'red',alpha = 0.7)
     plt.plot(ch_data.index,ch_data['normalized_distance'],label="Chaste",alpha = 0.6)
+    plt.plot(ts_data.index,ts_data['normalized_distance'],label="TiSim",alpha = 0.6)
 
     plt.ylabel(ylabel="Normalized Distance travelled")
     plt.xlabel(xlabel="Time")
