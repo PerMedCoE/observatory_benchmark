@@ -5,12 +5,6 @@ from matplotlib.animation import FuncAnimation
 import argparse
 from sklearn.preprocessing import MinMaxScaler
 
-# Load data into a pandas dataframe
-
-# data = pd.read_csv("/home/thalia/BSC/NEW_BENCH/Physicell_template/mechanics_movement/position_step.csv",index_col=0).sort_values(by=['dt']).reset_index(drop=True)
-# data_biod = pd.read_csv("/home/thalia/BSC/observatory_benchmark/multiscale_benchmark/2022_09_hackathon/Biodynamo/unit_test_mechanics_friction_single/results/positions.csv"
-# ,header = None,sep='\t|,',engine='python')
-# data_biod = data_biod.rename(columns={1: "x", 2: "y", 3: "z"})
 
 
 def get_physicell_df(file):
