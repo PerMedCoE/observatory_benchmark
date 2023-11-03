@@ -13,12 +13,11 @@ def get_physicell_df(file):
     pc_dist =  abs(df[df['id']==0]['x'].reset_index() - df[df['id']==1]['x'].reset_index())
     pc_dista= df[df['id']==0]['radius'].reset_index() + df[df['id']==1]['radius'].reset_index()['radius']
     # +2*df[df['id']==0]['radius']  
-    pc_dist.rename({"x":"distance"},inplace=True,axis=1)
+    pc_dist['dt'] = df['dt'].unique()
+    pc_dist.rename({"x":"dx"},inplace=True,axis=1)
     pc_dist.drop("index",axis=1,inplace=True)
     # print(df[df['id']==0]['radius'])
-    print(pc_dist)
-
-    return df
+    return pc_dist
 
 def get_biodynamo_df(file):
     df = pd.read_csv(file,index_col=0,header = None,sep='\t|,',engine='python').rename(columns={1: "x1", 4: "x2"})
@@ -26,22 +25,21 @@ def get_biodynamo_df(file):
 
     # # The first row of the 'distances' column will be NaN, you can replace it with 0 if needed
     # df['dx'].fillna(0, inplace=True)
-    print(df)
     return df
 def get_tisim_df(file):
-    # df= pd.read_csv(file,delimiter="\t",names = ['timestep','diff'],header=0)
-    df = pd.read_csv(file,names=[x for x in range(0,28)],skiprows=[0],index_col=0,sep='\t|,',engine='python')
+    df = pd.read_csv(file,index_col=None,header=None).T
+    df['dx'] = abs(df[0]-df[1])
+    print(df)
     return df
 
 def get_chaste_df(file):
     df = pd.read_csv(file,header = None,sep='\t| ',index_col=0,engine='python')
-    df['dx'] = abs(df[1] - df[1].shift(1))
-
+    df['dx'] = abs(df[2] - df[1])
     # The first row of the 'distances' column will be NaN, you can replace it with 0 if needed
     df['dx'].fillna(0, inplace=True)
     return df
 
-def plot_distance_moved(pc_data,bd_data,ch_data):
+def plot_distance_moved(pc_data,bd_data,ch_data,ts_data):
     scaler = MinMaxScaler()
 
     pc_data['normalized_distance'] = scaler.fit_transform(pc_data[["dx"]])
@@ -52,14 +50,17 @@ def plot_distance_moved(pc_data,bd_data,ch_data):
     # Normalize distances in DataFrame 3
     ch_data['normalized_distance'] = scaler.fit_transform(ch_data[["dx"]])
     ch_data.index=range(0,101)
-    plt.plot(pc_data.index,pc_data['normalized_distance'],label="PhysiCell", color= 'green', marker='o')
-    plt.plot(bd_data.index,bd_data['normalized_distance'],label="Biodynamo",color= 'red')
-    plt.plot(ch_data.index,ch_data['normalized_distance'],label="Chaste",marker = 'x')
+
+    ts_data['normalized_distance'] = scaler.fit_transform(ts_data[["dx"]])
+    plt.plot(pc_data.index,pc_data['normalized_distance'],label="PhysiCell", color= 'green',alpha = 0.5)
+    plt.plot(bd_data.index,bd_data['normalized_distance'],label="Biodynamo",color= 'red',alpha = 0.7)
+    plt.plot(ch_data.index,ch_data['normalized_distance'],label="Chaste",alpha = 0.6)
+
     plt.ylabel(ylabel="Normalized Distance travelled")
     plt.xlabel(xlabel="Time")
-    plt.title("Normalized distance of the movement of a cell across time")
+    plt.title("Normalized distance between the two cells across time")
     plt.legend()
-    plt.savefig("mechanics_movement_normalized_distances.png",dpi=200)
+    plt.savefig("mechanics_pusing_normalized_distances.png",dpi=200)
 
     plt.show()
     print(pc_data)
@@ -76,7 +77,8 @@ def main():
                     default="../Biodynamo/unit_test_mechanics_pushing/results/positions.csv")
     parser.add_argument("--ch-csv",action="store", dest = "ch_csv", help="Path to Chaste position over time csv",
                     default="../Chaste/unit_test_mechanics_pushing/results/results.viznodelocations")
-    # parser.add_argument("--ts-csv", help="Path to TiSim concentration over time csv")
+    parser.add_argument("--ts-csv",action="store", dest = "ts_csv", help="Path to TiSim concentration over time csv",
+                         default="../Tisim/unit_test_mechanics_pushing/results/positions.csv")
     
     args = parser.parse_args()
     
@@ -84,8 +86,8 @@ def main():
 
     pc_df = get_physicell_df(args.pc_csv)
     bd_df = get_biodynamo_df(args.bd_csv)
-    # ch_conc = get_chaste_df(args.ch_csv)
-
-
+    ch_df = get_chaste_df(args.ch_csv)
+    ts_df = get_tisim_df(args.ts_csv)
+    plot_distance_moved(pc_df,bd_df,ch_df,ts_df)
 if __name__ == "__main__":
     main()
