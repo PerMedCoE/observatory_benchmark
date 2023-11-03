@@ -4,6 +4,8 @@ import os,re
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib
+import matplotlib.pylab as pl
+import numpy as np
 
 def create_parser():
     parser = argparse.ArgumentParser(description="Create folders from input paths.")
@@ -21,6 +23,7 @@ def create_parser():
 
 def get_physicell_df(file):
     df = pd.read_csv(file,index_col=0,float_precision='round_trip').sort_values(by=['dt']).reset_index(drop=True)
+    df['dt'] = df['dt']/60
     return df
 def get_biodynamo_df(file):
     df = pd.read_csv(file,index_col=0,header = None,sep='\t|,',engine='python').rename(columns={1: "x1", 4: "x2"})
@@ -49,89 +52,80 @@ def get_chaste_df(file):
                 df =pd.concat([df,df2],ignore_index=True)
         return df
 
-def plot(pc_df,ts_df,ch_df):
+
+
+def plot(pc_df,ch_df):
     fig,ax = plt.subplots()
-    pc_df['dt'] = pc_df['dt']/60
+    # plot Physicell
     pc_init_vol = pc_df.iloc[0,4]
-
-
-    dts= []
-    vols = []
-    for dt,idx in pc_df.groupby(['dt']).groups.items():
-        dts.append(dt)
-        total_cell_volume = 0
+    pc_group =  pc_df.groupby(['id']).groups.items()
+    num_cels = len(pc_group)
+    colors = pl.cm.Greens(np.linspace(0,1,num_cels*2))
+    j=2
+    for cell_id,idx in pc_group:
+        vols = []
+        dts = []
         for i in idx.values:
-            total_cell_volume += pc_df.loc[i,'total_volume']
-        perc = (total_cell_volume/(len(idx.values)))/pc_init_vol
-        vols.append(perc)
-    vols=[100*x for x in vols]
-    plt.plot(dts,vols,label="PhysiCell",color='green' ,linewidth=2)
-    # Now plot Chaste
-    dts= []
-    vols = []
-    ch_init_vol = ch_df.loc[0,"volume"]
-    for dt,idx in ch_df.groupby(['dt']).groups.items():
-        dts.append(dt)
-        total_cell_volume = 0
+            vols.append((pc_df.loc[i,'total_volume']/pc_init_vol)*100)
+            dts.append(pc_df.loc[i,'dt'])
+        # plt.plot(dts,vols,label="PhysiCell", color=colors[j] ,linewidth=2)
+        if cell_id!=num_cels-1:
+            plt.plot(dts,vols, color=colors[j] ,linewidth=2)
+        else:
+            plt.plot(dts,vols, color=colors[j],label = 'PhysiCell' ,linewidth=2)
+        j+=1
+    # plot get_tisim_df
+    colors = pl.cm.YlOrBr(np.linspace(0,1,10))
+    v1=[1,1.0202,1.04068,1.06142,1.08244,1.10068,1.12222,1.14403,1.16612,1.18528,1.2079,1.23081,1.25067,1.27411,1.29785,1.32187,1.34619,1.36728,1.39215,1.41732,1.44279,1.46487,1.49091,1.51725,1.54391,1.567,1.59423,1.62178,1.64964,1.67377,1.70223,1.731,1.76009,1.78529,1.81499,1.84501,1.87537,1.90165,1.93262,1.96393,1.99557,1.01363,1.03507,1.05369,1.07569,1.09799,1.12061,1.14023,1.16342,1.18692,1.21073,1.23139,1.25579,1.28052,1.30556,1.32728,1.35293,1.37891,1.40522,1.42803,1.45496,1.48222,1.50982,1.53375,1.56199,1.59057,1.61949,1.64456,1.67414,1.70407,1.73435,1.76059,1.79154,1.82284,1.85451,1.88195,1.9143,1.94701,1.9801,1,1.0117,1.02942,1.05035,1.07157,1.09307,1.11173,1.13376,1.15608,1.17869,1.19831,1.22146,1.24492,1.26867,1.28927,1.31358,1.33819,1.36311,1.38472,1.41021,1.43602,1.46213]
+    t1=[0,0.497778,0.995556,1.49333,1.99111,2.41778,2.91556,3.41333,3.91111,4.33778,4.83556,5.33333,5.76,6.25778,6.75556,7.25333,7.75111,8.17778,8.67556,9.17333,9.67111,10.0978,10.5956,11.0933,11.5911,12.0178,12.5156,13.0133,13.5111,13.9378,14.4356,14.9333,15.4311,15.8578,16.3556,16.8533,17.3511,17.7778,18.2756,18.7733,19.2711,19.7333,20.2311,20.6578,21.1556,21.6533,22.1511,22.5778,23.0756,23.5733,24.0711,24.4978,24.9956,25.4933,25.9911,26.4178,26.9156,27.4133,27.9111,28.3378,28.8356,29.3333,29.8311,30.2578,30.7556,31.2533,31.7511,32.1778,32.6756,33.1733,33.6711,34.0978,34.5956,35.0933,35.5911,36.0178,36.5156,37.0133,37.5111,37.9733,38.4711,38.8978,39.3956,39.8933,40.3911,40.8178,41.3156,41.8133,42.3111,42.7378,43.2356,43.7333,44.2311,44.6578,45.1556,45.6533,46.1511,46.5778,47.0756,47.5733,48.0711]
+    plt.plot(t1,[100*x for x in v1], color=colors[2],label='TiSim' ,linewidth=2)
+
+    v2=[1.01641,1.04229,1.06481,1.0915,1.11864,1.14621,1.17021,1.19863,1.2275,1.25683,1.28234,1.31254,1.3432,1.37434,1.40141,1.43344,1.46596,1.49896,1.52764,1.56156,1.59598,1.6309,1.66123,1.69709,1.73346,1.77035,1.80238,1.84024,1.87863,1.91754,1.95132,1.99123,1.01341,1.03238,1.04882,1.06823,1.08788,1.10776,1.12644,1.14679,1.16443,1.18523,1.20628,1.22758,1.24603,1.2678,1.28981,1.31208,1.33137,1.35411,1.37711,1.40037,1.42051,1.44425,1.46826,1.49253,1.51355,1.53831,1.56335,1.58865]
+    t2=[19.7333,20.2311,20.6578,21.1556,21.6533,22.1511,22.5778,23.0756,23.5733,24.0711,24.4978,24.9956,25.4933,25.9911,26.4178,26.9156,27.4133,27.9111,28.3378,28.8356,29.3333,29.8311,30.2578,30.7556,31.2533,31.7511,32.1778,32.6756,33.1733,33.6711,34.0978,34.5956,35.0933,35.5911,36.0178,36.5156,37.0133,37.5111,37.9733,38.4711,38.8978,39.3956,39.8933,40.3911,40.8178,41.3156,41.8133,42.3111,42.7378,43.2356,43.7333,44.2311,44.6578,45.1556,45.6533,46.1511,46.5778,47.0756,47.5733,48.0711]
+    plt.plot(t2,[100*x for x in v2], color=colors[4],linewidth=2)
+
+    v3=[1.01348,1.03256,1.0491,1.06862,1.08838,1.10839,1.12718,1.14765,1.1654,1.18633,1.20752,1.22895,1.24752,1.26942,1.29158,1.31399,1.33341,1.35631,1.37946,1.40288,1.42316,1.44706,1.47124,1.49568,1.51684,1.54178,1.567,1.59249]
+    t3=[35.0933,35.5911,36.0178,36.5156,37.0133,37.5111,37.9733,38.4711,38.8978,39.3956,39.8933,40.3911,40.8178,41.3156,41.8133,42.3111,42.7378,43.2356,43.7333,44.2311,44.6578,45.1556,45.6533,46.1511,46.5778,47.0756,47.5733,48.0711]
+    plt.plot(t3,[100*x for x in v3], color=colors[6],linewidth=2)
+
+    v4=[1,1.01129,1.02838,1.04857,1.06902,1.08973,1.10769,1.1289,1.15038,1.17212,1.19098,1.21323,1.23576,1.25857,1.27834,1.30166,1.32527,1.34916,1.36987,1.39429,1.419,1.444]
+    t4=[37.9733,38.4711,38.8978,39.3956,39.8933,40.3911,40.8178,41.3156,41.8133,42.3111,42.7378,43.2356,43.7333,44.2311,44.6578,45.1556,45.6533,46.1511,46.5778,47.0756,47.5733,48.0711]
+    plt.plot(t4,[100*x for x in v4], color=colors[8] ,linewidth=2)
+    # plot Chaste
+    ch_init_vol = ch_df.iloc[0,11]*1000
+    ch_group =  ch_df.groupby(['id']).groups.items()
+    num_cels = len(ch_group)
+    colors = pl.cm.Blues(np.linspace(0,1,num_cels*2))
+    j=4
+    for cell_id,idx in ch_group:
+        vols = []
+        dts = []
         for i in idx.values:
-            total_cell_volume += ch_df.loc[i,'volume']
+            vols.append(((ch_df.loc[i,'volume']*1000)/ch_init_vol)*100)
+            dts.append(ch_df.loc[i,'dt'])
+        if cell_id!=num_cels-1:
+            plt.plot(dts,vols, color=colors[j] ,linewidth=2)
+        else:
+            plt.plot(dts,vols, color=colors[j],label='Chaste' ,linewidth=2)
 
-        perc = (total_cell_volume/(len(idx.values)))/ch_init_vol
-        vols.append(perc)
+        j+=1
 
-    vols=[100*x for x in vols]
-
-    ax.plot(dts,vols,label="Chaste",color='blue',linewidth=2)
-    # Now plot TiSim
-    ax.plot(ts_df['dt'],ts_df['volumes'],label="TiSim",color  = '#ffd343',linewidth=2)
     plt.xlabel(xlabel="Time (hours)",fontsize=12,color = '#262626')
     plt.ylabel(ylabel="Percentage of initial volume",fontsize=12,color = '#262626')
-    plt.title(label = 'Fixed Cell Cycle Total Volume',color = '#262626')
-
-    for i in [0,1,2]:
-        rect1 = matplotlib.patches.Rectangle((18*i,50),
-                                        7, 170,
-                                        facecolor ='orange',alpha = 0.1,edgecolor=None)
-        
-        plt.text(18*i+1.9, 210,'G0/G1',color ='orange',alpha = 0.3)
-        rect2 = matplotlib.patches.Rectangle((18*i+7,50),
-                                        6, 170,
-                                        facecolor ='purple',alpha = 0.1,edgecolor=None)
-        plt.text(18*i+7+1.7, 210,'S',color ='purple',alpha = 0.3)
-        rect3 = matplotlib.patches.Rectangle((18*i+13,50),
-                                        3, 170,
-                                        facecolor ='yellow',alpha = 0.1,edgecolor=None)
-        rect4 = matplotlib.patches.Rectangle((18*i + 16,50),
-                                        2, 170,
-                                        facecolor ='red',alpha = 0.1,edgecolor=None)
-        
-        ax.add_patch(rect1)
-        ax.add_patch(rect2)
-        
-        if i ==2:
-            break
-        plt.text(18*i+13+0.8, 210,'G2',color ='gold',alpha = 0.8)
-        plt.text(18*i+16+0.4, 210,'M',color ='red',alpha = 0.3)
-        ax.add_patch(rect3)
-        ax.add_patch(rect4)
-        if i==4:
-            ax.legend()
-
-    ax.set_xlim(xmin=0,xmax = 48)
-    ax.set_ylim(ymin=90)
+    plt.title(label = 'Stochastic Cell Cycle Percentage',color = '#262626')
     ax.legend(bbox_to_anchor = (1.0,1.0),loc='upper left')
     plt.tight_layout()
-    plt.savefig("fixed_cell_cycle_volumes.png",dpi=200)
+    plt.savefig("stohastic_cell_cycle_volumes.png",dpi=200)
     plt.show()
-
     return
 def main():
     parser = create_parser()
     args = parser.parse_args()
     pc_df = get_physicell_df(args.pc_csv)
-    ts_df = get_tisim_df()
+    # ts_df = get_tisim_df()
     ch_df = get_chaste_df(args.ch_csv)
-    plot(pc_df,ts_df,ch_df)
+    print(pc_df)
+    plot(pc_df,ch_df)
 
     return
 

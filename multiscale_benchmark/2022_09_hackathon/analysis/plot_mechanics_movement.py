@@ -47,21 +47,21 @@ def plot_distance_moved(pc_data,bd_data,ch_data):
     scaler = MinMaxScaler()
 
     pc_data['normalized_distance'] = scaler.fit_transform(pc_data[["dx"]])
-
-    # Normalize distances in DataFrame 2
     bd_data['normalized_distance'] = scaler.fit_transform(bd_data[['dx']])
-
-    # Normalize distances in DataFrame 3
     ch_data['normalized_distance'] = scaler.fit_transform(ch_data[["dx"]])
     ch_data.index=range(0,101)
-    plt.plot(pc_data.index,pc_data['normalized_distance'],label="PhysiCell", color= 'green', marker='o')
+
+    filtered_data = pc_data[pc_data.index > 10]
+    filtered_data.reset_index(drop=True, inplace=True)
+
+    plt.plot(filtered_data.index,filtered_data['normalized_distance'],label="PhysiCell", color= 'green',alpha = 0.7)
     plt.plot(bd_data.index,bd_data['normalized_distance'],label="Biodynamo",color= 'red')
-    plt.plot(ch_data.index,ch_data['normalized_distance'],label="Chaste",marker = 'x')
-    plt.ylabel(ylabel="Normalized Distance travelled")
+    plt.plot(ch_data.index,ch_data['normalized_distance'],label="Chaste")
+    plt.ylabel(ylabel="Normalized Velocity")
     plt.xlabel(xlabel="Time")
-    plt.title("Normalized distance of the movement of a cell across time")
+    plt.title("Normalized velocity of the movement of a cell across time")
     plt.legend()
-    plt.savefig("mechanics_movement_normalized_distances.png",dpi=200)
+    plt.savefig("mechanics_movement_normalized_velocity.png",dpi=200)
 
     plt.show()
     print(pc_data)
