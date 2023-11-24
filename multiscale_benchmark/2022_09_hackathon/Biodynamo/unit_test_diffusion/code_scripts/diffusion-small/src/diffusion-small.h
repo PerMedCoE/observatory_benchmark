@@ -63,6 +63,9 @@ class ProvideSubstance : public StandaloneOperationImpl {
       : amount_(amount), dg_(dg){};
 
   void operator()() override {
+    if (Simulation::GetActive()->GetScheduler()->GetSimulatedSteps() > 1) {
+      return;
+    }
     assert(dg_->GetNumBoxes() == 27);
     for (size_t idx = 0; idx < dg_->GetNumBoxes(); idx++) {
       if (idx == 9 + 5 - 1) {  // 9 (one layer), 5 (middle box), 1 (offset)
@@ -115,7 +118,7 @@ inline int Simulate(int argc, const char **argv) {
   // Boundary concentrations [uM]
   double c_0 = 0;
   // Diffusion coefficient [uM^2/min]
-  double D = 2000;
+  double D = 200;
   // Sink term [uM/min] <NOTE / WARNING THIS VALUE DEVIATES FROM THE TASK
   // DESCRIPTION. LARGER VALUES FOR SINK DO NOT RESULT IN A PHYSICAL STATE.>
   // double sink = 20 / 0.01;
@@ -201,11 +204,28 @@ inline int Simulate(int argc, const char **argv) {
   scheduler->ScheduleOp(export_concentration, OpType::kPostSchedule);
 
   // ------------------------------------------------------------------
+  // Visualization
+  // ------------------------------------------------------------------
+  auto *ts = simulation.GetTimeSeries();
+  auto get_concentration = [](Simulation *sim) {
+    auto dgrid_ = sim->GetResourceManager()->GetDiffusionGrid("Substance");
+    auto concentration = dgrid_->GetValue({0, 0, 0});
+    return concentration;
+  };
+  ts->AddCollector("concentration", get_concentration);
+
+  // ------------------------------------------------------------------
   // Run simulation
   // ------------------------------------------------------------------
 
   scheduler->PrintInfo(std::cout);  // Print information about the simulation
   scheduler->Simulate(n_steps);
+
+  experimental::LineGraph g(ts, "My result", "Time", "Concentration", true,
+                            nullptr, 500, 300);
+  g.Add("concentration", "Concentration", "L", kGreen);
+  g.SaveAs(Concat(simulation.GetOutputDir(), "/concentration"),
+           {".svg", ".png"});
 
   std::cout << "Simulation completed successfully!" << std::endl;
   return 0;
