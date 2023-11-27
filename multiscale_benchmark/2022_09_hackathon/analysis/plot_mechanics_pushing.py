@@ -11,8 +11,7 @@ from sklearn.preprocessing import MinMaxScaler
 def get_physicell_df(file):
     df = pd.read_csv(file,index_col=0,float_precision='round_trip').sort_values(by=['dt']).reset_index(drop=True)
     pc_dist =  abs(df[df['id']==0]['x'].reset_index() - df[df['id']==1]['x'].reset_index())
-    pc_dista= df[df['id']==0]['radius'].reset_index()
-    # +2*df[df['id']==0]['radius']  
+
     pc_dist['dt'] = df['dt'].unique()
     pa= df[df['id']==0]['radius'].reset_index() + df[df['id']==1]['radius'].reset_index()
     pc_dist['radius'] = pa["radius"]

@@ -12,7 +12,8 @@ import matplotlib.pyplot as plt
 def create_parser():
     parser = argparse.ArgumentParser(description="Perform analysis of Physicell Mechanics (Friction) Movement of a cell")
     
-    parser.add_argument("data_folder", action="store", help="folder were the output data is stored")
+    parser.add_argument("--data-folder", action="store", dest = "data_folder",help="Path to the Physicell olutput folder for mechanics movement",
+                        default="../../output/mechanics_movement")
     
     parser.add_argument("--gifout", action="store", dest="gif_out", default="physicell_cell_positions.gif",
                         help="File name to save the gif")
@@ -39,23 +40,24 @@ def generate_position_timestep_csv(output_folder,csv_fname):
         i=i+interval
     
     df_cell.to_csv(output_folder+"/"+csv_fname)
-    
+    print(df_cell)
     return
 
 def generate_gif(output_folder,csv_fname,gif):
     def update(frame):
         ax.clear()
-        ax.set_xlim([-15.0, 15.0])
-        ax.set_ylim([-15.0, 15.0])
+        ax.set_xlim([-5.0, 20.0])
+        ax.set_ylim([-5.0, 15.0])
         ax.set_xlabel('X')
         ax.set_ylabel('Y')
         ax.scatter(data.iloc[frame]['x'], data.iloc[frame]['y'], c='b', marker='o')
         ax.set_title("PhysiCell Movement of a cell (Friction) Timepoint: " + str(frame))
         return ax
     data = pd.read_csv(output_folder+"/"+csv_fname,index_col=0).sort_values(by=['dt']).reset_index(drop=True)
+    print(data)
     fig = plt.figure()
     ax = fig.add_subplot(111)
-    ax.set_xlim([-15.0, 15.0])
+    ax.set_xlim([-5.0, 20.0])
     ax.set_ylim([-15.0, 15.0])
     ax.set_xlabel('X')
     ax.set_ylabel('Y')

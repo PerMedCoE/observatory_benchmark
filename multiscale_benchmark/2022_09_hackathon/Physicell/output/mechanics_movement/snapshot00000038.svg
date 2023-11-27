@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with PhysiCell (http://PhysiCell.MathCancer.org/) -->
+<svg 
+ xmlns:dc="http://purl.org/dc/elements/1.1/" 
+ xmlns:cc="http://creativecommons.org/ns#" 
+ xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+ xmlns:svg="http://www.w3.org/2000/svg" 
+ xmlns="http://www.w3.org/2000/svg" 
+ version="1.1" 
+ width="240" 
+ height="256.8" 
+ id="svg2">
+  <rect x="0" y="0" width="240" height="256.8" stroke-width="0.48" stroke="white" fill="white"/>
+  <text x="3" y="7.2"
+   font-family="Arial" font-size="6" fill="black" >
+   Current time: 0 days, 0 hours, and 3.80 minutes, z = 0.00 &#956;m
+  </text>
+  <text x="3" y="13.8"
+   font-family="Arial" font-size="5.7" fill="black" >
+   1 agents
+  </text>
+ <g id="tissue" 
+    transform="translate(0,256.8) scale(1,-1)">
+  <g id="ECM">
+  </g>
+  <g id="cells">
+   <g id="cell0" type="agent" dead="false" >
+  <circle cx="121" cy="120" r="5.01302" stroke-width="0.5" stroke="black" fill="grey"/>
+  <circle cx="121" cy="120" r="5.05167" stroke-width="0.5" stroke="grey" fill="grey"/>
+   </g>
+  </g>
+ </g>
+  <rect x="34" y="248.4" width="200" height="2.4" stroke-width="0.48" stroke="rgb(255,255,255)" fill="rgb(0,0,0)"/>
+  <text x="35.5" y="246.9"
+   font-family="Arial" font-size="6" fill="black" >
+   200 &#956;m
+  </text>
+  <text x="6" y="250.8"
+   font-family="Arial" font-size="4.5" fill="black" >
+   0 days, 0 hours, 0 minutes, and 0.5644 seconds
+  </text>
+  <rect x="0" y="16.8" width="240" height="240" stroke-width="0.48" stroke="rgb(0,0,0)" fill="none"/>
+</svg>
