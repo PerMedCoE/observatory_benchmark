@@ -11,13 +11,13 @@ def get_physicell_df(file):
     df = pd.read_csv(file,index_col=0).sort_values(by=['dt']).reset_index(drop=True)
     df.rename(columns= {"dt":"timestep"},inplace=True)
     print(df)
-    df['dx'] = abs(df['x'] - df['x'].shift(1))
-    df['dx'].fillna(0, inplace=True)
+    # df['dx'] = abs(df['x'] - df['x'].shift(1))
+    # df['dx'].fillna(0, inplace=True)
 
-    df['dt'] = abs(df['timestep'] - df['timestep'].shift(1))
-    df['dt'].fillna(0, inplace=True)
+    # df['dt'] = abs(df['timestep'] - df['timestep'].shift(1))
+    # df['dt'].fillna(0, inplace=True)
 
-    df['velocity'] = df['dx'] / df['dt']
+    df['velocity'] = df['v1']
     return df
 
 def get_biodynamo_df(file):
@@ -53,7 +53,7 @@ def plot_distance_moved(pc_data,bd_data,ch_data):
     plt.plot(pc_data.index,pc_data['velocity'],label="PhysiCell", color= 'green',alpha = 0.7)
     plt.plot(bd_data.index,bd_data['velocity'],label="Biodynamo",color= 'red')
     plt.plot(ch_data.index,ch_data['velocity'],label="Chaste")
-    plt.ylabel(ylabel="Normalized Velocity")
+    plt.ylabel(ylabel="Velocity μM/s")
     plt.xlabel(xlabel="Time")
     plt.title("Velocity of the movement of a cell across time")
     plt.legend()

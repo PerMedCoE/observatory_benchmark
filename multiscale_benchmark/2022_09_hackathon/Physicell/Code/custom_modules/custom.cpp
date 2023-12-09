@@ -87,7 +87,7 @@ void create_cell_types( void )
 	cell_defaults.functions.update_velocity = update_cell_velocity_with_friction;
 
 	cell_defaults.functions.update_migration_bias = NULL; 
-	cell_defaults.functions.update_phenotype = NULL; // update_cell_and_death_parameters_O2_based; 
+	cell_defaults.functions.update_phenotype = phenotype_function; // update_cell_and_death_parameters_O2_based; 
 	cell_defaults.functions.custom_cell_rule = NULL; 
 	cell_defaults.functions.contact_function = NULL; 
 	
@@ -232,9 +232,19 @@ double Xmin = microenvironment.mesh.bounding_box[0];
         pCell->phenotype.motility.migration_bias_direction[0] = 1.0;    // constrain motility to <1,0,0> direction
         pCell->phenotype.motility.migration_bias_direction[1] = 0.0;
         pCell->phenotype.motility.migration_bias_direction[2] = 0.0;
-    }
+    
+
+	pCell->phenotype.motility.is_motile = true;
+	pCell->phenotype.motility.migration_speed = 10;
 
 	
+	
+	pCell->phenotype.motility.motility_vector[0] = pCell->phenotype.motility.migration_speed;
+	// pCell->velocity = pCell->phenotype.motility.motility_vector;
+	std::cout<<"pCell->velocity "<<pCell->velocity <<std::endl;
+	std::cout<<"pCell->phenotype.motility.migration_speed "<<pCell->phenotype.motility.migration_speed<<std::endl;
+	std::cout<<"phenotype.motility.motility_vector "<<pCell->phenotype.motility.motility_vector<<std::endl;	
+	}
 	return; 
 }
 
@@ -243,7 +253,7 @@ std::vector<std::string> my_coloring_function( Cell* pCell )
 
 void phenotype_function( Cell* pCell, Phenotype& phenotype, double dt )
 { 
-    std::cout <<"phenotype_function(): t= "<<PhysiCell_globals.current_time<< " motility_vector= " << pCell->phenotype.motility.motility_vector[0]<<", "<<pCell->phenotype.motility.motility_vector[1]<<", "<<pCell->phenotype.motility.motility_vector[2] << std::endl;
+    std::cout <<" phenotype_function(): t= "<<PhysiCell_globals.current_time<< " motility_vector= " << pCell->phenotype.motility.motility_vector[0]<<", "<<pCell->phenotype.motility.motility_vector[1]<<", "<<pCell->phenotype.motility.motility_vector[2] << std::endl;
     return; 
 }
 
@@ -258,7 +268,7 @@ void update_cell_velocity_with_friction(Cell* pCell, Phenotype& phenotype, doubl
 
 	// Check if there is ECM material in given voxel
 	//double dens2 = get_microenvironment()->density_vector(index_voxel)[index_ecm];
-	std::cout<<"current time : "<<PhysiCell_globals.current_time<<std::endl;
+	std::cout<<"current time : "<<PhysiCell_globals.current_time<<"is_motile "<< pCell->phenotype.motility.is_motile <<std::endl;
 	std::cout<<"phenotype.motility.motility_vector "<<pCell->phenotype.motility.motility_vector<<std::endl;
 	
 	double mu = PhysiCell::parameters.doubles("friction_coeff"); //this is basically the density of the fluid
@@ -267,24 +277,8 @@ void update_cell_velocity_with_friction(Cell* pCell, Phenotype& phenotype, doubl
 	double updated_speed = current_speed * mu; //fast hack that does not reproduce the Stokes equation --> should be replaced with something like v = v0 * exp(- 6*pi*drag_coeff * radius / mass)
 
 	
-	if(PhysiCell_globals.current_time==0.0)
-	{
 
-	pCell->phenotype.motility.migration_speed = current_speed;
-
-	
-	
-	pCell->phenotype.motility.motility_vector[0] = phenotype.motility.migration_speed;
-	pCell->velocity = phenotype.motility.motility_vector;
-	std::cout<<"im inside the loop "<<current_speed<<" "<<updated_speed <<std::endl;
-	std::cout<<"pCell->velocity "<<pCell->velocity <<std::endl;
-	std::cout<<"pCell->phenotype.motility.migration_speed "<<pCell->phenotype.motility.migration_speed<<std::endl;
-	std::cout<<"phenotype.motility.motility_vector "<<pCell->phenotype.motility.motility_vector<<std::endl;
-
-	}
-	else
-	{
-
+		pCell->phenotype.motility.is_motile = false;
 		pCell->phenotype.motility.migration_speed = 0;
 		pCell->velocity *= 0;
 		pCell->phenotype.motility.motility_vector[0] *= 0;
@@ -292,7 +286,7 @@ void update_cell_velocity_with_friction(Cell* pCell, Phenotype& phenotype, doubl
 		std::cout<<"pCell->velocity "<<pCell->velocity <<std::endl;
 		std::cout<<"phenotype.motility.motility_vector "<<pCell->phenotype.motility.motility_vector<<std::endl;
 		std::cout<<"pCell->phenotype.motility.migration_speed "<<pCell->phenotype.motility.migration_speed<<std::endl;
-	}
+
 	
 
 	return ;

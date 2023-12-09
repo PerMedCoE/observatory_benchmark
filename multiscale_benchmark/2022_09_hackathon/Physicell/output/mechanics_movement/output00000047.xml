@@ -27,17 +27,17 @@
 		</software>
 		<citation />
 		<current_time units="min">4.700000</current_time>
-		<current_runtime units="sec">0.864052</current_runtime>
-		<created>2023-11-21T15:59:33Z</created>
-		<last_modified>2023-11-21T15:59:33Z</last_modified>
+		<current_runtime units="sec">0.147618</current_runtime>
+		<created>2023-12-09T11:53:35Z</created>
+		<last_modified>2023-12-09T11:53:35Z</last_modified>
 	</metadata>
 	<microenvironment>
 		<domain name="microenvironment">
 			<mesh type="Cartesian" uniform="true" regular="true" units="micron">
-				<bounding_box type="axis-aligned" units="micron">-120.000000 -120.000000 -120.000000 120.000000 120.000000 120.000000</bounding_box>
-				<x_coordinates delimiter=" ">-110.000000 -90.000000 -70.000000 -50.000000 -30.000000 -10.000000 10.000000 30.000000 50.000000 70.000000 90.000000 110.000000</x_coordinates>
-				<y_coordinates delimiter=" ">-110.000000 -90.000000 -70.000000 -50.000000 -30.000000 -10.000000 10.000000 30.000000 50.000000 70.000000 90.000000 110.000000</y_coordinates>
-				<z_coordinates delimiter=" ">-110.000000 -90.000000 -70.000000 -50.000000 -30.000000 -10.000000 10.000000 30.000000 50.000000 70.000000 90.000000 110.000000</z_coordinates>
+				<bounding_box type="axis-aligned" units="micron">-60.000000 -60.000000 -60.000000 60.000000 60.000000 60.000000</bounding_box>
+				<x_coordinates delimiter=" ">-50.000000 -30.000000 -10.000000 10.000000 30.000000 50.000000</x_coordinates>
+				<y_coordinates delimiter=" ">-50.000000 -30.000000 -10.000000 10.000000 30.000000 50.000000</y_coordinates>
+				<z_coordinates delimiter=" ">-50.000000 -30.000000 -10.000000 10.000000 30.000000 50.000000</z_coordinates>
 				<voxels type="matlab">
 					<filename>initial_mesh0.mat</filename>
 				</voxels>

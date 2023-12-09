@@ -33,8 +33,8 @@ def generate_position_timestep_csv(output_folder,csv_fname):
     i=0
     for file in sorted(files):
         mat = loadmat(file)
-        mat=mat['cells'][0:4]
-        df_mat = pd.DataFrame(mat.transpose(),columns = ['id','x','y','z'])
+        mat=mat['cells'][[0,1,2,3,53]]
+        df_mat = pd.DataFrame(mat.transpose(),columns = ['id','x','y','z','v1'])
         df_mat['dt'] = i
         df_cell= pd.concat([df_mat,df_cell],ignore_index=True)
         i=i+interval
