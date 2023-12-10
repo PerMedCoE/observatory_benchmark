@@ -27,7 +27,7 @@
 	</parallel> 
 	
 	<save>
-		<folder>../output_folders/PhysiCell_instance</folder>  
+		<folder>../output/mechanics_movement</folder>  
 
 		<full_data>
 			<interval units="min">0.1</interval>
@@ -135,8 +135,8 @@
           </volume>
 
           <mechanics>
-            <cell_cell_adhesion_strength units="micron/min">0.4</cell_cell_adhesion_strength>
-            <cell_cell_repulsion_strength units="micron/min">10.0</cell_cell_repulsion_strength>
+            <cell_cell_adhesion_strength units="micron/min">10</cell_cell_adhesion_strength>
+            <cell_cell_repulsion_strength units="micron/min">10</cell_cell_repulsion_strength>
             <relative_maximum_adhesion_distance units="dimensionless">100</relative_maximum_adhesion_distance>
             <cell_adhesion_affinities>
                 <cell_adhesion_affinity name="agent">1.0</cell_adhesion_affinity>
@@ -145,10 +145,10 @@
               <set_relative_equilibrium_distance enabled="false" units="dimensionless">1.8</set_relative_equilibrium_distance>
               <set_absolute_equilibrium_distance enabled="false" units="micron">15.12</set_absolute_equilibrium_distance>
             </options>
-            <cell_BM_adhesion_strength units="micron/min">4.0</cell_BM_adhesion_strength>
-            <cell_BM_repulsion_strength units="micron/min">10.0</cell_BM_repulsion_strength>
-            <attachment_elastic_constant units="1/min">0.01</attachment_elastic_constant>
-            <attachment_rate units="1/min">10.0</attachment_rate>
+            <cell_BM_adhesion_strength units="micron/min">0.0</cell_BM_adhesion_strength>
+            <cell_BM_repulsion_strength units="micron/min">0.0</cell_BM_repulsion_strength>
+            <attachment_elastic_constant units="1/min">0.00</attachment_elastic_constant>
+            <attachment_rate units="1/min">0.0</attachment_rate>
             <detachment_rate units="1/min">0.0</detachment_rate>
           </mechanics>
 
@@ -168,7 +168,7 @@
                 <enabled>false</enabled>
                 <normalize_each_gradient>false</normalize_each_gradient>
                 <chemotactic_sensitivities>
-                  <chemotactic_sensitivity substrate="oxygen">0.01</chemotactic_sensitivity>
+                  <chemotactic_sensitivity substrate="oxygen">0.00</chemotactic_sensitivity>
                   </chemotactic_sensitivities>
                 </advanced_chemotaxis>
             </options>
@@ -193,7 +193,7 @@
                   <attack_rate name="agent" units="1/min">0.0</attack_rate>
                   </attack_rates>
 
-            <damage_rate units="1/min">1.0</damage_rate>
+            <damage_rate units="1/min">0.0</damage_rate>
             <fusion_rates>
                   <fusion_rate name="agent" units="1/min">0.0</fusion_rate>
                   </fusion_rates>
@@ -224,7 +224,7 @@
 	<user_parameters>
 		<random_seed type="int" units="dimensionless" description="">0</random_seed>
         <number_of_cells type="int" units="none" description="initial number of cells (for each cell type)">0</number_of_cells>
-    <friction_coeff type="double" description="friction coefficient of the substrate">0.99</friction_coeff>
+    <friction_coeff type="double" description="friction coefficient of the substrate">0.0</friction_coeff>
     </user_parameters>
 	
 </PhysiCell_settings>

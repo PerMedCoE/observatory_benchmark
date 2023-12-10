@@ -88,7 +88,7 @@ int main( int argc, char* argv[] )
 {
 	// load and parse settings file(s)
 	
-		
+	
 	bool XML_status = false; 
 	char copy_command [1024]; 
 	char config_file[256]; 
@@ -107,10 +107,9 @@ int main( int argc, char* argv[] )
 		strcpy(config_file, "./config/PhysiCell_settings.xml");
 		// sprintf( copy_command , "cp ./config/PhysiCell_settings.xml %s" , PhysiCell_settings.folder.c_str() ); 
 	}
+	// now create the folders:
 	if( !XML_status )
 	{ exit(-1); }
-	// now create the folders:
-
 	int status = mkdir(PhysiCell_settings.folder.c_str(), 0777);
     if (status == 0 || errno == EEXIST) {
         std::cout << "Succesfully created the directory" << std::endl;
@@ -146,7 +145,7 @@ int main( int argc, char* argv[] )
 	/* PhysiCell setup */ 
  	
 	// set mechanics voxel size, and match the data structure to BioFVM
-	double mechanics_voxel_size = 20; 
+	double mechanics_voxel_size = 30; 
 	Cell_Container* cell_container = create_cell_container_for_microenvironment( microenvironment, mechanics_voxel_size );
 	
 	/* Users typically start modifying here. START USERMODS */ 
