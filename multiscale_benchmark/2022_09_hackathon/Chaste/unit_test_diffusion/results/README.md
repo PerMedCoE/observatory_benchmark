@@ -1,0 +1,1 @@
+Concentration at the centre, over time.

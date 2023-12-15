@@ -1,0 +1,1 @@
+Results available in tissuewidth.dat. Format is time    min_x, max_x, tissue_diameter, number_of_cells

@@ -1,0 +1,1 @@
+Average concentration across all 12x12x12 points, over time.
