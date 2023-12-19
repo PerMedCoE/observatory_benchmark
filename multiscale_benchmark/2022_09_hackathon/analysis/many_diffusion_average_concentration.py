@@ -31,7 +31,7 @@ def get_tisim_df(file):
     return df
 
 def get_chaste_df(file):
-    df= pd.read_csv(file,delimiter="\t",names = ['timestep','diff'],header=0)
+    df= pd.read_csv(file,delim_whitespace=True,names = ['timestep','diff'],header=0)
     return df
 
 
@@ -46,8 +46,8 @@ def main():
                     default="../Biodynamo/unit_test_diffusion_1k/results/concentration_avg.csv")
     parser.add_argument("--ts-csv",action="store", dest = "ts_csv", help="Path to TiSim concentration over time csv",
                     default="../Tisim/unit_test_diffusion_1k/results/result_1000c_diffusion.txt")
-    # parser.add_argument("ch_csv", help="Path to Chaste concentration over time csv")
-    
+    parser.add_argument("--ch-csv",action="store",dest = "ch_csv", help="Path to Chaste concentration over time csv",
+                        default="../Chaste/unit_test_diffusion_1k/results/TestDiffusionSmall12.dat")    
     args = parser.parse_args()
     
 
@@ -55,14 +55,14 @@ def main():
     pc_conc = get_physicell_df(args.pc_csv)
     bd_conc = get_biodynamo_df(args.bd_csv)
     ts_conc = get_tisim_df(args.ts_csv)
-#   ch_conc = get_chaste_df(args.ch_csv)
+    ch_conc = get_chaste_df(args.ch_csv)
 
 
 
     plt.plot(pc_conc.index,pc_conc['diff'],label = 'Physicell',color='green')
     plt.plot(bd_conc.index,bd_conc[1]*602.2,label = 'Biodynamo',alpha=0.5,color = 'red')
     plt.plot(ts_conc.index,ts_conc['diff']*602.2,label = 'TiSim', color  = '#ffd343')
-    # plt.plot(ch_conc['timestep'],ch_conc['diff'],label = 'Chaste', color  = 'blue')
+    plt.plot(ch_conc['timestep'],ch_conc['diff']*602.2,label = 'Chaste', color  = 'blue')
     plt.ylabel("Concentration")
     plt.xlabel("Time (minutes)")
     plt.legend()
