@@ -85,6 +85,8 @@ void create_cell_types( void )
 	cell_defaults.functions.volume_update_function = standard_volume_update_function;
 	cell_defaults.functions.update_velocity = standard_update_cell_velocity;
 
+    // necrosis.add_phase_link( 0, 1, standard_necrosis_arrest_function ); 
+
 	cell_defaults.functions.update_migration_bias = NULL; 
 	cell_defaults.functions.update_phenotype = NULL; // update_cell_and_death_parameters_O2_based; 
 	cell_defaults.functions.custom_cell_rule = NULL; 
@@ -118,8 +120,8 @@ void create_cell_types( void )
 	*/ 
 	
 	cell_defaults.functions.update_phenotype = phenotype_function; 
-	// cell_defaults.functions.custom_cell_rule = custom_function; 
-	// cell_defaults.functions.contact_function = contact_function; 
+	cell_defaults.functions.custom_cell_rule = custom_function; 
+	cell_defaults.functions.contact_function = contact_function; 
 	
 	/*
 	   This builds the map of cell definitions and summarizes the setup. 
@@ -146,23 +148,45 @@ void setup_microenvironment( void )
 
 void setup_tissue( void )
 {
-	// just read cells from xml in this case
-	// load cells from your CSV file (if enabled)
-	load_cells_from_pugixml();
+	double Xmin = microenvironment.mesh.bounding_box[0]; 
+	double Ymin = microenvironment.mesh.bounding_box[1]; 
+	double Zmin = microenvironment.mesh.bounding_box[2]; 
 
+	double Xmax = microenvironment.mesh.bounding_box[3]; 
+	double Ymax = microenvironment.mesh.bounding_box[4]; 
+	double Zmax = microenvironment.mesh.bounding_box[5]; 
+	
+	if( default_microenvironment_options.simulate_2D == true )
+	{
+		Zmin = 0.0; 
+		Zmax = 0.0; 
+	}
+	
+	double Xrange = Xmax - Xmin; 
+	double Yrange = Ymax - Ymin; 
+	double Zrange = Zmax - Zmin; 
+	
+	// create some of each type of cell 
+	
+	Cell* pC;
+	
+	for( int k=0; k < cell_definitions_by_index.size() ; k++ )
+	{
+		Cell_Definition* pCD = cell_definitions_by_index[k]; 
+		for( int n = 0 ; n < parameters.ints("number_of_cells") ; n++ )
+		{
+			std::vector<double> position = {0,0,0}; 
+			position[0] = Xmin + UniformRandom()*Xrange; 
+			position[1] = Ymin + UniformRandom()*Yrange; 
+			position[2] = Zmin + UniformRandom()*Zrange; 
+			
+			pC = create_cell( *pCD ); 
+			pC->assign_position( position );
+		}
+	}
 	
 	// load cells from your CSV file (if enabled)
-
-
-    PhysiCell::Cell* pCell = (*all_cells)[0];
-    pCell->phenotype.motility.motility_vector[0] = 1.0;
-    pCell->phenotype.motility.motility_vector[1] = 0.0;
-    pCell->phenotype.motility.motility_vector[2] = 0.0;
-
-    pCell = (*all_cells)[1];
-    pCell->phenotype.motility.motility_vector[0] = -1.0;
-    pCell->phenotype.motility.motility_vector[1] = 0.0;
-    pCell->phenotype.motility.motility_vector[2] = 0.0;
+	load_cells_from_pugixml(); 	
 	
 	return; 
 }
@@ -171,13 +195,24 @@ std::vector<std::string> my_coloring_function( Cell* pCell )
 { return paint_by_number_cell_coloring(pCell); }
 
 void phenotype_function( Cell* pCell, Phenotype& phenotype, double dt )
-{ 
-    std::cout <<"phenotype_function(): t= "<<PhysiCell_globals.current_time<< " motility_vector= " << pCell->phenotype.motility.motility_vector[0]<<", "<<pCell->phenotype.motility.motility_vector[1]<<", "<<pCell->phenotype.motility.motility_vector[2] << std::endl;
-    return; 
-}
+{ return; }
 
 void custom_function( Cell* pCell, Phenotype& phenotype , double dt )
-{ return; } 
+{ 
+    // static int contact_start_index = find_signal_index( "pressure" + cell_definitions_by_type[0]->name ); 
+    // static int contact_start_index = find_signal_index( "pressure" + cell_definitions_by_type[0]->name ); 
+    double pressure = get_single_signal(pCell, "pressure");
+
+    if (pressure > 2.5)
+    {
+        pCell->phenotype.cycle.data.exit_rate( 0 ) = 0.0000001;
+    }
+    else
+    {
+        pCell->phenotype.cycle.data.exit_rate( 0 ) = 0.00238095;
+    }
+    return; 
+} 
 
 void contact_function( Cell* pMe, Phenotype& phenoMe , Cell* pOther, Phenotype& phenoOther , double dt )
 { return; } 

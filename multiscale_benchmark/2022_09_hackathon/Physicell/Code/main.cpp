@@ -72,7 +72,6 @@
 #include <cmath>
 #include <omp.h>
 #include <fstream>
-#include <sys/stat.h>
 
 #include "./core/PhysiCell.h"
 #include "./modules/PhysiCell_standard_modules.h" 
@@ -88,50 +87,24 @@ int main( int argc, char* argv[] )
 {
 	// load and parse settings file(s)
 	
-	
 	bool XML_status = false; 
 	char copy_command [1024]; 
-	char config_file[256]; 
 	if( argc > 1 )
-	{ 
-        XML_status = load_PhysiCell_config_file( argv[1]);
-
-        // int status = mkdir(PhysiCell_settings.folder.c_str(),0777);
-		strcpy(config_file, argv[1]);
-		// sprintf( copy_command , "cp %s %s" , argv[1] , PhysiCell_settings.folder.c_str() );
-
-  	}
+	{
+		XML_status = load_PhysiCell_config_file( argv[1] ); 
+		sprintf( copy_command , "cp %s %s" , argv[1] , PhysiCell_settings.folder.c_str() ); 
+	}
 	else
 	{
 		XML_status = load_PhysiCell_config_file( "./config/PhysiCell_settings.xml" );
-		strcpy(config_file, "./config/PhysiCell_settings.xml");
-		// sprintf( copy_command , "cp ./config/PhysiCell_settings.xml %s" , PhysiCell_settings.folder.c_str() ); 
+		sprintf( copy_command , "cp ./config/PhysiCell_settings.xml %s" , PhysiCell_settings.folder.c_str() ); 
 	}
-	// now create the folders:
 	if( !XML_status )
 	{ exit(-1); }
-	int status = mkdir(PhysiCell_settings.folder.c_str(), 0777);
-    if (status == 0 || errno == EEXIST) {
-        std::cout << "Succesfully created the directory" << std::endl;
-    } else {
-
-        std::cerr << "Failed to create directory: " << PhysiCell_settings.folder.c_str() << std::endl;
-		std::string str(PhysiCell_settings.folder.c_str()); // Convert the C-style string to a C++ string
-    	size_t found = str.rfind('/'); // Find the last occurrence of '/'
-		if (found != std::string::npos) {
-        std::string leftPart = str.substr(0, found); // Get the left part before the last '/'
-        std::string rightPart = str.substr(found + 1); // Get the right part after the last '/'
-
-        std::cout << "Left Part: " << leftPart << std::endl;
-        std::cout << "Right Part: " << rightPart << std::endl;
-		int status = mkdir(leftPart.c_str(), 0777);
-		status = mkdir(PhysiCell_settings.folder.c_str(), 0777);
-		}
-    }
-
-	sprintf( copy_command , "cp %s %s" ,config_file , PhysiCell_settings.folder.c_str() );
+	
 	// copy config file to output directry 
-	system( copy_command ); 	
+	system( copy_command ); 
+	
 	// OpenMP setup
 	omp_set_num_threads(PhysiCell_settings.omp_num_threads);
 	
