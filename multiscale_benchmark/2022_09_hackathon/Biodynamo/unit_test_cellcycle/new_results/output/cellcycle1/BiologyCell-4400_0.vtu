@@ -1,0 +1,49 @@
+<VTKFile type="UnstructuredGrid" version="0.1" byte_order="LittleEndian" header_type="UInt32" compressor="vtkZLibDataCompressor">
+  <UnstructuredGrid>
+    <Piece NumberOfPoints="1" NumberOfCells="0">
+      <PointData>
+        <DataArray type="Int32" Name="age_" format="binary" RangeMin="4401" RangeMax="4401">
+          AQAAAACAAAAEAAAADAAAAA==eJwzFGRgAAAA+wBD
+        </DataArray>
+        <DataArray type="Int32" Name="cycle_time_" format="binary" RangeMin="797" RangeMax="797">
+          AQAAAACAAAAEAAAADAAAAA==eJyTZWZgAAAAgQAh
+        </DataArray>
+        <DataArray type="Float64" Name="diameter_" format="binary" RangeMin="10.596243560366487" RangeMax="10.596243560366487">
+          AQAAAACAAAAIAAAAEAAAAA==eJxjL2a45mao6gAACcgCLQ==
+        </DataArray>
+        <DataArray type="Int32" Name="phase_" format="binary" RangeMin="2" RangeMax="2">
+          AQAAAACAAAAEAAAADAAAAA==eJxjYmBgAAAADAAD
+        </DataArray>
+        <DataArray type="Float64" Name="volume_" format="binary" RangeMin="622.951762648597" RangeMax="622.951762648597">
+          AQAAAACAAAAIAAAAEAAAAA==eJyz8tpjOre82QEADm4DTQ==
+        </DataArray>
+      </PointData>
+      <CellData>
+      </CellData>
+      <Points>
+        <DataArray type="Float64" Name="position_" NumberOfComponents="3" format="binary" RangeMin="2.2944494963380104" RangeMax="2.2944494963380104">
+          AQAAAACAAAAYAAAAIQAAAA==eJx7cLH9ZLzym/13XdUEk+4wOJiuNBJJzzpjDwCc4gsG
+          <InformationKey name="L2_NORM_RANGE" location="vtkDataArray" length="2">
+            <Value index="0">
+              2.2944494963
+            </Value>
+            <Value index="1">
+              2.2944494963
+            </Value>
+          </InformationKey>
+        </DataArray>
+      </Points>
+      <Cells>
+        <DataArray type="Int64" Name="connectivity" format="binary" RangeMin="1e+299" RangeMax="-1e+299">
+          AAAAAACAAAAAAAAA
+        </DataArray>
+        <DataArray type="Int64" Name="offsets" format="binary" RangeMin="1e+299" RangeMax="-1e+299">
+          AAAAAACAAAAAAAAA
+        </DataArray>
+        <DataArray type="UInt8" Name="types" format="binary" RangeMin="1e+299" RangeMax="-1e+299">
+          AAAAAACAAAAAAAAA
+        </DataArray>
+      </Cells>
+    </Piece>
+  </UnstructuredGrid>
+</VTKFile>
