@@ -1,33 +1,53 @@
 import argparse
 import os
+import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
-
+pd.set_option('display.float_format', lambda x: '%.5f' % x)
 # ../Biodynamo/unit_test_diffusion/results/concentration.csv
 # ../Tisim/unit_test_diffusion/results/result_1c_diffusion.txt
 def get_physicell_df(file):
     df= pd.read_csv(file,index_col=0)
-    result = df.loc[df.index == 13]
-    return result
+    df = df.loc[df.index == 13]
+    timesteps = np.concatenate((np.linspace(0, 1, num=11)[:-1], np.arange(1, 11, 1)))
+    timesteps_rounded = np.round(timesteps, 2)
+    df['timestep_rounded'] = df['timestep'].round(2)
+    selected_rows = df[df['timestep_rounded'].isin(timesteps_rounded)]
+    selected_rows.drop('timestep_rounded', axis=1, inplace=True)
+    print(selected_rows)
+    return selected_rows
 
 def get_biodynamo_df(file):
     df= pd.read_csv(file,index_col=0,header=None)
-    df.index = df.index /100
-    df = pd.DataFrame(df[14])
-    df.rename(columns={14: 'diff'}, inplace=True)
-
-    return df
+    df['timestep'] = df.index /100
+    df = pd.DataFrame(df[[14,'timestep']])
+    timesteps = np.concatenate((np.linspace(0, 1, num=11)[:-1], np.arange(1, 11, 1),[9.99]))
+    timesteps_rounded = np.round(timesteps, 2)
+    df['timestep_rounded'] = df['timestep'].round(2)
+    selected_rows = df[df['timestep_rounded'].isin(timesteps_rounded)]
+    selected_rows.rename(columns={14: 'diff'}, inplace=True)
+    selected_rows.drop('timestep_rounded', axis=1, inplace=True)
+    return selected_rows
 def get_tisim_df(file):
     df= pd.read_csv(file,delimiter="\t",names = ['timestep','diff'],header=0)
-    
+    timesteps = np.concatenate((np.linspace(0, 1, num=11)[:-1], np.arange(1, 11, 1)))
+    timesteps_rounded = np.round(timesteps, 2)
+    df['timestep_rounded'] = df['timestep'].round(2)
+    selected_rows = df[df['timestep_rounded'].isin(timesteps_rounded)]
+    selected_rows.drop('timestep_rounded', axis=1, inplace=True)
+
     # df.rename(columns={'Concentration (uM)': 'diff'}, inplace=True)
-    return df
+    return selected_rows
 
 def get_chaste_df(file):
     df= pd.read_csv(file,delim_whitespace=True,names = ['timestep','diff'],header=0)
-    print(df)
-    return df
+    timesteps = np.concatenate((np.linspace(0, 1, num=11)[:-1], np.arange(1, 11, 1)))
+    timesteps_rounded = np.round(timesteps, 2)
+    df['timestep_rounded'] = df['timestep'].round(2)
+    selected_rows = df[df['timestep_rounded'].isin(timesteps_rounded)]
+
+    return selected_rows
 
 
 def main():
@@ -55,16 +75,15 @@ def main():
 
 
 
-    plt.plot(pc_conc['timestep'],pc_conc['diff'],label = 'Physicell',color='green')
-    plt.plot(bd_conc.index,bd_conc['diff']*602.2,label = 'Biodynamo',alpha=0.5,color = 'red')
-    plt.plot(ts_conc['timestep'],ts_conc['diff']*602.2,label = 'TiSim', color  = '#ffd343')
-    plt.plot(ch_conc['timestep'],ch_conc['diff']*602.2,label = 'Chaste', color  = 'blue')
+    plt.plot(pc_conc['timestep'],pc_conc['diff']/602.2,label = 'Physicell',color='green',alpha=0.6)
+    plt.plot(bd_conc['timestep'],bd_conc['diff'],label = 'Biodynamo',alpha=0.5,color = 'red')
+    plt.plot(ts_conc['timestep'],ts_conc['diff'],label = 'TiSim', color  = '#ffd343',alpha=0.6)
+    plt.plot(ch_conc['timestep'],ch_conc['diff'],label = 'Chaste', color  = 'blue',alpha = 0.5)
     plt.ylabel("Concentration")
     plt.xlabel("Time (minutes)")
     plt.legend()
     plt.title("Concentration of central voxel")
     plt.savefig("./single_diffusion_concentration_of_central_voxel.png",dpi=200)
     plt.show()
-    # Now create a plot of the 3 different concentrations over time
 if __name__ == "__main__":
     main()

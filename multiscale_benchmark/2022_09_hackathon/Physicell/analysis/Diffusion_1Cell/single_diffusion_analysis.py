@@ -44,7 +44,6 @@ def generate_microenv_csv(output_folder,csv_out):
         df_mat["timestep"] = steps
         df_cell= pd.concat([df_cell,df_mat])
         i= i + 1
-
     df_cell.to_csv(output_folder+csv_out)
 
 def generate_pngs(output_folder,csv_out):

@@ -5,29 +5,38 @@ import os
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
+import numpy as np
 
-# pc =  '/home/thalia/BSC/Benchmarks/NEW_BENCH/output/single_diffusion_out/diffusion.csv'
-# bd = '/home/thalia/BSC/github/Benchmarks/observatory_benchmark/multiscale_benchmark/2022_09_hackathon/Biodynamo/unit_test_diffusion_1k/results/concentration_avg.csv'
-# ts =  '/home/thalia/BSC/github/Benchmarks/observatory_benchmark/multiscale_benchmark/2022_09_hackathon/Tisim/unit_test_diffusion_1k/results/result_1000c_diffusion.txt'
 def get_physicell_df(file):
-    df= pd.read_csv(file,index_col=0)
-    grouped = df.groupby(by="timestep")
-    # result = df.loc[df.index == 13]
-    result = grouped.mean()
-    return result
+    df= pd.read_csv(file,index_col=None,usecols=['timestep','diff'])
+    groupe_conc = df.groupby(by="timestep")
+    result_conc = groupe_conc.mean()
+    result_conc['nt'] = groupe_conc.sum()*8000
+    timesteps = np.arange(0, 10,0.1)
+    timesteps_rounded = np.round(timesteps, 2)
+    result_conc['timestep_rounded'] = result_conc.index.values.round(2)
+    
+    selected_rows = result_conc[result_conc['timestep_rounded'].isin(timesteps_rounded)]
+    selected_rows.drop('timestep_rounded', axis=1, inplace=True)
+    return selected_rows
 
 def get_biodynamo_df(file):
     df= pd.read_csv(file,index_col=0,header=None)
-
+    
     df.index= df.index /100
-    print(df)
     return df
 def get_tisim_df(file):
-    # df= pd.read_csv(file,delimiter="\t",names = ['timestep','diff'],header=0)
-    df = pd.read_csv(file,names=[x for x in range(0,28)],skiprows=[0],index_col=0,sep='\t|,',engine='python')
+    df= pd.read_csv(file,delimiter="\t",names = ['timestep','diff'],header=0)
+    # df = pd.read_csv(file,names=[x for x in range(0,28)],skiprows=[0],index_col=0,sep='\t|,',engine='python')
+    print(df)
     df['diff']= df.mean(axis=1)
-    
-    # df.rename(columns={'Concentration (uM)': 'diff'}, inplace=True)
+    df['nt'] = df.sum(axis=1)*8000
+    df.to_csv("check.csv")
+    timesteps = np.arange(0, 10,0.1)
+    timesteps_rounded = np.round(timesteps, 2)
+    df['timestep_rounded'] = df["timestep"].round(2)
+    df = df[df['timestep_rounded'].isin(timesteps_rounded)]
+    df.drop('timestep_rounded', axis=1, inplace=True)
     return df
 
 def get_chaste_df(file):
@@ -46,6 +55,8 @@ def main():
                     default="../Biodynamo/unit_test_diffusion_1k/results/concentration_avg.csv")
     parser.add_argument("--ts-csv",action="store", dest = "ts_csv", help="Path to TiSim concentration over time csv",
                     default="../Tisim/unit_test_diffusion_1k/results/result_1000c_diffusion.txt")
+    # parser.add_argument("--ts-csv",action="store", dest = "ts_csv", help="Path to TiSim concentration over time csv",
+    #                 default="../Tisim/unit_test_diffusion_1k/results/result1000.txt")
     parser.add_argument("--ch-csv",action="store",dest = "ch_csv", help="Path to Chaste concentration over time csv",
                         default="../Chaste/unit_test_diffusion_1k/results/TestDiffusionSmall12.dat")    
     args = parser.parse_args()
@@ -59,10 +70,10 @@ def main():
 
 
 
-    plt.plot(pc_conc.index,pc_conc['diff'],label = 'Physicell',color='green')
-    plt.plot(bd_conc.index,bd_conc[1]*602.2,label = 'Biodynamo',alpha=0.5,color = 'red')
-    plt.plot(ts_conc.index,ts_conc['diff']*602.2,label = 'TiSim', color  = '#ffd343')
-    plt.plot(ch_conc['timestep'],ch_conc['diff']*602.2,label = 'Chaste', color  = 'blue')
+    plt.plot(pc_conc.index,pc_conc['nt'],label = 'Physicell',color='green')
+    # plt.plot(bd_conc.index,bd_conc[1]*602.2,label = 'Biodynamo',alpha=0.5,color = 'red')
+    # plt.plot(ts_conc['timestep'],ts_conc['diff']*602.2,label = 'TiSim', color  = '#ffd343')
+    # plt.plot(ch_conc['timestep'],ch_conc['diff']*602.2,label = 'Chaste', color  = 'blue')
     plt.ylabel("Concentration")
     plt.xlabel("Time (minutes)")
     plt.legend()

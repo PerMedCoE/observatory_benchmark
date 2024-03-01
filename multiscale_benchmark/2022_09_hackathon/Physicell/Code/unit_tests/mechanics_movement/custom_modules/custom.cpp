@@ -181,46 +181,46 @@ void setup_microenvironment( void )
 
 void setup_tissue( void )
 {
-double Xmin = microenvironment.mesh.bounding_box[0]; 
-	double Ymin = microenvironment.mesh.bounding_box[1]; 
-	double Zmin = microenvironment.mesh.bounding_box[2]; 
+	// double Xmin = microenvironment.mesh.bounding_box[0]; 
+	// double Ymin = microenvironment.mesh.bounding_box[1]; 
+	// double Zmin = microenvironment.mesh.bounding_box[2]; 
 
-	double Xmax = microenvironment.mesh.bounding_box[3]; 
-	double Ymax = microenvironment.mesh.bounding_box[4]; 
-	double Zmax = microenvironment.mesh.bounding_box[5]; 
+	// double Xmax = microenvironment.mesh.bounding_box[3]; 
+	// double Ymax = microenvironment.mesh.bounding_box[4]; 
+	// double Zmax = microenvironment.mesh.bounding_box[5]; 
 	
-	if( default_microenvironment_options.simulate_2D == true )
-	{
-		Zmin = 0.0; 
-		Zmax = 0.0; 
-	}
-    std::cout << "\n\n------- setup_tissue(): Xmin,Xmax= " << Xmin << ", " << Xmax<<std::endl; 
-    std::cout << "------- setup_tissue(): Ymin,Ymax= " << Ymin << ", " << Ymax<<std::endl; 
+	// if( default_microenvironment_options.simulate_2D == true )
+	// {
+	// 	Zmin = 0.0; 
+	// 	Zmax = 0.0; 
+	// }
+    // std::cout << "\n\n------- setup_tissue(): Xmin,Xmax= " << Xmin << ", " << Xmax<<std::endl; 
+    // std::cout << "------- setup_tissue(): Ymin,Ymax= " << Ymin << ", " << Ymax<<std::endl; 
 	
-	double Xrange = Xmax - Xmin; 
-	double Yrange = Ymax - Ymin; 
-	double Zrange = Zmax - Zmin; 
+	// double Xrange = Xmax - Xmin; 
+	// double Yrange = Ymax - Ymin; 
+	// double Zrange = Zmax - Zmin; 
 	
-	// create some of each type of cell 
+	// // create some of each type of cell 
 	
-	Cell* pC;
+	// Cell* pC;
 	
-	for( int k=0; k < cell_definitions_by_index.size() ; k++ )
-	{
-		Cell_Definition* pCD = cell_definitions_by_index[k]; 
-		std::cout << "Placing cells of type " << pCD->name << " ... " << std::endl; 
-		for( int n = 0 ; n < parameters.ints("number_of_cells") ; n++ )
-		{
-			std::vector<double> position = {0,0,0}; 
-			position[0] = Xmin + UniformRandom()*Xrange; 
-			position[1] = Ymin + UniformRandom()*Yrange; 
-			position[2] = Zmin + UniformRandom()*Zrange; 
+	// for( int k=0; k < cell_definitions_by_index.size() ; k++ )
+	// {
+	// 	Cell_Definition* pCD = cell_definitions_by_index[k]; 
+	// 	std::cout << "Placing cells of type " << pCD->name << " ... " << std::endl; 
+	// 	for( int n = 0 ; n < parameters.ints("number_of_cells") ; n++ )
+	// 	{
+	// 		std::vector<double> position = {0,0,0}; 
+	// 		position[0] = Xmin + UniformRandom()*Xrange; 
+	// 		position[1] = Ymin + UniformRandom()*Yrange; 
+	// 		position[2] = Zmin + UniformRandom()*Zrange; 
 			
-			pC = create_cell( *pCD ); 
-			pC->assign_position( position );
-		}
-	}
-	std::cout << std::endl; 
+	// 		pC = create_cell( *pCD ); 
+	// 		pC->assign_position( position );
+	// 	}
+	// }
+	// std::cout << std::endl; 
 
 	// load cells from your CSV file (if enabled)
 	load_cells_from_pugixml(); 	
@@ -268,7 +268,7 @@ void update_cell_velocity_with_friction(Cell* pCell, Phenotype& phenotype, doubl
 
 	// Check if there is ECM material in given voxel
 	//double dens2 = get_microenvironment()->density_vector(index_voxel)[index_ecm];
-	std::cout<<"current time : "<<PhysiCell_globals.current_time<<"is_motile "<< pCell->phenotype.motility.is_motile <<std::endl;
+	std::cout<<"current time : "<<PhysiCell_globals.current_time<<" is_motile "<< pCell->phenotype.motility.is_motile <<std::endl;
 	std::cout<<"phenotype.motility.motility_vector "<<pCell->phenotype.motility.motility_vector<<std::endl;
 	
 	double mu = PhysiCell::parameters.doubles("friction_coeff"); //this is basically the density of the fluid
@@ -278,16 +278,16 @@ void update_cell_velocity_with_friction(Cell* pCell, Phenotype& phenotype, doubl
 
 	
 
-		pCell->phenotype.motility.is_motile = false;
-		pCell->phenotype.motility.migration_speed = 0;
-		pCell->velocity *= 0;
-		pCell->phenotype.motility.motility_vector[0] *= 0;
-		std::cout<<"im inside else "<<current_speed<<" "<<updated_speed <<std::endl;
-		std::cout<<"pCell->velocity "<<pCell->velocity <<std::endl;
-		std::cout<<"phenotype.motility.motility_vector "<<pCell->phenotype.motility.motility_vector<<std::endl;
-		std::cout<<"pCell->phenotype.motility.migration_speed "<<pCell->phenotype.motility.migration_speed<<std::endl;
+	pCell->phenotype.motility.is_motile = false;
+	pCell->phenotype.motility.migration_speed = 0;
+	pCell->velocity *= 0;
+	pCell->phenotype.motility.motility_vector[0] *= 0;
+	std::cout<<"position "<<pCell->position[0]<<" "<<updated_speed <<std::endl;
+	std::cout<<"pCell->velocity "<<pCell->velocity <<std::endl;
+	std::cout<<"phenotype.motility.motility_vector "<<pCell->phenotype.motility.motility_vector<<std::endl;
+	std::cout<<"pCell->phenotype.motility.migration_speed "<<pCell->phenotype.motility.migration_speed<<std::endl;
 
-	
+
 
 	return ;
 }

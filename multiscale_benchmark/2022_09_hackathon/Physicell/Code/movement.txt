@@ -1,0 +1,1371 @@
+Using config file ./config/PhysiCell_settings.xml ... 
+0
+dc? 0
+User parameters in XML config file: 
+Bool parameters:: 
+
+Int parameters:: 
+random_seed: 0 [dimensionless]
+number_of_cells: 0 [none]
+
+Double parameters:: 
+friction_coeff: 0.99 [dimensionless]
+
+String parameters:: 
+
+
+Succesfully created the directory
+which boundaries?
+0 0 0 0 0 0
+
+Microenvironment summary: microenvironment: 
+
+Mesh information: 
+type: uniform Cartesian
+Domain: [-60,60] micron x [-60,60] micron x [-60,60] micron
+   resolution: dx = 20 micron
+   voxels: 216
+   voxel faces: 0
+   volume: 1.728e+06 cubic micron
+Densities: (1 total)
+   oxygen:
+     units: dimensionless
+     diffusion coefficient: 20000 micron^2 / min
+     decay rate: 0 min^-1
+     diffusion length scale: 1.41421e+08 micron
+     initial condition: 20000 dimensionless
+     boundary condition: 6022 dimensionless (enabled: false)
+
+virtual_wall_at_domain_edge: enabled
+Pre-processing type 0 named agent
+Processing agent ... 
+  --------- attachment_elastic_constant = 0.01
+Signals: 
+=======
+0 : oxygen
+1 : intracellular oxygen
+2 : oxygen gradient
+3 : pressure
+4 : volume
+5 : contact with agent
+6 : contact with live cell
+7 : contact with dead cell
+8 : contact with basement membrane
+9 : damage
+10 : dead
+11 : total attack time
+12 : time
+13 : custom:sample
+
+
+Behaviors: 
+=========
+0 : oxygen secretion
+1 : oxygen secretion target
+2 : oxygen uptake
+3 : oxygen export
+4 : cycle entry
+5 : exit from cycle phase 1
+6 : exit from cycle phase 2
+7 : exit from cycle phase 3
+8 : exit from cycle phase 4
+9 : exit from cycle phase 5
+10 : apoptosis
+11 : necrosis
+12 : migration speed
+13 : migration bias
+14 : migration persistence time
+15 : chemotactic response to oxygen
+16 : cell-cell adhesion
+17 : cell-cell adhesion elastic constant
+18 : adhesive affinity to agent
+19 : relative maximum adhesion distance
+20 : cell-cell repulsion
+21 : cell-BM adhesion
+22 : cell-BM repulsion
+23 : phagocytose dead cell
+24 : phagocytose agent
+25 : attack agent
+26 : fuse to agent
+27 : transform to agent
+28 : custom:sample
+
+
+0 :: type:0 name: agent
+	 cycle model: Live (code=5)
+		Phase 0: Live
+		Cycle transitions: 
+		-----------------
+		Live --> Live w mean duration inf min
+	 death models: 
+		0 : Apoptosis (code=100) with rate 5.31667e-05 1/min
+		death phase transitions: 
+		------------------------
+		Apoptotic --> Debris w mean duration 516 min
+		1 : Necrosis (code=101) with rate 0 1/min
+		death phase transitions: 
+		------------------------
+		Necrotic (swelling) --> Necrotic (lysed) w mean duration 1e-16 min
+		Necrotic (lysed) --> Debris w mean duration 86400 min
+	 key functions: 
+		 migration bias rule: false
+		 custom rule: false
+		 phenotype rule: true
+		 volume update function: true
+		 mechanics function: true
+		 contact function: false
+	motility (enabled: true in 3D)
+		speed: 10 micron/min
+		bias: 1 
+		persistence time: 1 min
+		chemotaxis (enabled: false)
+			along 1 * grad(oxygen) 
+	mechanics:
+		cell_cell_adhesion_strength: 0.4
+		cell_cell_repulsion_strength: 10
+		rel max adhesion dist: 100
+		cell_BM_adhesion_strength: 4
+		cell_BM_repulsion_strength: 10
+		attachment_elastic_constant: 0.01
+		attachment_rate: 10
+		detachment_rate: 0
+	custom data: 
+		sample: 1 dimensionless
+	custom vector data: 
+			NOTE: custom vector data will eventually be merged with custom data
+
+
+------- setup_tissue(): Xmin,Xmax= -60, 60
+------- setup_tissue(): Ymin,Ymax= -60, 60
+Placing cells of type agent ... 
+
+Loading cells from CSV file ./config/cells.csv ... 
+Creating agent (type=0) at 0 0 0 
+pCell->velocity 0 0 0 
+pCell->phenotype.motility.migration_speed 10
+phenotype.motility.motility_vector 10 0 0 
+Using PhysiCell version 1.10.4
+	Please cite DOI: 10.1371/journal.pcbi.1005991
+	Project website: http://PhysiCell.MathCancer.org
+
+See ALL_CITATIONS.txt for this list.
+current simulated time: 0 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 8.0092e-05 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.000112533 seconds 
+
+
+Using method diffusion_decay_solver__constant_coefficients_LOD_3D (implicit 3-D LOD with Thomas Algorithm) ... 
+
+ phenotype_function(): t= 0 motility_vector= 10, 0, 0
+last mech time 0.1
+current time : 0 is_motile 1
+phenotype.motility.motility_vector 10 0 0 
+im inside else 10 9.9
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 0.1 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0045166 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.00466608 seconds 
+
+last mech time 0.1
+current time : 0.1 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 0.2 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00374141 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.00843748 seconds 
+
+last mech time 0.1
+current time : 0.2 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 0.3 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0032836 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0117447 seconds 
+
+last mech time 0.1
+current time : 0.3 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 0.4 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00229505 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0140609 seconds 
+
+last mech time 0.1
+current time : 0.4 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 0.5 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00229509 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0163772 seconds 
+
+last mech time 0.1
+current time : 0.5 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 0.6 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00217961 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0185773 seconds 
+
+last mech time 0.1
+current time : 0.6 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 0.7 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00265612 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0212571 seconds 
+
+last mech time 0.1
+current time : 0.7 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 0.8 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00243272 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0237111 seconds 
+
+last mech time 0.1
+current time : 0.8 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 0.9 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00236631 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0260983 seconds 
+
+last mech time 0.1
+current time : 0.9 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 1 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00252752 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0286472 seconds 
+
+last mech time 0.1
+current time : 1 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 1.1 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00300817 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0316766 seconds 
+
+last mech time 0.1
+current time : 1.1 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 1.2 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00216458 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0338619 seconds 
+
+last mech time 0.1
+current time : 1.2 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 1.3 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00239837 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0362816 seconds 
+
+last mech time 0.1
+current time : 1.3 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 1.4 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00220378 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0385058 seconds 
+
+last mech time 0.1
+current time : 1.4 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 1.5 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00226615 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0407927 seconds 
+
+last mech time 0.1
+current time : 1.5 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 1.6 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00215919 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0429724 seconds 
+
+last mech time 0.1
+current time : 1.6 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 1.7 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0023029 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0452955 seconds 
+
+last mech time 0.1
+current time : 1.7 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 1.8 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00221088 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0475271 seconds 
+
+last mech time 0.1
+current time : 1.8 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 1.9 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00224953 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0497976 seconds 
+
+last mech time 0.1
+current time : 1.9 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 2 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00239675 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.052232 seconds 
+
+last mech time 0.1
+current time : 2 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 2.1 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00308823 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0553625 seconds 
+
+last mech time 0.1
+current time : 2.1 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 2.2 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00232548 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0577083 seconds 
+
+last mech time 0.1
+current time : 2.2 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 2.3 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00256393 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0602941 seconds 
+
+last mech time 0.1
+current time : 2.3 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 2.4 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00254055 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0628571 seconds 
+
+last mech time 0.1
+current time : 2.4 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 2.5 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00241014 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.065288 seconds 
+
+last mech time 0.1
+current time : 2.5 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 2.6 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00261257 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.067933 seconds 
+
+last mech time 0.1
+current time : 2.6 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 2.7 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0026625 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0706325 seconds 
+
+last mech time 0.1
+current time : 2.7 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 2.8 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00339304 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0740569 seconds 
+
+last mech time 0.1
+current time : 2.8 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 2.9 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00364829 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0777401 seconds 
+
+last mech time 0.1
+current time : 2.9 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 3 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00378976 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0815661 seconds 
+
+last mech time 0.1
+current time : 3 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 3.1 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00424216 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0858291 seconds 
+
+last mech time 0.1
+current time : 3.1 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 3.2 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00227259 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0881227 seconds 
+
+last mech time 0.1
+current time : 3.2 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 3.3 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00219158 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.090335 seconds 
+
+last mech time 0.1
+current time : 3.3 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 3.4 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0027104 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0930811 seconds 
+
+last mech time 0.1
+current time : 3.4 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 3.5 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00245952 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0955618 seconds 
+
+last mech time 0.1
+current time : 3.5 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 3.6 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00216964 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0977521 seconds 
+
+last mech time 0.1
+current time : 3.6 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 3.7 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00222734 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.100001 seconds 
+
+last mech time 0.1
+current time : 3.7 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 3.8 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00217555 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.102197 seconds 
+
+last mech time 0.1
+current time : 3.8 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 3.9 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0022546 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.104472 seconds 
+
+last mech time 0.1
+current time : 3.9 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 4 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00217262 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.106666 seconds 
+
+last mech time 0.1
+current time : 4 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 4.1 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0029362 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.109623 seconds 
+
+last mech time 0.1
+current time : 4.1 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 4.2 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00225663 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.111901 seconds 
+
+last mech time 0.1
+current time : 4.2 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 4.3 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00216002 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.114082 seconds 
+
+last mech time 0.1
+current time : 4.3 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 4.4 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00219028 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.116292 seconds 
+
+last mech time 0.1
+current time : 4.4 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 4.5 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00213753 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.118451 seconds 
+
+last mech time 0.1
+current time : 4.5 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 4.6 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00219793 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.120669 seconds 
+
+last mech time 0.1
+current time : 4.6 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 4.7 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0021362 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.122825 seconds 
+
+last mech time 0.1
+current time : 4.7 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 4.8 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00216345 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.125009 seconds 
+
+last mech time 0.1
+current time : 4.8 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 4.9 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00197315 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.126999 seconds 
+
+last mech time 0.1
+current time : 4.9 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 5 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00196696 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.128984 seconds 
+
+last mech time 0.1
+current time : 5 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 5.1 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00256479 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.131568 seconds 
+
+last mech time 0.1
+current time : 5.1 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 5.2 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00190118 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.133487 seconds 
+
+last mech time 0.1
+current time : 5.2 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 5.3 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00194589 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.135451 seconds 
+
+last mech time 0.1
+current time : 5.3 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 5.4 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00195264 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.137423 seconds 
+
+last mech time 0.1
+current time : 5.4 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 5.5 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00191279 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.139354 seconds 
+
+last mech time 0.1
+current time : 5.5 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 5.6 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00188723 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.141258 seconds 
+
+last mech time 0.1
+current time : 5.6 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 5.7 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00188427 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.14316 seconds 
+
+last mech time 0.1
+current time : 5.7 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 5.8 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00191225 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.14509 seconds 
+
+last mech time 0.1
+current time : 5.8 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 5.9 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00189675 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.147005 seconds 
+
+last mech time 0.1
+current time : 5.9 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 6 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00199261 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.149016 seconds 
+
+ phenotype_function(): t= 6 motility_vector= 0, 0, 0
+last mech time 0.1
+current time : 6 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 6.1 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00258735 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.151621 seconds 
+
+last mech time 0.1
+current time : 6.1 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 6.2 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00189643 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.153535 seconds 
+
+last mech time 0.1
+current time : 6.2 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 6.3 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0019018 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.155455 seconds 
+
+last mech time 0.1
+current time : 6.3 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 6.4 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00188549 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.157358 seconds 
+
+last mech time 0.1
+current time : 6.4 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 6.5 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00187216 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.159248 seconds 
+
+last mech time 0.1
+current time : 6.5 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 6.6 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00191914 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.161185 seconds 
+
+last mech time 0.1
+current time : 6.6 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 6.7 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00187749 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.16308 seconds 
+
+last mech time 0.1
+current time : 6.7 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 6.8 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00192247 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.165022 seconds 
+
+last mech time 0.1
+current time : 6.8 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 6.9 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00187288 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.166912 seconds 
+
+last mech time 0.1
+current time : 6.9 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 7 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00188772 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.168818 seconds 
+
+last mech time 0.1
+current time : 7 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 7.1 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00254695 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.171383 seconds 
+
+last mech time 0.1
+current time : 7.1 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 7.2 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00188534 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.173287 seconds 
+
+last mech time 0.1
+current time : 7.2 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 7.3 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00191373 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.175219 seconds 
+
+last mech time 0.1
+current time : 7.3 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 7.4 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00190452 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.177141 seconds 
+
+last mech time 0.1
+current time : 7.4 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 7.5 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00187418 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.179033 seconds 
+
+last mech time 0.1
+current time : 7.5 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 7.6 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00191802 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.180969 seconds 
+
+last mech time 0.1
+current time : 7.6 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 7.7 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00188782 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.182874 seconds 
+
+last mech time 0.1
+current time : 7.7 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 7.8 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00198585 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.184878 seconds 
+
+last mech time 0.1
+current time : 7.8 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 7.9 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00188289 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.186779 seconds 
+
+last mech time 0.1
+current time : 7.9 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 8 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00190225 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.188699 seconds 
+
+last mech time 0.1
+current time : 8 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 8.1 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00252737 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.191245 seconds 
+
+last mech time 0.1
+current time : 8.1 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 8.2 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0019539 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.193217 seconds 
+
+last mech time 0.1
+current time : 8.2 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 8.3 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00187236 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.195107 seconds 
+
+last mech time 0.1
+current time : 8.3 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 8.4 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0019099 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.197035 seconds 
+
+last mech time 0.1
+current time : 8.4 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 8.5 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0018697 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.198923 seconds 
+
+last mech time 0.1
+current time : 8.5 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 8.6 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00189489 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.200836 seconds 
+
+last mech time 0.1
+current time : 8.6 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 8.7 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00187698 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.202731 seconds 
+
+last mech time 0.1
+current time : 8.7 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 8.8 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00199389 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.204742 seconds 
+
+last mech time 0.1
+current time : 8.8 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 8.9 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00187426 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.206634 seconds 
+
+last mech time 0.1
+current time : 8.9 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 9 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00190691 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.208559 seconds 
+
+last mech time 0.1
+current time : 9 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 9.1 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00251517 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.211092 seconds 
+
+last mech time 0.1
+current time : 9.1 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 9.2 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00192922 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.213039 seconds 
+
+last mech time 0.1
+current time : 9.2 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 9.3 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00187236 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.21493 seconds 
+
+last mech time 0.1
+current time : 9.3 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 9.4 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00189188 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.216839 seconds 
+
+last mech time 0.1
+current time : 9.4 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 9.5 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00186503 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.218722 seconds 
+
+last mech time 0.1
+current time : 9.5 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 9.6 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0018921 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.220632 seconds 
+
+last mech time 0.1
+current time : 9.6 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 9.7 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00187247 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.222537 seconds 
+
+last mech time 0.1
+current time : 9.7 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 9.8 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00188888 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.224444 seconds 
+
+last mech time 0.1
+current time : 9.8 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 9.9 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00186903 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.226331 seconds 
+
+last mech time 0.1
+current time : 9.9 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+current simulated time: 10 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00192366 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.228273 seconds 
+
+last mech time 0.1
+current time : 10 is_motile 0
+phenotype.motility.motility_vector 0 0 0 
+im inside else 0 0
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+
+Total simulation runtime: 
+0 days, 0 hours, 0 minutes, and 0.231999 seconds 
