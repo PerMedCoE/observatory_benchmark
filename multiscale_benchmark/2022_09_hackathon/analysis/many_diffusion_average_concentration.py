@@ -28,13 +28,14 @@ def get_biodynamo_df(file):
 def get_tisim_df(file):
     df= pd.read_csv(file,delimiter="\t",names = ['timestep','diff'],header=0)
     # df = pd.read_csv(file,names=[x for x in range(0,28)],skiprows=[0],index_col=0,sep='\t|,',engine='python')
+    # df['diff']= df.mean(axis=1)
     print(df)
-    df['diff']= df.mean(axis=1)
     df['nt'] = df.sum(axis=1)*8000
     df.to_csv("check.csv")
     timesteps = np.arange(0, 10,0.1)
     timesteps_rounded = np.round(timesteps, 2)
     df['timestep_rounded'] = df["timestep"].round(2)
+    # df['timestep_rounded'] = df.index.values.round(2)
     df = df[df['timestep_rounded'].isin(timesteps_rounded)]
     df.drop('timestep_rounded', axis=1, inplace=True)
     return df
@@ -70,10 +71,11 @@ def main():
 
 
 
-    plt.plot(pc_conc.index,pc_conc['nt'],label = 'Physicell',color='green')
-    # plt.plot(bd_conc.index,bd_conc[1]*602.2,label = 'Biodynamo',alpha=0.5,color = 'red')
-    # plt.plot(ts_conc['timestep'],ts_conc['diff']*602.2,label = 'TiSim', color  = '#ffd343')
-    # plt.plot(ch_conc['timestep'],ch_conc['diff']*602.2,label = 'Chaste', color  = 'blue')
+    plt.plot(pc_conc.index,pc_conc['diff']/602.2,label = 'Physicell',color='green')
+    plt.plot(bd_conc.index,bd_conc[1],label = 'Biodynamo',alpha=0.5,color = 'red')
+    plt.plot(ts_conc['timestep'],ts_conc['diff'],label = 'TiSim', color  = '#ffd343')
+    # plt.plot(ts_conc.index.values,ts_conc['diff'],label = 'TiSim', color  = '#ffd343')
+    plt.plot(ch_conc['timestep'],ch_conc['diff'],label = 'Chaste', color  = 'blue')
     plt.ylabel("Concentration")
     plt.xlabel("Time (minutes)")
     plt.legend()
