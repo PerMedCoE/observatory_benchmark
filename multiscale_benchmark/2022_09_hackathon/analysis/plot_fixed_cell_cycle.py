@@ -11,8 +11,8 @@ def create_parser():
     # Specify at least 3 folder paths as arguments
     parser.add_argument("--pc-csv", action="store", dest = "pc_csv",help="Path to the PhysiCell cell volumes for fixed cell cycle",
                         default="../Physicell/output/fixed_cell_cycle/cells_volumes.csv")
-    # parser.add_argument("--bd-csv",action="store", dest = "bd_csv" ,help="Path to BioDynaMo cell volumes for fixed cell cycle",
-    #                 default="../Biodynamo/unit_test_cellcycle/results/")
+    parser.add_argument("--bd-csv",action="store", dest = "bd_csv" ,help="Path to BioDynaMo cell volumes for fixed cell cycle",
+                    default="../Biodynamo/unit_test_cellcycle/results/volume_perncentage_over_time.csv")
     parser.add_argument("--ch-csv",action="store", dest = "ch_csv", help="Path to Chaste cell volumes for fixed cell cycle",
                     default="../Chaste/unit_test_cellcycle/results/cellcycle_fixed.dat")
     # parser.add_argument("--ts-csv",action="store", dest = "ts_csv", help="Path to TiSim cell volumes for fixed cell cycle")
@@ -23,7 +23,7 @@ def get_physicell_df(file):
     df = pd.read_csv(file,index_col=0,float_precision='round_trip').sort_values(by=['dt']).reset_index(drop=True)
     return df
 def get_biodynamo_df(file):
-    df = pd.read_csv(file,index_col=0,header = None,sep='\t|,',engine='python').rename(columns={1: "x1", 4: "x2"})
+    df = pd.read_csv(file,index_col=0)
 
     return df
 def get_tisim_df():
@@ -49,7 +49,7 @@ def get_chaste_df(file):
                 df =pd.concat([df,df2],ignore_index=True)
         return df
 
-def plot(pc_df,ts_df,ch_df):
+def plot(pc_df,ts_df,ch_df,bd_df):
     fig,ax = plt.subplots()
     pc_df['dt'] = pc_df['dt']/60
     pc_init_vol = pc_df.iloc[0,4]
@@ -87,7 +87,8 @@ def plot(pc_df,ts_df,ch_df):
     plt.xlabel(xlabel="Time (hours)",fontsize=12,color = '#262626')
     plt.ylabel(ylabel="Percentage of initial volume",fontsize=12,color = '#262626')
     plt.title(label = 'Fixed Cell Cycle Total Volume',color = '#262626')
-
+    # Plot Biodynamo
+    ax.plot(bd_df['timestep'],bd_df["volume"],label = "Biodynamo",color ="red")
     for i in [0,1,2]:
         rect1 = matplotlib.patches.Rectangle((18*i,50),
                                         7, 170,
@@ -129,9 +130,10 @@ def main():
     parser = create_parser()
     args = parser.parse_args()
     pc_df = get_physicell_df(args.pc_csv)
+    bd_df = get_biodynamo_df(args.bd_csv)
     ts_df = get_tisim_df()
     ch_df = get_chaste_df(args.ch_csv)
-    plot(pc_df,ts_df,ch_df)
+    plot(pc_df,ts_df,ch_df,bd_df)
 
     return
 
