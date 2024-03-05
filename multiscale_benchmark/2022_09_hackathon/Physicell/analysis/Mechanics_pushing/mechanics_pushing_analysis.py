@@ -38,6 +38,7 @@ def generate_position_timestep_csv(data_folder,csv_fname):
     df_cell.to_csv(data_folder+"/"+csv_fname)
 def generate_pngs(data_folder,csv_fname):
     pc_me = pd.read_csv(data_folder+csv_fname,index_col=0,float_precision='round_trip')
+    print(data_folder+csv_fname)
     # print(pc_me['dt'])
     # exit()
     grouped = pc_me.groupby(by="dt")
@@ -45,12 +46,15 @@ def generate_pngs(data_folder,csv_fname):
     for t,timestep in grouped:
         fig = plt.figure()
         ax = fig.add_subplot(111)
+        c0 = timestep[timestep["id"]==0]
+        c1 = timestep[timestep["id"]==1]
+
         # Add voxels to the plot
         # ax.scatter(timestep['x'], timestep['y'],s = timestep['radius']*20,c='green',label = "PhysiCell")
-        circle1a = plt.Circle((timestep['x'].iloc[0], timestep['y'].iloc[0]), timestep['radius'].iloc[0], color='r',alpha = 0.5,label = "Cell volume")
+        circle1a = plt.Circle((c0['x'], c0['y']), c0['radius'], color='r',alpha = 0.5,label = "Cell 1")
         # circle1b = plt.Circle((timestep['x'].iloc[0], timestep['y'].iloc[0]), timestep['nuclear_radius'].iloc[0], color='g',alpha = 0.2,label = "Cell nucleo")
 
-        circle2a = plt.Circle((timestep['x'].iloc[1], timestep['y'].iloc[1]), timestep['radius'].iloc[0], color='r',alpha = 0.5,label = "Cell volume")
+        circle2a = plt.Circle((c1['x'], c1['y']), c1['radius'], color='b',alpha = 0.5,label = "Cell 2")
         # circle2b = plt.Circle((timestep['x'].iloc[1], timestep['y'].iloc[1]), timestep['nuclear_radius'].iloc[0], color='g',alpha = 0.2,label = "Cell nucleo")
         # Set the axis labels
         ax.set_aspect( 1 )

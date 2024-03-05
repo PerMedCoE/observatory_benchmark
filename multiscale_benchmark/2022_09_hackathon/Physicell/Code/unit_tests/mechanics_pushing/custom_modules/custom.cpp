@@ -82,7 +82,7 @@ void create_cell_types( void )
 	initialize_default_cell_definition(); 
 	cell_defaults.phenotype.secretion.sync_to_microenvironment( &microenvironment ); 
 	
-	cell_defaults.functions.volume_update_function = standard_volume_update_function;
+	cell_defaults.functions.volume_update_function = NULL;
 	cell_defaults.functions.update_velocity = standard_update_cell_velocity;
 
 	cell_defaults.functions.update_migration_bias = NULL; 
@@ -173,7 +173,11 @@ std::vector<std::string> my_coloring_function( Cell* pCell )
 void phenotype_function( Cell* pCell, Phenotype& phenotype, double dt )
 { 
     std::cout <<"phenotype_function(): t= "<<PhysiCell_globals.current_time<< " motility_vector= " << pCell->phenotype.motility.motility_vector[0]<<", "<<pCell->phenotype.motility.motility_vector[1]<<", "<<pCell->phenotype.motility.motility_vector[2] << std::endl;
-    return; 
+    pCell = (*all_cells)[0];
+	std::cout<<pCell->phenotype.motility.is_motile<<std::endl;
+	pCell = (*all_cells)[1];
+	std::cout<<pCell->phenotype.motility.is_motile<<std::endl;
+	return; 
 }
 
 void custom_function( Cell* pCell, Phenotype& phenotype , double dt )
