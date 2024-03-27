@@ -1,19 +1,9 @@
-# BDM small scale diffusion
+# BDM 1k Cells Diffusion
 
-This folder implements the small scale diffusion test. To run, you need to have
-BioDynaMo sourced and be in the folder `code_scripts/diffusion-small`. Then,
-simply execute `bdm run` in your terminal. You'll find the results in
-`code_scripts/diffusion-small/output`.
-
-Alternatively, execute the script `run.sh` which checks if BDM is sourced,
-executes the simulation, and moves the results to the results directory.
-
-## Known issues
-
-* We do not have a convenient way to initialize the boundary different from
-  the rest of the domain, thus we initialize the entire domain to `u_0 = 1`
-  instead of to 0.
-* The results in the folder `results/` have been taken on and Apple MacBook Pro
-  with M1 chip
-* As can be seen in the metadata, the export of the gird values is **by far**
-  the most time consuming part.
+This folder implements the 1k cells diffusion test. To run, you need to have
+BioDynaMo sourced and be in this folder: `unit_test_diffusion_1k`. Then,
+simply execute `bdm run` in your terminal. Running this will output the data to 
+a csv file called `data.csv` in the current directory (not in the output directory).
+This file contains two columns aranged: time (minutes) | average concentration across
+all voxels. You can then run `python plot.py` to get a graph of the data against 
+average concentration across all voxels. 
