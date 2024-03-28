@@ -14,7 +14,6 @@
 #ifndef UNIT_TEST_MECHANICS_H_
 #define UNIT_TEST_MECHANICS_H_
 
-#include "behaviours.h"
 #include "biodynamo.h"
 #include "custom_ops.h"
 #include "moving_cell.h"
@@ -28,6 +27,7 @@ inline int Simulate(int argc, const char** argv) {
     param->min_bound = -30;
     param->max_bound = 30;
     param->statistics = true;
+    param->simulation_time_step = 0.1;  // 0.1 minutes
   };
 
   Simulation simulation(argc, argv, set_param);
@@ -43,10 +43,26 @@ inline int Simulate(int argc, const char** argv) {
   auto* cell = new Moving_cell({0.0, 0.0, 0.0});
   cell->SetDiameter(10.);
   cell->SetMass(cell_mass);
-  cell->SetSpeed({1.0, 0.0, 0.0});  // Movement along x-axis, 1um/0.1min
-  cell->AddBehavior(new Move());
 
   rm->AddAgent(cell);
+
+  const int time_steps = 100;
+
+  // Track positions
+
+  std::vector<Real3> cell_positions;
+  auto* track_pos_op = NewOperation("track_position");
+  track_pos_op->GetImplementation<TrackPosition>()->positions_ =
+      &cell_positions;
+  track_pos_op->frequency_ = 1;  // 0.1 min
+  scheduler->ScheduleOp(track_pos_op);
+
+  // Apply force
+  
+  auto* apply_force = NewOperation("apply_force");
+  apply_force->GetImplementation<ApplyForce>()->initial_speed_ = {10.0, 0.0, 0.0};
+  scheduler->ScheduleOp(apply_force);
+  apply_force->frequency_ = time_steps;  // 0.1 min
 
   // Simulate dissipative force (e.g. friction from extracellular matrix)
   auto* friction = NewOperation("dissipative_force");
@@ -58,20 +74,6 @@ inline int Simulate(int argc, const char** argv) {
       friction_coefficient;
   friction->frequency_ = 1;  // 0.1 min
   scheduler->ScheduleOp(friction);
-
-  // Track positions
-  const int time_steps = 100;
-
-  std::vector<Double3> cell_positions;
-  auto* track_pos_op = NewOperation("track_position");
-  track_pos_op->GetImplementation<TrackPosition>()->positions_ =
-      &cell_positions;
-  track_pos_op->frequency_ = 1;  // 0.1 min
-  scheduler->ScheduleOp(track_pos_op);
-
-  // Move behaviour
-  auto* behavior_op = scheduler->GetOps("behavior")[0];
-  behavior_op->frequency_ = 1;  // Set behaviors' frequency
 
   // Run simulation for 10 minutes (100 steps, 1 step = 0.1 min )
   scheduler->Simulate(time_steps);

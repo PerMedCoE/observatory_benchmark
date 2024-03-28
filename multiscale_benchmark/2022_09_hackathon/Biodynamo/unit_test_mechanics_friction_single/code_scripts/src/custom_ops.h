@@ -11,13 +11,28 @@ struct DissipativeForce : public AgentOperationImpl {
 
   void operator()(Agent* agent) override {
     if (auto* cell = bdm_static_cast<Moving_cell*>(agent)) {
-      Double3 decrease_speed = cell->GetSpeed() * (-friction_coefficient_);
+      Real3 decrease_speed = cell->GetSpeed() * (-friction_coefficient_);
 
       cell->UpdateSpeed(decrease_speed);
     }
   }
 
   double friction_coefficient_ = 0.;
+};
+
+struct ApplyForce : public AgentOperationImpl {
+  BDM_OP_HEADER(ApplyForce);
+
+  void operator()(Agent* agent) override {
+    if (auto* cell = bdm_static_cast<Moving_cell*>(agent)) {
+      real_t dt = Simulation::GetActive()->GetParam()->simulation_time_step;
+      Real3 displacement = initial_speed_ * dt;
+
+      cell->ApplyDisplacement(displacement);
+    }
+  }
+
+  Real3 initial_speed_ = {0., 0., 0.};
 };
 
 struct TrackPosition : public AgentOperationImpl {
@@ -29,7 +44,7 @@ struct TrackPosition : public AgentOperationImpl {
     (*positions_).push_back(agent->GetPosition());
   }
 
-  std::vector<Double3>* positions_;
+  std::vector<Real3>* positions_;
 };
 
 }  // namespace bdm
