@@ -37,6 +37,8 @@ public:
     age_ = 0;
     cycle_time_ = 0;
     phase_ = BiologyCellCycle_G0;
+
+    this->SetTime4Phases();
   }
   virtual ~BiologyCell() {}
 
@@ -51,6 +53,15 @@ public:
   void SetPhase(int phase) { phase_ = phase; }
   int GetPhase() const { return phase_; }
 
+  void SetTime4Phases() {
+    time_G0_to_G1_ = 7.0;
+    time_G1_to_S_ = time_G0_to_G1_ + 6.0;
+    time_S_to_G2_ = time_G1_to_S_ + 5.0;
+  }
+  int GetTimeG0toG1() const { return time_G0_to_G1_; }
+  int GetTimeG1toS() const { return time_G1_to_S_; }
+  int GetTimeStoG2() const { return time_S_to_G2_; }
+
   // Initialize data if agent divides by passing information
   // from the mother to the daughter agent
   void Initialize(const NewAgentEvent& event) override {
@@ -61,10 +72,11 @@ public:
         age_ = 0;
         cycle_time_ = 0;
         phase_ = BiologyCellCycle_G0;
-        if (BiologyCellCycle_M!=mother->GetPhase()) {
+
+        this->SetTime4Phases();
+        if (BiologyCellCycle_M!=mother->GetPhase())
           bdm::Log::Fatal("bdm::BiologyCellCycle::Run",
             "error @line "+std::to_string(__LINE__));
-        }
       }
     }
   }
@@ -73,6 +85,7 @@ private:
   // member data
   int age_, cycle_time_;
   int phase_;
+  double time_G0_to_G1_, time_G1_to_S_, time_S_to_G2_;
 };
 
 
@@ -100,26 +113,29 @@ public:
       } else if (BiologyCellCycle_M == cell->GetPhase()) {
         cell->ResetCycleTime();
         cell->SetPhase(BiologyCellCycle_G0);
+        cell->SetTime4Phases();
       }
 
       const double V_min = (Math::kPi/6.0)*pow(10.0, 3),
                    V_max = 2.0 * V_min;
       const double T = cell->GetCycleTime()
                      * param->simulation_time_step;
-      if        (T <= 7.0) {
+      if        (T <= cell->GetTimeG0toG1()) {
         cell->SetPhase(BiologyCellCycle_G1);
-      } else if (T <= 13.0) {
+      } else if (T <= cell->GetTimeG1toS()) {
         cell->SetPhase(BiologyCellCycle_S);
         const double probability = 0.9999;
         if (rand->Uniform(0.0,1.0) <= probability) {
-          const double V = V_min*(-0.00908*T*T+0.316*T-0.752);
+          const double V = V_min*(-0.00908*pow(T+7.0-cell->GetTimeG0toG1(),2.0)
+                                 +0.316*(T+7.0-cell->GetTimeG0toG1())-0.752);
           cell->SetVolume(V>V_max?V_max:V);
         }
-      } else if (T <= 18.0) {
+      } else if (T <= cell->GetTimeStoG2()) {
         cell->SetPhase(BiologyCellCycle_G2);
         const double probability = 0.9999;
         if (rand->Uniform(0.0,1.0) <= probability) {
-          const double V = V_min*(-0.00908*T*T+0.316*T-0.752);
+          const double V = V_min*(-0.00908*pow(T+7.0-cell->GetTimeG0toG1(),2.0)
+                                 +0.316*(T+7.0-cell->GetTimeG0toG1())-0.752);
           cell->SetVolume(V>V_max?V_max:V);
         }
       } else {
@@ -141,8 +157,8 @@ inline int Simulate(int argc, const char** argv) {
     param->bound_space = Param::BoundSpaceMode::kOpen;
     param->simulation_time_step = 0.01;
     param->visualization_interval = 100;
-    param->min_bound = -100.0;
-    param->max_bound = +100.0;
+    param->min_bound = -30.0;
+    param->max_bound = +30.0;
     param->statistics = true;
   };
 
@@ -157,16 +173,16 @@ inline int Simulate(int argc, const char** argv) {
   std::system(s.c_str());
 
   {
-
+    //
     double x, y, z;
     x = y = z = 0.0;
 
     auto* cell = new BiologyCell({x, y, z});
     cell->SetVolume((Math::kPi/6.0)*pow(10.0, 3));
     cell->AddBehavior(new BiologyCellCycle());
-
-    rm->AddAgent(cell); // insert the agent created in the simulation
-
+    // insert the agent created in the simulation
+    rm->AddAgent(cell);
+    //
   }
 
   // Run the simulation for multiple time-steps
