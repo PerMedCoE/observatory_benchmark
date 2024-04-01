@@ -1,8 +1,8 @@
 clear
 clc
-close all
+%close all
 
-data = table2array(readtable('output/cell-0.csv'));
+data = table2array(readtable('cell-0-sim1.csv'));
 
 Time = data(:,1);
 Volume = data(:,2);
