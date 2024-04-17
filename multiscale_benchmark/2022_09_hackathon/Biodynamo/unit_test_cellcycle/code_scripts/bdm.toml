@@ -1,0 +1,9 @@
+[visualization]
+export = true
+
+[simulation]
+max_displacement = 10.0
+
+[[visualize_agent]]
+name = "BiologyCell"
+additional_data_members = [ "volume_", "diameter_", "age_", "cycle_time_", "phase_" ]

@@ -33,3 +33,4 @@ bdm_add_executable(${CMAKE_PROJECT_NAME}
                    HEADERS ${PROJECT_HEADERS}
                    SOURCES ${PROJECT_SOURCES}
                    LIBRARIES ${BDM_REQUIRED_LIBRARIES})
+
