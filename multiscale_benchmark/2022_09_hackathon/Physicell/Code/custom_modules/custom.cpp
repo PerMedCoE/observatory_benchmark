@@ -82,7 +82,7 @@ void create_cell_types( void )
 	initialize_default_cell_definition(); 
 	cell_defaults.phenotype.secretion.sync_to_microenvironment( &microenvironment ); 
 	
-	cell_defaults.functions.volume_update_function = NULL;
+	cell_defaults.functions.volume_update_function = standard_volume_update_function;
 	cell_defaults.functions.update_velocity = standard_update_cell_velocity;
 
 	cell_defaults.functions.update_migration_bias = NULL; 
@@ -118,8 +118,8 @@ void create_cell_types( void )
 	*/ 
 	
 	cell_defaults.functions.update_phenotype = phenotype_function; 
-	// cell_defaults.functions.custom_cell_rule = custom_function; 
-	// cell_defaults.functions.contact_function = contact_function; 
+	cell_defaults.functions.custom_cell_rule = custom_function; 
+	cell_defaults.functions.contact_function = contact_function; 
 	
 	/*
 	   This builds the map of cell definitions and summarizes the setup. 
@@ -149,21 +149,7 @@ void setup_tissue( void )
 	// just read cells from xml in this case
 	// load cells from your CSV file (if enabled)
 	load_cells_from_pugixml();
-
-	
-	// load cells from your CSV file (if enabled)
-
-
-    PhysiCell::Cell* pCell = (*all_cells)[0];
-    pCell->phenotype.motility.motility_vector[0] = 1.0;
-    pCell->phenotype.motility.motility_vector[1] = 0.0;
-    pCell->phenotype.motility.motility_vector[2] = 0.0;
-
-    pCell = (*all_cells)[1];
-    pCell->phenotype.motility.motility_vector[0] = -1.0;
-    pCell->phenotype.motility.motility_vector[1] = 0.0;
-    pCell->phenotype.motility.motility_vector[2] = 0.0;
-	
+	std::cout <<"length of al cells "<< all_cells->size()<<std::endl;
 	return; 
 }
 
@@ -171,14 +157,7 @@ std::vector<std::string> my_coloring_function( Cell* pCell )
 { return paint_by_number_cell_coloring(pCell); }
 
 void phenotype_function( Cell* pCell, Phenotype& phenotype, double dt )
-{ 
-    std::cout <<"phenotype_function(): t= "<<PhysiCell_globals.current_time<< " motility_vector= " << pCell->phenotype.motility.motility_vector[0]<<", "<<pCell->phenotype.motility.motility_vector[1]<<", "<<pCell->phenotype.motility.motility_vector[2] << std::endl;
-    pCell = (*all_cells)[0];
-	std::cout<<pCell->phenotype.motility.is_motile<<std::endl;
-	pCell = (*all_cells)[1];
-	std::cout<<pCell->phenotype.motility.is_motile<<std::endl;
-	return; 
-}
+{ return; }
 
 void custom_function( Cell* pCell, Phenotype& phenotype , double dt )
 { return; } 

@@ -88,7 +88,7 @@ int main( int argc, char* argv[] )
 {
 	// load and parse settings file(s)
 	
-	
+		
 	bool XML_status = false; 
 	char copy_command [1024]; 
 	char config_file[256]; 

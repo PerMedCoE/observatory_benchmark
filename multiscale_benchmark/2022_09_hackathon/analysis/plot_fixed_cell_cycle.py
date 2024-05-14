@@ -4,7 +4,6 @@ import os,re
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib
-
 def create_parser():
     parser = argparse.ArgumentParser(description="Create folders from input paths.")
 
@@ -12,7 +11,7 @@ def create_parser():
     parser.add_argument("--pc-csv", action="store", dest = "pc_csv",help="Path to the PhysiCell cell volumes for fixed cell cycle",
                         default="../Physicell/output/fixed_cell_cycle/cells_volumes.csv")
     parser.add_argument("--bd-csv",action="store", dest = "bd_csv" ,help="Path to BioDynaMo cell volumes for fixed cell cycle",
-                    default="../Biodynamo/unit_test_cellcycle/results/volume_perncentage_over_time.csv")
+                    default="../Biodynamo/unit_test_cellcycle/new_results/cell-0-sim1.csv")
     parser.add_argument("--ch-csv",action="store", dest = "ch_csv", help="Path to Chaste cell volumes for fixed cell cycle",
                     default="../Chaste/unit_test_cellcycle/results/cellcycle_fixed.dat")
     # parser.add_argument("--ts-csv",action="store", dest = "ts_csv", help="Path to TiSim cell volumes for fixed cell cycle")
@@ -23,8 +22,10 @@ def get_physicell_df(file):
     df = pd.read_csv(file,index_col=0,float_precision='round_trip').sort_values(by=['dt']).reset_index(drop=True)
     return df
 def get_biodynamo_df(file):
-    df = pd.read_csv(file,index_col=0)
-
+    df = pd.read_csv(file)
+    df.columns = ['timestep', 'volume', 'Phase', 'Age']
+    df['vol']= df['volume']/df['volume'][0]
+    print(df)
     return df
 def get_tisim_df():
     # ra<-c(1,1,1,1,1,1,1.04668,1.22985,1.39039,1.531,1.64972,1.74628,1.82178,1.87848,1.91944,1.94916,1.96973,1.98663,1.51756,1.0031,1.0031,1.0031,1.0031,1.0031,1.0031,1.0031,1.14954,1.31814,1.46836,1.59738,1.70416,1.78922,1.85432,1.90216,1.93616,1.96017,1.97837,1.99506,1.00185,1.00185,1.00185,1.00185,1.00185,1.00185,1.00185,1.06626,1.24191,1.40646,1.54479,1.66112)
@@ -85,14 +86,14 @@ def plot(pc_df,ts_df,ch_df,bd_df):
 
     vols=[100*x for x in vols]
 
-    ax.plot(dts,vols,label="Chaste",color='blue',linewidth=2)
+    ax.plot(dts,vols,label="Chaste",color='blue',linewidth=2,alpha=0.5)
     # Now plot TiSim
     ax.plot(ts_df['dt'],ts_df['volumes'],label="TiSim",color  = '#ffd343',linewidth=2)
     plt.xlabel(xlabel="Time (hours)",fontsize=12,color = '#262626')
     plt.ylabel(ylabel="Percentage of initial volume",fontsize=12,color = '#262626')
     plt.title(label = 'Fixed Cell Cycle Total Volume',color = '#262626')
     # Plot Biodynamo
-    ax.plot(bd_df['timestep'],bd_df["volume"],label = "Biodynamo",color ="red")
+    ax.plot(bd_df['timestep'],bd_df["vol"]*100,label = "Biodynamo",color ="red")
     for i in [0,1,2]:
         rect1 = matplotlib.patches.Rectangle((18*i,50),
                                         7, 170,

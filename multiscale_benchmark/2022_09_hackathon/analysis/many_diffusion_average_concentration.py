@@ -21,15 +21,13 @@ def get_physicell_df(file):
     return selected_rows
 
 def get_biodynamo_df(file):
-    df= pd.read_csv(file,index_col=0,header=None)
-    
-    df.index= df.index /100
+    df= pd.read_csv(file,index_col=None,header=None,names = ['timestep','diff'],sep=" ")
+    # df.index= df.index /100
     return df
 def get_tisim_df(file):
     df= pd.read_csv(file,delimiter="\t",names = ['timestep','diff'],header=0)
     # df = pd.read_csv(file,names=[x for x in range(0,28)],skiprows=[0],index_col=0,sep='\t|,',engine='python')
     # df['diff']= df.mean(axis=1)
-    print(df)
     df['nt'] = df.sum(axis=1)*8000
     df.to_csv("check.csv")
     timesteps = np.arange(0, 10,0.1)
@@ -53,7 +51,8 @@ def main():
                         default="../Physicell/output/diffusion_1k/microenv_many_diffusion.csv")
     #  action="store", dest = "data_folder",help="folder were the output data is stored",default="results/"
     parser.add_argument("--bd-csv",action="store", dest = "bd_csv" ,help="Path to BioDynaMo concentration over time csv",
-                    default="../Biodynamo/unit_test_diffusion_1k/results/concentration_avg.csv")
+                    default="../Biodynamo/unit_test_diffusion_1k/data.csv")
+    # Biodynamo/unit_test_diffusion_1k/data.csv
     parser.add_argument("--ts-csv",action="store", dest = "ts_csv", help="Path to TiSim concentration over time csv",
                     default="../Tisim/unit_test_diffusion_1k/results/result_1000c_diffusion.txt")
     # parser.add_argument("--ts-csv",action="store", dest = "ts_csv", help="Path to TiSim concentration over time csv",
@@ -70,12 +69,15 @@ def main():
     ch_conc = get_chaste_df(args.ch_csv)
 
 
-
-    plt.plot(pc_conc.index,pc_conc['diff']/602.2,label = 'Physicell',color='green')
-    plt.plot(bd_conc.index,bd_conc[1],label = 'Biodynamo',alpha=0.5,color = 'red')
-    plt.plot(ts_conc['timestep'],ts_conc['diff'],label = 'TiSim', color  = '#ffd343')
-    # plt.plot(ts_conc.index.values,ts_conc['diff'],label = 'TiSim', color  = '#ffd343')
-    plt.plot(ch_conc['timestep'],ch_conc['diff'],label = 'Chaste', color  = 'blue')
+    common_values = pc_conc.index[pc_conc.index.isin(bd_conc['timestep']) & pc_conc.index.isin(ts_conc['timestep']) & pc_conc.index.isin(ch_conc['timestep'])]
+    values_pc = pc_conc.loc[pc_conc.index.isin(common_values), 'diff']
+    values_bd = bd_conc.loc[bd_conc['timestep'].isin(common_values), 'diff']
+    values_ts = ts_conc.loc[ts_conc['timestep'].isin(common_values), 'diff']
+    values_ch = ch_conc.loc[ch_conc['timestep'].isin(common_values), 'diff']
+    plt.plot(common_values,values_pc/602.2,label = 'Physicell',color='green')
+    plt.plot(common_values,values_bd,label = 'Biodynamo',alpha=0.5,color = 'red')
+    plt.plot(common_values,values_ts,label = 'TiSim', color  = '#ffd343')
+    plt.plot(common_values,values_ch,label = 'Chaste', color  = 'blue')
     plt.ylabel("Concentration")
     plt.xlabel("Time (minutes)")
     plt.legend()

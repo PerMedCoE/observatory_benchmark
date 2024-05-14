@@ -54,7 +54,7 @@ def get_chaste_df(file):
 
 
 
-def plot(pc_df,ch_df):
+def plot(pc_df,ch_df,ts_df):
     fig,ax = plt.subplots()
     # plot Physicell
     pc_init_vol = pc_df.iloc[0,4]

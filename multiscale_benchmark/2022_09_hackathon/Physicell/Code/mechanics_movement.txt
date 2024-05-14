@@ -1,0 +1,1465 @@
+Using config file ./config/PhysiCell_settings.xml ... 
+0
+dc? 0
+User parameters in XML config file: 
+Bool parameters:: 
+
+Int parameters:: 
+random_seed: 0 [dimensionless]
+number_of_cells: 0 [none]
+
+Double parameters:: 
+friction_coeff: 0.99 [dimensionless]
+
+String parameters:: 
+
+
+Succesfully created the directory
+which boundaries?
+0 0 0 0 0 0
+
+Microenvironment summary: microenvironment: 
+
+Mesh information: 
+type: uniform Cartesian
+Domain: [-60,60] micron x [-60,60] micron x [-60,60] micron
+   resolution: dx = 20 micron
+   voxels: 216
+   voxel faces: 0
+   volume: 1.728e+06 cubic micron
+Densities: (1 total)
+   oxygen:
+     units: dimensionless
+     diffusion coefficient: 20000 micron^2 / min
+     decay rate: 0 min^-1
+     diffusion length scale: 1.41421e+08 micron
+     initial condition: 20000 dimensionless
+     boundary condition: 6022 dimensionless (enabled: false)
+
+virtual_wall_at_domain_edge: enabled
+Pre-processing type 0 named agent
+Processing agent ... 
+  --------- attachment_elastic_constant = 0
+Signals: 
+=======
+0 : oxygen
+1 : intracellular oxygen
+2 : oxygen gradient
+3 : pressure
+4 : volume
+5 : contact with agent
+6 : contact with live cell
+7 : contact with dead cell
+8 : contact with basement membrane
+9 : damage
+10 : dead
+11 : total attack time
+12 : time
+13 : custom:sample
+
+
+Behaviors: 
+=========
+0 : oxygen secretion
+1 : oxygen secretion target
+2 : oxygen uptake
+3 : oxygen export
+4 : cycle entry
+5 : exit from cycle phase 1
+6 : exit from cycle phase 2
+7 : exit from cycle phase 3
+8 : exit from cycle phase 4
+9 : exit from cycle phase 5
+10 : apoptosis
+11 : necrosis
+12 : migration speed
+13 : migration bias
+14 : migration persistence time
+15 : chemotactic response to oxygen
+16 : cell-cell adhesion
+17 : cell-cell adhesion elastic constant
+18 : adhesive affinity to agent
+19 : relative maximum adhesion distance
+20 : cell-cell repulsion
+21 : cell-BM adhesion
+22 : cell-BM repulsion
+23 : phagocytose dead cell
+24 : phagocytose agent
+25 : attack agent
+26 : fuse to agent
+27 : transform to agent
+28 : custom:sample
+
+
+0 :: type:0 name: agent
+	 cycle model: Live (code=5)
+		Phase 0: Live
+		Cycle transitions: 
+		-----------------
+		Live --> Live w mean duration inf min
+	 death models: 
+		0 : Apoptosis (code=100) with rate 5.31667e-05 1/min
+		death phase transitions: 
+		------------------------
+		Apoptotic --> Debris w mean duration 516 min
+		1 : Necrosis (code=101) with rate 0 1/min
+		death phase transitions: 
+		------------------------
+		Necrotic (swelling) --> Necrotic (lysed) w mean duration 1e-16 min
+		Necrotic (lysed) --> Debris w mean duration 86400 min
+	 key functions: 
+		 migration bias rule: false
+		 custom rule: false
+		 phenotype rule: false
+		 volume update function: false
+		 mechanics function: true
+		 contact function: false
+	motility (enabled: true in 3D)
+		speed: 10 micron/min
+		bias: 1 
+		persistence time: 10 min
+		chemotaxis (enabled: false)
+			along 1 * grad(oxygen) 
+	mechanics:
+		cell_cell_adhesion_strength: 0
+		cell_cell_repulsion_strength: 0
+		rel max adhesion dist: 0
+		cell_BM_adhesion_strength: 0
+		cell_BM_repulsion_strength: 0
+		attachment_elastic_constant: 0
+		attachment_rate: 0
+		detachment_rate: 0
+	custom data: 
+		sample: 1 dimensionless
+	custom vector data: 
+			NOTE: custom vector data will eventually be merged with custom data
+Loading cells from CSV file ./config/cells.csv ... 
+Creating agent (type=0) at 0 0 0 
+Inside assign position 
+pCell->velocity 10 0 0 
+pCell->phenotype.motility.migration_speed 10
+phenotype.motility.motility_vector 10 0 0 
+Using PhysiCell version 1.10.4
+	Please cite DOI: 10.1371/journal.pcbi.1005991
+	Project website: http://PhysiCell.MathCancer.org
+
+See ALL_CITATIONS.txt for this list.
+current simulated time: 0 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 5.0453e-05 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 7.0798e-05 seconds 
+
+
+Using method diffusion_decay_solver__constant_coefficients_LOD_3D (implicit 3-D LOD with Thomas Algorithm) ... 
+
+=========My update velocity function is ========= 1
+ Setting standard update velocity
+position 0
+pCell->velocity 10 0 0 
+phenotype.motility.motility_vector 10 0 0 
+pCell->phenotype.motility.migration_speed 10
+----update velocity sim time  0 -------
+Inside if of updating positions
+current simulated time: 0.1 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0027201 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.00280923 seconds 
+
+=========My update velocity function is ========= 1
+Setting to NULL
+position 1.5
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  0.1 -------
+Inside if of updating positions
+current simulated time: 0.2 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00196841 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.00479753 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  0.2 -------
+Inside if of updating positions
+current simulated time: 0.3 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00251751 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.00734144 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  0.3 -------
+Inside if of updating positions
+current simulated time: 0.4 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00273107 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0100954 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  0.4 -------
+Inside if of updating positions
+current simulated time: 0.5 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00214063 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.012255 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  0.5 -------
+Inside if of updating positions
+current simulated time: 0.6 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00197062 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0142439 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  0.6 -------
+Inside if of updating positions
+current simulated time: 0.7 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00198957 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0162516 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  0.7 -------
+Inside if of updating positions
+current simulated time: 0.8 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00214522 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0184154 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  0.8 -------
+Inside if of updating positions
+current simulated time: 0.9 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00210605 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0205393 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  0.9 -------
+Inside if of updating positions
+current simulated time: 1 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00268958 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0232517 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  1 -------
+Inside if of updating positions
+current simulated time: 1.1 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00295959 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0262302 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  1.1 -------
+Inside if of updating positions
+current simulated time: 1.2 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00210788 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0283566 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  1.2 -------
+Inside if of updating positions
+current simulated time: 1.3 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00214996 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0305255 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  1.3 -------
+Inside if of updating positions
+current simulated time: 1.4 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00271602 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0332759 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  1.4 -------
+Inside if of updating positions
+current simulated time: 1.5 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00242742 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0357299 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  1.5 -------
+Inside if of updating positions
+current simulated time: 1.6 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00301093 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0387724 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  1.6 -------
+Inside if of updating positions
+current simulated time: 1.7 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00240199 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0411927 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  1.7 -------
+Inside if of updating positions
+current simulated time: 1.8 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00218668 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.043418 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  1.8 -------
+Inside if of updating positions
+current simulated time: 1.9 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0019653 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0454018 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  1.9 -------
+Inside if of updating positions
+current simulated time: 2 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00195263 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0473729 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  2 -------
+Inside if of updating positions
+current simulated time: 2.1 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00336689 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0507594 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  2.1 -------
+Inside if of updating positions
+current simulated time: 2.2 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00253412 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0533229 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  2.2 -------
+Inside if of updating positions
+current simulated time: 2.3 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00275264 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0560957 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  2.3 -------
+Inside if of updating positions
+current simulated time: 2.4 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00203373 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0581487 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  2.4 -------
+Inside if of updating positions
+current simulated time: 2.5 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00193665 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0601038 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  2.5 -------
+Inside if of updating positions
+current simulated time: 2.6 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00215158 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0622743 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  2.6 -------
+Inside if of updating positions
+current simulated time: 2.7 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00232703 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0646211 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  2.7 -------
+Inside if of updating positions
+current simulated time: 2.8 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00256493 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0672054 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  2.8 -------
+Inside if of updating positions
+current simulated time: 2.9 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00286536 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0700903 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  2.9 -------
+Inside if of updating positions
+current simulated time: 3 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00234393 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0724714 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  3 -------
+Inside if of updating positions
+current simulated time: 3.1 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00372927 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0762252 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  3.1 -------
+Inside if of updating positions
+current simulated time: 3.2 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00244049 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0786942 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  3.2 -------
+Inside if of updating positions
+current simulated time: 3.3 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00270855 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.081431 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  3.3 -------
+Inside if of updating positions
+current simulated time: 3.4 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00305112 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0845017 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  3.4 -------
+Inside if of updating positions
+current simulated time: 3.5 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00288003 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0874099 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  3.5 -------
+Inside if of updating positions
+current simulated time: 3.6 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00302953 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.09046 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  3.6 -------
+Inside if of updating positions
+current simulated time: 3.7 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00210728 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0925859 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  3.7 -------
+Inside if of updating positions
+current simulated time: 3.8 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00202149 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0946264 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  3.8 -------
+Inside if of updating positions
+current simulated time: 3.9 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00193872 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0965839 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  3.9 -------
+Inside if of updating positions
+current simulated time: 4 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00198627 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0985897 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  4 -------
+Inside if of updating positions
+current simulated time: 4.1 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00399968 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.102611 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  4.1 -------
+Inside if of updating positions
+current simulated time: 4.2 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0020239 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.104654 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  4.2 -------
+Inside if of updating positions
+current simulated time: 4.3 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0026881 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.107362 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  4.3 -------
+Inside if of updating positions
+current simulated time: 4.4 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00198902 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.10937 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  4.4 -------
+Inside if of updating positions
+current simulated time: 4.5 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00200372 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.111392 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  4.5 -------
+Inside if of updating positions
+current simulated time: 4.6 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00201859 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.11343 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  4.6 -------
+Inside if of updating positions
+current simulated time: 4.7 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0019928 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.115441 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  4.7 -------
+Inside if of updating positions
+current simulated time: 4.8 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00188048 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.11734 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  4.8 -------
+Inside if of updating positions
+current simulated time: 4.9 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00200235 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.119362 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  4.9 -------
+Inside if of updating positions
+current simulated time: 5 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00267928 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.122062 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  5 -------
+Inside if of updating positions
+current simulated time: 5.1 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00260833 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.124688 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  5.1 -------
+Inside if of updating positions
+current simulated time: 5.2 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00201728 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.126725 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  5.2 -------
+Inside if of updating positions
+current simulated time: 5.3 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00189776 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.128642 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  5.3 -------
+Inside if of updating positions
+current simulated time: 5.4 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00195448 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.130614 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  5.4 -------
+Inside if of updating positions
+current simulated time: 5.5 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00189768 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.13253 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  5.5 -------
+Inside if of updating positions
+current simulated time: 5.6 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0019543 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.134503 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  5.6 -------
+Inside if of updating positions
+current simulated time: 5.7 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00235291 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.136888 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  5.7 -------
+Inside if of updating positions
+current simulated time: 5.8 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00226542 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.139172 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  5.8 -------
+Inside if of updating positions
+current simulated time: 5.9 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00193403 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.141124 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  5.9 -------
+Inside if of updating positions
+current simulated time: 6 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00203868 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.143183 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  6 -------
+Inside if of updating positions
+current simulated time: 6.1 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00268957 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.145892 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  6.1 -------
+Inside if of updating positions
+current simulated time: 6.2 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00192531 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.147836 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  6.2 -------
+Inside if of updating positions
+current simulated time: 6.3 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00244149 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.150307 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  6.3 -------
+Inside if of updating positions
+current simulated time: 6.4 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00299232 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.153328 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  6.4 -------
+Inside if of updating positions
+current simulated time: 6.5 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00307239 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.156431 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  6.5 -------
+Inside if of updating positions
+current simulated time: 6.6 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0022567 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.158706 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  6.6 -------
+Inside if of updating positions
+current simulated time: 6.7 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00193605 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.160661 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  6.7 -------
+Inside if of updating positions
+current simulated time: 6.8 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00276148 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.163442 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  6.8 -------
+Inside if of updating positions
+current simulated time: 6.9 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00197103 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.165431 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  6.9 -------
+Inside if of updating positions
+current simulated time: 7 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00284943 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.168314 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  7 -------
+Inside if of updating positions
+current simulated time: 7.1 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00322863 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.171582 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  7.1 -------
+Inside if of updating positions
+current simulated time: 7.2 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0022283 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.17383 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  7.2 -------
+Inside if of updating positions
+current simulated time: 7.3 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00192935 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.175779 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  7.3 -------
+Inside if of updating positions
+current simulated time: 7.4 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00200699 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.177812 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  7.4 -------
+Inside if of updating positions
+current simulated time: 7.5 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0025509 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.180382 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  7.5 -------
+Inside if of updating positions
+current simulated time: 7.6 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00205124 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.182452 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  7.6 -------
+Inside if of updating positions
+current simulated time: 7.7 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00240303 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.184884 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  7.7 -------
+Inside if of updating positions
+current simulated time: 7.8 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00303215 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.187935 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  7.8 -------
+Inside if of updating positions
+current simulated time: 7.9 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00259225 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.190547 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  7.9 -------
+Inside if of updating positions
+current simulated time: 8 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00199212 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.192558 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  8 -------
+Inside if of updating positions
+current simulated time: 8.1 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0031636 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.195751 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  8.1 -------
+Inside if of updating positions
+current simulated time: 8.2 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00235491 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.198125 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  8.2 -------
+Inside if of updating positions
+current simulated time: 8.3 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00192462 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.200068 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  8.3 -------
+Inside if of updating positions
+current simulated time: 8.4 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00313585 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.203234 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  8.4 -------
+Inside if of updating positions
+current simulated time: 8.5 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00287149 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.206125 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  8.5 -------
+Inside if of updating positions
+current simulated time: 8.6 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00225565 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.2084 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  8.6 -------
+Inside if of updating positions
+current simulated time: 8.7 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00198162 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.210401 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  8.7 -------
+Inside if of updating positions
+current simulated time: 8.8 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00277464 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.213206 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  8.8 -------
+Inside if of updating positions
+current simulated time: 8.9 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00272238 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.215961 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  8.9 -------
+Inside if of updating positions
+current simulated time: 9 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00292289 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.218912 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  9 -------
+Inside if of updating positions
+current simulated time: 9.1 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00378089 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.222713 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  9.1 -------
+Inside if of updating positions
+current simulated time: 9.2 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00197452 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.224706 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  9.2 -------
+Inside if of updating positions
+current simulated time: 9.3 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00201673 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.226743 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  9.3 -------
+Inside if of updating positions
+current simulated time: 9.4 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00265986 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.229434 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  9.4 -------
+Inside if of updating positions
+current simulated time: 9.5 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00213643 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.231589 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  9.5 -------
+Inside if of updating positions
+current simulated time: 9.6 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00189748 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.233505 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  9.6 -------
+Inside if of updating positions
+current simulated time: 9.7 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00284875 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.236386 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  9.7 -------
+Inside if of updating positions
+current simulated time: 9.8 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00279138 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.239199 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  9.8 -------
+Inside if of updating positions
+current simulated time: 9.9 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00197504 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.241193 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  9.9 -------
+Inside if of updating positions
+current simulated time: 10 min (max: 10 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.00207737 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.243289 seconds 
+
+=========My update velocity function is ========= 0
+Setting to NULL
+position 1
+pCell->velocity 0 0 0 
+phenotype.motility.motility_vector 0 0 0 
+pCell->phenotype.motility.migration_speed 0
+----update velocity sim time  10 -------
+Inside if of updating positions
+
+Total simulation runtime: 
+0 days, 0 hours, 0 minutes, and 0.24793 seconds 
