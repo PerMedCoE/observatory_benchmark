@@ -67,12 +67,12 @@ public:
     void Test3x3x3()
     {
         // Target number of nodes in each dimension, so we have num_nodes x num_nodes x num_nodes in the domain
-        const unsigned num_nodes = 3;
+        const unsigned num_nodes = 3; // So 3x3x3 voxels one around each node. 
 
         // Simulation parameters from PerMedCoE document
         const double width_xyz = 60.0; // 60 x 60 x 60 micrometers,
-        const double vox_size = width_xyz / (num_nodes - 1u);
-        const double initial_concentration = 0.0; // no concentration initially
+        const double element_size = width_xyz / (num_nodes - 1u); // Note 2 elements means 3 nodes and 3 voxels.
+        const double initial_concentration = 0.0; // no concentration initially not on boundary
         const double source_strength = 10.0; // constant concentration on the boundary
         const double sink_strength = 20.0; // 20 microMol per minute
         const double sink_square_radius = 10.0; // sink-size, diameter in inf norm
@@ -81,7 +81,13 @@ public:
         // Create a 60 by 60 by 60 mesh in 3D. The first parameter is the cartesian space-step and the
         // other three parameters are the width, height and depth of the mesh.
         TetrahedralMesh<3, 3> mesh;
-        mesh.ConstructRegularSlabMesh(vox_size, width_xyz, width_xyz, width_xyz);
+        mesh.ConstructRegularSlabMesh(element_size, width_xyz, width_xyz, width_xyz);
+
+        // Get the middle node, and check it corresponds to a node in the very centre of the domain
+        const unsigned middle_node_idx = (num_nodes * num_nodes * num_nodes - 1u) / 2u;
+        TS_ASSERT_DELTA(mesh.GetNode(middle_node_idx)->rGetLocation()[0], 30.0, 1e-12);
+        TS_ASSERT_DELTA(mesh.GetNode(middle_node_idx)->rGetLocation()[1], 30.0, 1e-12);
+        TS_ASSERT_DELTA(mesh.GetNode(middle_node_idx)->rGetLocation()[2], 30.0, 1e-12);
 
         // Custom PDE for this unit test
         DiffusionEquationWithSinkTerm<3> pde;
@@ -91,7 +97,7 @@ public:
         pde.setSinkRadius(sink_square_radius);
         pde.setDiffusionCoefficient(diffusion_coefficient);
 
-        // Create a new boundary conditions container and specify u=1.0 on the boundary.
+        // Create a new boundary conditions container and specify u=10.0 on the boundary.
         BoundaryConditionsContainer<3, 3, 1> bcc;
         bcc.DefineConstantDirichletOnMeshBoundary(&mesh, source_strength);
 
@@ -101,9 +107,11 @@ public:
         /* For parabolic problems, initial conditions are also needed. The solver will expect
          * a PETSc vector, where the i-th entry is the initial solution at node i, to be passed
          * in. To create this PETSc Vec, we will use a helper function in the PetscTools
-         * class to create a Vec of size num_nodes, with each entry set to 1.0. Then we
-         * set the initial condition on the solver. */
-        Vec initial_condition = PetscTools::CreateAndSetVec(mesh.GetNumNodes(), initial_concentration);
+         * class to create a Vec of size num_nodes, with each entry set to source_strength. Then we
+         * set the initial condition at the central node to be initial_concentration then we set 
+         * the initial condition on the solver. */
+        Vec initial_condition = PetscTools::CreateAndSetVec(mesh.GetNumNodes(), source_strength);
+        VecSetValue(initial_condition, middle_node_idx ,initial_concentration, INSERT_VALUES);
         solver.SetInitialCondition(initial_condition);
 
         // Next define the start time, end time, and timestep, and set them.
@@ -122,12 +130,6 @@ public:
         // Solve the model
         Vec solution = solver.Solve();
         ReplicatableVector solution_repl(solution);
-
-        // Get the middle node, and check it corresponds to a node in the very centre of the domain
-        const unsigned middle_node_idx = (num_nodes * num_nodes * num_nodes - 1u) / 2u;
-        TS_ASSERT_DELTA(mesh.GetNode(middle_node_idx)->rGetLocation()[0], 30.0, 1e-12);
-        TS_ASSERT_DELTA(mesh.GetNode(middle_node_idx)->rGetLocation()[1], 30.0, 1e-12);
-        TS_ASSERT_DELTA(mesh.GetNode(middle_node_idx)->rGetLocation()[2], 30.0, 1e-12);
 
         auto output_dir = FileFinder("TestDiffusionSmall03", RelativeTo::ChasteTestOutput);
 

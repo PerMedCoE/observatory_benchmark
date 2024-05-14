@@ -7,31 +7,31 @@
 [1mGeneral[0m
 Command				: ./build/cellcycle2 
 Simulation name			: cellcycle2
-Total simulation runtime	: 28 ms
-Peak memory usage (MB)		: 179.359
-Number of iterations executed	: 480
-Number of agents		: 2
+Total simulation runtime	: 5081 ms
+Peak memory usage (MB)		: 540.188
+Number of iterations executed	: 4800
+Number of agents		: 4
 Output directory		: output/cellcycle2
-  size				:   0B
-BioDynaMo version:		: v1.03.65-0c884685
-BioDynaMo real type:		: double
+  size				: 1.7M
+BioDynaMo version:		: v1.05.102-5bd40afa
+BioDynaMo real type:		: float
 
 ***********************************************
 
 [1mTotal execution time per operation[0m
-agent ops: 2
+agent ops: 105
 behavior: 0
 bound space: 0
-diffusion: 0
+continuum: 1
 discretization: 0
 load balancing: 0
 mechanical forces: 0
-set up iteration: 3
-tear down iteration: 5
-update environment: 10
+set up iteration: 170
+tear down iteration: 185
+update environment: 164
 update staticness: 0
 update time series: 0
-visualize: 0
+visualize: 2281
 
 ***********************************************
 
@@ -45,7 +45,7 @@ num threads per numa	: 8
 ***********************************************
 
 [1mAgents per numa node[0m
-numa node 0 -> size: 2
+numa node 0 -> size: 4
 
 ***********************************************
 
@@ -68,26 +68,27 @@ numa node 0 -> size: 2
         "compute_target": "cpu",
         "debug_numa": false,
         "detect_static_agents": false,
-        "diffusion_boundary_condition": "open",
+        "diffusion_boundary_condition": "Neumann",
         "diffusion_method": "euler",
         "environment": "uniform_grid",
         "execution_order": 0,
-        "export_visualization": false,
+        "export_visualization": true,
         "insitu_visualization": false,
         "mapped_data_array_mode": 0,
-        "max_bound": 100,
+        "max_bound": 30,
         "mem_mgr_aligned_pages_shift": 5,
         "mem_mgr_growth_rate": 1.1,
         "mem_mgr_max_mem_per_thread_factor": 1,
-        "min_bound": 0,
+        "min_bound": -30,
         "minimize_memory_while_rebalancing": true,
         "nanoflann_depth": 10,
         "numerical_ode_solver": 1,
         "opencl_debug": false,
         "output_dir": "output",
         "plot_memory_layout": false,
-        "preferred_gpu": 0,
-        "pv_insitu_pipeline": "/Users/tobias/tmp/biodynamo/build/include/core/visualization/paraview/default_insitu_pipeline.py",
+        "preferred_gpu": -1,
+        "progress_bar_time_unit": "s",
+        "pv_insitu_pipeline": "/Users/hp024/biodynamo/build/include/core/visualization/paraview/default_insitu_pipeline.py",
         "pv_insitu_pipelinearguments": "",
         "random_seed": 4357,
         "remove_output_dir_contents": true,
@@ -95,7 +96,7 @@ numa node 0 -> size: 2
         "root_visualization": false,
         "scheduling_batch_size": 1000,
         "show_simulation_step": 0,
-        "simulation_max_displacement": 3,
+        "simulation_max_displacement": 10,
         "simulation_time_step": 0.01,
         "statistics": true,
         "thread_safety_mechanism": 1,
@@ -106,8 +107,15 @@ numa node 0 -> size: 2
         "visualization_compress_pv_files": true,
         "visualization_engine": "paraview",
         "visualization_export_generate_pvsm": true,
-        "visualization_interval": 1,
+        "visualization_interval": 100,
         "visualize_agents": {
+            "BiologyCell": [
+                "age_",
+                "cycle_time_",
+                "diameter_",
+                "phase_",
+                "volume_"
+            ],
             "_typename": "map<string,set<string> >"
         },
         "visualize_diffusion": []
