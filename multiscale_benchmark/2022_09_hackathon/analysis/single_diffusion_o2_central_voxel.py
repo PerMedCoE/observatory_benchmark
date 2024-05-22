@@ -17,6 +17,7 @@ def get_physicell_df(file):
     selected_rows.drop('timestep_rounded', axis=1, inplace=True)
     print(selected_rows)
     return selected_rows
+
 def get_physicell_df_not_rounded(file):
     df= pd.read_csv(file,index_col=0)
     df = df.loc[df.index == 13]
