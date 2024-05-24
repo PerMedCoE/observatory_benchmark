@@ -18,6 +18,7 @@ def get_physicell_df(file):
     # df['dt'].fillna(0, inplace=True)
 
     df['velocity'] = df['v1']
+    df['velocity'][0] = 0
     return df
 
 def get_biodynamo_df(file):
@@ -31,7 +32,7 @@ def get_biodynamo_df(file):
     df['dt'].fillna(0, inplace=True)
 
     df['velocity'] = df['dx'] / df['dt']
-
+    df['velocity'][0] = 0
     return df
 def get_tisim_df(file):
     # df= pd.read_csv(file,delimiter="\t",names = ['timestep','diff'],header=0)
@@ -47,12 +48,13 @@ def get_chaste_df(file):
     df['dt'] = np.arange(0,10.01,0.1)
 
     df['velocity'] = df['dx'] / df['dt']
+    df['velocity'][0] = 0
     return df
 
 def plot_distance_moved(pc_data,bd_data,ch_data):
     plt.plot(pc_data.index,pc_data['velocity'],label="PhysiCell", color= 'green',alpha = 0.7)
-    plt.plot(bd_data.index,bd_data['velocity'],label="Biodynamo",color= 'red')
-    plt.plot(ch_data.index,ch_data['velocity'],label="Chaste")
+    plt.plot(bd_data.index,bd_data['velocity'],label="Biodynamo",color= 'red',alpha = 0.6)
+    plt.plot(ch_data.index,ch_data['velocity'],label="Chaste", alpha= 0.3)
     plt.ylabel(ylabel="Velocity μM/s")
     plt.xlabel(xlabel="Time")
     plt.title("Velocity of the movement of a cell across time")
