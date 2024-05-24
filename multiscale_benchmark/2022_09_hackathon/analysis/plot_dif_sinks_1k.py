@@ -55,8 +55,8 @@ def main():
     
 # "mean_diff_of_sinks.csv"
 
-    pc_conc = get_physicell_df_sinks(args.pc_csv)
-
+    pc_concv1 = get_physicell_df_sinks("../Physicell/output/new_results/diffusion_v1_u12044_1k/mean_diff_of_sinks.csv")
+    pc_concv10 = get_physicell_df_sinks("../Physicell/output/new_results/diffusion_v10_u1204_1k/mean_diff_of_sinks.csv")
     # pc_conc_2 = get_physicell_df_not_rounded("../Physicell/output/diffusion_0.001/microenv_single_diffusion.csv")
     # print(pc_conc_2['diff']/602.2)
     bd_conc = get_biodynamo_df(args.bd_csv)
@@ -65,7 +65,8 @@ def main():
 
 
 
-    plt.plot(pc_conc['timestep'],pc_conc['diff']/602.2,label = 'Physicell 0.1',color='green',alpha=0.6)
+    plt.plot(pc_concv1['timestep'],pc_concv1['diff']/602.2,label = 'Physicell V 1',color='green',alpha=0.6)
+    plt.plot(pc_concv10['timestep'],pc_concv10['diff']/602.2,label = 'Physicell V 10',color='black',alpha=0.6)
     # plt.plot(pc_conc_2['timestep'],pc_conc['diff']/602.2,label = 'Physicell 0.001',color='orange',alpha=0.6)
     plt.plot(bd_conc['timestep'],bd_conc['diff'],label = 'Biodynamo',alpha=0.5,color = 'red')
     plt.plot(ts_conc['timestep'],ts_conc['diff'],label = 'TiSim', color  = '#ffd343',alpha=0.6)
@@ -73,8 +74,8 @@ def main():
     plt.ylabel("Concentration μM")
     plt.xlabel("Time (minutes)")
     plt.legend()
-    plt.title("Concentration of central voxel")
-    plt.savefig("./single_diffusion_concentration_of_central_voxel_sinks.png",dpi=200)
+    plt.title("Concentration of voxels containing sinks")
+    plt.savefig("./many_diffusion_concentration_of_sinks.png",dpi=200)
     plt.show()
 if __name__ == "__main__":
     main()

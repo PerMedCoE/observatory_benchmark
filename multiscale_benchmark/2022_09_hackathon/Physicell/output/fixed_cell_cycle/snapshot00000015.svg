@@ -25,8 +25,8 @@
   </g>
   <g id="cells">
    <g id="cell0" type="agent" dead="false" >
-  <circle cx="30" cy="30" r="6.24479" stroke-width="0.5" stroke="black" fill="grey"/>
-  <circle cx="30" cy="30" r="6.24479" stroke-width="0.5" stroke="grey" fill="grey"/>
+  <circle cx="30" cy="30" r="6.13827" stroke-width="0.5" stroke="black" fill="grey"/>
+  <circle cx="30" cy="30" r="3.89071" stroke-width="0.5" stroke="grey" fill="grey"/>
    </g>
   </g>
  </g>
@@ -37,7 +37,7 @@
   </text>
   <text x="1.5" y="62.7"
    font-family="Arial" font-size="1.125" fill="black" >
-   0 days, 0 hours, 0 minutes, and 5.8485 seconds
+   0 days, 0 hours, 0 minutes, and 5.4216 seconds
   </text>
   <rect x="0" y="4.2" width="60" height="60" stroke-width="0.12" stroke="rgb(0,0,0)" fill="none"/>
 </svg>

@@ -14,7 +14,7 @@ def create_parser():
     parser.add_argument("data_folder", action="store", help="folder were the output data is stored")
     
 
-    parser.add_argument("--csvout", action="store", dest="csv_fname", default="/microenv_many_diffusion.csv",
+    parser.add_argument("--csvout", action="store", dest="csv_fname", default="/cells_microenv_many_diffusion.csv",
                         help="File name to store the summary table used for the plot")
 
     return parser
@@ -44,10 +44,11 @@ def generate_csv(output_folder,csv_out):
     df_cell.to_csv(output_folder+csv_out)
     return df_cell
 
-def get_physicell_df(df_cells):
+def get_physicell_df(df_cells,data_folder):
 
-    file = "microenv_many_diffusion.csv"
+    file = data_folder+"microenv_many_diffusion.csv"
     df= pd.read_csv(file,index_col=0)
+
     df['timestep'] = df['timestep'].round(2)
 
     print(df)
@@ -73,8 +74,24 @@ def get_physicell_df(df_cells):
         selected_rows = vox_t.loc[indexes]
         average_diff = selected_rows['diff'].mean()
         df_mean = df_mean.append({'timestep': t, 'diff': average_diff}, ignore_index=True)
-    df_mean.to_csv("mean_diff_of_sinks.csv")
-        # index_dic[t] = indexes
+    df_mean.to_csv(data_folder+"mean_diff_of_sinks.csv")
+    # merged_df = pd.merge(df_cells, df, on='timestep', suffixes=('_cell', '_vox'))
+
+    # # Filter rows where cell coordinates are within the voxel boundaries
+    # condition = (
+    #     (merged_df['x_cell'] >= merged_df['xmin']) & (merged_df['x_cell'] <= merged_df['xmax']) &
+    #     (merged_df['y_cell'] >= merged_df['ymin']) & (merged_df['y_cell'] <= merged_df['ymax']) &
+    #     (merged_df['z_cell'] >= merged_df['zmin']) & (merged_df['z_cell'] <= merged_df['zmax'])
+    # )
+
+    # filtered_df = merged_df[condition]
+
+    # # Group by timestep and calculate the mean of 'diff'
+    # df_mean = filtered_df.groupby('timestep')['diff'].mean().reset_index()
+
+    # # Save the result to CSV
+    # df_mean.to_csv(data_folder + "mean_diff_of_sinks.csv", index=False)
+    #     # index_dic[t] = indexes
     
     
 
@@ -85,4 +102,4 @@ if __name__ == '__main__':
     data_folder = args.data_folder
     csv_fname = args.csv_fname
     df_cells = generate_csv(data_folder,csv_fname)
-    get_physicell_df(df_cells)
+    get_physicell_df(df_cells,data_folder)

@@ -45,6 +45,23 @@ def generate_microenv_csv(output_folder,csv_out):
         df_cell= pd.concat([df_cell,df_mat])
         i= i + 1
     df_cell.to_csv(output_folder+csv_out)
+def generate_cell_csv(output_folder):
+    # generate csv of all voxels and their diffusion in each timestep
+    files = Path(output_folder).glob('*output*_cells.mat')
+    mcds = multicellds.Settings(output_folder+"/PhysiCell_settings.xml")
+    step = mcds.interval
+    df_cell = pd.DataFrame(columns = ['id','internalized_substrates',"total_volume"])
+    i = 0
+    for file in sorted(files):
+        mat = loadmat(file)
+        
+        mat = mat["cells"]
+        steps = [step*i] * mat.shape[1]
+        df_mat = pd.DataFrame(mat[[1,68,4]].transpose(),columns = ['id','internalized_substrates',"total_volume"])
+        df_mat["timestep"] = steps
+        df_cell= pd.concat([df_cell,df_mat])
+        i= i + 1
+    df_cell.to_csv(output_folder+"/cell_prop.csv")
 
 def generate_pngs(output_folder,csv_out):
     pc_me = pd.read_csv(output_folder+csv_out,index_col=0)
@@ -110,6 +127,7 @@ if __name__ == '__main__':
     if args.generate_csv:
         print("generating microenvironment csv")
         generate_microenv_csv(data_folder,csv_fname)
+        generate_cell_csv(data_folder)
     generate_first_last(data_folder,csv_fname)
     if args.generate_gif:
         print("generating gif")

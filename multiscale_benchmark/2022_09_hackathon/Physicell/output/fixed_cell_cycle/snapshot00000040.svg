@@ -25,12 +25,12 @@
   </g>
   <g id="cells">
    <g id="cell0" type="agent" dead="false" >
-  <circle cx="28.9484" cy="36.3258" r="5.04122" stroke-width="0.5" stroke="black" fill="grey"/>
-  <circle cx="28.9484" cy="36.3258" r="5.04122" stroke-width="0.5" stroke="grey" fill="grey"/>
+  <circle cx="28.9641" cy="36.2425" r="4.98036" stroke-width="0.5" stroke="black" fill="grey"/>
+  <circle cx="28.9641" cy="36.2425" r="3.14204" stroke-width="0.5" stroke="grey" fill="grey"/>
    </g>
    <g id="cell3" type="agent" dead="false" >
-  <circle cx="33.3473" cy="23.969" r="4.59949" stroke-width="0.5" stroke="black" fill="grey"/>
-  <circle cx="33.3473" cy="23.969" r="4.59949" stroke-width="0.5" stroke="grey" fill="grey"/>
+  <circle cx="33.31" cy="24.0478" r="4.54348" stroke-width="0.5" stroke="black" fill="grey"/>
+  <circle cx="33.31" cy="24.0478" r="2.3899" stroke-width="0.5" stroke="grey" fill="grey"/>
    </g>
   </g>
  </g>
@@ -41,7 +41,7 @@
   </text>
   <text x="1.5" y="62.7"
    font-family="Arial" font-size="1.125" fill="black" >
-   0 days, 0 hours, 0 minutes, and 14.2376 seconds
+   0 days, 0 hours, 0 minutes, and 18.9942 seconds
   </text>
   <rect x="0" y="4.2" width="60" height="60" stroke-width="0.12" stroke="rgb(0,0,0)" fill="none"/>
 </svg>

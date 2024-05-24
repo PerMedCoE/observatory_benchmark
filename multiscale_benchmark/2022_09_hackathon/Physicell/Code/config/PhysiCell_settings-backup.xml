@@ -125,7 +125,7 @@
           <volume>
             <total units="micron^3">523.6</total>
             <fluid_fraction units="dimensionless">0.75</fluid_fraction>
-            <nuclear units="micron^3">540</nuclear>
+            <nuclear units="micron^3">130.9</nuclear>
             <fluid_change_rate units="1/min">0.05</fluid_change_rate>
             <cytoplasmic_biomass_change_rate units="1/min">0.0045</cytoplasmic_biomass_change_rate>
             <nuclear_biomass_change_rate units="1/min">0.0055</nuclear_biomass_change_rate>

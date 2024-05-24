@@ -68,7 +68,7 @@
  		</variable>
 		
 		<options>
-			<calculate_gradients>false</calculate_gradients>
+			<calculate_gradients>true</calculate_gradients>
 			<track_internalized_substrates_in_each_agent>true</track_internalized_substrates_in_each_agent>
 			 
 			<initial_condition type="matlab" enabled="false">
@@ -184,7 +184,7 @@
 					<substrate name="oxygen">
 					<secretion_rate units="1/min">0</secretion_rate>
 					<secretion_target units="substrate density">1</secretion_target>
-					<uptake_rate units="1/min">0</uptake_rate>
+					<uptake_rate units="1/min">12044</uptake_rate>
 					<net_export_rate units="total substrate/min">0</net_export_rate>
 					</substrate>
 					</secretion>
