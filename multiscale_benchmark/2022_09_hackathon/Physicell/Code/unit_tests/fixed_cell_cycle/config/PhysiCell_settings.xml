@@ -27,7 +27,7 @@
 	</parallel> 
 	
 	<save>
-		<folder>../output/fixed_cell_cycle/</folder>  
+		<folder>../output/new_results/fixed_cell_cycle/</folder>  
 
 		<full_data>
 			<interval units="min">30</interval>
@@ -145,11 +145,11 @@
           <volume>
             <total units="micron^3">523.6</total>
             <fluid_fraction units="dimensionless">0.75</fluid_fraction>
-            <nuclear units="micron^3">540</nuclear>
-
-            <fluid_change_rate units="1/min">0.05</fluid_change_rate>
-            <cytoplasmic_biomass_change_rate units="1/min">0.0045</cytoplasmic_biomass_change_rate>
-            <nuclear_biomass_change_rate units="1/min">0.0055</nuclear_biomass_change_rate>
+            <nuclear units="micron^3">130.9</nuclear>
+<!--  (0.075, 0.00675, 0.00825) -->
+            <fluid_change_rate units="1/min">0.075</fluid_change_rate>
+            <cytoplasmic_biomass_change_rate units="1/min">0.00675</cytoplasmic_biomass_change_rate>
+            <nuclear_biomass_change_rate units="1/min">0.00825</nuclear_biomass_change_rate>
             <calcified_fraction units="dimensionless">0</calcified_fraction>
             <calcification_rate units="1/min">0</calcification_rate>
 

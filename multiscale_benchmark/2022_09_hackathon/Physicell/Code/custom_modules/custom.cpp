@@ -146,10 +146,48 @@ void setup_microenvironment( void )
 
 void setup_tissue( void )
 {
-	// just read cells from xml in this case
+	double Xmin = microenvironment.mesh.bounding_box[0]; 
+	double Ymin = microenvironment.mesh.bounding_box[1]; 
+	double Zmin = microenvironment.mesh.bounding_box[2]; 
+
+	double Xmax = microenvironment.mesh.bounding_box[3]; 
+	double Ymax = microenvironment.mesh.bounding_box[4]; 
+	double Zmax = microenvironment.mesh.bounding_box[5]; 
+	
+	if( default_microenvironment_options.simulate_2D == true )
+	{
+		Zmin = 0.0; 
+		Zmax = 0.0; 
+	}
+	
+	double Xrange = Xmax - Xmin; 
+	double Yrange = Ymax - Ymin; 
+	double Zrange = Zmax - Zmin; 
+	
+	// create some of each type of cell 
+	
+	Cell* pC;
+	
+	for( int k=0; k < cell_definitions_by_index.size() ; k++ )
+	{
+		Cell_Definition* pCD = cell_definitions_by_index[k]; 
+		std::cout << "Placing cells of type " << pCD->name << " ... " << std::endl; 
+		for( int n = 0 ; n < parameters.ints("number_of_cells") ; n++ )
+		{
+			std::vector<double> position = {0,0,0}; 
+			position[0] = Xmin + UniformRandom()*Xrange; 
+			position[1] = Ymin + UniformRandom()*Yrange; 
+			position[2] = Zmin + UniformRandom()*Zrange; 
+			
+			pC = create_cell( *pCD ); 
+			pC->assign_position( position );
+		}
+	}
+	std::cout << std::endl; 
+	
 	// load cells from your CSV file (if enabled)
-	load_cells_from_pugixml();
-	std::cout <<"length of al cells "<< all_cells->size()<<std::endl;
+	load_cells_from_pugixml(); 	
+	
 	return; 
 }
 

@@ -9,7 +9,7 @@ def create_parser():
 
     # Specify at least 3 folder paths as arguments
     parser.add_argument("--pc-csv", action="store", dest = "pc_csv",help="Path to the PhysiCell cell volumes for fixed cell cycle",
-                        default="../Physicell/output/fixed_cell_cycle/cells_volumes.csv")
+                        default="../Physicell/output/new_results/fixed_cell_cycle/cells_volumes.csv")
     parser.add_argument("--bd-csv",action="store", dest = "bd_csv" ,help="Path to BioDynaMo cell volumes for fixed cell cycle",
                     default="../Biodynamo/unit_test_cellcycle/new_results/cell-0-sim1.csv")
     parser.add_argument("--ch-csv",action="store", dest = "ch_csv", help="Path to Chaste cell volumes for fixed cell cycle",

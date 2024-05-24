@@ -172,7 +172,7 @@ custom.o: ./custom_modules/custom.cpp
 
 reset:
 	rm -f *.cpp 
-	cp ./unit_tests/Makefile-default Makefile
+	cp ./unit_tests/Makefile-default Makefile 
 	rm -f ./custom_modules/*
 	touch ./custom_modules/empty.txt 
 	touch ALL_CITATIONS.txt 
