@@ -660,7 +660,6 @@ bool Cell::assign_position(double x, double y, double z)
 		
 		return false;
 	}
-	std::cout << "Inside assign position " <<std::endl;
 	return true;
 }
 
@@ -828,10 +827,14 @@ void Cell::update_position( double dt )
 	previous_velocity = velocity; 
 	
 	velocity[0]=0; velocity[1]=0; velocity[2]=0;
+	std::cout<<sqrt(dist(old_position, position))<<"old_position: "<<old_position<<", new position: "<< position<<", velocity: "<<velocity<<", previous_velocity: "<< previous_velocity<<std::endl;
 	if(get_container()->underlying_mesh.is_position_valid(position[0],position[1],position[2]))
 	{
-		// std::cout<< "Inside if of updating positions"<<std::endl;
+		std::cout<< "Inside if of updating positions"<<std::endl;
 		updated_current_mechanics_voxel_index=get_container()->underlying_mesh.nearest_voxel_index( position );
+		std::cout<<updated_current_mechanics_voxel_index<<std::endl;
+
+		
 	}
 	else
 	{

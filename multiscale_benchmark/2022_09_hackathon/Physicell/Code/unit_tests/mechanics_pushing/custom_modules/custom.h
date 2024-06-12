@@ -72,7 +72,7 @@ using namespace BioFVM;
 using namespace PhysiCell;
 
 static const double EPSILON = std::numeric_limits<double>::epsilon();
-double custom_last_mechanics_time = 0.0;
+// double custom_last_mechanics_time = 0.0;
 // setup functions to help us along 
 
 void create_cell_types( void );

@@ -18,7 +18,6 @@ def get_physicell_df(file):
     # df['dt'].fillna(0, inplace=True)
 
     df['velocity'] = df['v1']
-    df['velocity'][0] = 0
     return df
 
 def get_biodynamo_df(file):
@@ -52,26 +51,26 @@ def get_chaste_df(file):
     return df
 
 def plot_distance_moved(pc_data,bd_data,ch_data):
-    plt.plot(pc_data.index,pc_data['velocity'],label="PhysiCell", color= 'green',alpha = 0.7)
-    plt.plot(bd_data.index,bd_data['velocity'],label="Biodynamo",color= 'red',alpha = 0.6)
-    plt.plot(ch_data.index,ch_data['velocity'],label="Chaste", alpha= 0.3)
+    plt.plot(pc_data.index[0:50],pc_data['velocity'][0:50],label="PhysiCell", color= 'green',alpha = 0.7)
+    plt.plot(bd_data.index[0:50],bd_data['velocity'][0:50],label="Biodynamo",color= 'red',alpha = 0.6)
+    plt.plot(ch_data.index[0:50],ch_data['velocity'][0:50],label="Chaste", alpha= 0.3)
     plt.ylabel(ylabel="Velocity μM/s")
     plt.xlabel(xlabel="Time")
     plt.title("Velocity of the movement of a cell across time")
     plt.legend()
-    plt.savefig("mechanics_movement_normalized_velocity.png",dpi=200)
+    plt.savefig("updated_mechanics_movement_normalized_velocity.png",dpi=200)
 
     plt.show()
-    print(pc_data['x'])
-    print(bd_data)
-    print(ch_data)
+    # print(pc_data['x'])
+    # print(bd_data)
+    # print(ch_data)
     return
 def main():
     parser = argparse.ArgumentParser(description="Create folders from input paths.")
 
     # Specify at least 3 folder paths as arguments
     parser.add_argument("--pc-csv", action="store", dest = "pc_csv",help="Path to the PhysiCell position over time csv",
-                        default="../Physicell/output/mechanics_movement/cell_position_time.csv")
+                        default="../Physicell/output/new_results/mechanics_movement/cell_position_time.csv")
     parser.add_argument("--bd-csv",action="store", dest = "bd_csv" ,help="Path to BioDynaMo position over time csv",
                     default="../Biodynamo/unit_test_mechanics_friction_single/results/positions.csv")
     parser.add_argument("--ch-csv",action="store", dest = "ch_csv", help="Path to Chaste position over time csv",
@@ -85,7 +84,7 @@ def main():
     pc_conc = get_physicell_df(args.pc_csv)
     bd_conc = get_biodynamo_df(args.bd_csv)
     ch_conc = get_chaste_df(args.ch_csv)
-
+    print(pc_conc)
     plot_distance_moved(pc_conc,bd_conc,ch_conc)
     # def update(frame, sphere_df, cube_df,triangle_df):
     #     ax.clear()

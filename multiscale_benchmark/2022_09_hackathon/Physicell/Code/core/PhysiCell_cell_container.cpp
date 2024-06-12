@@ -285,7 +285,6 @@ void Cell_Container::update_all_cells(double t, double phenotype_dt_ , double me
 				(*all_cells)[i]->update_voxel_in_container();
 		last_mechanics_time=t;
 	}
-	
 	initialzed=true;
 	return;
 }

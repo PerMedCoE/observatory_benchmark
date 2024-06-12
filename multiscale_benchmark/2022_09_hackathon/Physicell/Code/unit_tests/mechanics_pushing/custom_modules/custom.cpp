@@ -85,7 +85,7 @@ void create_cell_types( void )
 	cell_defaults.functions.volume_update_function = NULL;
 	// cell_defaults.functions.update_velocity = standard_update_cell_velocity;
 	// cell_defaults.functions.update_velocity = NULL;
-	cell_defaults.functions.update_velocity = update_cell_velocity_with_friction;
+	cell_defaults.functions.update_velocity = standard_update_cell_velocity;
 	cell_defaults.functions.update_migration_bias = NULL; 
 	cell_defaults.functions.update_phenotype = phenotype_function; // update_cell_and_death_parameters_O2_based; 
 	cell_defaults.functions.custom_cell_rule = NULL; 
@@ -225,26 +225,44 @@ void setup_tissue( void )
 	// load cells from your CSV file (if enabled)
 	load_cells_from_pugixml(); 	
 
-    for(int idx=0; idx < all_cells->size(); idx++)
-    {
-        PhysiCell::Cell* pCell = (*all_cells)[idx];
-        // std::cout << "setup_tissue():  fix motility_vector for cell " << idx<< std::endl;
-        pCell->phenotype.motility.migration_bias_direction[0] = 1.0;    // constrain motility to <1,0,0> direction
-        pCell->phenotype.motility.migration_bias_direction[1] = 0.0;
-        pCell->phenotype.motility.migration_bias_direction[2] = 0.0;
+    // for(int idx=0; idx < all_cells->size(); idx++)
+    // {
+    //     PhysiCell::Cell* pCell = (*all_cells)[idx];
+    //     // std::cout << "setup_tissue():  fix motility_vector for cell " << idx<< std::endl;
+    //     pCell->phenotype.motility.migration_bias_direction[0] = 1.0;    // constrain motility to <1,0,0> direction
+    //     pCell->phenotype.motility.migration_bias_direction[1] = 0.0;
+    //     pCell->phenotype.motility.migration_bias_direction[2] = 0.0;
     
 
-	pCell->phenotype.motility.is_motile = true;
-	pCell->phenotype.motility.migration_speed = 10;
+	// pCell->phenotype.motility.is_motile = true;
+	// pCell->phenotype.motility.migration_speed = 10;
 
 	
 	
+	// pCell->phenotype.motility.motility_vector[0] = pCell->phenotype.motility.migration_speed;
+	// // pCell->velocity = pCell->phenotype.motility.motility_vector;
+	// std::cout<<"pCell->velocity "<<pCell->velocity <<std::endl;
+	// std::cout<<"pCell->phenotype.motility.migration_speed "<<pCell->phenotype.motility.migration_speed<<std::endl;
+	// std::cout<<"phenotype.motility.motility_vector "<<pCell->phenotype.motility.motility_vector<<std::endl;	
+	// }
+	PhysiCell::Cell* pCell = (*all_cells)[0];
+	// std::cout << "setup_tissue():  fix motility_vector for cell " << idx<< std::endl;
+	pCell->phenotype.motility.migration_bias_direction[0] = 1.0;    // constrain motility to <1,0,0> direction
+	pCell->phenotype.motility.migration_bias_direction[1] = 0.0;
+	pCell->phenotype.motility.migration_bias_direction[2] = 0.0;
+	pCell->phenotype.motility.is_motile = true;
+	pCell->phenotype.motility.migration_speed = 10;
 	pCell->phenotype.motility.motility_vector[0] = pCell->phenotype.motility.migration_speed;
-	// pCell->velocity = pCell->phenotype.motility.motility_vector;
-	std::cout<<"pCell->velocity "<<pCell->velocity <<std::endl;
-	std::cout<<"pCell->phenotype.motility.migration_speed "<<pCell->phenotype.motility.migration_speed<<std::endl;
-	std::cout<<"phenotype.motility.motility_vector "<<pCell->phenotype.motility.motility_vector<<std::endl;	
-	}
+	// celula 2
+	pCell = (*all_cells)[1];
+	// std::cout << "setup_tissue():  fix motility_vector for cell " << idx<< std::endl;
+	pCell->phenotype.motility.migration_bias_direction[0] = -1.0;    // constrain motility to <1,0,0> direction
+	pCell->phenotype.motility.migration_bias_direction[1] = 0.0;
+	pCell->phenotype.motility.migration_bias_direction[2] = 0.0;
+	pCell->phenotype.motility.is_motile = true;
+	pCell->phenotype.motility.migration_speed = 10;
+	pCell->phenotype.motility.motility_vector[0] = - pCell->phenotype.motility.migration_speed;
+	
 	return; 
 }
 
@@ -287,8 +305,8 @@ void update_cell_velocity_with_friction(Cell* pCell, Phenotype& phenotype, doubl
 	// std::cout<<"phenotype.motility.motility_vector "<<pCell->phenotype.motility.motility_vector<<std::endl;
 	// std::cout<<"pCell->phenotype.motility.migration_speed "<<pCell->phenotype.motility.migration_speed<<std::endl;
 	
-	custom_last_mechanics_time =((Cell_Container *)microenvironment.agent_container)->last_mechanics_time;
-	std::cout<<"dt "<<dt<<"custom last mechanics time "<< custom_last_mechanics_time<<std::endl;
+	// custom_last_mechanics_time =((Cell_Container *)microenvironment.agent_container)->last_mechanics_time;
+	// std::cout<<"dt "<<dt<<"custom last mechanics time "<< custom_last_mechanics_time<<std::endl;
 	// double mechanics_dt_ = mechanics_dt;
 	// static double mechanics_dt_tolerance = 0.001 * mechanics_dt_;
 	// double time_since_last_mechanics= dt- custom_last_mechanics_time;

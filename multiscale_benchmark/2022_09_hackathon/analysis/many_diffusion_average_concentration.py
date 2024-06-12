@@ -78,18 +78,13 @@ def main():
     ts_conc = get_tisim_df(args.ts_csv)
     ch_conc = get_chaste_df(args.ch_csv)
     
-    print(bd_conc)
-    print(ts_conc)
-    print(ch_conc)
 
     common_values = pc_conc_v1.index[pc_conc_v1.index.isin(bd_conc['timestep']) & pc_conc_v1.index.isin(ts_conc['timestep']) & pc_conc_v1.index.isin(ch_conc['timestep'])]
     values_v1 = pc_conc_v1.loc[pc_conc_v1.index.isin(common_values), 'diff']
-    # values_v10 = pc_conc_v10.loc[pc_conc_v1.index.isin(common_values), 'diff']
     values_bd = bd_conc.loc[bd_conc['timestep'].isin(common_values), 'avg_diff']
     values_ts = ts_conc.loc[ts_conc['timestep'].isin(common_values), 'diff']
     values_ch = ch_conc.loc[ch_conc['timestep'].isin(common_values), 'diff']
     plt.plot(common_values,values_v1/602.2,label = 'Physicell',color='green')
-    # plt.plot(common_values,values_v10/602.2,label = 'Physicell v10',color='black')
     plt.plot(common_values,values_bd,label = 'Biodynamo',alpha=0.5,color = 'red')
     plt.plot(common_values,values_ts,label = 'TiSim', color  = '#ffd343')
     plt.plot(common_values,values_ch,label = 'Chaste', color  = 'blue')

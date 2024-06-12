@@ -82,11 +82,12 @@ void create_cell_types( void )
 	initialize_default_cell_definition(); 
 	cell_defaults.phenotype.secretion.sync_to_microenvironment( &microenvironment ); 
 	
-	cell_defaults.functions.volume_update_function = standard_volume_update_function;
+	cell_defaults.functions.volume_update_function = NULL;
+	// cell_defaults.functions.update_velocity = standard_update_cell_velocity;
+	// cell_defaults.functions.update_velocity = NULL;
 	cell_defaults.functions.update_velocity = standard_update_cell_velocity;
-
 	cell_defaults.functions.update_migration_bias = NULL; 
-	cell_defaults.functions.update_phenotype = NULL; // update_cell_and_death_parameters_O2_based; 
+	cell_defaults.functions.update_phenotype = phenotype_function; // update_cell_and_death_parameters_O2_based; 
 	cell_defaults.functions.custom_cell_rule = NULL; 
 	cell_defaults.functions.contact_function = NULL; 
 	
@@ -117,9 +118,9 @@ void create_cell_types( void )
 	   This is a good place to set custom functions. 
 	*/ 
 	
-	cell_defaults.functions.update_phenotype = phenotype_function; 
-	cell_defaults.functions.custom_cell_rule = custom_function; 
-	cell_defaults.functions.contact_function = contact_function; 
+	// cell_defaults.functions.update_phenotype = phenotype_function; 
+	// cell_defaults.functions.custom_cell_rule = custom_function; 
+	// cell_defaults.functions.contact_function = contact_function; 
 	
 	/*
 	   This builds the map of cell definitions and summarizes the setup. 
@@ -136,6 +137,40 @@ void setup_microenvironment( void )
 	
 	// put any custom code to set non-homogeneous initial conditions or 
 	// extra Dirichlet nodes here. 
+
+    // ^ rwh - NO, NOT TRUE - do *after* initialize_microenvironment(); 	
+
+
+    // argh, these args are confusing!! bass-ackwards
+
+    //                 microenvironment.update_dirichlet_node( microenvironment.voxel_index(i,j,k), idx_chemoattract, 100.0);
+    //                 microenvironment.set_substrate_dirichlet_activation( idx_chemoattract, microenvironment.voxel_index(i,j,k), true);
+
+    // int ixmid = microenvironment.mesh.x_coordinates.size() / 2;
+    // std::cout << "--------- setup_microenvironment(): ixmid = " << ixmid << std::endl;
+
+    // std::vector<double> scratch_DC_val = {0., 100.};  // oxygen, chemoattractant
+    // std::vector<bool> scratch_DC_bool = {false, true};
+    // for( unsigned int k=0 ; k < microenvironment.mesh.z_coordinates.size() ; k++ )
+    // {
+    //     for( unsigned int j=0 ; j < microenvironment.mesh.y_coordinates.size() ; j++ )
+    //     {
+    //         for( unsigned int i=0 ; i < microenvironment.mesh.x_coordinates.size() ; i++ )
+    //         {
+    //             if( (i >= ixmid-1) && (i <= ixmid) )  // due to the asymmetry of the voxel mesh
+    //             {
+    //                 std::cout << "--------- setup_microenvironment(): add_dirichlet_node at i = " << i << std::endl;
+    //                 // set the value 
+    //                 microenvironment.add_dirichlet_node( microenvironment.voxel_index(i,j,k), scratch_DC_val);
+    //                 // default_microenvironment_options.Dirichlet_xmin_values );
+                    
+    //                 // set the activation 
+    //                 microenvironment.set_substrate_dirichlet_activation( microenvironment.voxel_index(i,j,k), scratch_DC_bool);
+    //                 // default_microenvironment_options.Dirichlet_xmin ); 
+    //             }
+    //         }
+    //     }
+    // }
 	
 	// initialize BioFVM 
 	
@@ -146,47 +181,87 @@ void setup_microenvironment( void )
 
 void setup_tissue( void )
 {
-	double Xmin = microenvironment.mesh.bounding_box[0]; 
-	double Ymin = microenvironment.mesh.bounding_box[1]; 
-	double Zmin = microenvironment.mesh.bounding_box[2]; 
+	// double Xmin = microenvironment.mesh.bounding_box[0]; 
+	// double Ymin = microenvironment.mesh.bounding_box[1]; 
+	// double Zmin = microenvironment.mesh.bounding_box[2]; 
 
-	double Xmax = microenvironment.mesh.bounding_box[3]; 
-	double Ymax = microenvironment.mesh.bounding_box[4]; 
-	double Zmax = microenvironment.mesh.bounding_box[5]; 
+	// double Xmax = microenvironment.mesh.bounding_box[3]; 
+	// double Ymax = microenvironment.mesh.bounding_box[4]; 
+	// double Zmax = microenvironment.mesh.bounding_box[5]; 
 	
-	if( default_microenvironment_options.simulate_2D == true )
-	{
-		Zmin = 0.0; 
-		Zmax = 0.0; 
-	}
+	// if( default_microenvironment_options.simulate_2D == true )
+	// {
+	// 	Zmin = 0.0; 
+	// 	Zmax = 0.0; 
+	// }
+    // std::cout << "\n\n------- setup_tissue(): Xmin,Xmax= " << Xmin << ", " << Xmax<<std::endl; 
+    // std::cout << "------- setup_tissue(): Ymin,Ymax= " << Ymin << ", " << Ymax<<std::endl; 
 	
-	double Xrange = Xmax - Xmin; 
-	double Yrange = Ymax - Ymin; 
-	double Zrange = Zmax - Zmin; 
+	// double Xrange = Xmax - Xmin; 
+	// double Yrange = Ymax - Ymin; 
+	// double Zrange = Zmax - Zmin; 
 	
-	// create some of each type of cell 
+	// // create some of each type of cell 
 	
-	Cell* pC;
+	// Cell* pC;
 	
-	for( int k=0; k < cell_definitions_by_index.size() ; k++ )
-	{
-		Cell_Definition* pCD = cell_definitions_by_index[k]; 
-		std::cout << "Placing cells of type " << pCD->name << " ... " << std::endl; 
-		for( int n = 0 ; n < parameters.ints("number_of_cells") ; n++ )
-		{
-			std::vector<double> position = {0,0,0}; 
-			position[0] = Xmin + UniformRandom()*Xrange; 
-			position[1] = Ymin + UniformRandom()*Yrange; 
-			position[2] = Zmin + UniformRandom()*Zrange; 
+	// for( int k=0; k < cell_definitions_by_index.size() ; k++ )
+	// {
+	// 	Cell_Definition* pCD = cell_definitions_by_index[k]; 
+	// 	std::cout << "Placing cells of type " << pCD->name << " ... " << std::endl; 
+	// 	for( int n = 0 ; n < parameters.ints("number_of_cells") ; n++ )
+	// 	{
+	// 		std::vector<double> position = {0,0,0}; 
+	// 		position[0] = Xmin + UniformRandom()*Xrange; 
+	// 		position[1] = Ymin + UniformRandom()*Yrange; 
+	// 		position[2] = Zmin + UniformRandom()*Zrange; 
 			
-			pC = create_cell( *pCD ); 
-			pC->assign_position( position );
-		}
-	}
-	std::cout << std::endl; 
-	
+	// 		pC = create_cell( *pCD ); 
+	// 		pC->assign_position( position );
+	// 	}
+	// }
+	// std::cout << std::endl; 
+
 	// load cells from your CSV file (if enabled)
 	load_cells_from_pugixml(); 	
+
+    // for(int idx=0; idx < all_cells->size(); idx++)
+    // {
+    //     PhysiCell::Cell* pCell = (*all_cells)[idx];
+    //     // std::cout << "setup_tissue():  fix motility_vector for cell " << idx<< std::endl;
+    //     pCell->phenotype.motility.migration_bias_direction[0] = 1.0;    // constrain motility to <1,0,0> direction
+    //     pCell->phenotype.motility.migration_bias_direction[1] = 0.0;
+    //     pCell->phenotype.motility.migration_bias_direction[2] = 0.0;
+    
+
+	// pCell->phenotype.motility.is_motile = true;
+	// pCell->phenotype.motility.migration_speed = 10;
+
+	
+	
+	// pCell->phenotype.motility.motility_vector[0] = pCell->phenotype.motility.migration_speed;
+	// // pCell->velocity = pCell->phenotype.motility.motility_vector;
+	// std::cout<<"pCell->velocity "<<pCell->velocity <<std::endl;
+	// std::cout<<"pCell->phenotype.motility.migration_speed "<<pCell->phenotype.motility.migration_speed<<std::endl;
+	// std::cout<<"phenotype.motility.motility_vector "<<pCell->phenotype.motility.motility_vector<<std::endl;	
+	// }
+	PhysiCell::Cell* pCell = (*all_cells)[0];
+	// std::cout << "setup_tissue():  fix motility_vector for cell " << idx<< std::endl;
+	pCell->phenotype.motility.migration_bias_direction[0] = 1.0;    // constrain motility to <1,0,0> direction
+	pCell->phenotype.motility.migration_bias_direction[1] = 0.0;
+	pCell->phenotype.motility.migration_bias_direction[2] = 0.0;
+	pCell->phenotype.motility.is_motile = true;
+	pCell->phenotype.motility.migration_speed = 10;
+	pCell->phenotype.motility.motility_vector[0] = pCell->phenotype.motility.migration_speed;
+	// celula 2
+	pCell = (*all_cells)[1];
+	// std::cout << "setup_tissue():  fix motility_vector for cell " << idx<< std::endl;
+	pCell->phenotype.motility.migration_bias_direction[0] = -1.0;    // constrain motility to <1,0,0> direction
+	pCell->phenotype.motility.migration_bias_direction[1] = 0.0;
+	pCell->phenotype.motility.migration_bias_direction[2] = 0.0;
+	pCell->phenotype.motility.is_motile = true;
+	pCell->phenotype.motility.migration_speed = 10;
+	pCell->phenotype.motility.motility_vector[0] = pCell->phenotype.motility.migration_speed;
 	
 	return; 
 }
@@ -195,10 +270,51 @@ std::vector<std::string> my_coloring_function( Cell* pCell )
 { return paint_by_number_cell_coloring(pCell); }
 
 void phenotype_function( Cell* pCell, Phenotype& phenotype, double dt )
-{ return; }
+{ 
+    std::cout <<" phenotype_function(): t= "<<PhysiCell_globals.current_time<< " motility_vector= " << pCell->phenotype.motility.motility_vector[0]<<", "<<pCell->phenotype.motility.motility_vector[1]<<", "<<pCell->phenotype.motility.motility_vector[2] << std::endl;
+    return; 
+}
 
 void custom_function( Cell* pCell, Phenotype& phenotype , double dt )
 { return; } 
 
 void contact_function( Cell* pMe, Phenotype& phenoMe , Cell* pOther, Phenotype& phenoOther , double dt )
 { return; } 
+
+
+void update_cell_velocity_with_friction(Cell* pCell, Phenotype& phenotype, double dt){
+
+	// Check if there is ECM material in given voxel
+	//double dens2 = get_microenvironment()->density_vector(index_voxel)[index_ecm];
+	// std::cout<<"current time : "<<PhysiCell_globals.current_time<<" is_motile "<< pCell->phenotype.motility.is_motile <<std::endl;
+	// std::cout<<"phenotype.motility.motility_vector "<<pCell->phenotype.motility.motility_vector<<std::endl;
+	
+	// double mu = PhysiCell::parameters.doubles("friction_coeff"); //this is basically the density of the fluid
+
+	// double current_speed = pCell->phenotype.motility.migration_speed;
+	// double updated_speed = current_speed * mu; //fast hack that does not reproduce the Stokes equation --> should be replaced with something like v = v0 * exp(- 6*pi*drag_coeff * radius / mass)
+
+	
+
+	// pCell->phenotype.motility.is_motile = false;
+	// pCell->phenotype.motility.migration_speed = 0;
+	// pCell->velocity *= 0;
+	// pCell->phenotype.motility.motility_vector[0] *= 0;
+	// std::cout<<"position "<<pCell->position[0]<<" "<<updated_speed <<std::endl;
+	// std::cout<<"pCell->velocity "<<pCell->velocity <<std::endl;
+	// std::cout<<"phenotype.motility.motility_vector "<<pCell->phenotype.motility.motility_vector<<std::endl;
+	// std::cout<<"pCell->phenotype.motility.migration_speed "<<pCell->phenotype.motility.migration_speed<<std::endl;
+	
+	// custom_last_mechanics_time =((Cell_Container *)microenvironment.agent_container)->last_mechanics_time;
+	// std::cout<<"dt "<<dt<<"custom last mechanics time "<< custom_last_mechanics_time<<std::endl;
+	// double mechanics_dt_ = mechanics_dt;
+	// static double mechanics_dt_tolerance = 0.001 * mechanics_dt_;
+	// double time_since_last_mechanics= dt- custom_last_mechanics_time;
+
+
+	// pCell->update_motility_vector(dt); 
+	// pCell->velocity += phenotype.motility.motility_vector; 
+	// custom_last_mechanics_time=dt;
+
+	return ;
+}

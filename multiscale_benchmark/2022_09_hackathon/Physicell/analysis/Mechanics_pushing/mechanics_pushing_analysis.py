@@ -29,8 +29,8 @@ def generate_position_timestep_csv(data_folder,csv_fname):
     i=0
     for file in sorted(files):
         mat = loadmat(file)
-        mat=mat['cells'][[0,1,2,3,38,39]]
-        df_mat = pd.DataFrame(mat.transpose(),columns = ['id','x','y','z','radius','nuclear_radius'])
+        mat=mat['cells'][[0,1,2,3,38,39,53,54]]
+        df_mat = pd.DataFrame(mat.transpose(),columns = ['id','x','y','z','radius','nuclear_radius','ms','mbx'])
         df_mat['dt'] = round(i, 1) 
         df_cell= pd.concat([df_mat,df_cell],ignore_index=True)
         i=i+interval

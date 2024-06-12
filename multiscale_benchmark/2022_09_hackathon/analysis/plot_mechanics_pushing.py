@@ -10,7 +10,8 @@ from sklearn.preprocessing import MinMaxScaler
 
 def get_physicell_df(file):
     df = pd.read_csv(file,index_col=0,float_precision='round_trip').sort_values(by=['dt']).reset_index(drop=True)
-    # print(df)
+    print(df)
+    exit()
     pc_dist =  abs(df[df['id']==0]['x'].reset_index() - df[df['id']==1]['x'].reset_index()) -10
 
     pc_dist['dt'] = df['dt'].unique()
@@ -104,7 +105,7 @@ def main():
 
     # Specify at least 3 folder paths as arguments
     parser.add_argument("--pc-csv", action="store", dest = "pc_csv",help="Path to the PhysiCell position over time csv",
-                        default="../Physicell/output/mechanics_pushing/cells_position_time.csv")
+                        default="../Physicell/output/new_results/mechanics_pushing/cells_position_time.csv")
     parser.add_argument("--bd-csv",action="store", dest = "bd_csv" ,help="Path to BioDynaMo position over time csv",
                     default="../Biodynamo/unit_test_mechanics_pushing/results/positions.csv")
     parser.add_argument("--ch-csv",action="store", dest = "ch_csv", help="Path to Chaste position over time csv",

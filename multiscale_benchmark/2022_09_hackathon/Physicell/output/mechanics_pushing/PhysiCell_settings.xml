@@ -125,7 +125,7 @@
           <volume>
             <total units="micron^3">523.6</total>
             <fluid_fraction units="dimensionless">0.75</fluid_fraction>
-            <nuclear units="micron^3">540</nuclear>
+            <nuclear units="micron^3">138</nuclear>
             <fluid_change_rate units="1/min">0.05</fluid_change_rate>
             <cytoplasmic_biomass_change_rate units="1/min">0.0045</cytoplasmic_biomass_change_rate>
             <nuclear_biomass_change_rate units="1/min">0.0055</nuclear_biomass_change_rate>
@@ -137,7 +137,7 @@
           <mechanics>
             <cell_cell_adhesion_strength units="micron/min">0.4</cell_cell_adhesion_strength>
             <cell_cell_repulsion_strength units="micron/min">10</cell_cell_repulsion_strength>
-            <relative_maximum_adhesion_distance units="dimensionless">7</relative_maximum_adhesion_distance>
+            <relative_maximum_adhesion_distance units="dimensionless">1.25</relative_maximum_adhesion_distance>
             <cell_adhesion_affinities>
                 <cell_adhesion_affinity name="agent">1.0</cell_adhesion_affinity>
                 </cell_adhesion_affinities>
