@@ -11,8 +11,7 @@ from sklearn.preprocessing import MinMaxScaler
 def get_physicell_df(file):
     df = pd.read_csv(file,index_col=0,float_precision='round_trip').sort_values(by=['dt']).reset_index(drop=True)
     print(df)
-    exit()
-    pc_dist =  abs(df[df['id']==0]['x'].reset_index() - df[df['id']==1]['x'].reset_index()) -10
+    pc_dist =  abs(df[df['id']==0]['x'].reset_index() - df[df['id']==1]['x'].reset_index())
 
     pc_dist['dt'] = df['dt'].unique()
     pa= df[df['id']==0]['radius'].reset_index() + df[df['id']==1]['radius'].reset_index()
@@ -23,7 +22,7 @@ def get_physicell_df(file):
     # pc_dist['dxx'] = abs(pc_dist['dx'] - pc_dist['radius'])
 
     # pc_dist= pc_dist[["dt","dxx"]].rename({"dxx":"dx"})
-    # print(pc_dist)
+    print(pc_dist)
     return pc_dist
 
 def get_biodynamo_df(file):
@@ -31,22 +30,23 @@ def get_biodynamo_df(file):
     df.loc[-1] = [-15,0,0,15,0,0]  # adding a row
     df.index = df.index + 1  # shifting index
     df.sort_index(inplace=True)
-    df['dx'] = abs(df["x1"] - df["x2"]) -10
-    print(df)  
+    df['dx'] = abs(df["x1"] - df["x2"])
+    # print(df)  
     # # The first row of the 'distances' column will be NaN, you can replace it with 0 if needed
     # df['dx'].fillna(0, inplace=True)
     return df
 def get_tisim_df(file):
     df = pd.read_csv(file,index_col=None,header=None).T
     df['dx'] = abs(df[0]-df[1])*10
-    print(df)
+    # print(df)
     return df
 
 def get_chaste_df(file):
     df = pd.read_csv(file,header = None,sep='\t| ',index_col=0,engine='python')
-    df['dx'] = abs(df[2] - df[1])
+    df['dx'] = abs(df[2] - df[1])*10
     # The first row of the 'distances' column will be NaN, you can replace it with 0 if needed
     df['dx'].fillna(0, inplace=True)
+    # print(df)
     return df
 
 def plot_normalized_distance_moved(pc_data,bd_data,ch_data,ts_data):
@@ -84,11 +84,11 @@ def plot_distance_moved(pc_data,bd_data,ch_data,ts_data):
 
     ch_data.index=range(0,101)
 
-    # plt.plot(pc_data.index,pc_data['dx'],label="PhysiCell", color= 'green',alpha = 0.5)
+    plt.plot(pc_data.index,pc_data['dx'],label="PhysiCell", color= 'green',alpha = 0.5)
     plt.plot(bd_data.index,bd_data['dx'],label="Biodynamo",color= 'red',alpha = 0.7)
-    # plt.plot(ch_data.index,ch_data['dx'],label="Chaste",alpha = 0.6)
+    plt.plot(ch_data.index,ch_data['dx'],label="Chaste",alpha = 0.6)
     plt.plot(ts_data.index,ts_data['dx'],label="TiSim",alpha = 0.6)
-
+    plt.axhline(y=10, color='black', linestyle='-',label='radious')
     plt.ylabel(ylabel="Real Distance travelled")
     plt.xlabel(xlabel="Time")
     plt.title("Real distance between the two cells across time")
