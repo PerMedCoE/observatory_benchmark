@@ -7,6 +7,7 @@ from sklearn.preprocessing import MinMaxScaler, StandardScaler
 pd.set_option('display.float_format', lambda x: '%.5f' % x)
 # ../Biodynamo/unit_test_diffusion/results/concentration.csv
 # ../Tisim/unit_test_diffusion/results/result_1c_diffusion.txt
+# observatory_benchmark/multiscale_benchmark/2022_09_hackathon/Tisim/unit_test_diffusion/results/arnau_diffusion1.txt
 def get_physicell_df(file):
     df= pd.read_csv(file,index_col=0)
     df = df.loc[df.index == 13]
@@ -44,13 +45,16 @@ def get_biodynamo_df(file):
     selected_rows.drop('timestep_rounded', axis=1, inplace=True)
     return selected_rows
 def get_tisim_df(file):
-    df= pd.read_csv(file,delimiter="\t",names = ['timestep','diff'],header=0)
+    # df= pd.read_csv(file,delimiter="\t",names = ['timestep','diff'],header=0)
+    df= pd.read_csv(file,delimiter="\t",usecols=[0,14],names = ['timestep','diff'],header=0)
+    new_row = pd.Series([0, 0])
+    df.loc[0]=[0,0]
+    print(df)
     timesteps = np.concatenate((np.linspace(0, 1, num=11)[:-1], np.arange(1, 11, 1)))
     timesteps_rounded = np.round(timesteps, 2)
     df['timestep_rounded'] = df['timestep'].round(2)
     selected_rows = df[df['timestep_rounded'].isin(timesteps_rounded)]
     selected_rows.drop('timestep_rounded', axis=1, inplace=True)
-
     # df.rename(columns={'Concentration (uM)': 'diff'}, inplace=True)
     return selected_rows
 
@@ -74,7 +78,7 @@ def main():
     parser.add_argument("--bd-csv",action="store", dest = "bd_csv" ,help="Path to BioDynaMo concentration over time csv",
                     default="../Biodynamo/unit_test_diffusion_small/data.csv")
     parser.add_argument("--ts-csv",action="store", dest = "ts_csv", help="Path to TiSim concentration over time csv",
-                    default="../Tisim/unit_test_diffusion/results/result_1c_diffusion.txt")
+                    default="../Tisim/unit_test_diffusion/results/arnau_diffusion1.txt")
     parser.add_argument("--ch-csv",action="store",dest = "ch_csv", help="Path to Chaste concentration over time csv",
                         default="../Chaste/unit_test_diffusion/results/TestDiffusionSmall03.dat")
     
