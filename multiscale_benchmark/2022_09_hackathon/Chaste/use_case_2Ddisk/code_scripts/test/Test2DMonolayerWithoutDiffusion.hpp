@@ -117,7 +117,7 @@ public:
      */
     void Test2DMonolayerWithoutDiffusionSingleCell()
     {
-        static const double M_TIME_FOR_SIMULATION = 336.0;
+        static const double end_time = 28*24; // 28 days first 14 days and second 14 days can be separated 
 
 
         NodesOnlyMesh<2>* p_mesh = new NodesOnlyMesh<2>;
@@ -141,8 +141,8 @@ public:
         OffLatticeSimulation<2> simulator(cell_population);
         simulator.SetOutputDirectory("2DMonolayerWithoutDiffusion/SingleCell");
         simulator.SetDt(0.05);
-        simulator.SetSamplingTimestepMultiple(10);
-        simulator.SetEndTime(M_TIME_FOR_SIMULATION);
+        simulator.SetSamplingTimestepMultiple(10); // Every 30 minutes
+        simulator.SetEndTime(end_time);
 
         simulator.SetOutputDivisionLocations(true);
 
@@ -165,13 +165,13 @@ public:
      */
     void Test2DMonolayerWithoutDiffusionMultipleCells()
     {
-        static const double M_TIME_FOR_SIMULATION = 170.0;
-        static const double M_NUM_CELLS_ACROSS = 57;
+        double end_time = 14*24; // Now run for 14 days
+        double initial_tissue_radius = 57; // initial radius
 
-        HoneycombMeshGenerator generator(2.0 * M_NUM_CELLS_ACROSS, 2.0 * M_NUM_CELLS_ACROSS,0);
+        HoneycombMeshGenerator generator(2.0 * initial_tissue_radius, 2.0 * initial_tissue_radius,0);
         boost::shared_ptr<MutableMesh<2,2> > p_generating_mesh = generator.GetMesh();
 
-        p_generating_mesh->Translate(-M_NUM_CELLS_ACROSS / 2.0, -M_NUM_CELLS_ACROSS / 2.0);
+        p_generating_mesh->Translate(-initial_tissue_radius / 2.0, -initial_tissue_radius / 2.0);
 
         //Remove all elements outside the specified initial radius
         for (AbstractMesh<2, 2>::NodeIterator node_iter = p_generating_mesh->GetNodeIteratorBegin();
@@ -181,7 +181,7 @@ public:
             unsigned node_index = node_iter->GetIndex();
             c_vector<double,2> node_location = node_iter->rGetLocation();
 
-            if (norm_2(node_location)>0.5*M_NUM_CELLS_ACROSS + 1e-5)
+            if (norm_2(node_location)>0.5*initial_tissue_radius + 1e-5)
             {
                 p_generating_mesh->DeleteNodePriorToReMesh(node_index);
             }
@@ -207,8 +207,8 @@ public:
         OffLatticeSimulation<2> simulator(cell_population);
         simulator.SetOutputDirectory("2DMonolayerWithoutDiffusion/MultipleCells");
         simulator.SetDt(0.05);
-        simulator.SetSamplingTimestepMultiple(10);
-        simulator.SetEndTime(M_TIME_FOR_SIMULATION);
+        simulator.SetSamplingTimestepMultiple(10); // Every 30 minutes
+        simulator.SetEndTime(end_time);
 
         simulator.SetOutputDivisionLocations(true);
 

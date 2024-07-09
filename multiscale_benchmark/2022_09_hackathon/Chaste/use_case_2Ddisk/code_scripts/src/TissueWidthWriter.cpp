@@ -40,6 +40,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "NodeBasedCellPopulation.hpp"
 #include "PottsBasedCellPopulation.hpp"
 #include "VertexBasedCellPopulation.hpp"
+#include "ImmersedBoundaryCellPopulation.hpp"
 
 template<unsigned ELEMENT_DIM, unsigned SPACE_DIM>
 TissueWidthWriter<ELEMENT_DIM, SPACE_DIM>::TissueWidthWriter()
@@ -70,7 +71,7 @@ void TissueWidthWriter<ELEMENT_DIM, SPACE_DIM>::VisitAnyPopulation(AbstractCellP
     double tissue_width = (max_width - min_width)*20 + 10; // outputs tissue diameter in um and the number of cells
     unsigned int num_cells = pCellPopulation->GetNumRealCells();
     *this->mpOutStream << min_width << "," << max_width << "," << tissue_width << "," << num_cells << "\n";
-    std::cout << "Tissue diameter: " << tissue_width << "    Number of Cells: " << num_cells << "\n";
+    std::cout << "Time: " << SimulationTime::Instance()->GetTime() << "    Tissue diameter: " << tissue_width << "    Number of Cells: " << num_cells << "\n";
 }
 
 template<unsigned ELEMENT_DIM, unsigned SPACE_DIM>
@@ -112,6 +113,12 @@ void TissueWidthWriter<ELEMENT_DIM, SPACE_DIM>::Visit(PottsBasedCellPopulation<S
 
 template<unsigned ELEMENT_DIM, unsigned SPACE_DIM>
 void TissueWidthWriter<ELEMENT_DIM, SPACE_DIM>::Visit(VertexBasedCellPopulation<SPACE_DIM>* pCellPopulation)
+{
+    VisitAnyPopulation(pCellPopulation);
+}
+
+template<unsigned ELEMENT_DIM, unsigned SPACE_DIM>
+void TissueWidthWriter<ELEMENT_DIM, SPACE_DIM>::Visit(ImmersedBoundaryCellPopulation<SPACE_DIM>* pCellPopulation)
 {
     VisitAnyPopulation(pCellPopulation);
 }
