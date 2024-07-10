@@ -186,7 +186,7 @@ public:
 
         DiffusionEquationWithUniformSinkTerm<3> pde;
         pde.setDiffusionCoefficient(diffusion_coefficient);
-        pde.setUptake(sink_strength/vox_size/vox_size);
+        pde.setUptake(sink_strength/vox_size/vox_size/vox_size);
 
         // Create a new boundary conditions container and specify u=source_strength on the boundary.
         BoundaryConditionsContainer<3, 3, 1> bcc;
