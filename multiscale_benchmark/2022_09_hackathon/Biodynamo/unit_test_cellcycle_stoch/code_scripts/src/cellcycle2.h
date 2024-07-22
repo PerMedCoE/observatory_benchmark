@@ -56,7 +56,7 @@ public:
   void SetTime4Phases() {
     auto* rand = Simulation::GetActive()->GetRandom();
 
-    time_G0_to_G1_ = rand->Uniform(6.0,8.0);
+    time_G0_to_G1_ = rand->Uniform(5.0,9.0);
     time_G1_to_S_ = time_G0_to_G1_ + 6.0;
     time_S_to_G2_ = time_G1_to_S_ + 5.0;
   }
