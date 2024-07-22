@@ -58,9 +58,9 @@ public:
     time_G1_to_S_ = time_G0_to_G1_ + 6.0;
     time_S_to_G2_ = time_G1_to_S_ + 5.0;
   }
-  int GetTimeG0toG1() const { return time_G0_to_G1_; }
-  int GetTimeG1toS() const { return time_G1_to_S_; }
-  int GetTimeStoG2() const { return time_S_to_G2_; }
+  double GetTimeG0toG1() const { return time_G0_to_G1_; }
+  double GetTimeG1toS() const { return time_G1_to_S_; }
+  double GetTimeStoG2() const { return time_S_to_G2_; }
 
   // Initialize data if agent divides by passing information
   // from the mother to the daughter agent
