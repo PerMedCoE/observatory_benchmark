@@ -27,9 +27,9 @@ def create_parser():
 
 def generate_position_timestep_csv(output_folder,csv_fname):
     files = Path(output_folder).glob('*output*_cells.mat')
-    mcds = multicellds.Settings(output_folder+"/PhysiCell_settings.xml")
+    # mcds = multicellds.Settings(output_folder+"/PhysiCell_settings.xml")
     df_cell = pd.DataFrame(columns = ['x','y','z',"dt"])
-    interval = mcds.interval
+    # interval = mcds.interval
     i=0
     for file in sorted(files):
         mat = loadmat(file)
@@ -39,7 +39,7 @@ def generate_position_timestep_csv(output_folder,csv_fname):
         
         df_mat['dt'] = i
         df_cell= pd.concat([df_mat,df_cell],ignore_index=True)
-        i=i+interval
+        i=i+0.1
     
     df_cell.to_csv(output_folder+"/"+csv_fname)
     print(df_cell)

@@ -9,7 +9,7 @@ random_seed: 0 [dimensionless]
 number_of_cells: 0 [none]
 
 Double parameters:: 
-friction_coeff: 0 [dimensionless]
+div_initialization: 0 [dimensionless]
 
 String parameters:: 
 
@@ -22,24 +22,25 @@ Microenvironment summary: microenvironment:
 
 Mesh information: 
 type: uniform Cartesian
-Domain: [-60,60] micron x [-60,60] micron x [-60,60] micron
+Domain: [-30,30] micron x [-30,30] micron x [-30,30] micron
    resolution: dx = 20 micron
-   voxels: 216
+   voxels: 27
    voxel faces: 0
-   volume: 1.728e+06 cubic micron
+   volume: 216000 cubic micron
 Densities: (1 total)
    oxygen:
      units: dimensionless
-     diffusion coefficient: 20000 micron^2 / min
+     diffusion coefficient: 0 micron^2 / min
      decay rate: 0 min^-1
-     diffusion length scale: 1.41421e+08 micron
-     initial condition: 20000 dimensionless
+     diffusion length scale: 0 micron
+     initial condition: 0 dimensionless
      boundary condition: 6022 dimensionless (enabled: false)
 
 virtual_wall_at_domain_edge: enabled
-Pre-processing type 0 named agent
-Processing agent ... 
-  --------- attachment_elastic_constant = 0
+Pre-processing type 0 named default
+Processing default ... 
+what?!?
+  --------- attachment_elastic_constant = 0.01
 Signals: 
 =======
 0 : oxygen
@@ -47,7 +48,7 @@ Signals:
 2 : oxygen gradient
 3 : pressure
 4 : volume
-5 : contact with agent
+5 : contact with default
 6 : contact with live cell
 7 : contact with dead cell
 8 : contact with basement membrane
@@ -78,27 +79,33 @@ Behaviors:
 15 : chemotactic response to oxygen
 16 : cell-cell adhesion
 17 : cell-cell adhesion elastic constant
-18 : adhesive affinity to agent
+18 : adhesive affinity to default
 19 : relative maximum adhesion distance
 20 : cell-cell repulsion
 21 : cell-BM adhesion
 22 : cell-BM repulsion
 23 : phagocytose dead cell
-24 : phagocytose agent
-25 : attack agent
-26 : fuse to agent
-27 : transform to agent
+24 : phagocytose default
+25 : attack default
+26 : fuse to default
+27 : transform to default
 28 : custom:sample
 
 
-0 :: type:0 name: agent
-	 cycle model: Live (code=5)
-		Phase 0: Live
+0 :: type:0 name: default
+	 cycle model: Flow cytometry model (separated) (code=6)
+		Phase 0: G0/G1
+		Phase 1: S
+		Phase 2: G2
+		Phase 3: M
 		Cycle transitions: 
 		-----------------
-		Live --> Live w mean duration inf min
+		G0/G1 --> S w mean duration 420 min
+		S --> G2 w mean duration 360 min
+		G2 --> M w mean duration 180 min
+		M --> G0/G1 w mean duration 120 min
 	 death models: 
-		0 : Apoptosis (code=100) with rate 5.31667e-05 1/min
+		0 : Apoptosis (code=100) with rate 0 1/min
 		death phase transitions: 
 		------------------------
 		Apoptotic --> Debris w mean duration 516 min
@@ -106,563 +113,1971 @@ Behaviors:
 		death phase transitions: 
 		------------------------
 		Necrotic (swelling) --> Necrotic (lysed) w mean duration 1e-16 min
-		Necrotic (lysed) --> Debris w mean duration 86400 min
+		Necrotic (lysed) --> Debris w mean duration 1e-16 min
 	 key functions: 
 		 migration bias rule: false
-		 custom rule: false
+		 custom rule: true
 		 phenotype rule: true
-		 volume update function: false
+		 volume update function: true
 		 mechanics function: true
-		 contact function: false
-	motility (enabled: true in 3D)
-		speed: 10 micron/min
-		bias: 1 
+		 contact function: true
+	motility (enabled: false in 2D)
+		speed: 1 micron/min
+		bias: 0.5 
 		persistence time: 1 min
 		chemotaxis (enabled: false)
 			along 1 * grad(oxygen) 
 	mechanics:
-		cell_cell_adhesion_strength: 10
+		cell_cell_adhesion_strength: 0.4
 		cell_cell_repulsion_strength: 10
-		rel max adhesion dist: 100
-		cell_BM_adhesion_strength: 0
-		cell_BM_repulsion_strength: 0
-		attachment_elastic_constant: 0
-		attachment_rate: 4
-		detachment_rate: 10
+		rel max adhesion dist: 1.25
+		cell_BM_adhesion_strength: 4
+		cell_BM_repulsion_strength: 10
+		attachment_elastic_constant: 0.01
+		attachment_rate: 10
+		detachment_rate: 0
 	custom data: 
 		sample: 1 dimensionless
 	custom vector data: 
 			NOTE: custom vector data will eventually be merged with custom data
 Loading cells from CSV file ./config/cells.csv ... 
-Creating agent (type=0) at -15 0 0 
-Creating agent (type=0) at 15 0 0 
+Creating default (type=0) at 0 0 0 
+size1
 Using PhysiCell version 1.10.4
 	Please cite DOI: 10.1371/journal.pcbi.1005991
 	Project website: http://PhysiCell.MathCancer.org
 
 See ALL_CITATIONS.txt for this list.
-current simulated time: 0 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 4.9194e-05 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 6.7375e-05 seconds 
+current simulated time: 0 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 4.5186e-05 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 6.2591e-05 seconds 
 
 
 Using method diffusion_decay_solver__constant_coefficients_LOD_3D (implicit 3-D LOD with Thomas Algorithm) ... 
 
-phenotype_function(): t= 0 motility_vector= 1, 0, 0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+current simulated time: 30 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.165305 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.165389 seconds 
+
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+current simulated time: 60 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.213862 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.379718 seconds 
+
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+current simulated time: 90 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.142048 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.521787 seconds 
+
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+current simulated time: 120 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.124267 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.646075 seconds 
+
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+current simulated time: 150 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.124699 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.770794 seconds 
+
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+current simulated time: 180 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.127171 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.897985 seconds 
+
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+current simulated time: 210 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.13298 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.03099 seconds 
+
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+current simulated time: 240 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.136518 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.16752 seconds 
+
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+current simulated time: 270 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.134525 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.30207 seconds 
+
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+current simulated time: 300 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.13555 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.43764 seconds 
+
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+current simulated time: 330 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.130176 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.56783 seconds 
+
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+current simulated time: 360 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.13381 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.70166 seconds 
+
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+current simulated time: 390 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.136059 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.83774 seconds 
+
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+current simulated time: 420 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.134471 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.97223 seconds 
+
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+current simulated time: 450 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.132885 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 2.10514 seconds 
+
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+current simulated time: 480 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.129986 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 2.23514 seconds 
+
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+current simulated time: 510 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.130292 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 2.36545 seconds 
+
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+current simulated time: 540 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.185718 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 2.55119 seconds 
+
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+current simulated time: 570 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.200393 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 2.75161 seconds 
+
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+current simulated time: 600 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.27608 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 3.02771 seconds 
+
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+current simulated time: 630 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.2959 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 3.32408 seconds 
+
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+current simulated time: 660 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.18073 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 3.50526 seconds 
+
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+current simulated time: 690 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.143091 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 3.64837 seconds 
+
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+current simulated time: 720 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.137798 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 3.78619 seconds 
+
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+current simulated time: 750 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.141357 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 3.92757 seconds 
+
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+current simulated time: 780 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.153222 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 4.08081 seconds 
+
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+current simulated time: 810 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.155349 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 4.23618 seconds 
+
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+current simulated time: 840 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.159845 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 4.39649 seconds 
+
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+current simulated time: 870 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.176231 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 4.57275 seconds 
+
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+current simulated time: 900 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.202506 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 4.77528 seconds 
+
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+current simulated time: 930 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.168273 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 4.94358 seconds 
+
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+current simulated time: 960 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.214139 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 5.15775 seconds 
+
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+current simulated time: 990 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.498423 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 5.65619 seconds 
+
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+current simulated time: 1020 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.615941 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 6.27267 seconds 
+
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
+0
+inside if of update cell
 1
+************DIVIDING********************
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 1050 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.200013 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 6.4727 seconds 
+
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 1080 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.195935 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 6.66866 seconds 
+
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cellinside if of update cell
+
+0
+current simulated time: 1110 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.216232 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 6.88491 seconds 
+
+inside if of update cellinside if of update cell
+
+0
+inside if of update cellinside if of update cell
+
+0
+inside if of update cellinside if of update cell
+
+0
+inside if of update cellinside if of update cell
+
+0
+inside if of update cellinside if of update cell
+
+0
+current simulated time: 1140 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.226123 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 7.11161 seconds 
+
+inside if of update cellinside if of update cell
+
+0
+inside if of update cellinside if of update cell
+
+0
+inside if of update cellinside if of update cell
+
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cellinside if of update cell
+
+0
+current simulated time: 1170 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.207172 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 7.31881 seconds 
+
+inside if of update cellinside if of update cell
+
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cellinside if of update cell
+
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cellinside if of update cell
+
+0
+current simulated time: 1200 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.164845 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 7.48368 seconds 
+
+inside if of update cellinside if of update cell
+
+0
+inside if of update cellinside if of update cell
+
+0
+inside if of update cellinside if of update cell
+
+0
+inside if of update cellinside if of update cell
+
+0
+inside if of update cellinside if of update cell
+
+0
+current simulated time: 1230 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.168924 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 7.65263 seconds 
+
+inside if of update cellinside if of update cell
+
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cellinside if of update cell
+
+0
+inside if of update cellinside if of update cell
+
+0
+inside if of update cellinside if of update cell
+
+0
+current simulated time: 1260 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.179232 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 7.83189 seconds 
+
+inside if of update cellinside if of update cell
+
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cellinside if of update cell
+
+0
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 1290 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.196316 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 8.02823 seconds 
+
+inside if of update cellinside if of update cell
+
+0
+inside if of update cellinside if of update cell
+
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 1320 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.18038 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 8.20933 seconds 
+
+inside if of update cellinside if of update cell
+
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 1350 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.191356 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 8.40071 seconds 
+
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 1380 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.245932 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 8.64749 seconds 
+
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 1410 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.277726 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 8.92524 seconds 
+
+inside if of update cellinside if of update cell
+
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 1440 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.169739 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 9.09501 seconds 
+
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cellinside if of update cell
+
+0
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 1470 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.208969 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 9.304 seconds 
+
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cellinside if of update cell
+
+0
+current simulated time: 1500 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.342477 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 9.64653 seconds 
+
+inside if of update cellinside if of update cell
+
+0
+inside if of update cellinside if of update cell
+
+0
+inside if of update cellinside if of update cell
+
+0
+inside if of update cellinside if of update cell
+
+0
+inside if of update cellinside if of update cell
+
+0
+current simulated time: 1530 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.327402 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 9.97396 seconds 
+
+inside if of update cellinside if of update cell
+
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cellinside if of update cell
+
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cellinside if of update cell
+
+0
+current simulated time: 1560 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.171532 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 10.1455 seconds 
+
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 1590 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.122856 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 10.2684 seconds 
+
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cellinside if of update cell
+
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 1620 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.132681 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 10.4011 seconds 
+
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cellinside if of update cell
+
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 1650 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.161465 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 10.5626 seconds 
+
+inside if of update cellinside if of update cell
+
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 1680 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.16112 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 10.7238 seconds 
+
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 1710 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.24979 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 10.9742 seconds 
+
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cellinside if of update cell
+
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 1740 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.257975 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 11.2322 seconds 
+
+inside if of update cell
+inside if of update cell
+0
+inside if of update cellinside if of update cell
+
+0
+inside if of update cellinside if of update cell
+
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 1770 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.148488 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 11.3807 seconds 
+
+inside if of update cellinside if of update cell
+
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cellinside if of update cell
+
+0
+inside if of update cellinside if of update cell
+
+0
+current simulated time: 1800 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.224456 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 11.6052 seconds 
+
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cellinside if of update cell
+
+0
+inside if of update cellinside if of update cell
+
+0
+current simulated time: 1830 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.28295 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 11.8882 seconds 
+
+inside if of update cell
+inside if of update cell
+0
+inside if of update cellinside if of update cell
+
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 1860 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.23391 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 12.1221 seconds 
+
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 1890 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.169457 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 12.2916 seconds 
+
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 1920 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.178923 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 12.4706 seconds 
+
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+0
+inside if of update cellinside if of update cell
+
+0
+current simulated time: 1950 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.204286 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 12.6749 seconds 
+
+inside if of update cell
+inside if of update cell
 1
-phenotype_function(): t= 0 motility_vector= -1, 0, 0
+************DIVIDING********************
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cellinside if of update cellinside if of update cell
+
+
+0
+inside if of update cellinside if of update cellinside if of update cell
+
+
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 1980 min (max: 2880 min)
+total agents: 3
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.153665 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 12.8286 seconds 
+
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cellinside if of update cellinside if of update cell
+
+
+0
+inside if of update cellinside if of update cell
+inside if of update cell
+
+0
+inside if of update cellinside if of update cell
+inside if of update cell
+
+0
+current simulated time: 2010 min (max: 2880 min)
+total agents: 3
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.182959 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 13.0115 seconds 
+
+inside if of update cellinside if of update cell
+inside if of update cell
+
+0
+inside if of update cellinside if of update cell
+
+inside if of update cell
+0
+inside if of update cellinside if of update cell
+inside if of update cell
+
+0
+inside if of update cellinside if of update cell
+inside if of update cell
+
+0
+inside if of update cellinside if of update cellinside if of update cell
+
+
+0
+current simulated time: 2040 min (max: 2880 min)
+total agents: 3
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.168292 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 13.1799 seconds 
+
+inside if of update cellinside if of update cell
+inside if of update cell
+
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 2070 min (max: 2880 min)
+total agents: 3
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.144633 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 13.3245 seconds 
+
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cellinside if of update cell
+inside if of update cell
+
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cellinside if of update cell
+inside if of update cell
+
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 2100 min (max: 2880 min)
+total agents: 3
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.139576 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 13.4641 seconds 
+
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 2130 min (max: 2880 min)
+total agents: 3
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.141887 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 13.606 seconds 
+
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cellinside if of update cellinside if of update cell
+
+
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 2160 min (max: 2880 min)
+total agents: 3
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.137978 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 13.744 seconds 
+
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cellinside if of update cell
+inside if of update cell
+
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 2190 min (max: 2880 min)
+total agents: 3
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.129547 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 13.8736 seconds 
+
+inside if of update cellinside if of update cellinside if of update cell
+
+
+0
+inside if of update cell
+inside if of update cellinside if of update cell
+
+0
+inside if of update cellinside if of update cell
+inside if of update cell
+
+0
+inside if of update cellinside if of update cell
+
+inside if of update cell
+0
+inside if of update cellinside if of update cell
+inside if of update cell
+
+0
+current simulated time: 2220 min (max: 2880 min)
+total agents: 3
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.135598 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 14.0092 seconds 
+
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cellinside if of update cell
+inside if of update cell
+
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 2250 min (max: 2880 min)
+total agents: 3
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.13749 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 14.1467 seconds 
+
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cellinside if of update cell
+
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 2280 min (max: 2880 min)
+total agents: 3
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.139531 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 14.2863 seconds 
+
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cellinside if of update cell
+inside if of update cell
+
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 2310 min (max: 2880 min)
+total agents: 3
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.143507 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 14.4298 seconds 
+
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cellinside if of update cellinside if of update cell
+
+
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cellinside if of update cellinside if of update cell
+
+
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 2340 min (max: 2880 min)
+total agents: 3
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.184642 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 14.6145 seconds 
+
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cellinside if of update cell
+inside if of update cell
+
+0
+inside if of update cell
+inside if of update cellinside if of update cell
+
+0
+inside if of update cellinside if of update cell
+inside if of update cell
+
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 2370 min (max: 2880 min)
+total agents: 3
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.20173 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 14.8162 seconds 
+
+inside if of update cell
+inside if of update cellinside if of update cell
+
+0
+inside if of update cellinside if of update cell
+
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cellinside if of update cell
+inside if of update cell
+
+0
+current simulated time: 2400 min (max: 2880 min)
+total agents: 3
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.196435 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 15.0127 seconds 
+
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 2430 min (max: 2880 min)
+total agents: 3
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.167208 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 15.1799 seconds 
+
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 2460 min (max: 2880 min)
+total agents: 3
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.185379 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 15.3657 seconds 
+
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cellinside if of update cellinside if of update cell
+
+
+0
+inside if of update cell
+inside if of update cellinside if of update cell
+
+0
+inside if of update cellinside if of update cell
+
+inside if of update cell
+0
+inside if of update cellinside if of update cell
+inside if of update cell
+
+0
+current simulated time: 2490 min (max: 2880 min)
+total agents: 3
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.1677 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 15.5335 seconds 
+
+inside if of update cellinside if of update cell
+inside if of update cell
+
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 2520 min (max: 2880 min)
+total agents: 3
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.155581 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 15.6891 seconds 
+
+inside if of update cellinside if of update cell
+inside if of update cell
+
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cellinside if of update cell
+
+0
+current simulated time: 2550 min (max: 2880 min)
+total agents: 3
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.207321 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 15.8964 seconds 
+
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cellinside if of update cell
+
+0
+inside if of update cell
+inside if of update cellinside if of update cell
+
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 2580 min (max: 2880 min)
+total agents: 3
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.163356 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 16.0598 seconds 
+
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cellinside if of update cellinside if of update cell
+
+
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 2610 min (max: 2880 min)
+total agents: 3
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.143017 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 16.2028 seconds 
+
+inside if of update cellinside if of update cell
+
+inside if of update cell
+0
+inside if of update cellinside if of update cellinside if of update cell
+
+
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cellinside if of update cellinside if of update cell
+
+
+0
+current simulated time: 2640 min (max: 2880 min)
+total agents: 3
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.136767 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 16.3396 seconds 
+
+inside if of update cellinside if of update cell
+inside if of update cell
+
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cellinside if of update cell
+
+0
+inside if of update cell
+inside if of update cellinside if of update cell
+
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 2670 min (max: 2880 min)
+total agents: 3
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.135059 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 16.4747 seconds 
+
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cellinside if of update cell
+inside if of update cell
+
+0
+inside if of update cellinside if of update cell
+inside if of update cell
+
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 2700 min (max: 2880 min)
+total agents: 3
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.125528 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 16.6002 seconds 
+
+inside if of update cellinside if of update cell
+inside if of update cell
+
+0
+inside if of update cellinside if of update cellinside if of update cell
+
+
+0
+inside if of update cellinside if of update cell
+inside if of update cell
+
+0
+inside if of update cell
+inside if of update cellinside if of update cell
+
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 2730 min (max: 2880 min)
+total agents: 3
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.142001 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 16.7423 seconds 
+
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cellinside if of update cell
+
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cellinside if of update cell
+inside if of update cell
+
+0
+current simulated time: 2760 min (max: 2880 min)
+total agents: 3
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.143619 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 16.8859 seconds 
+
+inside if of update cellinside if of update cellinside if of update cell
+
+
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cellinside if of update cell
+
+inside if of update cell
+0
+current simulated time: 2790 min (max: 2880 min)
+total agents: 3
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.147288 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 17.0332 seconds 
+
+inside if of update cell
+inside if of update cell
+inside if of update cell
 1
-1
-current simulated time: 0.1 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00402689 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.00415439 seconds 
-
-current simulated time: 0.2 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00374443 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.00793212 seconds 
-
-current simulated time: 0.3 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00248687 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.0104357 seconds 
-
-current simulated time: 0.4 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00244448 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.0128964 seconds 
-
-current simulated time: 0.5 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00283005 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.0157427 seconds 
-
-current simulated time: 0.6 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00295475 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.0187188 seconds 
-
-Warning and FYI: Very small vectors are normalized to 0 vector
-
-current simulated time: 0.7 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00362985 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.0223754 seconds 
-
-current simulated time: 0.8 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00330839 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.0257082 seconds 
-
-current simulated time: 0.9 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.0030239 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.0287565 seconds 
-
-current simulated time: 1 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00265684 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.0314309 seconds 
-
-current simulated time: 1.1 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.0042909 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.0357393 seconds 
-
-current simulated time: 1.2 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00260232 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.0383694 seconds 
-
-current simulated time: 1.3 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00324012 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.0416343 seconds 
-
-current simulated time: 1.4 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00320024 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.0448519 seconds 
-
-current simulated time: 1.5 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00239145 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.0472602 seconds 
-
-current simulated time: 1.6 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00285805 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.0501357 seconds 
-
-current simulated time: 1.7 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00239509 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.0525467 seconds 
-
-current simulated time: 1.8 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00217901 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.054742 seconds 
-
-current simulated time: 1.9 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00339237 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.0581516 seconds 
-
-current simulated time: 2 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00315877 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.0613372 seconds 
-
-current simulated time: 2.1 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00385217 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.0652077 seconds 
-
-current simulated time: 2.2 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.0027737 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.0679983 seconds 
-
-current simulated time: 2.3 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00272826 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.070744 seconds 
-
-current simulated time: 2.4 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00287518 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.0736363 seconds 
-
-current simulated time: 2.5 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00275513 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.076408 seconds 
-
-current simulated time: 2.6 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00244278 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.0788676 seconds 
-
-current simulated time: 2.7 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.0027914 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.0816869 seconds 
-
-current simulated time: 2.8 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.0029328 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.0846374 seconds 
-
-current simulated time: 2.9 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00323409 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.0878941 seconds 
-
-current simulated time: 3 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.0030728 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.0909881 seconds 
-
-current simulated time: 3.1 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00492602 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.0959521 seconds 
-
-current simulated time: 3.2 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00372023 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.0996938 seconds 
-
-current simulated time: 3.3 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00223665 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.101947 seconds 
-
-current simulated time: 3.4 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00276862 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.104749 seconds 
-
-current simulated time: 3.5 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00315957 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.107926 seconds 
-
-current simulated time: 3.6 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00324645 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.111202 seconds 
-
-current simulated time: 3.7 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00310519 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.114325 seconds 
-
-current simulated time: 3.8 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00256886 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.11691 seconds 
-
-current simulated time: 3.9 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00324416 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.120171 seconds 
-
-current simulated time: 4 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00231417 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.122503 seconds 
-
-current simulated time: 4.1 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00473641 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.127279 seconds 
-
-current simulated time: 4.2 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00341148 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.130713 seconds 
-
-current simulated time: 4.3 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00244847 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.133178 seconds 
-
-current simulated time: 4.4 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.0021945 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.135389 seconds 
-
-current simulated time: 4.5 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00258116 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.137988 seconds 
-
-current simulated time: 4.6 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00264645 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.140657 seconds 
-
-current simulated time: 4.7 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00321048 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.143885 seconds 
-
-current simulated time: 4.8 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00230261 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.146205 seconds 
-
-current simulated time: 4.9 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00223423 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.148456 seconds 
-
-current simulated time: 5 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00217153 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.150644 seconds 
-
-current simulated time: 5.1 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00394907 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.154611 seconds 
-
-current simulated time: 5.2 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00319495 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.15783 seconds 
-
-current simulated time: 5.3 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00322899 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.161076 seconds 
-
-current simulated time: 5.4 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00322622 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.164329 seconds 
-
-current simulated time: 5.5 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00324612 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.167639 seconds 
-
-current simulated time: 5.6 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00335084 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.171022 seconds 
-
-current simulated time: 5.7 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00337331 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.174418 seconds 
-
-current simulated time: 5.8 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00335817 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.177803 seconds 
-
-current simulated time: 5.9 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00329461 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.181127 seconds 
-
-current simulated time: 6 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00341309 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.184564 seconds 
-
-phenotype_function(): t= 6 motility_vector= 0, 0, 0
-1
-1
-phenotype_function(): t= 6 motility_vector= 0, 0, 0
-1
-1
-current simulated time: 6.1 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00498567 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.189605 seconds 
-
-current simulated time: 6.2 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00340689 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.193037 seconds 
-
-current simulated time: 6.3 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.0033184 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.196374 seconds 
-
-current simulated time: 6.4 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00334026 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.199742 seconds 
-
-current simulated time: 6.5 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.0032792 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.203053 seconds 
-
-current simulated time: 6.6 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00324376 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.206319 seconds 
-
-current simulated time: 6.7 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00298131 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.209329 seconds 
-
-current simulated time: 6.8 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00292744 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.212273 seconds 
-
-current simulated time: 6.9 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00313825 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.215431 seconds 
-
-current simulated time: 7 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.0030246 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.218483 seconds 
-
-current simulated time: 7.1 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00475046 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.223257 seconds 
-
-current simulated time: 7.2 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00239971 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.225673 seconds 
-
-current simulated time: 7.3 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00227657 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.227968 seconds 
-
-current simulated time: 7.4 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00225793 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.230246 seconds 
-
-current simulated time: 7.5 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00248342 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.232758 seconds 
-
-current simulated time: 7.6 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00272659 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.235502 seconds 
-
-current simulated time: 7.7 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.0027074 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.238227 seconds 
-
-current simulated time: 7.8 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00295743 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.241206 seconds 
-
-current simulated time: 7.9 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00306878 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.244302 seconds 
-
-current simulated time: 8 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00299528 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.247315 seconds 
-
-current simulated time: 8.1 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00351708 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.250867 seconds 
-
-current simulated time: 8.2 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00301543 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.253905 seconds 
-
-current simulated time: 8.3 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00289199 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.256819 seconds 
-
-current simulated time: 8.4 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00267667 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.259513 seconds 
-
-current simulated time: 8.5 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00306373 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.262599 seconds 
-
-current simulated time: 8.6 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00313 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.26575 seconds 
-
-current simulated time: 8.7 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00258058 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.268347 seconds 
-
-current simulated time: 8.8 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00245766 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.270822 seconds 
-
-current simulated time: 8.9 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00241915 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.273259 seconds 
-
-current simulated time: 9 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00285405 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.276131 seconds 
-
-current simulated time: 9.1 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00426649 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.280415 seconds 
-
-current simulated time: 9.2 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00249116 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.282924 seconds 
-
-current simulated time: 9.3 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00277709 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.285718 seconds 
-
-current simulated time: 9.4 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00241177 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.288147 seconds 
-
-current simulated time: 9.5 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00226577 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.290429 seconds 
-
-current simulated time: 9.6 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00247943 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.292926 seconds 
-
-current simulated time: 9.7 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00253602 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.295479 seconds 
-
-current simulated time: 9.8 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.0026384 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.298135 seconds 
-
-current simulated time: 9.9 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00243644 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.300589 seconds 
-
-current simulated time: 10 min (max: 10 min)
-total agents: 2
-interval wall time: 0 days, 0 hours, 0 minutes, and 0.00280357 seconds 
-total wall time: 0 days, 0 hours, 0 minutes, and 0.303411 seconds 
-
+************DIVIDING********************
+inside if of update cell
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 2820 min (max: 2880 min)
+total agents: 4
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.135431 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 17.1687 seconds 
+
+inside if of update cell
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 2850 min (max: 2880 min)
+total agents: 4
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.144336 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 17.313 seconds 
+
+inside if of update cell
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+inside if of update cellinside if of update cellinside if of update cell
+
+
+inside if of update cell
+0
+inside if of update cellinside if of update cellinside if of update cell
+inside if of update cell
+
+
+0
+inside if of update cell
+inside if of update cellinside if of update cell
+
+inside if of update cell
+0
+inside if of update cell
+inside if of update cell
+inside if of update cell
+inside if of update cell
+0
+current simulated time: 2880 min (max: 2880 min)
+total agents: 4
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.213035 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 17.5261 seconds 
+
+inside if of update cellinside if of update cell
+inside if of update cell
+inside if of update cell
+
+0
 
 Total simulation runtime: 
-0 days, 0 hours, 0 minutes, and 0.309406 seconds 
+0 days, 0 hours, 0 minutes, and 17.5356 seconds 

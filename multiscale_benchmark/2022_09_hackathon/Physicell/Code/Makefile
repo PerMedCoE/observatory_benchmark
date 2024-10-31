@@ -12,6 +12,22 @@ ifdef PHYSICELL_CPP
 endif
 
 ARCH := native # best auto-tuning
+# ARCH := core2 # a reasonably safe default for most CPUs since 2007
+# ARCH := corei7
+# ARCH := corei7-avx # earlier i7 
+# ARCH := core-avx-i # i7 ivy bridge or newer 
+# ARCH := core-avx2 # i7 with Haswell or newer
+# ARCH := nehalem
+# ARCH := westmere
+# ARCH := sandybridge # circa 2011
+# ARCH := ivybridge   # circa 2012
+# ARCH := haswell     # circa 2013
+# ARCH := broadwell   # circa 2014
+# ARCH := skylake     # circa 2015
+# ARCH := bonnell
+# ARCH := silvermont
+# ARCH := skylake-avx512
+# ARCH := nocona #64-bit pentium 4 or later 
 
 # CFLAGS := -march=$(ARCH) -Ofast -s -fomit-frame-pointer -mfpmath=both -fopenmp -m64 -std=c++11
 CFLAGS := -march=$(ARCH) -O3 -fomit-frame-pointer -mfpmath=both -fopenmp -m64 -std=c++11
@@ -42,105 +58,24 @@ PhysiCell_pugixml.o PhysiCell_settings.o PhysiCell_geometry.o
 
 # put your custom objects here (they should be in the custom_modules directory)
 
-PhysiCell_custom_module_OBJECTS := .o
+PhysiCell_custom_module_OBJECTS := custom.o
 
 pugixml_OBJECTS := pugixml.o
 
 PhysiCell_OBJECTS := $(BioFVM_OBJECTS)  $(pugixml_OBJECTS) $(PhysiCell_core_OBJECTS) $(PhysiCell_module_OBJECTS)
 ALL_OBJECTS := $(PhysiCell_OBJECTS) $(PhysiCell_custom_module_OBJECTS)
 
+# compile the project 
+
+all: main.cpp $(ALL_OBJECTS)
+	$(COMPILE_COMMAND) -o $(PROGRAM_NAME) $(ALL_OBJECTS) main.cpp 
+	make name
 
 name:
 	@echo ""
 	@echo "Executable name is" $(PROGRAM_NAME)
 	@echo ""
 
-# sample projects 	
-# change to the different 
-list-projects:
-	@echo "Sample projects: template"
-	@echo ""
-	@echo "Sample intracellular projects: ode-energy-sample physiboss-cell-lines-sample cancer-metabolism-sample"
-	@echo ""
-	
-template:
-	cp ./unit_tests/template/custom_modules/* ./custom_modules/
-	touch main.cpp && cp main.cpp main-backup.cpp
-	cp ./unit_tests/template/main.cpp ./main.cpp 
-	cp Makefile Makefile-backup
-	cp ./unit_tests/template/Makefile .
-	cp ./config/PhysiCell_settings.xml ./config/PhysiCell_settings-backup.xml 
-	cp ./unit_tests/template/config/* ./config/
-	
-# unit_tests
-single_diffusion:
-	cp ./unit_tests/single_diffusion/custom_modules/* ./custom_modules/
-	touch main.cpp && cp main.cpp main-backup.cpp
-	cp ./unit_tests/single_diffusion/main.cpp ./main.cpp 
-	cp Makefile Makefile-backup
-	cp ./unit_tests/single_diffusion/Makefile .
-	cp ./config/PhysiCell_settings.xml ./config/PhysiCell_settings-backup.xml 
-	cp ./unit_tests/single_diffusion/config/* ./config/
-
-many_diffusion:
-	cp ./unit_tests/many_diffusion/custom_modules/* ./custom_modules/
-	touch main.cpp && cp main.cpp main-backup.cpp
-	cp ./unit_tests/many_diffusion/main.cpp ./main.cpp 
-	cp Makefile Makefile-backup
-	cp ./unit_tests/many_diffusion/Makefile .
-	cp ./config/PhysiCell_settings.xml ./config/PhysiCell_settings-backup.xml 
-	cp ./unit_tests/many_diffusion/config/* ./config/
-mechanics_movement:
-	cp ./unit_tests/mechanics_movement/custom_modules/* ./custom_modules/
-	touch main.cpp && cp main.cpp main-backup.cpp
-	cp ./unit_tests/mechanics_movement/main.cpp ./main.cpp 
-	cp Makefile Makefile-backup
-	cp ./unit_tests/mechanics_movement/Makefile .
-	cp ./config/PhysiCell_settings.xml ./config/PhysiCell_settings-backup.xml 
-	cp ./unit_tests/mechanics_movement/config/* ./config/
-mechanics_pushing:
-	cp ./unit_tests/mechanics_pushing/custom_modules/* ./custom_modules/
-	touch main.cpp && cp main.cpp main-backup.cpp
-	cp ./unit_tests/mechanics_pushing/main.cpp ./main.cpp 
-	cp Makefile Makefile-backup
-	cp ./unit_tests/mechanics_pushing/Makefile .
-	cp ./config/PhysiCell_settings.xml ./config/PhysiCell_settings-backup.xml 
-	cp ./unit_tests/mechanics_pushing/config/* ./config/
-fixed_cell_cycle:
-	cp ./unit_tests/fixed_cell_cycle/custom_modules/* ./custom_modules/
-	touch main.cpp && cp main.cpp main-backup.cpp
-	cp ./unit_tests/fixed_cell_cycle/main.cpp ./main.cpp 
-	cp Makefile Makefile-backup
-	cp ./unit_tests/fixed_cell_cycle/Makefile .
-	cp ./config/PhysiCell_settings.xml ./config/PhysiCell_settings-backup.xml 
-	cp ./unit_tests/fixed_cell_cycle/config/* ./config/
-stochastic_cell_cylcle:
-	cp ./unit_tests/stochastic_cell_cylcle/custom_modules/* ./custom_modules/
-	touch main.cpp && cp main.cpp main-backup.cpp
-	cp ./unit_tests/stochastic_cell_cylcle/main.cpp ./main.cpp 
-	cp Makefile Makefile-backup
-	cp ./unit_tests/stochastic_cell_cylcle/Makefile .
-	cp ./config/PhysiCell_settings.xml ./config/PhysiCell_settings-backup.xml 
-	cp ./unit_tests/stochastic_cell_cylcle/config/* ./config/
-
-# stochastic_cell_cylcle
-# use cases
-monolayer:
-	cp ./use_cases/monolayer/custom_modules/* ./custom_modules/
-	touch main.cpp && cp main.cpp main-backup.cpp
-	cp ./use_cases/monolayer/main.cpp ./main.cpp 
-	cp Makefile Makefile-backup
-	cp ./use_cases/monolayer/Makefile .
-	cp ./config/PhysiCell_settings.xml ./config/PhysiCell_settings-backup.xml 
-	cp ./use_cases/monolayer/config/* ./config/
-sphereoid_no_diff:
-	cp ./use_cases/sphereoid_no_diff/custom_modules/* ./custom_modules/
-	touch main.cpp && cp main.cpp main-backup.cpp
-	cp ./use_cases/sphereoid_no_diff/main.cpp ./main.cpp 
-	cp Makefile Makefile-backup
-	cp ./use_cases/sphereoid_no_diff/Makefile .
-	cp ./config/PhysiCell_settings.xml ./config/PhysiCell_settings-backup.xml 
-	cp ./use_cases/sphereoid_no_diff/config/* ./config/	
 # PhysiCell core components	
 
 PhysiCell_phenotype.o: ./core/PhysiCell_phenotype.cpp
@@ -215,26 +150,29 @@ PhysiCell_MultiCellDS.o: ./modules/PhysiCell_MultiCellDS.cpp
 
 PhysiCell_various_outputs.o: ./modules/PhysiCell_various_outputs.cpp
 	$(COMPILE_COMMAND) -c ./modules/PhysiCell_various_outputs.cpp
-	
+
 PhysiCell_pugixml.o: ./modules/PhysiCell_pugixml.cpp
 	$(COMPILE_COMMAND) -c ./modules/PhysiCell_pugixml.cpp
 	
 PhysiCell_settings.o: ./modules/PhysiCell_settings.cpp
-	$(COMPILE_COMMAND) -c ./modules/PhysiCell_settings.cpp	
+	$(COMPILE_COMMAND) -c ./modules/PhysiCell_settings.cpp
 	
 PhysiCell_basic_signaling.o: ./core/PhysiCell_basic_signaling.cpp
-	$(COMPILE_COMMAND) -c ./core/PhysiCell_basic_signaling.cpp 
-
+	$(COMPILE_COMMAND) -c ./core/PhysiCell_basic_signaling.cpp 	
+	
 PhysiCell_geometry.o: ./modules/PhysiCell_geometry.cpp
 	$(COMPILE_COMMAND) -c ./modules/PhysiCell_geometry.cpp 
-
+	
 # user-defined PhysiCell modules
+
+custom.o: ./custom_modules/custom.cpp 
+	$(COMPILE_COMMAND) -c ./custom_modules/custom.cpp
 
 # cleanup
 
 reset:
-	rm -f *.cpp PhysiCell_cell.o
-	cp ./unit_tests/Makefile-default Makefile 
+	rm -f *.cpp 
+	cp ./unit_tests/Makefile-default Makefile
 	rm -f ./custom_modules/*
 	touch ./custom_modules/empty.txt 
 	touch ALL_CITATIONS.txt 
@@ -242,7 +180,7 @@ reset:
 	rm ALL_CITATIONS.txt 
 	cp ./config/PhysiCell_settings-backup.xml ./config/PhysiCell_settings.xml 
 	touch ./config/empty.csv
-	rm ./config/*.csv	
+	rm -f ./config/*.csv
 	
 clean:
 	rm -f *.o
@@ -252,9 +190,9 @@ data-cleanup:
 	rm -rf ./output
 	mkdir ./output
 	touch ./output/empty.txt
-
+	
 # archival 
-
+	
 checkpoint: 
 	zip -r $$(date +%b_%d_%Y_%H%M).zip Makefile *.cpp *.h config/*.xml custom_modules/* 
 	

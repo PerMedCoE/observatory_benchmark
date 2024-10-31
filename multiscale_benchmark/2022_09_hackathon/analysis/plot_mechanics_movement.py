@@ -54,6 +54,7 @@ def plot_distance_moved(pc_data,bd_data,ch_data):
     plt.plot(pc_data.index[0:50],pc_data['velocity'][0:50],label="PhysiCell", color= 'green',alpha = 0.7)
     plt.plot(bd_data.index[0:50],bd_data['velocity'][0:50],label="Biodynamo",color= 'red',alpha = 0.6)
     plt.plot(ch_data.index[0:50],ch_data['velocity'][0:50],label="Chaste", alpha= 0.3)
+    plt.plot(ch_data.index[0:50],ch_data['velocity'][0:50],label="Chaste", alpha= 0.3)
     plt.ylabel(ylabel="Velocity μM/s")
     plt.xlabel(xlabel="Time")
     plt.title("Velocity of the movement of a cell across time")
@@ -75,7 +76,7 @@ def main():
                     default="../Biodynamo/unit_test_mechanics_friction_single/results/positions.csv")
     parser.add_argument("--ch-csv",action="store", dest = "ch_csv", help="Path to Chaste position over time csv",
                     default="../Chaste/unit_test_mechanics_friction/results/node_locations.dat")
-    # parser.add_argument("--ts-csv", help="Path to TiSim concentration over time csv")
+    parser.add_argument("--ts-csv", help="Path to TiSim concentration over time csv",default="../Tisim/mechanical pushing.csv")
     
     args = parser.parse_args()
     

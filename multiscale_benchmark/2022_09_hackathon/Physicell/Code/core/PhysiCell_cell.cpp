@@ -565,6 +565,7 @@ Cell* Cell::divide( )
 	normalize( &rand_vec ); 
 	rand_vec *= radius; // multiply direction times the displacement 
 	*/
+	std::cout<<"************DIVIDING********************"<<std::endl;
 	
 	std::vector<double> rand_vec = cell_division_orientation(); 
 	rand_vec = rand_vec- phenotype.geometry.polarity*(rand_vec[0]*state.orientation[0]+ 
@@ -827,12 +828,12 @@ void Cell::update_position( double dt )
 	previous_velocity = velocity; 
 	
 	velocity[0]=0; velocity[1]=0; velocity[2]=0;
-	std::cout<<sqrt(dist(old_position, position))<<"old_position: "<<old_position<<", new position: "<< position<<", velocity: "<<velocity<<", previous_velocity: "<< previous_velocity<<std::endl;
+	// std::cout<<sqrt(dist(old_position, position))<<"old_position: "<<old_position<<", new position: "<< position<<", velocity: "<<velocity<<", previous_velocity: "<< previous_velocity<<std::endl;
 	if(get_container()->underlying_mesh.is_position_valid(position[0],position[1],position[2]))
 	{
-		std::cout<< "Inside if of updating positions"<<std::endl;
+		// std::cout<< "Inside if of updating positions"<<std::endl;
 		updated_current_mechanics_voxel_index=get_container()->underlying_mesh.nearest_voxel_index( position );
-		std::cout<<updated_current_mechanics_voxel_index<<std::endl;
+		// std::cout<<updated_current_mechanics_voxel_index<<std::endl;
 
 		
 	}

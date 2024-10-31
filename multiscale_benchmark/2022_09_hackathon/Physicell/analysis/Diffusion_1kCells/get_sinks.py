@@ -28,8 +28,8 @@ def point_to_voxel_index(group, point):
 def generate_csv(output_folder,csv_out):
     # generate csv of all voxels and their diffusion in each timestep
     files = Path(output_folder).glob('*output*_cells.mat')
-    mcds = multicellds.Settings(output_folder+"/PhysiCell_settings.xml")
-    step = mcds.interval
+    # mcds = multicellds.Settings(output_folder+"/PhysiCell_settings.xml")
+    step = 0.01
     df_cell = pd.DataFrame(columns = ['id','x','y','z'])
     i = 0
     for file in sorted(files):
@@ -44,54 +44,42 @@ def generate_csv(output_folder,csv_out):
     df_cell.to_csv(output_folder+csv_out)
     return df_cell
 
-def get_physicell_df(df_cells,data_folder):
-
-    file = data_folder+"microenv_many_diffusion.csv"
-    df= pd.read_csv(file,index_col=0)
+def get_physicell_df(df_cells, data_folder):
+    file = data_folder + "microenv_many_diffusion.csv"
+    df = pd.read_csv(file, index_col=0)
 
     df['timestep'] = df['timestep'].round(2)
-
     print(df)
+    
     df = df.assign(
-    xmin=df['x'] - 10,
-    xmax=df['x'] + 10,
-    ymin=df['y'] - 10,
-    ymax=df['y'] + 10,
-    zmin=df['z'] - 10,
-    zmax=df['z'] + 10)
+        xmin=df['x'] - 10,
+        xmax=df['x'] + 10,
+        ymin=df['y'] - 10,
+        ymax=df['y'] + 10,
+        zmin=df['z'] - 10,
+        zmax=df['z'] + 10
+    )
+
     cells_grouped_by_timestep = df_cells.groupby("timestep")
     voxels_grouped_by_timestep = df.groupby("timestep")
-    index_dic = {}
-    df_mean = pd.DataFrame(columns=['timestep', 'diff'])
-    for t , gr in cells_grouped_by_timestep:
+    
+    rows = []  # List to hold rows for the new DataFrame
+    for t, gr in cells_grouped_by_timestep:
         indexes = []
         vox_t = voxels_grouped_by_timestep.get_group(t)
-        for _,cell in gr.iterrows():
+        for _, cell in gr.iterrows():
             index = vox_t[(cell['x'] >= vox_t['xmin']) & (cell['x'] <= vox_t['xmax']) &
-                      (cell['y'] >= vox_t['ymin']) & (cell['y'] <= vox_t['ymax']) &
-                      (cell['z'] >= vox_t['zmin']) & (cell['z'] <= vox_t['zmax'])].index
-            indexes.append(index.values[0])
-        selected_rows = vox_t.loc[indexes]
-        average_diff = selected_rows['diff'].mean()
-        df_mean = df_mean.append({'timestep': t, 'diff': average_diff}, ignore_index=True)
-    df_mean.to_csv(data_folder+"mean_diff_of_sinks.csv")
-    # merged_df = pd.merge(df_cells, df, on='timestep', suffixes=('_cell', '_vox'))
-
-    # # Filter rows where cell coordinates are within the voxel boundaries
-    # condition = (
-    #     (merged_df['x_cell'] >= merged_df['xmin']) & (merged_df['x_cell'] <= merged_df['xmax']) &
-    #     (merged_df['y_cell'] >= merged_df['ymin']) & (merged_df['y_cell'] <= merged_df['ymax']) &
-    #     (merged_df['z_cell'] >= merged_df['zmin']) & (merged_df['z_cell'] <= merged_df['zmax'])
-    # )
-
-    # filtered_df = merged_df[condition]
-
-    # # Group by timestep and calculate the mean of 'diff'
-    # df_mean = filtered_df.groupby('timestep')['diff'].mean().reset_index()
-
-    # # Save the result to CSV
-    # df_mean.to_csv(data_folder + "mean_diff_of_sinks.csv", index=False)
-    #     # index_dic[t] = indexes
+                           (cell['y'] >= vox_t['ymin']) & (cell['y'] <= vox_t['ymax']) &
+                           (cell['z'] >= vox_t['zmin']) & (cell['z'] <= vox_t['zmax'])].index
+            if not index.empty:  # Check if index is not empty
+                indexes.append(index.values[0])
+        if indexes:  # Only proceed if there are indexes
+            selected_rows = vox_t.loc[indexes]
+            average_diff = selected_rows['diff'].mean()
+            rows.append({'timestep': t, 'diff': average_diff})
+    
+    df_mean = pd.DataFrame(rows)
+    df_mean.to_csv(data_folder + "mean_diff_of_sinks.csv")
     
     
 

@@ -174,11 +174,13 @@ void Cell_Container::update_all_cells(double t, double phenotype_dt_ , double me
 		{
 			if( (*all_cells)[i]->is_out_of_domain == false )
 			{
-				(*all_cells)[i]->advance_bundled_phenotype_functions( time_since_last_cycle ); 
+				(*all_cells)[i]->advance_bundled_phenotype_functions( time_since_last_cycle );
+				std::cout<<"inside if of update cell"<<std::endl; 
 			}
 		}
 		
 		// process divides / removes 
+		std::cout<<cells_ready_to_divide.size()<<std::endl;
 		for( int i=0; i < cells_ready_to_divide.size(); i++ )
 		{
 			cells_ready_to_divide[i]->divide();

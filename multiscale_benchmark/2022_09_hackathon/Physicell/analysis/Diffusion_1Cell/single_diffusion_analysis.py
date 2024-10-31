@@ -32,8 +32,8 @@ def get_key(fp):
 def generate_microenv_csv(output_folder,csv_out):
     # generate csv of all voxels and their diffusion in each timestep
     files = Path(output_folder).glob('*output*_microenvironment*.mat')
-    mcds = multicellds.Settings(output_folder+"/PhysiCell_settings.xml")
-    step = mcds.interval
+    # mcds = multicellds.Settings(output_folder+"/PhysiCell_settings.xml")
+    step = 0.01
     df_cell = pd.DataFrame(columns = ['x','y','z','vol','diff'])
     i = 0
     for file in sorted(files):
@@ -48,8 +48,8 @@ def generate_microenv_csv(output_folder,csv_out):
 def generate_cell_csv(output_folder):
     # generate csv of all voxels and their diffusion in each timestep
     files = Path(output_folder).glob('*output*_cells.mat')
-    mcds = multicellds.Settings(output_folder+"/PhysiCell_settings.xml")
-    step = mcds.interval
+    # mcds = multicellds.Settings(output_folder+"/PhysiCell_settings.xml")
+    step = 0.01
     df_cell = pd.DataFrame(columns = ['id','internalized_substrates',"total_volume"])
     i = 0
     for file in sorted(files):
