@@ -73,17 +73,28 @@
 #include <omp.h>
 #include <fstream>
 #include <sys/stat.h>
-
 #include "./core/PhysiCell.h"
 #include "./modules/PhysiCell_standard_modules.h" 
 
 // put custom code modules here! 
 
 #include "./custom_modules/custom.h" 
+#include <algorithm>
 	
 using namespace BioFVM;
 using namespace PhysiCell;
+std::vector<int> sink_ids;  // Global variable
 
+void bulk_uptake_rate_function_u(Microenvironment* pMicroenvironment, int voxel_index, std::vector<double>* write_destination) {
+    if (std::find(sink_ids.begin(), sink_ids.end(), voxel_index) != sink_ids.end()) {
+		std::cout<<voxel_index<<" inside bulk "<<std::endl;
+        (*write_destination)[voxel_index] = 20.0;  // Set specific value if in `sink_ids`
+		
+    } else {
+		std::cout<<voxel_index<<" inside bulk 0 "<<std::endl;
+        (*write_destination)[voxel_index] = 0.0;   // Otherwise, set to 0
+    }
+}
 int main( int argc, char* argv[] )
 {
 	// load and parse settings file(s)
@@ -141,7 +152,23 @@ int main( int argc, char* argv[] )
 	/* Microenvironment setup */ 
 	
 	setup_microenvironment(); // modify this in the custom code 
-	
+	// std::vector<int> sink_ids;
+	sink_ids = get_sinks("./config/cells.csv");
+    auto bulk_uptake_rate_function_u = [](Microenvironment* pMicroenvironment, int voxel_index, std::vector<double>* write_destination) {
+        if (std::find(sink_ids.begin(), sink_ids.end(), voxel_index) != sink_ids.end()) {
+            (*write_destination)[0] = 20.0;  // Set specific value if in `sink_ids`
+				// std::cout<<"voxel "<<voxel_index<<std::endl;
+
+        } 
+		else {
+			std::cout<<voxel_index<<" is dirichlet "<<microenvironment.mesh.voxels[voxel_index].is_Dirichlet<<std::endl;
+            (*write_destination)[0] = 0.0;   // Otherwise, set to 0
+        }
+    };
+
+    // Assuming you have a `microenvironment` instance
+    microenvironment.bulk_uptake_rate_function = bulk_uptake_rate_function_u;
+	// microenvironment.bulk_uptake_rate_function = bulk_uptake_rate_function_u;
 	/* PhysiCell setup */ 
  	
 	// set mechanics voxel size, and match the data structure to BioFVM
@@ -153,7 +180,27 @@ int main( int argc, char* argv[] )
 	create_cell_types();
 	
 	setup_tissue();
+	
+	
+	// get ids of voxels where cells should be place
 
+	// microenvironment.bulk_supply_rate_function[](Microenvironment* pMicroenvironment, int voxel_index, std::vector<double>* write_destination){
+	// 	if(i is in ids){
+	// 		write_destination[i] = 20
+	// 	}
+	// 	else{
+	// 		write_destination[0] = 0
+	// 	}
+	// };
+
+	// Assign the lambda to the function pointer
+
+// Assign the lambda to the function pointer
+	// microenvironment.bulk_s
+	// implement the following
+		// 	bulk_supply_rate_function( this,i, &bulk_source_sink_solver_temp1[i] ); // temp1 = S
+		// bulk_supply_target_densities_function( this,i, &bulk_source_sink_solver_temp2[i]); // temp2 = T
+		// bulk_uptake_rate_function( this,i, &bulk_source_sink_solver_temp3[i] ); // temp3 = U
 	/* Users typically stop modifying here. END USERMODS */ 
 	
 	// set MultiCellDS save options 
@@ -166,9 +213,10 @@ int main( int argc, char* argv[] )
 	// save a simulation snapshot 
 	
 	char filename[1024];
+	
 	sprintf( filename , "%s/initial" , PhysiCell_settings.folder.c_str() ); 
 	save_PhysiCell_to_MultiCellDS_v2( filename , microenvironment , PhysiCell_globals.current_time ); 
-	
+
 	// save a quick SVG cross section through z = 0, after setting its 
 	// length bar to 200 microns 
 
@@ -191,6 +239,7 @@ int main( int argc, char* argv[] )
 	BioFVM::RUNTIME_TIC();
 	BioFVM::TIC();
 	
+
 	std::ofstream report_file;
 	if( PhysiCell_settings.enable_legacy_saves == true )
 	{	
@@ -240,11 +289,16 @@ int main( int argc, char* argv[] )
 			}
 
 			// update the microenvironment
-			microenvironment.simulate_diffusion_decay( diffusion_dt );
+			// microenvironment.simulate_diffusion_decay( diffusion_dt );
+			// applies conditions to the walls
+			microenvironment.apply_dirichlet_conditions();
+
+			microenvironment.simulate_bulk_sources_and_sinks(diffusion_dt);
+			std::cout<<"dsimulate_bulk_sources_and_sink finished"<<std::endl;
 			
 			// run PhysiCell 
 			((Cell_Container *)microenvironment.agent_container)->update_all_cells( PhysiCell_globals.current_time );
-			
+			std::cout<<"update all cels"<<std::endl;
 			/*
 			  Custom add-ons could potentially go here. 
 			*/

@@ -75,6 +75,8 @@ using namespace PhysiCell;
 
 void create_cell_types( void );
 void setup_tissue( void ); 
+// 
+// void bulk_uptake_rate_function_u(Microenvironment* pMicroenvironment, int voxel_index, std::vector<double>* write_destination);
 
 // set up the BioFVM microenvironment 
 void setup_microenvironment( void ); 
@@ -82,7 +84,7 @@ void setup_microenvironment( void );
 // custom pathology coloring function 
 
 std::vector<std::string> my_coloring_function( Cell* );
-
+std::vector<int> get_sinks(std::string filename);
 // custom functions can go here 
 
 void phenotype_function( Cell* pCell, Phenotype& phenotype, double dt );

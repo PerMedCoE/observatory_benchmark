@@ -82,8 +82,8 @@ void create_cell_types( void )
 	initialize_default_cell_definition(); 
 	cell_defaults.phenotype.secretion.sync_to_microenvironment( &microenvironment ); 
 	
-	cell_defaults.functions.volume_update_function = standard_volume_update_function;
-	cell_defaults.functions.update_velocity = standard_update_cell_velocity;
+	cell_defaults.functions.volume_update_function = NULL;
+	cell_defaults.functions.update_velocity = NULL;
 
 	cell_defaults.functions.update_migration_bias = NULL; 
 	cell_defaults.functions.update_phenotype = NULL; // update_cell_and_death_parameters_O2_based; 
@@ -117,9 +117,9 @@ void create_cell_types( void )
 	   This is a good place to set custom functions. 
 	*/ 
 	
-	cell_defaults.functions.update_phenotype = phenotype_function; 
-	cell_defaults.functions.custom_cell_rule = custom_function; 
-	cell_defaults.functions.contact_function = contact_function; 
+	// cell_defaults.functions.update_phenotype = phenotype_function; 
+	// cell_defaults.functions.custom_cell_rule = custom_function; 
+	// cell_defaults.functions.contact_function = contact_function; 
 	
 	/*
 	   This builds the map of cell definitions and summarizes the setup. 
@@ -146,13 +146,55 @@ void setup_microenvironment( void )
 
 void setup_tissue( void )
 {
+
 	// just read cells from xml in this case
 	// load cells from your CSV file (if enabled)
+	// sink_ids = get_sinks("./config/cells.csv");
+
 	load_cells_from_pugixml();
-	std::cout <<"length of al cells "<< all_cells->size()<<std::endl;
+	// microenvironment.bulk_uptake_rate_function = bulk_uptake_rate_function_u;
+
+	// std::cout <<"length of al cells "<< all_cells->size()<<std::endl;
 	return; 
 }
+std::vector<int> get_sinks(std::string filename){
+	std::vector<int> sink_indexes;
+	std::ifstream file( filename, std::ios::in );
+	if( !file )
+	{ 
+		std::cout << "Error: " << filename << " not found during cell loading. Quitting." << std::endl; 
+		exit(-1);
+	}
 
+	std::string line;
+	while (std::getline(file, line))
+	{
+		std::vector<double> data;
+		csv_to_vector( line.c_str() , data ); 
+
+		if( data.size() != 4 )
+		{
+			std::cout << "Error! Importing cells from a CSV file expects each row to be x,y,z,typeID." << std::endl;
+			exit(-1);
+		}
+
+		std::vector<double> position = { data[0] , data[1] , data[2] };
+		sink_indexes.push_back(microenvironment.nearest_voxel_index(position));
+		// std::cout<<microenvironment.nearest_voxel_index(position)<<std::endl;
+
+	}
+
+	file.close(); 	
+	return sink_indexes;
+}
+// void bulk_uptake_rate_function_u(Microenvironment* pMicroenvironment, int voxel_index, std::vector<double>* write_destination) {
+// 	// Check if voxel_index is in ids
+// 	if (std::find(sink_ids.begin(), sink_ids.end(), voxel_index) != sink_ids.end()) {
+// 		(*write_destination)[0] = 20.0;  // Set a specific value if in `ids`
+// 	} else {
+// 		(*write_destination)[0] = 0.0;  // Set to 0 otherwise
+// 	}
+// }
 std::vector<std::string> my_coloring_function( Cell* pCell )
 { return paint_by_number_cell_coloring(pCell); }
 
