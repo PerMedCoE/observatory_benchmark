@@ -1,0 +1,9 @@
+!/gpfs/scratch/bsc08/bsc008602/diffusion_official_results/**/*.csv
+
+# Ignore compiled files, logs, and other unwanted files
+*.o
+*.log
+*.swp
+__pycache__/
+.DS_Store:wq
+
