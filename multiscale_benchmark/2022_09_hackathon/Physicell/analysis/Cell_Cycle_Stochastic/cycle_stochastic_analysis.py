@@ -104,7 +104,7 @@ def create_png(csv_fname,output_folder):
     # plt.plot(dts,vols,label="PhysiCell",color='green' ,linewidth=2)
     ax.legend(bbox_to_anchor = (1.0,1.0),loc='upper left')
     plt.tight_layout()
-    plt.savefig("stochastic_cell_cycle_volumes.png")
+    plt.savefig("new_stochastic_cell_cycle_volumes.png")
     plt.show()
 if __name__ == '__main__':
     parser = create_parser()

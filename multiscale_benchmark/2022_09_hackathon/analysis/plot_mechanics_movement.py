@@ -54,11 +54,13 @@ def plot_distance_moved(pc_data,bd_data,ch_data):
     plt.plot(pc_data.index[0:50],pc_data['velocity'][0:50],label="PhysiCell", color= 'green',alpha = 0.7)
     plt.plot(bd_data.index[0:50],bd_data['velocity'][0:50],label="Biodynamo",color= 'red',alpha = 0.6)
     plt.plot(ch_data.index[0:50],ch_data['velocity'][0:50],label="Chaste", alpha= 0.3)
+    plt.plot(ch_data.index[0:50],ch_data['velocity'][0:50],label="TiSim", alpha= 0.3)
+    plt.plot()
     plt.ylabel(ylabel="Velocity μM/s")
     plt.xlabel(xlabel="Time")
     plt.title("Velocity of the movement of a cell across time")
     plt.legend()
-    plt.savefig("updated_mechanics_movement_normalized_velocity.png",dpi=200)
+    plt.savefig("mechanics_movement_2025.png",dpi=200)
 
     plt.show()
     # print(pc_data['x'])
@@ -70,12 +72,13 @@ def main():
 
     # Specify at least 3 folder paths as arguments
     parser.add_argument("--pc-csv", action="store", dest = "pc_csv",help="Path to the PhysiCell position over time csv",
-                        default="../Physicell/output/new_results/mechanics_movement/cell_position_time.csv")
+                        default="../Physicell/output/archived_physicell_benchmark_results/mechanics_movement/cell_position_time.csv")
+    # Physicell/output/archived_physicell_benchmark_results/mechanics_movement/cell_position_time.csv
     parser.add_argument("--bd-csv",action="store", dest = "bd_csv" ,help="Path to BioDynaMo position over time csv",
                     default="../Biodynamo/unit_test_mechanics_friction_single/results/positions.csv")
     parser.add_argument("--ch-csv",action="store", dest = "ch_csv", help="Path to Chaste position over time csv",
                     default="../Chaste/unit_test_mechanics_friction/results/node_locations.dat")
-    # parser.add_argument("--ts-csv", help="Path to TiSim concentration over time csv")
+    parser.add_argument("--ts-csv", help="Path to TiSim concentration over time csv",default="../Tisim/mechanical pushing.csv")
     
     args = parser.parse_args()
     

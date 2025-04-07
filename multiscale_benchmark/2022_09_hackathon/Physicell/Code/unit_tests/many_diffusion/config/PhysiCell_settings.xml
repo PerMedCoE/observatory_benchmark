@@ -27,7 +27,7 @@
 	</parallel> 
 	
 	<save>
-		<folder>../output/new_results/diffusion_v1_u12044_1k/</folder>  
+		<folder>../output/new_results/diffusion_1k/diffusion_1/</folder>  
 
 		<full_data>
 			<interval units="min">0.1</interval>
@@ -225,7 +225,7 @@
 	<initial_conditions>
 		<cell_positions type="csv" enabled="true">
 			<folder>./config</folder>
-			<filename>cells1K.csv</filename>
+			<filename>cells.csv</filename>
 		</cell_positions>
 	</initial_conditions>	
 	

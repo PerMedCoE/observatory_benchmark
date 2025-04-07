@@ -833,7 +833,7 @@ void save_PhysiCell_to_MultiCellDS_v2( std::string filename_base , Microenvironm
 	add_PhysiCell_cells_to_open_xml_pugi_v2( BioFVM::biofvm_doc , filename_base , M  ); 
 	
 	// Lastly, save to the indicated filename 
-
+	
 	char filename[1024]; 
 	sprintf( filename , "%s.xml" , filename_base.c_str() ); 
 	BioFVM::biofvm_doc.save_file( filename );
@@ -851,6 +851,7 @@ void add_PhysiCell_cells_to_open_xml_pugi_v2( pugi::xml_document& xml_dom, std::
 	
 	// get number of death models 
 	static int nd = (*all_cells)[0]->phenotype.death.rates.size(); //
+	
 	// get number of custom data 
 	static int nc = 0; // 
 	static int nc_scalar = 0; 
@@ -878,7 +879,7 @@ void add_PhysiCell_cells_to_open_xml_pugi_v2( pugi::xml_document& xml_dom, std::
 		int size; 
 		int index = 0; 
 
-
+		
 // compatibilty : first 17 entries 
 		// ID 					<label index="0" size="1">ID</label>
 		name = "ID"; 

@@ -27,22 +27,22 @@ def create_parser():
 
 def generate_position_timestep_csv(output_folder,csv_fname):
     files = Path(output_folder).glob('*output*_cells.mat')
-    mcds = multicellds.Settings(output_folder+"/PhysiCell_settings.xml")
+    # mcds = multicellds.Settings(output_folder+"/PhysiCell_settings.xml")
     df_cell = pd.DataFrame(columns = ['x','y','z',"dt"])
-    interval = mcds.interval
+    # interval = mcds.interval
     i=0
     for file in sorted(files):
         mat = loadmat(file)
-        mat=mat['cells'][[0,1,2,3,53,54,55,56]]
+        mat=mat['cells'][[0,1,2,3,17,50,52,53,54,55,57,58,59]]
         print(mat)
-        df_mat = pd.DataFrame(mat.transpose(),columns = ['id','x','y','z','v1','mbx','mby','mbz'])
+        df_mat = pd.DataFrame(mat.transpose(),columns = ['id','x','y','z','velocity','is_motile','migration_speed','mbx','mby','mbz','mvx','mvy','mvz'])
         
         df_mat['dt'] = i
         df_cell= pd.concat([df_mat,df_cell],ignore_index=True)
-        i=i+interval
+        i=i+0.1
     
-    df_cell.to_csv(output_folder+"/"+csv_fname)
-    print(df_cell)
+    df_cell.sort_index(ascending=False).to_csv(output_folder+"/"+csv_fname)
+    print(df_cell.sort_index(ascending=False))
     return
 
 def generate_gif(output_folder,csv_fname,gif):

@@ -21,9 +21,9 @@ def create_parser():
     return parser
 def generate_csv(data_folder,csv_fname,generate_csv):
     files = Path(data_folder).glob('*output*_cells.mat')
-    mcds = multicellds.Settings(data_folder+"/PhysiCell_settings.xml")
+    # mcds = multicellds.Settings(data_folder+"/PhysiCell_settings.xml")
     df_cell = pd.DataFrame(columns = ['x','y','z',"dt",'radius'])
-    interval = mcds.interval
+    interval = 30
     i=0
     for file in sorted(files):
         mat = loadmat(file)
@@ -31,7 +31,7 @@ def generate_csv(data_folder,csv_fname,generate_csv):
         df_mat = pd.DataFrame(mat.transpose(),columns = ['id','x','y','z','total_volume','current_phase'])
         df_mat['dt'] = round(i, 1) 
         df_cell= pd.concat([df_mat,df_cell],ignore_index=True)
-        i=i+interval
+        i=i+30
     df_cell = df_cell.sort_values(by=['dt']).reset_index(drop=True)
     if generate_csv:
         df_cell.to_csv(data_folder+"/"+csv_fname)
@@ -99,4 +99,5 @@ if __name__ == '__main__':
     parser = create_parser()
     args = parser.parse_args()
     physicell_data = generate_csv(args.data_folder,args.csv_fname,args.generate_csv)
-    create_png(physicell_data,args.data_folder)
+    print(physicell_data)
+    # create_png(physicell_data,args.data_folder)

@@ -231,7 +231,6 @@ bool& Microenvironment::is_dirichlet_node( int voxel_index )
 void Microenvironment::set_substrate_dirichlet_activation( int substrate_index , bool new_value )
 {
 	dirichlet_activation_vector[substrate_index] = new_value; 
-	
 	for( int n = 0 ; n < mesh.voxels.size() ; n++ )
 	{ dirichlet_activation_vectors[n][substrate_index] = new_value; }
 	
@@ -854,24 +853,20 @@ void Microenvironment::simulate_bulk_sources_and_sinks( double dt )
 		
 		bulk_source_sink_solver_setup_done = true; 
 	}
-	
-	#pragma omp parallel for
+	// #pragma omp parallel for
 	for( unsigned int i=0; i < mesh.voxels.size() ; i++ )
 	{
 		bulk_supply_rate_function( this,i, &bulk_source_sink_solver_temp1[i] ); // temp1 = S
 		bulk_supply_target_densities_function( this,i, &bulk_source_sink_solver_temp2[i]); // temp2 = T
 		bulk_uptake_rate_function( this,i, &bulk_source_sink_solver_temp3[i] ); // temp3 = U
-
-		
+		// std::cout<<mesh.voxels[i].is_Dirichlet<<" bulk "<<bulk_source_sink_solver_temp3[i]<<std::endl;
 		bulk_source_sink_solver_temp2[i] *= bulk_source_sink_solver_temp1[i]; // temp2 = S*T
 		axpy( &(*p_density_vectors)[i] , dt , bulk_source_sink_solver_temp2[i] ); // out = out + dt*temp2 = out + dt*S*T
 		bulk_source_sink_solver_temp3[i] += bulk_source_sink_solver_temp1[i]; // temp3 = U+S
 		bulk_source_sink_solver_temp3[i] *= dt; // temp3 = dt*(U+S)
 		bulk_source_sink_solver_temp3[i] += one; // temp3 = 1 + dt*(U+S)
-		
 		(*p_density_vectors)[i] /= bulk_source_sink_solver_temp3[i];
 	}
-	
 	return; 
 }
 

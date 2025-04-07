@@ -1,0 +1,43 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug PhysiCell Project",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/project",  // Path to your executable
+            "args": [],  // Add any arguments if necessary
+            "stopAtEntry": true,  // Set to true if you want to stop at the entry point
+            "cwd": "${workspaceFolder}/",  // Working directory
+            "environment": [],
+            "externalConsole": false,  // Set to true if you want an external console for output
+            "MIMode": "gdb",  // tue gdb for Linux/macOS or "lldb" for macOS
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "miDebuggerPath": "/usr/bin/gdb",  // Path to gdb (use "lldb" for macOS)
+            "preLaunchTask": "build",  // Ensure your project is built before debugging
+            // "sourceFileMap": {
+            //     "${workspaceFolder}/core/": "${workspaceFolder}/core/",
+            //     "${workspaceFolder}/modules/": "${workspaceFolder}/modules/",
+            //     "${workspaceFolder}/BioFVM/": "${workspaceFolder}/BioFVM/",
+            //     "${workspaceFolder}/custom_modules/": "${workspaceFolder}/custom_modules/"
+            // },
+            "justMyCode": false,
+            "sourceFileMap": {
+                "./BioFVM/": "${workspaceFolder}/BioFVM/",
+                "./core/": "${workspaceFolder}/core/"
+                
+            },
+            "logging": {
+                "moduleLoad": true,
+                "trace": true,
+                "engineLogging": true
+            }
+        }
+    ]
+}

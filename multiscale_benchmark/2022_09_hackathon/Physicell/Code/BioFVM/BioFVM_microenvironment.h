@@ -162,7 +162,7 @@ class Microenvironment
 	void (*bulk_supply_rate_function)( Microenvironment* pMicroenvironment, int voxel_index, std::vector<double>* write_destination );
 	void (*bulk_supply_target_densities_function)( Microenvironment* pMicroenvironment, int voxel_index, std::vector<double>* write_destination );
 	void (*bulk_uptake_rate_function)( Microenvironment* pMicroenvironment, int voxel_index, std::vector<double>* write_destination );
-		
+	
 	/*! functions to simplify size queries */ 
 	
 	unsigned int number_of_densities( void ); 

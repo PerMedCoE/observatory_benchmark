@@ -16,7 +16,7 @@ def create_parser():
     parser.add_argument("--ch-csv",action="store", dest = "ch_csv", help="Path to Chaste cel",
                     default="../Chaste/use_case_2Ddisk/results/single-cell/tissuewidth.dat")
     parser.add_argument("--ts-csv",action="store", dest = "ts_csv", help="Path to TiSim cell",
-                        default = "Tisim/use_case_2Ddisk/results/result_2d_10_8_3.9_50.txt")
+                        default = "../Tisim/use_case_2Ddisk/results/result_2d_10_8_3.9_50.txt")
 
     return parser
 expe_dt = [336,386,408,481,506,646]
@@ -26,11 +26,11 @@ expe_diam = [ 1140 , 1400 , 1590 , 2040 , 2250 , 3040 ]
 biodynamo_dt = [14, 14.8333333333333, 15.6666666666667, 16.5, 17.3333333333333, 18.1666666666666, 18.9999999999999, 19.8333333333332, 20.6666666666665, 21.4999999999998, 22.333333333333, 23.1666666666663, 23.9999999999996, 24.8333333333329, 25.6666666666665, 26.5]
 biodynamo_diam =  [1240, 1320, 1440, 1560, 1680, 1800, 1920, 2040, 2160, 2280, 2400, 2520, 2640, 2760, 2880, 3000]
 
-df_tsim_pre = pd.read_csv('./tisim_result_2d_10_8_3.9_50_20221102.txt',sep='\t',engine='python')
-tisim_diam = [2*x for x in df_tsim_pre['Radius of cell population [um]'].iloc[142:]]
+df_tsim_pre = pd.read_csv("../Tisim/use_case_2Ddisk/results/result_2d_10_8_3.9_50.txt",sep='\t',engine='python')
+tisim_diam = [2*x for x in df_tsim_pre['Radius of cell population [μm]'].iloc[142:]]
 tisim_dt = [x/86400 for x in df_tsim_pre['Time [s]'].iloc[142:]]
 
-df_pc = pd.read_csv('./physicell1428.csv' ,sep=',',engine='python')
+df_pc = pd.read_csv('/home/tntiniak/Work/github/Benchmarks/observatory_benchmark/multiscale_benchmark/2022_09_hackathon/Physicell/output/physicell1428.csv' ,sep=',',engine='python')
 df_pc = df_pc.drop(columns=df_pc.columns[0])
 
 df_exp = pd.DataFrame(data=zip(expe_dt,expe_diam),columns=['dt','diam'])
@@ -45,7 +45,7 @@ df_all = pd.concat(frames)
 
 
 # chaste
-with open('tissuewidth.dat') as results_file:
+with open('/home/tntiniak/Work/github/Benchmarks/observatory_benchmark/multiscale_benchmark/2022_09_hackathon/Chaste/use_case_2Ddisk/results/single-cell/tissuewidth.dat') as results_file:
     times = []
     tissue_widths = []
     num_cells = []
