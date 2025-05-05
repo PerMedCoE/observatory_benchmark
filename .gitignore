@@ -1,0 +1,18 @@
+# Ignore all XML files
+*.xml
+
+# But keep PhysiCell_settings.xml
+!PhysiCell_settings.xml
+
+# Ignore SVG files
+*.svg
+
+# Ignore MATLAB .mat files
+*.mat
+
+# Ignore C++ source files
+*.cpp
+
+# Ignore compiled object files
+*.o
+
