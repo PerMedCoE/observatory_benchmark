@@ -29,7 +29,7 @@
     <save>
         <folder>../results/custom_stochastic_cell_cycle</folder>
         <full_data>
-            <interval units="min">30</interval>
+            <interval units="min">10</interval>
             <enable>true</enable>
         </full_data>
         <SVG>

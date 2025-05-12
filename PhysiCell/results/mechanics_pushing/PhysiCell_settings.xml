@@ -36,7 +36,7 @@
     </parallel>
 
     <save>
-        <folder>mechanics_pushing</folder>
+        <folder>../results/mechanics_pushing</folder>
         <full_data>
             <interval units="min">0.1</interval>
             <enable>true</enable>
@@ -145,7 +145,7 @@
                     <relative_rupture_volume units="dimensionless">2.0</relative_rupture_volume>
                 </volume>
                 <mechanics>
-                    <cell_cell_adhesion_strength units="micron/min">0.4</cell_cell_adhesion_strength>
+                    <cell_cell_adhesion_strength units="micron/min">0.04</cell_cell_adhesion_strength>
                     <cell_cell_repulsion_strength units="micron/min">10</cell_cell_repulsion_strength>
                     <relative_maximum_adhesion_distance units="dimensionless">1.25</relative_maximum_adhesion_distance>
                     <cell_adhesion_affinities>
