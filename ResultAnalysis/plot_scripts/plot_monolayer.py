@@ -150,13 +150,11 @@ for result in ['BioDynaMo', 'Chaste', 'PhysiCell', 'TiSim']:
         zorder=2
     )
 
-# Customize first plot
 ax1.set_xlabel("Time (days)", labelpad=2)
 ax1.set_ylabel("Diameter (μm)", labelpad=2)
 ax1.set_xlim(left=df_all['dt'].min() - 0.5, right=df_all['dt'].max() + 0.5)
 ax1.set_ylim(bottom=df_all['diam'].min() - 100, top=df_all['diam'].max() + 100)
 
-# Add grid to first plot (subtle)
 ax1.grid(True, which='major', axis='both', color='grey', linestyle='-', linewidth=0.2, alpha=0.2)
 ax1.set_axisbelow(True)
 
@@ -213,7 +211,7 @@ plt.tight_layout()
 save_dir = "./ResultAnalysis/plots/monolayer_plots"
 os.makedirs(save_dir, exist_ok=True)
 
-# Save as PDF (preferred for publications)
+# Save as PDF 
 plt.savefig(os.path.join(save_dir, "monolayer_comparison_combined.pdf"), 
             format='pdf',
             bbox_inches='tight', 

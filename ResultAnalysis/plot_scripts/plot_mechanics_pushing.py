@@ -81,8 +81,7 @@ ax1.spines['right'].set_visible(False)
 ax1.grid(True, alpha=0.3, linewidth=0.5)
 ax1.set_title("Full time course", fontsize=10)
 
-# --- ZOOMED PLOT (ax2) ---
-# Only plot data up to 3 minutes
+# Only plot data up to 3 minutes (ax2)
 ax2.plot(pc_dist_dt['dt'][pc_dist_dt['dt'] <= 3], pc_dist_dt['dx'][pc_dist_dt['dt'] <= 3], color=colors['PhysiCell'], linestyle=linestyles['PhysiCell'], alpha=0.9)
 ax2.plot(bd_dist['dt'][bd_dist['dt'] <= 3], bd_dist['dx'][bd_dist['dt'] <= 3], color=colors['BioDynaMo'], linestyle=linestyles['BioDynaMo'], alpha=0.9)
 ax2.plot(ch_dist['dt'][np.array(ch_dist['dt']) <= 3], ch_dist['dx'][np.array(ch_dist['dt']) <= 3], color=colors['Chaste'], linestyle=linestyles['Chaste'], alpha=0.9)
@@ -109,7 +108,6 @@ plt.savefig(os.path.join(save_dir, "mechanics_movement_dualpanel.pdf"), format='
 plt.savefig(os.path.join(save_dir, "mechanics_movement_dualpanel.svg"), format='svg', bbox_inches='tight', pad_inches=0.1)
 plt.savefig(os.path.join(save_dir, "mechanics_movement_dualpanel.png"), dpi=300, bbox_inches='tight', pad_inches=0.1, format='png')
 
-# --- NEW: Normalized distance plot (distance / radius) ---
 
 # Define the cell radius (from your reference line, it's 10 μm)
 cell_radius = 10.0
@@ -147,7 +145,6 @@ plt.savefig(os.path.join(save_dir, "mechanics_movement_normalized.pdf"), format=
 plt.savefig(os.path.join(save_dir, "mechanics_movement_normalized.svg"), format='svg', bbox_inches='tight', pad_inches=0.1)
 plt.savefig(os.path.join(save_dir, "mechanics_movement_normalized.png"), dpi=300, bbox_inches='tight', pad_inches=0.1, format='png')
 
-# --- NEW: Normalized distance, zoomed to first 3 minutes ---
 
 fig3, ax_norm_zoom = plt.subplots(figsize=(8.9, 4), dpi=300)
 

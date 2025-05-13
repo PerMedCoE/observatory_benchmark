@@ -183,7 +183,7 @@ plt.subplots_adjust(bottom=0.2)  # Add more space at the bottom for the legend
 save_dir = "./ResultAnalysis/plots/cell_cycle_plots"
 os.makedirs(save_dir, exist_ok=True)
 
-# Save as PDF (preferred for publications)
+# Save as PDF
 plt.savefig(os.path.join(save_dir, "fixed_cell_cycle_volumes.pdf"), 
             format='pdf',
             bbox_inches='tight', 
