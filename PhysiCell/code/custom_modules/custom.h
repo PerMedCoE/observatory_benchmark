@@ -71,12 +71,12 @@
 using namespace BioFVM; 
 using namespace PhysiCell;
 
-static const double EPSILON = std::numeric_limits<double>::epsilon();
-
 // setup functions to help us along 
 
 void create_cell_types( void );
 void setup_tissue( void ); 
+// 
+// void bulk_uptake_rate_function_u(Microenvironment* pMicroenvironment, int voxel_index, std::vector<double>* write_destination);
 
 // set up the BioFVM microenvironment 
 void setup_microenvironment( void ); 
@@ -84,16 +84,11 @@ void setup_microenvironment( void );
 // custom pathology coloring function 
 
 std::vector<std::string> my_coloring_function( Cell* );
-
+std::vector<int> get_sinks(std::string filename);
 // custom functions can go here 
 
 void phenotype_function( Cell* pCell, Phenotype& phenotype, double dt );
 void custom_function( Cell* pCell, Phenotype& phenotype , double dt );
 
 void contact_function( Cell* pMe, Phenotype& phenoMe , Cell* pOther, Phenotype& phenoOther , double dt ); 
-
-void add_friction_term(Cell* pC, Phenotype& phenotype, double dt);
-
-
-
 
