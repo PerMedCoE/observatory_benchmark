@@ -1,0 +1,1755 @@
+Using config file ./config/PhysiCell_settings.xml ... 
+Setting up RNG with seed 0
+0
+dc? 0
+User parameters in XML config file: 
+Bool parameters:: 
+
+Int parameters:: 
+number_of_cells: 0 [none]
+random_seed: 0 [dimensionless]
+
+Double parameters:: 
+
+String parameters:: 
+
+
+which boundaries?
+0 0 0 0 0 0
+
+Microenvironment summary: microenvironment: 
+
+Mesh information: 
+type: uniform Cartesian
+Domain: [-30,30] micron x [-30,30] micron x [-30,30] micron
+   resolution: dx = 20 micron
+   voxels: 27
+   voxel faces: 0
+   volume: 216000 cubic micron
+Densities: (1 total)
+   substrate:
+     units: dimensionless
+     diffusion coefficient: 100000 micron^2 / min
+     decay rate: 10 min^-1
+     diffusion length scale: 100 micron
+     initial condition: 0 dimensionless
+     boundary condition: 0 dimensionless (enabled: false)
+
+virtual_wall_at_domain_edge: enabled
+Pre-processing type 0 named agent
+Processing agent ... 
+what?!?
+  --------- attachment_elastic_constant = 0.01
+Warning: When processing the agent cell definition: 
+	Could not find cell type default for phagocytosis.
+	Ignoring this live phagocytosis rate!
+
+Warning: When processing the agent cell definition: 
+	Could not find cell type default for cell attack.
+	Ignoring this cell attack rate!
+
+Warning: When processing the agent cell definition: 
+	Could not find cell type default for cell fusion.
+	Ignoring this cell fusion rate!
+
+Warning: When processing the agent cell definition: 
+	Could not find cell type default for cell transformation.
+	Ignoring this cell transformation rate!
+
+Signals: 
+=======
+0 : substrate
+1 : intracellular substrate
+2 : substrate gradient
+3 : pressure
+4 : volume
+5 : contact with agent
+6 : contact with live cell
+7 : contact with dead cell
+8 : contact with apoptotic cell
+9 : contact with necrotic cell
+10 : contact with other dead cell
+11 : contact with basement membrane
+12 : damage
+13 : damage delivered
+14 : attacking
+15 : dead
+16 : total attack time
+17 : time
+18 : custom:sample
+19 : apoptotic
+20 : necrotic
+
+
+Behaviors: 
+=========
+0 : substrate secretion
+1 : substrate secretion target
+2 : substrate uptake
+3 : substrate export
+4 : cycle entry
+5 : exit from cycle phase 1
+6 : exit from cycle phase 2
+7 : exit from cycle phase 3
+8 : exit from cycle phase 4
+9 : exit from cycle phase 5
+10 : apoptosis
+11 : necrosis
+12 : migration speed
+13 : migration bias
+14 : migration persistence time
+15 : chemotactic response to substrate
+16 : cell-cell adhesion
+17 : cell-cell adhesion elastic constant
+18 : adhesive affinity to agent
+19 : relative maximum adhesion distance
+20 : cell-cell repulsion
+21 : cell-BM adhesion
+22 : cell-BM repulsion
+23 : phagocytose apoptotic cell
+24 : phagocytose necrotic cell
+25 : phagocytose other dead cell
+26 : phagocytose agent
+27 : attack agent
+28 : fuse to agent
+29 : transition to agent
+30 : asymmetric division to agent
+31 : custom:sample
+32 : is_movable
+33 : immunogenicity to agent
+34 : cell attachment rate
+35 : cell detachment rate
+36 : maximum number of cell attachments
+37 : attack damage rate
+38 : attack duration
+39 : damage rate
+40 : damage repair rate
+
+
+0 :: type:0 name: agent
+	 cycle model: Flow cytometry model (separated) (code=6)
+		Phase 0: G0/G1
+		Phase 1: S
+		Phase 2: G2
+		Phase 3: M
+		Cycle transitions: 
+		-----------------
+		G0/G1 --> S w mean duration 420 min
+		S --> G2 w mean duration 360 min
+		G2 --> M w mean duration 180 min
+		M --> G0/G1 w mean duration 120 min
+	 death models: 
+		0 : Apoptosis (code=100) with rate 0 1/min
+		death phase transitions: 
+		------------------------
+		Apoptotic --> Debris w mean duration 516 min
+		1 : Necrosis (code=101) with rate 0 1/min
+		death phase transitions: 
+		------------------------
+		Necrotic (swelling) --> Necrotic (lysed) w mean duration 1e-16 min
+		Necrotic (lysed) --> Debris w mean duration 86400 min
+	 key functions: 
+		 migration bias rule: false
+		 custom rule: false
+		 phenotype rule: true
+		 volume update function: true
+		 mechanics function: true
+		 contact function: false
+		 cell division function: false
+	motility (enabled: false in 2D)
+		speed: 1 micron/min
+		bias: 0 
+		persistence time: 1 min
+		chemotaxis (enabled: false)
+			along 1 * grad(substrate) 
+	mechanics:
+		cell_cell_adhesion_strength: 0.4
+		cell_cell_repulsion_strength: 10
+		rel max adhesion dist: 1.25
+		cell_BM_adhesion_strength: 4
+		cell_BM_repulsion_strength: 100
+		attachment_elastic_constant: 0.01
+		attachment_rate: 0
+		detachment_rate: 0
+	custom data: 
+		sample: 1 dimensionless
+	custom vector data: 
+			NOTE: custom vector data will eventually be merged with custom data
+Loading cells from CSV file ./config/cells.csv ... 
+Loading cells from simple (v1) CSV file ./config/cells.csv ... 
+Creating agent (type=0) at 0 0 0 
+Copying ./config/cells.csv to output folder.
+Copy command: cp ./config/cells.csv ../results/custom_stochastic_cell_cycle/cells.csv
+0.00238095 
+Using PhysiCell version 1.14.2
+	Please cite DOI: 10.1371/journal.pcbi.1005991
+	Project website: http://physicell.org
+
+See ALL_CITATIONS.txt for this list.
+current simulated time: 0 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 2.0967e-05 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 2.8247e-05 seconds 
+
+
+Using method diffusion_decay_solver__constant_coefficients_LOD_3D (implicit 3-D LOD with Thomas Algorithm) ... 
+
+0 elapsed time in phase 0 and 6
+0 elapsed time in phase 0 and 6
+G0/G1 phase: 0.00204186
+6 elapsed time in phase 0 and 6
+12 elapsed time in phase 0 and 6
+18 elapsed time in phase 0 and 6
+24 elapsed time in phase 0 and 6
+current simulated time: 30 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0851917 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.0852284 seconds 
+
+30 elapsed time in phase 0 and 6
+36 elapsed time in phase 0 and 6
+42 elapsed time in phase 0 and 6
+48 elapsed time in phase 0 and 6
+54 elapsed time in phase 0 and 6
+current simulated time: 60 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.028614 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.113846 seconds 
+
+60 elapsed time in phase 0 and 6
+66 elapsed time in phase 0 and 6
+72 elapsed time in phase 0 and 6
+78 elapsed time in phase 0 and 6
+84 elapsed time in phase 0 and 6
+current simulated time: 90 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0151234 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.128972 seconds 
+
+90 elapsed time in phase 0 and 6
+96 elapsed time in phase 0 and 6
+102 elapsed time in phase 0 and 6
+108 elapsed time in phase 0 and 6
+114 elapsed time in phase 0 and 6
+current simulated time: 120 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0146298 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.143605 seconds 
+
+120 elapsed time in phase 0 and 6
+126 elapsed time in phase 0 and 6
+132 elapsed time in phase 0 and 6
+138 elapsed time in phase 0 and 6
+144 elapsed time in phase 0 and 6
+current simulated time: 150 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0145293 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.158137 seconds 
+
+150 elapsed time in phase 0 and 6
+156 elapsed time in phase 0 and 6
+162 elapsed time in phase 0 and 6
+168 elapsed time in phase 0 and 6
+174 elapsed time in phase 0 and 6
+current simulated time: 180 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0144422 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.172582 seconds 
+
+180 elapsed time in phase 0 and 6
+186 elapsed time in phase 0 and 6
+192 elapsed time in phase 0 and 6
+198 elapsed time in phase 0 and 6
+204 elapsed time in phase 0 and 6
+current simulated time: 210 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0145719 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.187157 seconds 
+
+210 elapsed time in phase 0 and 6
+216 elapsed time in phase 0 and 6
+222 elapsed time in phase 0 and 6
+228 elapsed time in phase 0 and 6
+234 elapsed time in phase 0 and 6
+current simulated time: 240 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0145909 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.201752 seconds 
+
+240 elapsed time in phase 0 and 6
+246 elapsed time in phase 0 and 6
+252 elapsed time in phase 0 and 6
+258 elapsed time in phase 0 and 6
+264 elapsed time in phase 0 and 6
+current simulated time: 270 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.014519 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.216274 seconds 
+
+270 elapsed time in phase 0 and 6
+276 elapsed time in phase 0 and 6
+282 elapsed time in phase 0 and 6
+288 elapsed time in phase 0 and 6
+294 elapsed time in phase 0 and 6
+current simulated time: 300 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0145528 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.230829 seconds 
+
+300 elapsed time in phase 0 and 6
+306 elapsed time in phase 0 and 6
+312 elapsed time in phase 0 and 6
+318 elapsed time in phase 0 and 6
+324 elapsed time in phase 0 and 6
+current simulated time: 330 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0144502 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.245282 seconds 
+
+330 elapsed time in phase 0 and 6
+336 elapsed time in phase 0 and 6
+342 elapsed time in phase 0 and 6
+348 elapsed time in phase 0 and 6
+354 elapsed time in phase 0 and 6
+current simulated time: 360 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0144364 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.259721 seconds 
+
+360 elapsed time in phase 0 and 6
+366 elapsed time in phase 0 and 6
+372 elapsed time in phase 0 and 6
+378 elapsed time in phase 0 and 6
+384 elapsed time in phase 0 and 6
+current simulated time: 390 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.014457 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.274181 seconds 
+
+390 elapsed time in phase 0 and 6
+396 elapsed time in phase 0 and 6
+402 elapsed time in phase 0 and 6
+408 elapsed time in phase 0 and 6
+414 elapsed time in phase 0 and 6
+current simulated time: 420 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0144658 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.288649 seconds 
+
+420 elapsed time in phase 0 and 6
+426 elapsed time in phase 0 and 6
+432 elapsed time in phase 0 and 6
+438 elapsed time in phase 0 and 6
+444 elapsed time in phase 0 and 6
+current simulated time: 450 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.014436 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.303088 seconds 
+
+450 elapsed time in phase 0 and 6
+456 elapsed time in phase 0 and 6
+462 elapsed time in phase 0 and 6
+468 elapsed time in phase 0 and 6
+474 elapsed time in phase 0 and 6
+current simulated time: 480 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0143821 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.317473 seconds 
+
+480 elapsed time in phase 0 and 6
+486 elapsed time in phase 0 and 6
+0 elapsed time in phase 1 and 6
+0 elapsed time in phase 1 and 6
+S phase: 0.00329066
+6 elapsed time in phase 1 and 6
+12 elapsed time in phase 1 and 6
+current simulated time: 510 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0144814 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.331957 seconds 
+
+18 elapsed time in phase 1 and 6
+24 elapsed time in phase 1 and 6
+30 elapsed time in phase 1 and 6
+36 elapsed time in phase 1 and 6
+42 elapsed time in phase 1 and 6
+current simulated time: 540 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0145416 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.346502 seconds 
+
+48 elapsed time in phase 1 and 6
+54 elapsed time in phase 1 and 6
+60 elapsed time in phase 1 and 6
+66 elapsed time in phase 1 and 6
+72 elapsed time in phase 1 and 6
+current simulated time: 570 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0142558 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.360761 seconds 
+
+78 elapsed time in phase 1 and 6
+84 elapsed time in phase 1 and 6
+90 elapsed time in phase 1 and 6
+96 elapsed time in phase 1 and 6
+102 elapsed time in phase 1 and 6
+current simulated time: 600 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0141216 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.374885 seconds 
+
+108 elapsed time in phase 1 and 6
+114 elapsed time in phase 1 and 6
+120 elapsed time in phase 1 and 6
+126 elapsed time in phase 1 and 6
+132 elapsed time in phase 1 and 6
+current simulated time: 630 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0140613 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.388948 seconds 
+
+138 elapsed time in phase 1 and 6
+144 elapsed time in phase 1 and 6
+150 elapsed time in phase 1 and 6
+156 elapsed time in phase 1 and 6
+162 elapsed time in phase 1 and 6
+current simulated time: 660 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.01408 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.403031 seconds 
+
+168 elapsed time in phase 1 and 6
+174 elapsed time in phase 1 and 6
+180 elapsed time in phase 1 and 6
+186 elapsed time in phase 1 and 6
+192 elapsed time in phase 1 and 6
+current simulated time: 690 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.01408 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.417113 seconds 
+
+198 elapsed time in phase 1 and 6
+204 elapsed time in phase 1 and 6
+210 elapsed time in phase 1 and 6
+216 elapsed time in phase 1 and 6
+222 elapsed time in phase 1 and 6
+current simulated time: 720 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.014135 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.43125 seconds 
+
+228 elapsed time in phase 1 and 6
+234 elapsed time in phase 1 and 6
+240 elapsed time in phase 1 and 6
+246 elapsed time in phase 1 and 6
+252 elapsed time in phase 1 and 6
+current simulated time: 750 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0141029 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.445356 seconds 
+
+258 elapsed time in phase 1 and 6
+264 elapsed time in phase 1 and 6
+270 elapsed time in phase 1 and 6
+276 elapsed time in phase 1 and 6
+282 elapsed time in phase 1 and 6
+current simulated time: 780 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0140484 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.459406 seconds 
+
+288 elapsed time in phase 1 and 6
+294 elapsed time in phase 1 and 6
+300 elapsed time in phase 1 and 6
+0 elapsed time in phase 2 and 6
+0 elapsed time in phase 2 and 6
+G2 phase: 0.00829501
+6 elapsed time in phase 2 and 6
+current simulated time: 810 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0139304 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.473339 seconds 
+
+12 elapsed time in phase 2 and 6
+18 elapsed time in phase 2 and 6
+24 elapsed time in phase 2 and 6
+30 elapsed time in phase 2 and 6
+36 elapsed time in phase 2 and 6
+current simulated time: 840 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0139668 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.487308 seconds 
+
+42 elapsed time in phase 2 and 6
+48 elapsed time in phase 2 and 6
+54 elapsed time in phase 2 and 6
+60 elapsed time in phase 2 and 6
+66 elapsed time in phase 2 and 6
+current simulated time: 870 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0139732 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.501283 seconds 
+
+72 elapsed time in phase 2 and 6
+78 elapsed time in phase 2 and 6
+84 elapsed time in phase 2 and 6
+90 elapsed time in phase 2 and 6
+96 elapsed time in phase 2 and 6
+current simulated time: 900 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0140063 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.515292 seconds 
+
+102 elapsed time in phase 2 and 6
+108 elapsed time in phase 2 and 6
+114 elapsed time in phase 2 and 6
+0 elapsed time in phase 3 and 6
+0 elapsed time in phase 3 and 6
+M phase: 0.00555556
+6 elapsed time in phase 3 and 6
+current simulated time: 930 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0140589 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.529353 seconds 
+
+12 elapsed time in phase 3 and 6
+18 elapsed time in phase 3 and 6
+24 elapsed time in phase 3 and 6
+30 elapsed time in phase 3 and 6
+36 elapsed time in phase 3 and 6
+current simulated time: 960 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0145886 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.543944 seconds 
+
+42 elapsed time in phase 3 and 6
+48 elapsed time in phase 3 and 6
+54 elapsed time in phase 3 and 6
+60 elapsed time in phase 3 and 6
+66 elapsed time in phase 3 and 6
+current simulated time: 990 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0143544 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.558301 seconds 
+
+72 elapsed time in phase 3 and 6
+78 elapsed time in phase 3 and 6
+84 elapsed time in phase 3 and 6
+90 elapsed time in phase 3 and 6
+96 elapsed time in phase 3 and 6
+current simulated time: 1020 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0145503 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.572854 seconds 
+
+102 elapsed time in phase 3 and 6
+108 elapsed time in phase 3 and 6
+114 elapsed time in phase 3 and 6
+120 elapsed time in phase 3 and 6
+126 elapsed time in phase 3 and 6
+current simulated time: 1050 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0147993 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.587657 seconds 
+
+132 elapsed time in phase 3 and 6
+138 elapsed time in phase 3 and 6
+144 elapsed time in phase 3 and 6
+150 elapsed time in phase 3 and 6
+156 elapsed time in phase 3 and 6
+current simulated time: 1080 min (max: 2880 min)
+total agents: 1
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0153358 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.602996 seconds 
+
+162 elapsed time in phase 3 and 6
+168 elapsed time in phase 3 and 6
+174 elapsed time in phase 3 and 6
+0 elapsed time in phase 0 and 6
+0 elapsed time in phase 0 and 6
+0G0/G1 phase:  elapsed time in phase 0 and 0.002182
+6
+0 elapsed time in phase 0 and 6
+G0/G1 phase: 0.003406
+6 elapsed time in phase 0 and 66
+ elapsed time in phase 0 and 6
+current simulated time: 1110 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0150674 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.618066 seconds 
+
+1212 elapsed time in phase  elapsed time in phase 0 and 06
+ and 6
+18 elapsed time in phase 0 and 18 elapsed time in phase 60
+ and 6
+24 elapsed time in phase 0 and 246 elapsed time in phase 
+0 and 6
+30 elapsed time in phase 0 and 6
+30 elapsed time in phase 0 and 6
+36 elapsed time in phase 36 elapsed time in phase 00 and  and 6
+6
+current simulated time: 1140 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.021783 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.639854 seconds 
+
+42 elapsed time in phase 0 and 426 elapsed time in phase 0 and 
+6
+48 elapsed time in phase 480 and  elapsed time in phase 60 and 
+6
+5454 elapsed time in phase  elapsed time in phase 0 and 0 and 6
+6
+60 elapsed time in phase 60 elapsed time in phase 00 and  and 66
+
+6666 elapsed time in phase  elapsed time in phase 0 and 06 and 
+6
+current simulated time: 1170 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0200132 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.659871 seconds 
+
+72 elapsed time in phase 72 elapsed time in phase 00 and  and 66
+
+7878 elapsed time in phase  elapsed time in phase 00 and  and 66
+
+8484 elapsed time in phase  elapsed time in phase 00 and  and 66
+
+9090 elapsed time in phase 0 elapsed time in phase 0 and  and 66
+
+9696 elapsed time in phase  elapsed time in phase 00 and  and 6
+6
+current simulated time: 1200 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0181053 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.67798 seconds 
+
+102 elapsed time in phase 0 and 1026
+ elapsed time in phase 0 and 6
+108 elapsed time in phase 1080 elapsed time in phase 0 and  and 6
+6
+114114 elapsed time in phase 0 and 6 elapsed time in phase 
+0 and 6
+120120 elapsed time in phase  elapsed time in phase 00 and  and 6
+6
+126 elapsed time in phase 0 and 6126
+ elapsed time in phase 0 and 6
+current simulated time: 1230 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0165483 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.694533 seconds 
+
+132 elapsed time in phase 0 and 6
+132 elapsed time in phase 0 and 6
+138 elapsed time in phase 0138 and  elapsed time in phase 06 and 
+6
+144 elapsed time in phase 0 and 6
+144 elapsed time in phase 0 and 6
+150 elapsed time in phase 0 and 6
+150 elapsed time in phase 0 and 6
+156 elapsed time in phase 0 and 6
+156 elapsed time in phase 0 and 6
+current simulated time: 1260 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0155041 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.710041 seconds 
+
+162 elapsed time in phase 0 and 6
+162 elapsed time in phase 0 and 6
+168 elapsed time in phase 0 and 6
+168 elapsed time in phase 0 and 6
+174 elapsed time in phase 0 and 1746 elapsed time in phase 
+0 and 6
+180 elapsed time in phase 0180 and  elapsed time in phase 06 and 
+6
+186 elapsed time in phase 0 and 6
+186 elapsed time in phase 0 and 6
+current simulated time: 1290 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0148829 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.724926 seconds 
+
+192 elapsed time in phase 0 and 6
+192 elapsed time in phase 0 and 6
+198 elapsed time in phase 0 and 6
+198 elapsed time in phase 0 and 6
+204 elapsed time in phase 2040 elapsed time in phase  and 0 and 6
+6
+210 elapsed time in phase 0 and 6
+210 elapsed time in phase 0 and 6
+216 elapsed time in phase 0 and 2166 elapsed time in phase 
+0 and 6
+current simulated time: 1320 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0147779 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.739708 seconds 
+
+222 elapsed time in phase 0 and 2226
+ elapsed time in phase 0 and 6
+228 elapsed time in phase 0 and 6
+228 elapsed time in phase 0 and 6
+234 elapsed time in phase 0 and 6
+234 elapsed time in phase 0 and 6
+240 elapsed time in phase 0 and 6
+240 elapsed time in phase 0 and 6
+246 elapsed time in phase 0 and 6
+246 elapsed time in phase 0 and 6
+current simulated time: 1350 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.014245 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.753956 seconds 
+
+252 elapsed time in phase 0 and 6
+252 elapsed time in phase 0 and 6
+258 elapsed time in phase 0 and 6
+258 elapsed time in phase 0 and 6
+264 elapsed time in phase 0 and 6
+264 elapsed time in phase 0 and 6
+270 elapsed time in phase 0 and 6
+270 elapsed time in phase 0 and 6
+276 elapsed time in phase 0 and 6
+276 elapsed time in phase 0 and 6
+current simulated time: 1380 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0142435 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.768202 seconds 
+
+282 elapsed time in phase 0 and 6
+282 elapsed time in phase 0 and 6
+288 elapsed time in phase 0 and 6
+288 elapsed time in phase 0 and 6
+0 elapsed time in phase 1 and 6
+0 elapsed time in phase 1 and 6
+S phase: 294 elapsed time in phase 0.00233512
+0 and 6
+6 elapsed time in phase 1 and 6
+300 elapsed time in phase 0 and 6
+12 elapsed time in phase 1 and 6
+306 elapsed time in phase 0 and 6
+current simulated time: 1410 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0143467 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.782551 seconds 
+
+18 elapsed time in phase 1 and 6
+312 elapsed time in phase 0 and 6
+24 elapsed time in phase 1 and 6
+318 elapsed time in phase 0 and 6
+30 elapsed time in phase 1 and 6
+324 elapsed time in phase 0 and 6
+36 elapsed time in phase 1 and 6330 elapsed time in phase 0
+ and 6
+336 elapsed time in phase 42 elapsed time in phase 01 and  and 66
+
+current simulated time: 1440 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0149391 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.797493 seconds 
+
+342 elapsed time in phase 0 and 6
+48 elapsed time in phase 1 and 6
+54 elapsed time in phase 1 and 6348 elapsed time in phase 
+0 and 6
+60 elapsed time in phase 1 and 6
+354 elapsed time in phase 0 and 6
+66 elapsed time in phase 1 and 6
+360 elapsed time in phase 0 and 6
+72 elapsed time in phase 1 and 3666
+ elapsed time in phase 0 and 6
+current simulated time: 1470 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0150392 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.812535 seconds 
+
+78 elapsed time in phase 1 and 6
+372 elapsed time in phase 0 and 6
+84 elapsed time in phase 1 and 6
+378 elapsed time in phase 0 and 6
+90 elapsed time in phase 1 and 6
+384 elapsed time in phase 0 and 6
+96 elapsed time in phase 1 and 6
+390 elapsed time in phase 0 and 6
+102 elapsed time in phase 1396 elapsed time in phase  and 0 and 66
+
+current simulated time: 1500 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0152264 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.827765 seconds 
+
+402 elapsed time in phase 0 and 6
+108 elapsed time in phase 1 and 6
+408 elapsed time in phase 0 and 1146
+ elapsed time in phase 1 and 6
+120414 elapsed time in phase  elapsed time in phase 01 and  and 6
+6
+420126 elapsed time in phase  elapsed time in phase 0 and 1 and 66
+
+426132 elapsed time in phase  elapsed time in phase 1 and 06 and 
+6
+current simulated time: 1530 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0154664 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.843235 seconds 
+
+138432 elapsed time in phase  elapsed time in phase 0 and 1 and 6
+6
+144 elapsed time in phase 4381 and  elapsed time in phase 0 and 6
+6
+150 elapsed time in phase 1 and 6
+444 elapsed time in phase 0 and 6
+450 elapsed time in phase 1560 and  elapsed time in phase 1 and 6
+6
+0 elapsed time in phase 1621 and  elapsed time in phase 61 and 
+0 elapsed time in phase 1 and 6
+S phase: 60.00315127
+
+current simulated time: 1560 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0159111 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.859148 seconds 
+
+1686 elapsed time in phase  elapsed time in phase 1 and 1 and 6
+6
+174 elapsed time in phase 1 and 126
+ elapsed time in phase 1 and 6
+18180 elapsed time in phase  elapsed time in phase 1 and 1 and 66
+
+24186 elapsed time in phase  elapsed time in phase 1 and 16 and 
+6
+192 elapsed time in phase 1 and 306 elapsed time in phase 
+1 and 6
+current simulated time: 1590 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0150713 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.874223 seconds 
+
+198 elapsed time in phase 1 and 636
+ elapsed time in phase 1 and 6
+42 elapsed time in phase 1204 elapsed time in phase 1 and  and 6
+6
+48210 elapsed time in phase 1 and  elapsed time in phase 1 and 66
+
+54216 elapsed time in phase 1 and  elapsed time in phase 61 and 
+6
+22260 elapsed time in phase  elapsed time in phase 1 and 1 and 66
+
+current simulated time: 1620 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0149302 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.889156 seconds 
+
+228 elapsed time in phase 1 and 6
+66 elapsed time in phase 1 and 6
+72 elapsed time in phase 234 elapsed time in phase 11 and  and 6
+6
+78 elapsed time in phase 1 and 2406
+ elapsed time in phase 1 and 6
+24684 elapsed time in phase  elapsed time in phase 1 and 1 and 6
+6
+25290 elapsed time in phase  elapsed time in phase 1 and 1 and 6
+6
+current simulated time: 1650 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.015097 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.904256 seconds 
+
+96258 elapsed time in phase  elapsed time in phase 1 and 1 and 6
+6
+264102 elapsed time in phase  elapsed time in phase 1 and 1 and 6
+6
+108 elapsed time in phase 1 and 6
+270 elapsed time in phase 1 and 6
+114 elapsed time in phase 1 and 6
+276 elapsed time in phase 1 and 6
+282 elapsed time in phase 1 and 6
+120 elapsed time in phase 1 and 6
+current simulated time: 1680 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0151034 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.919362 seconds 
+
+288 elapsed time in phase 1 and 6
+126 elapsed time in phase 1 and 6
+294132 elapsed time in phase  elapsed time in phase 1 and 1 and 66
+
+300 elapsed time in phase 1 and 6
+138 elapsed time in phase 1 and 6
+306 elapsed time in phase 1 and 6
+144 elapsed time in phase 1 and 6
+312 elapsed time in phase 1 and 6
+150 elapsed time in phase 1 and 6
+current simulated time: 1710 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0148887 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.934254 seconds 
+
+318 elapsed time in phase 1 and 6
+156 elapsed time in phase 1 and 6
+324 elapsed time in phase 1 and 6
+162 elapsed time in phase 1 and 6
+330 elapsed time in phase 1 and 6
+168 elapsed time in phase 1 and 6
+336 elapsed time in phase 1 and 6
+174 elapsed time in phase 1 and 6
+342 elapsed time in phase 1 and 6
+180 elapsed time in phase 1 and 6
+current simulated time: 1740 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0149645 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.949222 seconds 
+
+348 elapsed time in phase 1 and 6
+186 elapsed time in phase 1 and 6
+354 elapsed time in phase 1 and 6
+192 elapsed time in phase 1 and 6
+360 elapsed time in phase 1 and 6
+198 elapsed time in phase 1 and 6
+366 elapsed time in phase 1 and 6
+204 elapsed time in phase 1 and 6
+372 elapsed time in phase 1 and 6
+210 elapsed time in phase 1 and 6
+current simulated time: 1770 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0146767 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.963902 seconds 
+
+378 elapsed time in phase 1 and 6
+216 elapsed time in phase 1 and 6
+384 elapsed time in phase 1 and 6
+222 elapsed time in phase 1 and 6
+390 elapsed time in phase 1 and 6
+228 elapsed time in phase 1 and 6
+396 elapsed time in phase 1 and 6
+234 elapsed time in phase 1 and 6
+402 elapsed time in phase 1 and 6
+240 elapsed time in phase 1 and 6
+current simulated time: 1800 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0149442 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.978849 seconds 
+
+408 elapsed time in phase 1 and 6
+246 elapsed time in phase 1 and 6
+414 elapsed time in phase 1 and 6
+252 elapsed time in phase 1 and 6
+420 elapsed time in phase 1 and 6
+258 elapsed time in phase 1 and 6
+0 elapsed time in phase 2 and 6
+0 elapsed time in phase 2 and 6
+G2 phase: 0.00792108
+264 elapsed time in phase 1 and 6
+6 elapsed time in phase 2 and 6270 elapsed time in phase 
+1 and 6
+current simulated time: 1830 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0147662 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 0.993618 seconds 
+
+12 elapsed time in phase 2 and 6
+276 elapsed time in phase 1 and 6
+18 elapsed time in phase 2 and 6
+282 elapsed time in phase 1 and 6
+24 elapsed time in phase 2 and 288 elapsed time in phase 61
+ and 6
+30 elapsed time in phase 2 and 6
+294 elapsed time in phase 1 and 6
+36 elapsed time in phase 2 and 6
+300 elapsed time in phase 1 and 6
+current simulated time: 1860 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0146819 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.0083 seconds 
+
+42 elapsed time in phase 2 and 6
+306 elapsed time in phase 1 and 6
+312 elapsed time in phase 48 elapsed time in phase 1 and 2 and 6
+6
+0 elapsed time in phase 2 and 654
+ elapsed time in phase 0 elapsed time in phase 2 and 6
+G2 phase: 0.0180533
+2 and 6
+60 elapsed time in phase 2 and 6
+6 elapsed time in phase 2 and 6
+66 elapsed time in phase 2 and 6
+12 elapsed time in phase 2 and 6
+current simulated time: 1890 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0147982 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.0231 seconds 
+
+72 elapsed time in phase 2 and 6
+18 elapsed time in phase 2 and 6
+78 elapsed time in phase 2 and 24 elapsed time in phase 26 and 
+6
+84 elapsed time in phase 2 and 6
+30 elapsed time in phase 2 and 6
+90 elapsed time in phase 2 and 6
+36 elapsed time in phase 2 and 6
+96 elapsed time in phase 2 and 6
+42 elapsed time in phase 2 and 6
+current simulated time: 1920 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0144983 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.03761 seconds 
+
+102 elapsed time in phase 2 and 6
+48 elapsed time in phase 2 and 6
+1080 elapsed time in phase  elapsed time in phase 32 and  and 66
+
+0 elapsed time in phase 3 and 6
+M phase: 0.00555556
+114 elapsed time in phase 62 and  elapsed time in phase 3 and 6
+6
+120 elapsed time in phase 2 and 6
+12 elapsed time in phase 3 and 6
+0 elapsed time in phase 3 and 6
+0 elapsed time in phase 3 and 6
+M phase: 0.00555556
+18 elapsed time in phase 3 and 6
+current simulated time: 1950 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0146028 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.05221 seconds 
+
+6 elapsed time in phase 3 and 6
+24 elapsed time in phase 3 and 6
+12 elapsed time in phase 3 and 6
+30 elapsed time in phase 3 and 6
+1836 elapsed time in phase  elapsed time in phase 3 and 3 and 66
+
+42 elapsed time in phase 3 and 624
+ elapsed time in phase 3 and 6
+30 elapsed time in phase 3 and 6
+48 elapsed time in phase 3 and 6
+current simulated time: 1980 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.015366 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.06758 seconds 
+
+36 elapsed time in phase 3 and 6
+54 elapsed time in phase 3 and 6
+42 elapsed time in phase 3 and 6
+60 elapsed time in phase 3 and 6
+48 elapsed time in phase 3 and 6
+66 elapsed time in phase 3 and 6
+5472 elapsed time in phase  elapsed time in phase 33 and  and 66
+
+60 elapsed time in phase 3 and 678 elapsed time in phase 
+3 and 6
+current simulated time: 2010 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.014996 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.08258 seconds 
+
+66 elapsed time in phase 3 and 6
+84 elapsed time in phase 3 and 6
+72 elapsed time in phase 3 and 6
+90 elapsed time in phase 3 and 6
+78 elapsed time in phase 3 and 966 elapsed time in phase 
+3 and 6
+102 elapsed time in phase 843 and  elapsed time in phase 63 and 
+6
+108 elapsed time in phase 3 and 6
+90 elapsed time in phase 3 and 6
+current simulated time: 2040 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0157072 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.09829 seconds 
+
+114 elapsed time in phase 96 elapsed time in phase 33 and  and 6
+6
+102 elapsed time in phase 3 and 120 elapsed time in phase 6
+3 and 6
+108 elapsed time in phase 3 and 6
+126 elapsed time in phase 3 and 6
+132 elapsed time in phase 3114 and  elapsed time in phase 63
+ and 6
+120 elapsed time in phase 3 and 6
+138 elapsed time in phase 3 and 6
+current simulated time: 2070 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0153301 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.11363 seconds 
+
+126 elapsed time in phase 3 and 6
+144 elapsed time in phase 3 and 6
+132 elapsed time in phase 3 and 6
+150 elapsed time in phase 3 and 6
+138156 elapsed time in phase  elapsed time in phase 3 and 3 and 6
+6
+144 elapsed time in phase 3 and 6
+162 elapsed time in phase 3 and 6
+150 elapsed time in phase 3 and 6
+168 elapsed time in phase 3 and 6
+current simulated time: 2100 min (max: 2880 min)
+total agents: 2
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0151744 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.12881 seconds 
+
+156 elapsed time in phase 3 and 6
+174 elapsed time in phase 3 and 6
+162 elapsed time in phase 3 and 6
+0 elapsed time in phase 0 and 6
+0 elapsed time in phase 0 and 6
+0 elapsed time in phase G0/G1 phase: 0 and 60.00285939
+
+0 elapsed time in phase 0 and 6
+G0/G1 phase: 0.00226114
+168 elapsed time in phase 3 and 6
+6 elapsed time in phase 0 and 6
+6 elapsed time in phase 0 and 6
+174 elapsed time in phase 3 and 126 elapsed time in phase 
+120 and 6
+ elapsed time in phase 0 and 6
+18 elapsed time in phase 0 and 6
+0 elapsed time in phase 0 and 618
+0 elapsed time in phase 0 and 6
+G0/G1 phase:  elapsed time in phase 0.00248163
+0 and 6
+0 elapsed time in phase 0 and 6
+0 elapsed time in phase 0 and 6
+G0/G1 phase: 0.00274574
+current simulated time: 2130 min (max: 2880 min)
+total agents: 4
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0155897 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.1444 seconds 
+
+24 elapsed time in phase 0 and 6
+624 elapsed time in phase  elapsed time in phase 00 and  and 66
+
+6 elapsed time in phase 0 and 6
+30 elapsed time in phase 0 and 6
+12 elapsed time in phase 0 and 6
+30 elapsed time in phase 0 and 6
+12 elapsed time in phase 0 and 6
+36 elapsed time in phase 0 and 186 elapsed time in phase 0 and 
+6
+36 elapsed time in phase 0 and 6
+18 elapsed time in phase 0 and 6
+2442 elapsed time in phase  elapsed time in phase 0 and 06 and 24 elapsed time in phase 
+06 and 6
+
+42 elapsed time in phase 0 and 6
+4830 elapsed time in phase 0 elapsed time in phase 48 and 306
+ elapsed time in phase 0 and 6
+0 and 6
+ elapsed time in phase 0 and 6
+current simulated time: 2160 min (max: 2880 min)
+total agents: 4
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0150987 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.1595 seconds 
+
+5436 elapsed time in phase 0 elapsed time in phase 0 and  and 6
+6
+36 elapsed time in phase 0 and 6
+54 elapsed time in phase 0 and 6
+42 elapsed time in phase 060 and  elapsed time in phase 6060 elapsed time in phase 
+42 elapsed time in phase 0 and 6
+ and 6
+0 and 6
+6648 elapsed time in phase 0 elapsed time in phase  and 06
+ and 6
+48 elapsed time in phase 0 and 6
+66 elapsed time in phase 0 and 6
+7254 elapsed time in phase  elapsed time in phase 0 and 54726 elapsed time in phase 
+00 and 6
+ elapsed time in phase 0 and  and 6
+6
+6078 elapsed time in phase  elapsed time in phase 6000 and 6 elapsed time in phase 
+078 elapsed time in phase 0 and  and 6
+ and 6
+6
+current simulated time: 2190 min (max: 2880 min)
+total agents: 4
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.014978 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.17448 seconds 
+
+6684 elapsed time in phase  elapsed time in phase 06684 elapsed time in phase 0 and  elapsed time in phase 0 and 6
+ and 6
+0 and 6
+6
+9072 elapsed time in phase  elapsed time in phase 00 and 72 and  elapsed time in phase 0 and 9066
+
+6
+ elapsed time in phase 0 and 6
+9678 elapsed time in phase  elapsed time in phase 00 and  and 678
+96 elapsed time in phase 0 and 6
+6
+ elapsed time in phase 0 and 6
+84 elapsed time in phase 0 and 102 elapsed time in phase 60
+ and 6
+84 elapsed time in phase 0 and 6
+102 elapsed time in phase 0 and 6
+90 elapsed time in phase 0108 and  elapsed time in phase 0690108 elapsed time in phase 
+0 and  elapsed time in phase 0 and 6
+ and 6
+6
+current simulated time: 2220 min (max: 2880 min)
+total agents: 4
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0149806 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.18948 seconds 
+
+114 elapsed time in phase 0 and 966
+114 elapsed time in phase 0 and 6
+96 elapsed time in phase 0 and 6
+ elapsed time in phase 0 and 6
+120102 elapsed time in phase 102120 elapsed time in phase  elapsed time in phase 00 and  elapsed time in phase 6
+0 and 6
+ and 6
+0 and 6
+126108 elapsed time in phase  elapsed time in phase 00 and  and 1086 elapsed time in phase 06
+
+126 elapsed time in phase 0 and 6
+ and 6
+132114 elapsed time in phase  elapsed time in phase 0 and 0114132 and  elapsed time in phase 0 and 6
+6
+ elapsed time in phase 0 and 6
+6
+138 elapsed time in phase 120 elapsed time in phase 00 and 1206138 elapsed time in phase  and 0 and 6
+
+6 elapsed time in phase 
+0 and 6
+current simulated time: 2250 min (max: 2880 min)
+total agents: 4
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0148962 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.20438 seconds 
+
+144126 elapsed time in phase  elapsed time in phase 00 and  and 66144
+126 elapsed time in phase 0 and 6
+
+ elapsed time in phase 0 and 6
+132150 elapsed time in phase 0 elapsed time in phase 0 and  and 6
+6
+132 elapsed time in phase 0 and 6
+150 elapsed time in phase 0 and 6
+138156 elapsed time in phase  elapsed time in phase 00 and  and 6
+6
+138 elapsed time in phase 0 and 6
+156 elapsed time in phase 0 and 6
+144162 elapsed time in phase  elapsed time in phase 00 and  and 6144
+6
+ elapsed time in phase 0 and 1626
+ elapsed time in phase 0 and 6
+168150 elapsed time in phase 0 and  elapsed time in phase 6
+0 and 6
+150 elapsed time in phase 0 and 6
+168 elapsed time in phase 0 and 6
+current simulated time: 2280 min (max: 2880 min)
+total agents: 4
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0151092 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.21949 seconds 
+
+174156 elapsed time in phase  elapsed time in phase 0 and 0 and 6
+174 elapsed time in phase 0 and 6
+156 elapsed time in phase 0 and 6
+6
+162180 elapsed time in phase  elapsed time in phase 0 and 0 and 6
+6
+162 elapsed time in phase 0 and 6
+180 elapsed time in phase 0 and 6
+186168 elapsed time in phase  elapsed time in phase 00 and  and 1866 elapsed time in phase 1680 and  elapsed time in phase 
+0 and 6
+6
+6
+192174 elapsed time in phase  elapsed time in phase 00174 and  and 66
+
+192 elapsed time in phase 0 and 6
+ elapsed time in phase 0 and 6
+198180 elapsed time in phase  elapsed time in phase 00 and  and 1806198 elapsed time in phase 
+0 and  elapsed time in phase 0 and 6
+6
+6
+current simulated time: 2310 min (max: 2880 min)
+total agents: 4
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0149071 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.2344 seconds 
+
+204 elapsed time in phase 1860 elapsed time in phase  and 1860 elapsed time in phase  and 66
+204 elapsed time in phase 0 and 6
+0 and 6
+
+192210 elapsed time in phase  elapsed time in phase 0 and 06
+192210 elapsed time in phase  and  elapsed time in phase 0 and 06 and 
+6
+6
+216198 elapsed time in phase  elapsed time in phase 0198216 elapsed time in phase  elapsed time in phase  and 6
+00 and 06
+ and 6
+ and 6
+204222 elapsed time in phase  elapsed time in phase 00 and 222204 elapsed time in phase 0 and  elapsed time in phase 0 and 66
+
+ and 6
+6
+228 elapsed time in phase 2100 elapsed time in phase 0 and  and 6
+210 elapsed time in phase 0 and 6
+228 elapsed time in phase 0 and 6
+6
+current simulated time: 2340 min (max: 2880 min)
+total agents: 4
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0148474 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.24925 seconds 
+
+234216 elapsed time in phase  elapsed time in phase 0 and 0 and 6
+234216 elapsed time in phase  elapsed time in phase 00 and  and 6
+66
+
+222 elapsed time in phase 0 and 2406 elapsed time in phase 
+0 and 6
+240 elapsed time in phase 0 and 6
+222 elapsed time in phase 0 and 6
+246228 elapsed time in phase  elapsed time in phase 0 and 2460 elapsed time in phase 6 and 228
+0 and 6
+6
+ elapsed time in phase 0 and 6
+234 elapsed time in phase 2520 and  elapsed time in phase 0234 elapsed time in phase  and 60
+6 and 6
+252 elapsed time in phase 0 and 6
+
+258240 elapsed time in phase  elapsed time in phase 24000 and  and 66
+
+ elapsed time in phase 258 elapsed time in phase 0 and 6
+0 and 6
+current simulated time: 2370 min (max: 2880 min)
+total agents: 4
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0147243 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.26397 seconds 
+
+246264 elapsed time in phase 0 and  elapsed time in phase 2466 elapsed time in phase 0
+0 and 6
+264 elapsed time in phase 0 and  and 66
+
+270252 elapsed time in phase  elapsed time in phase 00 and  and 25262706 elapsed time in phase 0 and 
+6
+
+ elapsed time in phase 0 and 6
+258 elapsed time in phase 276 elapsed time in phase 0276 and 6
+258 elapsed time in phase 0 and 6
+0 and 6
+ elapsed time in phase 0 and 6
+282 elapsed time in phase 2640 elapsed time in phase  and 0 and 6264282 elapsed time in phase  elapsed time in phase 0 and 0
+6
+ and 66
+
+288270 elapsed time in phase  elapsed time in phase 00 and 2882706
+ and 6
+ elapsed time in phase 0 and 6 elapsed time in phase 
+0 and 6
+current simulated time: 2400 min (max: 2880 min)
+total agents: 4
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0147505 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.27873 seconds 
+
+294 elapsed time in phase 2760 elapsed time in phase  and 0 and 66
+276 elapsed time in phase 0 and 6
+294 elapsed time in phase 0 and 6
+
+282 elapsed time in phase 3000 and  elapsed time in phase 6282
+0 elapsed time in phase  and 6
+3000 elapsed time in phase  and 0 and 6
+6
+306288 elapsed time in phase  elapsed time in phase 2883060 and 6
+ elapsed time in phase  elapsed time in phase 0 and 6
+0 and 6
+0 and 6
+312294294 elapsed time in phase 0 and 6 elapsed time in phase 
+0 and 6
+ elapsed time in phase 0 and 6
+312 elapsed time in phase 0 and 6
+318 elapsed time in phase 3000 elapsed time in phase  and 06 and 300
+6318 elapsed time in phase 0 and 6
+ elapsed time in phase 0 and 6
+
+current simulated time: 2430 min (max: 2880 min)
+total agents: 4
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0147669 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.2935 seconds 
+
+306 elapsed time in phase 0 and 324 elapsed time in phase 0 and 66
+
+324 elapsed time in phase 0 and 6
+306 elapsed time in phase 0 and 6
+330312 elapsed time in phase 0 and  elapsed time in phase 60 and 312 elapsed time in phase 0 and 3306
+ elapsed time in phase 0 and 6
+
+6
+318 elapsed time in phase 318336 elapsed time in phase  elapsed time in phase 0 and 0 and 6
+6
+336 elapsed time in phase 0 and 6
+0 and 6
+342324 elapsed time in phase  elapsed time in phase 00 and 324342 and  elapsed time in phase 0 and 66
+
+ elapsed time in phase 0 and 6
+6
+0330 elapsed time in phase  elapsed time in phase 0 and 16348 elapsed time in phase 3300 and  elapsed time in phase 0 and 
+6
+6
+ and 6
+0 elapsed time in phase 1 and 6
+S phase: 0.00219085
+current simulated time: 2460 min (max: 2880 min)
+total agents: 4
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0148647 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.30836 seconds 
+
+6 elapsed time in phase 3361 elapsed time in phase 3360 elapsed time in phase 0 and  and 6 and 
+6
+354 elapsed time in phase 0 and 66
+
+342 elapsed time in phase 120 and  elapsed time in phase 1 and 3426360
+ elapsed time in phase 0 and 6
+ elapsed time in phase 0 and 6
+6
+18 elapsed time in phase 3481 elapsed time in phase  and 06 and 
+6
+366 elapsed time in phase 0 and 6
+348 elapsed time in phase 0 and 6
+24 elapsed time in phase 1354 elapsed time in phase  and 0 and 66372
+354 elapsed time in phase 
+0 elapsed time in phase  and 0 and 6
+6
+30360 elapsed time in phase 1 and  elapsed time in phase 60
+360 and 6
+378 elapsed time in phase 0 and  elapsed time in phase 6
+0 and 6
+current simulated time: 2490 min (max: 2880 min)
+total agents: 4
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0147428 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.32311 seconds 
+
+36366 elapsed time in phase  elapsed time in phase 10 and 6
+0 and 6
+ elapsed time in phase 1 and 6
+0 elapsed time in phase 1 and 6
+S phase: 3840.00217887
+ elapsed time in phase 0 and 6
+42372 elapsed time in phase 1 and  elapsed time in phase 0 and 666390
+
+ elapsed time in phase  elapsed time in phase 1 and 0 and 6
+6
+37848 elapsed time in phase  elapsed time in phase 1 and 0 and 6
+6
+12 elapsed time in phase 1 and 6
+396 elapsed time in phase 0 and 6
+54384 elapsed time in phase  elapsed time in phase 1 and 0 and 66
+18 elapsed time in phase 1 and 6
+
+402 elapsed time in phase 0 and 6
+60 elapsed time in phase 390 elapsed time in phase 124 and 06
+ elapsed time in phase 408 elapsed time in phase 0 and 1 and 6 and 6
+
+6
+current simulated time: 2520 min (max: 2880 min)
+total agents: 4
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0146921 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.3378 seconds 
+
+396 elapsed time in phase 066 and  elapsed time in phase 1 and 306
+6
+ elapsed time in phase 4141 elapsed time in phase 0 and  and 66
+
+72 elapsed time in phase 1 and 6
+36420 elapsed time in phase 1 and 6
+0 elapsed time in phase 1 and  elapsed time in phase 6
+0 elapsed time in phase 1 and 6
+0 and S phase: 0.00206309
+6
+786 elapsed time in phase  elapsed time in phase 1142642 elapsed time in phase  and 1 and 66
+ elapsed time in phase 0 and 6
+
+ and 6
+84 elapsed time in phase 1 and 6
+48 elapsed time in phase 1 and 6
+432 elapsed time in phase 0 and 6
+12 elapsed time in phase 1 and 6
+90 elapsed time in phase 1 and 618
+ elapsed time in phase 43854 elapsed time in phase 0 and  elapsed time in phase 61 and 
+6
+1 and 6
+current simulated time: 2550 min (max: 2880 min)
+total agents: 4
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.015495 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.3533 seconds 
+
+96 elapsed time in phase 1 and 6
+0 elapsed time in phase 1 and 624
+60 elapsed time in phase 1 and 60
+ elapsed time in phase 1 and 6
+S phase: 0.00284617
+ elapsed time in phase 1 and 6
+102306 elapsed time in phase  elapsed time in phase 1 and 1 and 6
+6
+66 elapsed time in phase 1 and 6
+ elapsed time in phase 1 and 6
+12108 elapsed time in phase 72 elapsed time in phase 361 and 1 and 6
+6
+ elapsed time in phase 1 and 6
+ elapsed time in phase 1 and 6
+78114 elapsed time in phase  elapsed time in phase 181 elapsed time in phase 1 and  and 4261
+ and 6
+ elapsed time in phase 1 and 6
+6
+12024 elapsed time in phase 48 elapsed time in phase 1 elapsed time in phase  and 1 and 846
+6
+1 and 6
+ elapsed time in phase 1 and 6
+current simulated time: 2580 min (max: 2880 min)
+total agents: 4
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0160936 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.3694 seconds 
+
+549030 elapsed time in phase 126 elapsed time in phase  elapsed time in phase 11 elapsed time in phase 1 and  and 1 and 6
+6
+6
+ and 6
+60 elapsed time in phase 96132 elapsed time in phase 1 elapsed time in phase 361 and  and 1 and  elapsed time in phase 6
+1 and 66
+
+6
+66138102 elapsed time in phase  elapsed time in phase 11 and  and 66
+
+ elapsed time in phase 1 and 6
+42 elapsed time in phase 1 and 6
+72144 elapsed time in phase 1081 and  elapsed time in phase  elapsed time in phase 1 and 1 and 66
+
+48 elapsed time in phase 1 and 6
+6
+78114 elapsed time in phase 150 elapsed time in phase  elapsed time in phase 1 and 1 and 66
+
+1 and 6
+54 elapsed time in phase 1 and 6
+current simulated time: 2610 min (max: 2880 min)
+total agents: 4
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0155406 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.38494 seconds 
+
+156 elapsed time in phase 601201 and  elapsed time in phase 684 elapsed time in phase  elapsed time in phase 11 and  and 66
+1
+ and 6
+
+126 elapsed time in phase 66901 and  elapsed time in phase  elapsed time in phase 1626
+ elapsed time in phase 1 and 6
+1 and 6
+1 and 6
+16896 elapsed time in phase 132721 elapsed time in phase  elapsed time in phase  elapsed time in phase 11 and  and 66
+
+ and 6
+1 and 6
+174 elapsed time in phase 1138 and 1026 elapsed time in phase 
+1 elapsed time in phase 1 and 6
+78 elapsed time in phase 1 and 6
+ and 6
+180 elapsed time in phase 1 and 1086 elapsed time in phase 84 elapsed time in phase 11 and  and 66
+
+
+144 elapsed time in phase 1 and 6
+current simulated time: 2640 min (max: 2880 min)
+total agents: 4
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0165832 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.40153 seconds 
+
+15090 elapsed time in phase 1114 and  elapsed time in phase  elapsed time in phase 1 and 16 and 
+6
+6
+186 elapsed time in phase 1 and 6
+192 elapsed time in phase 1 and 6
+120 elapsed time in phase 1 and 6
+96 elapsed time in phase 1 and 6
+156 elapsed time in phase 1 and 6
+198 elapsed time in phase 1 and 1026126162 elapsed time in phase 1 and  elapsed time in phase 1 and 6
+
+6
+ elapsed time in phase 1 and 6
+204 elapsed time in phase 1 and 108 elapsed time in phase 61
+ and 6
+132 elapsed time in phase 1 and 6
+168 elapsed time in phase 1 and 6
+114 elapsed time in phase 1 and 1746
+138 elapsed time in phase 1 and 6
+210 elapsed time in phase 1 and 6
+ elapsed time in phase 1 and 6
+current simulated time: 2670 min (max: 2880 min)
+total agents: 4
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0152224 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.41675 seconds 
+
+216 elapsed time in phase 1 and 6
+180 elapsed time in phase 1 and 6
+120 elapsed time in phase 1 and 6
+144 elapsed time in phase 1 and 6
+222 elapsed time in phase 1 and 126 elapsed time in phase 1 and 66186150
+
+ elapsed time in phase 1 and 6
+ elapsed time in phase 1 and 6
+192228 elapsed time in phase 1 elapsed time in phase 156 and 6
+ elapsed time in phase 1 and 6
+132 elapsed time in phase 1 and 6
+1 and 6
+198 elapsed time in phase 1 and 6
+162 elapsed time in phase 1 and 6
+138 elapsed time in phase 1 and 234 elapsed time in phase 1 and 6
+6
+204240 elapsed time in phase  elapsed time in phase 11681 and 6
+144 elapsed time in phase 1 and 6
+ and 6
+ elapsed time in phase 1 and 6
+current simulated time: 2700 min (max: 2880 min)
+total agents: 4
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0151707 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.43193 seconds 
+
+246 elapsed time in phase 210 elapsed time in phase 11 and  and 6
+174 elapsed time in phase 1 and 6
+150 elapsed time in phase 1 and 6
+6
+252216 elapsed time in phase  elapsed time in phase 11801 and  and 15666 elapsed time in phase  elapsed time in phase 1 and 1
+6 and 
+6
+
+258222 elapsed time in phase  elapsed time in phase 1861 and 6
+162 elapsed time in phase 1 and 6
+ elapsed time in phase 1 and 61 and 
+6
+228 elapsed time in phase 2641192 elapsed time in phase  elapsed time in phase 1 and 1 and 6
+ and 66
+
+168 elapsed time in phase 1 and 6
+234 elapsed time in phase 2701 and  elapsed time in phase 6198
+1741 and  elapsed time in phase 6
+1 and  elapsed time in phase 1 and 66
+
+current simulated time: 2730 min (max: 2880 min)
+total agents: 4
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0150623 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.44699 seconds 
+
+240204 elapsed time in phase 276 elapsed time in phase 1 elapsed time in phase 18011 and  and 66
+
+ elapsed time in phase 1 and 6
+ and 6
+246282 elapsed time in phase  elapsed time in phase 11 and 210 elapsed time in phase 1 and 6
+6186
+ and 6
+ elapsed time in phase 1 and 6
+288 elapsed time in phase 2521 elapsed time in phase  and 2161926 elapsed time in phase 
+1 and 6
+ elapsed time in phase 1 and 6
+1 and 6
+258 elapsed time in phase 2941 elapsed time in phase  and 2226 elapsed time in phase 
+198 elapsed time in phase 1 and 6
+1 and 6
+1 and 6
+264300228 elapsed time in phase  elapsed time in phase 1 elapsed time in phase  and 1 and 66
+
+1 and 6
+204 elapsed time in phase 1 and 6
+current simulated time: 2760 min (max: 2880 min)
+total agents: 4
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0153344 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.46233 seconds 
+
+234 elapsed time in phase 306210 elapsed time in phase 270 elapsed time in phase  elapsed time in phase 11 and  and 66
+11 and 6
+ and 6
+
+312 elapsed time in phase 1 and 6
+216 elapsed time in phase 1 and 6
+240 elapsed time in phase 1 and 6
+276 elapsed time in phase 1 and 6
+318 elapsed time in phase 2461 elapsed time in phase  and 2222826
+ elapsed time in phase 1 and 6
+ elapsed time in phase 1 and 6
+1 and 6
+324 elapsed time in phase 1 and 6
+288 elapsed time in phase 1 and 6
+228 elapsed time in phase 1 and 6
+252 elapsed time in phase 1 and 6
+330 elapsed time in phase 1 and 6
+294 elapsed time in phase 1 and 6
+258 elapsed time in phase 1 and 6
+234 elapsed time in phase 1 and 6
+current simulated time: 2790 min (max: 2880 min)
+total agents: 4
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0149897 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.47732 seconds 
+
+336 elapsed time in phase 1264 and 2406 elapsed time in phase 1 and 
+ elapsed time in phase 1 and 6
+300 elapsed time in phase 1 and 6
+6
+342 elapsed time in phase 2701 elapsed time in phase 3061 and  elapsed time in phase  and 66
+
+1 and 246 elapsed time in phase 61
+ and 6
+276 elapsed time in phase 1 and 348 elapsed time in phase 2521 and 3126 elapsed time in phase  elapsed time in phase 
+11 and 6
+ and 6
+6
+354 elapsed time in phase 1 and 6
+282 elapsed time in phase 1 and 6
+258 elapsed time in phase 1 and 318 elapsed time in phase 1 and 6
+6
+360 elapsed time in phase 1 and 6
+264 elapsed time in phase 1 and 6
+324 elapsed time in phase 1 and 6
+288 elapsed time in phase 1 and 6
+current simulated time: 2820 min (max: 2880 min)
+total agents: 4
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0149299 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.49226 seconds 
+
+366294330 elapsed time in phase  elapsed time in phase 1 and 1 and 6 elapsed time in phase 6
+
+1 and 6
+270 elapsed time in phase 1 and 6
+372300 elapsed time in phase  elapsed time in phase 3361276 and  elapsed time in phase 6
+1 and 6
+1 and 6
+ elapsed time in phase 1 and 6
+378 elapsed time in phase 1306 and  elapsed time in phase 1 and 6
+6
+342 elapsed time in phase 1 and 6
+282 elapsed time in phase 1 and 6
+384 elapsed time in phase 3121 and  elapsed time in phase 3486
+1 and 6
+ elapsed time in phase 1 and 6
+288 elapsed time in phase 1 and 6
+390 elapsed time in phase 1 and 3186354 elapsed time in phase 1
+ and 6
+294 elapsed time in phase 1 and 6
+ elapsed time in phase 1 and 6
+current simulated time: 2850 min (max: 2880 min)
+total agents: 4
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0151768 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.50744 seconds 
+
+324 elapsed time in phase 1 and 6
+360 elapsed time in phase 1 and 6
+396 elapsed time in phase 1 and 6
+300 elapsed time in phase 1 and 6
+330402366 elapsed time in phase 3061 elapsed time in phase  and 1 elapsed time in phase 6 and 
+16 elapsed time in phase 1 and 6
+ and 6
+
+336 elapsed time in phase 1 and 6
+408 elapsed time in phase 1 and 6
+372 elapsed time in phase 1 and 6
+312 elapsed time in phase 1 and 6
+342 elapsed time in phase 1 and 4146 elapsed time in phase 
+3783181 elapsed time in phase  and 1 and 66
+
+ elapsed time in phase 1 and 6
+348 elapsed time in phase 1 and 6
+420 elapsed time in phase 1 and 6
+384 elapsed time in phase 1 and 6
+324 elapsed time in phase 1 and 6
+current simulated time: 2880 min (max: 2880 min)
+total agents: 4
+interval wall time: 0 days, 0 hours, 0 minutes, and 0.0151026 seconds 
+total wall time: 0 days, 0 hours, 0 minutes, and 1.52254 seconds 
+
+354426 elapsed time in phase  elapsed time in phase 1 and 13906
+ elapsed time in phase 1 and 6
+ and 6330 elapsed time in phase 1 and 6
+
+
+Total simulation runtime: 
+0 days, 0 hours, 0 minutes, and 1.52321 seconds 

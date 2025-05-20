@@ -1,0 +1,113 @@
+Signals (with synonyms): 
+=======================
+19 : apoptotic
+14 : attacking
+11 : contact with BM
+8 : contact with apoptotic cell
+8 : contact with apoptotic cells
+11 : contact with basement membrane
+5 : contact with cell type 0
+7 : contact with dead cell
+7 : contact with dead cells
+5 : contact with default
+6 : contact with live cell
+6 : contact with live cells
+9 : contact with necrotic cell
+9 : contact with necrotic cells
+10 : contact with other dead cell
+10 : contact with other dead cells
+17 : current time
+18 : custom 0
+18 : custom: sample
+18 : custom:sample
+12 : damage
+13 : damage delivered
+15 : dead
+17 : global time
+2 : grad(substrate)
+2 : gradient of substrate
+1 : internalized substrate
+1 : intracellular substrate
+14 : is attacking
+15 : is dead
+19 : is_apoptotic
+20 : is_necrotic
+20 : necrotic
+3 : pressure
+0 : substrate
+2 : substrate gradient
+17 : time
+16 : total attack time
+13 : total damage delivered
+4 : volume
+
+
+Behaviors (with synonyms): 
+=========================
+18 : adhesive affinity to cell type 0
+18 : adhesive affinity to default
+10 : apoptosis
+30 : asymmetric division to default
+27 : attack cell type 0
+37 : attack damage rate
+27 : attack default
+38 : attack duration
+34 : cell attachment rate
+35 : cell detachment rate
+21 : cell-BM adhesion
+22 : cell-BM repulsion
+16 : cell-cell adhesion
+17 : cell-cell adhesion elastic constant
+20 : cell-cell repulsion
+21 : cell-membrane adhesion
+22 : cell-membrane repulsion
+15 : chemotactic response to substrate
+15 : chemotactic sensitivity to substrate
+31 : custom 0
+31 : custom: sample
+31 : custom:sample
+4 : cycle entry
+39 : damage rate
+40 : damage repair rate
+4 : exit from cycle phase 0
+5 : exit from cycle phase 1
+6 : exit from cycle phase 2
+7 : exit from cycle phase 3
+8 : exit from cycle phase 4
+9 : exit from cycle phase 5
+28 : fuse to cell type 0
+28 : fuse to default
+33 : immunogenicity to cell type 0
+33 : immunogenicity to default
+32 : is movable
+32 : is_movable
+36 : maximum number of cell attachments
+13 : migration bias
+14 : migration persistence time
+12 : migration speed
+32 : movable
+11 : necrosis
+23 : phagocytose apoptotic cell
+26 : phagocytose cell type 0
+26 : phagocytose default
+24 : phagocytose necrotic cell
+25 : phagocytose other dead cell
+26 : phagocytosis of 0
+23 : phagocytosis of apoptotic cell
+23 : phagocytosis of apoptotic cells
+24 : phagocytosis of necrotic cell
+24 : phagocytosis of necrotic cells
+25 : phagocytosis of other dead cell
+25 : phagocytosis of other dead cells
+19 : relative maximum adhesion distance
+3 : substrate export
+0 : substrate secretion
+1 : substrate secretion saturation density
+1 : substrate secretion target
+2 : substrate uptake
+29 : transform to cell type 0
+29 : transform to default
+29 : transition to cell type 0
+29 : transition to default
+
+
