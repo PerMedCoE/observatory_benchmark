@@ -1,8 +1,11 @@
 # Ignore all XML files
-*.xml
+# *.xml
 
 # But keep PhysiCell_settings.xml
 !PhysiCell_settings.xml
+
+# Ignore output folder
+PhysiCell/code/many_diffusion*
 
 # Ignore SVG files
 *.svg
