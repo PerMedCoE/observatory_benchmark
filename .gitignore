@@ -10,8 +10,6 @@
 # Ignore MATLAB .mat files
 *.mat
 
-# Ignore C++ source files
-*.cpp
 
 # Ignore compiled object files
 *.o
