@@ -1,12 +1,12 @@
 <PhysiCell_settings version="devel-version">
 
     <domain>
-		<x_min>-30</x_min>
-		<x_max>30</x_max>
-		<y_min>-30</y_min>
-		<y_max>30</y_max>
-		<z_min>-30</z_min>
-		<z_max>30</z_max>
+		<x_min>-50</x_min>
+		<x_max>50</x_max>
+		<y_min>-50</y_min>
+		<y_max>50</y_max>
+		<z_min>-50</z_min>
+		<z_max>50</z_max>
         <dx>20</dx>
         <dy>20</dy>
         <dz>20</dz>
@@ -27,7 +27,7 @@
     </parallel>
 
     <save>
-        <folder>../results/custom_stochastic_cell_cycle</folder>
+        <folder>../results/custom_stochastic_cell_cycle_100</folder>
         <full_data>
             <interval units="min">10</interval>
             <enable>true</enable>
@@ -246,7 +246,7 @@
     <initial_conditions>
 		<cell_positions type="csv" enabled="true">
             <folder>./config</folder>
-            <filename>cells.csv</filename>
+            <filename>cells_100.csv</filename>
         </cell_positions>
     </initial_conditions>
 

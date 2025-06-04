@@ -72,20 +72,17 @@
 #include <cmath>
 #include <omp.h>
 #include <fstream>
-#include <sys/stat.h>
+
 #include "./core/PhysiCell.h"
 #include "./modules/PhysiCell_standard_modules.h" 
 
 // put custom code modules here! 
 
 #include "./custom_modules/custom.h" 
-#include <algorithm>
-#include <unordered_set>
 	
 using namespace BioFVM;
 using namespace PhysiCell;
-std::vector<int> sink_ids;  // Global variable
-double uptake;
+
 int main( int argc, char* argv[] )
 {
 	// load and parse settings file(s)
@@ -117,24 +114,7 @@ int main( int argc, char* argv[] )
 	/* Microenvironment setup */ 
 	
 	setup_microenvironment(); // modify this in the custom code 
-	// std::vector<int> sink_ids;
-	// std::cout<<"EDWWWWWW"<<std::endl;
-	// std::cout<<parameters.strings["sinks"]<<std::endl;
-	std::string sinks = parameters.strings("sinks");
-	sink_ids = get_sinks(sinks);
-	uptake = parameters.doubles("uptake");
-    auto bulk_uptake_rate_function_u = [](Microenvironment* pMicroenvironment, int voxel_index, std::vector<double>* write_destination) {
-        if (std::find(sink_ids.begin(), sink_ids.end(), voxel_index) != sink_ids.end()) {
-            (*write_destination)[0] = uptake;  // Set specific value if in `sink_ids`
-        } 
-		else {
-            (*write_destination)[0] = 0.0;   // Otherwise, set to 0
-        }
-    };
-
-    // Assuming you have a `microenvironment` instance
-    microenvironment.bulk_uptake_rate_function = bulk_uptake_rate_function_u;
-	// microenvironment.bulk_uptake_rate_function = bulk_uptake_rate_function_u;
+	
 	/* PhysiCell setup */ 
  	
 	// set mechanics voxel size, and match the data structure to BioFVM
@@ -235,17 +215,10 @@ int main( int argc, char* argv[] )
 
 			// update the microenvironment
 			microenvironment.simulate_diffusion_decay( diffusion_dt );
-			microenvironment.simulate_bulk_sources_and_sinks(diffusion_dt);
-			// microenvironment.simulate_diffusion_decay( diffusion_dt );
-			
-			
-			// applies conditions to the walls
-			
-
-			
 			
 			// run PhysiCell 
-			// ((Cell_Container *)microenvironment.agent_container)->update_all_cells( PhysiCell_globals.current_time );
+			((Cell_Container *)microenvironment.agent_container)->update_all_cells( PhysiCell_globals.current_time );
+			
 			/*
 			  Custom add-ons could potentially go here. 
 			*/
