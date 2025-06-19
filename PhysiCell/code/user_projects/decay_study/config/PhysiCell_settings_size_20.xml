@@ -1,12 +1,12 @@
 <PhysiCell_settings version="devel-version">
 
     <domain>
-        <x_min>-130</x_min>
-        <x_max>130</x_max>
-        <y_min>-130</y_min>
-        <y_max>130</y_max>
-        <z_min>-130</z_min>
-        <z_max>130</z_max>
+        <x_min>-140</x_min>
+        <x_max>140</x_max>
+        <y_min>-140</y_min>
+        <y_max>140</y_max>
+        <z_min>-140</z_min>
+        <z_max>140</z_max>
         <dx>20</dx>
         <dy>20</dy>
         <dz>20</dz>
@@ -14,7 +14,7 @@
     </domain>
 
     <overall>
-        <max_time units="min">3.0</max_time>
+        <max_time units="min">10</max_time>
         <time_units>min</time_units>
         <space_units>micron</space_units>
         <dt_diffusion units="min">0.01</dt_diffusion>
@@ -29,11 +29,11 @@
     <save>
         <folder>size_20</folder>
         <full_data>
-            <interval units="min">0.01</interval>
+            <interval units="min">0.1</interval>
             <enable>true</enable>
         </full_data>
         <SVG>
-            <interval units="min">0.01</interval>
+            <interval units="min">0.1</interval>
             <enable>true</enable>
             <plot_substrate enabled="true" limits="false">
                 <substrate>substrate</substrate>
@@ -57,7 +57,7 @@
     <microenvironment_setup>
         <variable name="substrate" units="dimensionless" ID="0">
             <physical_parameter_set>
-                <diffusion_coefficient units="micron^2/min">0.0</diffusion_coefficient>
+                <diffusion_coefficient units="micron^2/min">2000.0</diffusion_coefficient>
                 <decay_rate units="1/min">2</decay_rate>
             </physical_parameter_set>
             <initial_condition units="mmHg">10</initial_condition>

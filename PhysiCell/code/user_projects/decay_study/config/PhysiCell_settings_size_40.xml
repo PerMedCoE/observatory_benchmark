@@ -1,12 +1,12 @@
 <PhysiCell_settings version="devel-version">
 
     <domain>
-        <x_min>-140</x_min>
-        <x_max>140</x_max>
-        <y_min>-140</y_min>
-        <y_max>140</y_max>
-        <z_min>-140</z_min>
-        <z_max>140</z_max>
+        <x_min>-160</x_min>
+        <x_max>160</x_max>
+        <y_min>-160</y_min>
+        <y_max>160</y_max>
+        <z_min>-160</z_min>
+        <z_max>160</z_max>
         <dx>40</dx>
         <dy>40</dy>
         <dz>40</dz>
@@ -14,7 +14,7 @@
     </domain>
 
     <overall>
-        <max_time units="min">1440.0</max_time>
+        <max_time units="min">10</max_time>
         <time_units>min</time_units>
         <space_units>micron</space_units>
         <dt_diffusion units="min">0.01</dt_diffusion>
@@ -27,13 +27,13 @@
     </parallel>
 
     <save>
-        <folder>output/size_40</folder>
+        <folder>./size_40</folder>
         <full_data>
-            <interval units="min">60</interval>
+            <interval units="min">0.1</interval>
             <enable>true</enable>
         </full_data>
         <SVG>
-            <interval units="min">60</interval>
+            <interval units="min">0.1</interval>
             <enable>true</enable>
             <plot_substrate enabled="true" limits="false">
                 <substrate>substrate</substrate>
