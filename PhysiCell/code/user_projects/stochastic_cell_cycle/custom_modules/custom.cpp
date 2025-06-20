@@ -186,11 +186,11 @@ void custom_update_phenotype(Cell* pCell, Phenotype& phenotype, double dt)
     if (pCell->phenotype.cycle.model().code != 6) return;
 
     int phase = pCell->phenotype.cycle.current_phase_index();
-	std::cout<<phenotype.cycle.data.elapsed_time_in_phase<<" elapsed time in phase " << phase << " and "<<dt<<std::endl;
+	// std::cout<<phenotype.cycle.data.elapsed_time_in_phase<<" elapsed time in phase " << phase << " and "<<dt<<std::endl;
     // Only assign a new duration when entering a new phase
 	if (phenotype.cycle.data.elapsed_time_in_phase < dt)
 	{
-		std::cout << phenotype.cycle.data.elapsed_time_in_phase << " elapsed time in phase " << phase << " and " << dt << std::endl;
+		// std::cout << phenotype.cycle.data.elapsed_time_in_phase << " elapsed time in phase " << phase << " and " << dt << std::endl;
 	
 		if (phase == 0) // G0/G1 → S
 		{

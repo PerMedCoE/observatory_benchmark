@@ -66,12 +66,11 @@
 */
 
 #include "./custom.h"
-#include <unordered_set>
 
 void create_cell_types( void )
 {
 	// set the random seed 
-	SeedRandom( parameters.ints("random_seed") );  
+	// SeedRandom( parameters.ints("random_seed") );  
 	
 	/* 
 	   Put any modifications to default cell definition here if you 
@@ -83,11 +82,12 @@ void create_cell_types( void )
 	initialize_default_cell_definition(); 
 	cell_defaults.phenotype.secretion.sync_to_microenvironment( &microenvironment ); 
 	
-	cell_defaults.functions.volume_update_function = NULL;
-	cell_defaults.functions.update_velocity = NULL;
+	cell_defaults.functions.volume_update_function = standard_volume_update_function;
+	cell_defaults.functions.update_velocity = standard_update_cell_velocity;
 
 	cell_defaults.functions.update_migration_bias = NULL; 
-	cell_defaults.functions.update_phenotype = NULL; // update_cell_and_death_parameters_O2_based; 
+	// cell_defaults.functions.update_phenotype = NULL;
+	cell_defaults.functions.update_phenotype = custom_update_phenotype; // update_cell_and_death_parameters_O2_based; 
 	cell_defaults.functions.custom_cell_rule = NULL; 
 	cell_defaults.functions.contact_function = NULL; 
 	
@@ -133,14 +133,22 @@ void create_cell_types( void )
 
 void setup_microenvironment( void )
 {
-	// set domain parameters 
-	
-	// put any custom code to set non-homogeneous initial conditions or 
-	// extra Dirichlet nodes here. 
-	
 	// initialize BioFVM 
 	
 	initialize_microenvironment(); 	
+
+    int idx_oxygen = 0;
+    double oxy_value = 6022.0;
+
+    int idx_xmax = microenvironment.mesh.x_coordinates.size() - 1; 
+    int idx_ymax = microenvironment.mesh.y_coordinates.size() - 1;
+    int idx_zmax = microenvironment.mesh.z_coordinates.size() - 1;
+
+    microenvironment.update_dirichlet_node( 
+        microenvironment.voxel_index(idx_xmax, idx_ymax, idx_zmax), 
+        idx_oxygen, oxy_value);
+    microenvironment.set_substrate_dirichlet_activation( idx_oxygen, 
+        microenvironment.voxel_index(idx_xmax, idx_ymax, idx_zmax), true);
 	
 	return; 
 }
@@ -148,56 +156,66 @@ void setup_microenvironment( void )
 void setup_tissue( void )
 {
 
-	// just read cells from xml in this case
+	// create some of each type of cell 
+	
+	
+	
 	// load cells from your CSV file (if enabled)
-	// sink_ids = get_sinks("./config/cells.csv");
+	load_cells_from_pugixml(); 	
+	PhysiCell::Cell* pCell = (*all_cells)[0];
+	std::cout<<pCell->phenotype.cycle.data.transition_rates[0]<<std::endl;;
+	
+	// // Force cell to start in G0/G1
+	// pCell->phenotype.cycle.sync_to_cycle_model(flow_cytometry_cycle_model);
+	// // pCell->phenotype.cycle. // G0/G1
 
-	load_cells_from_pugixml();
-	// microenvironment.bulk_uptake_rate_function = bulk_uptake_rate_function_u;
+	// // Optionally, reset elapsed time in phase
+	// pCell->phenotype.cycle.data.elapsed_time_in_phase = 0.0;
 
-	// std::cout <<"length of al cells "<< all_cells->size()<<std::endl;
-	return; 
-}
-std::vector<int> get_sinks(std::string filename) {
-    std::vector<int> sink_indexes;
-    std::ifstream file(filename, std::ios::in);
-    if (!file) {
-        std::cout << "Error: " << filename << " not found during cell loading. Quitting." << std::endl;
-        exit(-1);
-    }
-
-    std::string line;
-    while (std::getline(file, line)) {
-        std::vector<double> data;
-        csv_to_vector(line.c_str(), data);
-
-        if (data.size() != 4) {
-            std::cout << "Error! Importing cells from a CSV file expects each row to be x,y,z,typeID." << std::endl;
-            exit(-1);
-        }
-
-        std::vector<double> position = {data[0], data[1], data[2]};
-        sink_indexes.push_back(microenvironment.nearest_voxel_index(position));
-    }
-
-    file.close();
-
-    // Check for uniqueness
-    std::unordered_set<int> unique_sinks(sink_indexes.begin(), sink_indexes.end());
-	std::cout<<"unique length "<<unique_sinks.size()<<std::endl;
-    if (unique_sinks.size() != sink_indexes.size()) {
-        std::cout << "Error: sink indexes are not unique. Quitting." << std::endl;
-        exit(-1);
-    }
-
-    return sink_indexes;
+		return; 
 }
 
 std::vector<std::string> my_coloring_function( Cell* pCell )
 { return paint_by_number_cell_coloring(pCell); }
 
-void phenotype_function( Cell* pCell, Phenotype& phenotype, double dt )
-{ return; }
+
+
+// Custom function for stochastic phase durations
+void custom_update_phenotype(Cell* pCell, Phenotype& phenotype, double dt)
+{	
+    if (pCell->phenotype.cycle.model().code != 6) return;
+
+    int phase = pCell->phenotype.cycle.current_phase_index();
+	// std::cout<<phenotype.cycle.data.elapsed_time_in_phase<<" elapsed time in phase " << phase << " and "<<dt<<std::endl;
+    // Only assign a new duration when entering a new phase
+	if (phenotype.cycle.data.elapsed_time_in_phase < dt)
+	{
+		// std::cout << phenotype.cycle.data.elapsed_time_in_phase << " elapsed time in phase " << phase << " and " << dt << std::endl;
+	
+		if (phase == 0) // G0/G1 → S
+		{
+			phenotype.cycle.data.transition_rate(0, 1) = 1.0 / (NormalRandom(7.0, 1.0) * 60.0);
+			std::cout << "G0/G1 phase: " << phenotype.cycle.data.transition_rate(0, 1) << std::endl;
+		}
+		else if (phase == 1) // S → G2
+		{
+			phenotype.cycle.data.transition_rate(1, 2) = 1.0 / (NormalRandom(6.0, 1.0) * 60.0);
+			std::cout << "S phase: " << phenotype.cycle.data.transition_rate(1, 2) << std::endl;
+		}
+		else if (phase == 2) // G2 → M
+		{
+			phenotype.cycle.data.transition_rate(2, 3) = 1.0 / (NormalRandom(2.0, 0.5) * 60.0); // for example
+			std::cout << "G2 phase: " << phenotype.cycle.data.transition_rate(2, 3) << std::endl;
+		}
+		else if (phase == 3) // M → G0/G1
+		{
+			phenotype.cycle.data.transition_rate(3, 0) = 1.0 / (3.0 * 60.0); // fixed or stochastic
+			std::cout << "M phase: " << phenotype.cycle.data.transition_rate(3, 0) << std::endl;
+		}
+	}
+	return;
+}
+
 
 void custom_function( Cell* pCell, Phenotype& phenotype , double dt )
 { return; } 
