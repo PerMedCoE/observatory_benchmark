@@ -70,33 +70,35 @@ print(df_all['Results'].value_counts())
 
 # Set plotting order and color/marker mapping
 results_order = ['BioDynaMo', 'Chaste', 'PhysiCell', 'TiSim', 'Experimental']
-color_map = {
-    'BioDynaMo': '#e41a1c',   # red
-    'Chaste': '#377eb8',      # blue
-    'Experimental': '#000000',# black
-    'PhysiCell': '#4daf4a',   # green
-    'TiSim': '#984ea3'        # purple (changed from yellow)
-}
-linestyle_map = {
-    'BioDynaMo': '-',
-    'Chaste': '--',
-    'PhysiCell': '-.',
-    'TiSim': ':',
-    'Experimental': '-'  # solid for experimental
-}
-linewidth_map = {
-    'BioDynaMo': 2,
-    'Chaste': 2,
-    'PhysiCell': 2,
-    'TiSim': 2,
-    'Experimental': 3.5  # thicker for experimental
-}
 marker_map = {
     'Experimental': 'X'
 }
 
+# Define consistent colors and linestyles for all tools
+colors = {
+    'PhysiCell': '#4daf4a',   # Green
+    'BioDynaMo': '#ff7f00',   # Orange
+    'Chaste': '#377eb8',      # Blue
+    'TiSim': '#984ea3',       # Purple
+    'Experimental': '#000000' # Black
+}
+linestyles = {
+    'PhysiCell': '-',
+    'BioDynaMo': '-',
+    'Chaste': '-',
+    'TiSim': '-',
+    'Experimental': '-'
+}
+linewidths = {
+    'PhysiCell': 1.8,
+    'BioDynaMo': 1.8,
+    'Chaste': 1.8,
+    'TiSim': 1.8,
+    'Experimental': 2.5
+}
+
 # Set up the figure with specific dimensions (Nature's column width is 89mm)
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8.9, 4))  # 89mm width, height adjusted for readability
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8, 2.8))  # Compact, publication style
 
 # Update font settings with fallback options
 plt.rcParams.update({
@@ -126,14 +128,14 @@ exp_interp = interp1d(exp_times, exp_diams, kind='linear', bounds_error=False, f
 df_exp_plot = df_all[df_all['Results'] == 'Experimental']
 ax1.plot(
     df_exp_plot['dt'], df_exp_plot['diam'],
-    color=color_map['Experimental'],
+    color=colors['Experimental'],
     label='Experimental',
-    linestyle=linestyle_map['Experimental'],
-    linewidth=1.5,  # Slightly thicker for experimental
+    linestyle=linestyles['Experimental'],
+    linewidth=linewidths['Experimental'],
     marker=marker_map.get('Experimental', None),
     markersize=4,   # Smaller markers
     markeredgecolor='k',
-    markerfacecolor=color_map['Experimental'],
+    markerfacecolor=colors['Experimental'],
     alpha=0.4,
     zorder=1
 )
@@ -143,38 +145,39 @@ for result in ['BioDynaMo', 'Chaste', 'PhysiCell', 'TiSim']:
     df = df_all[df_all['Results'] == result]
     ax1.plot(
         df['dt'], df['diam'],
-        color=color_map[result],
+        color=colors[result],
         label=result,
-        linestyle=linestyle_map[result],
-        linewidth=1,
+        linestyle=linestyles[result],
+        linewidth=linewidths[result],
         zorder=2
     )
 
-ax1.set_xlabel("Time (days)", labelpad=2)
-ax1.set_ylabel("Diameter (μm)", labelpad=2)
-ax1.set_xlim(left=df_all['dt'].min() - 0.5, right=df_all['dt'].max() + 0.5)
+ax1.set_xlabel("Time (days)", labelpad=8, fontsize=12)
+ax1.set_ylabel("Diameter (μm)", labelpad=8, fontsize=12)
+ax1.set_xlim(0, 27)
+ax1.set_xticks(np.arange(0, 28, 1))
 ax1.set_ylim(bottom=df_all['diam'].min() - 100, top=df_all['diam'].max() + 100)
 
-ax1.grid(True, which='major', axis='both', color='grey', linestyle='-', linewidth=0.2, alpha=0.2)
+ax1.grid(False)
 ax1.set_axisbelow(True)
 
 # Remove top and right spines
 ax1.spines['top'].set_visible(False)
 ax1.spines['right'].set_visible(False)
+ax1.tick_params(axis='both', which='major', labelsize=11)
 
 # Second plot (deviations)
 for result in ['BioDynaMo', 'Chaste', 'PhysiCell', 'TiSim']:
     df = df_all[df_all['Results'] == result]
     exp_values = exp_interp(df['dt'])
     deviations = df['diam'] - exp_values
-    
     ax2.plot(
         df['dt'], 
         deviations,
-        color=color_map[result],
+        color=colors[result],
         label=result,
-        linestyle=linestyle_map[result],
-        linewidth=1,
+        linestyle=linestyles[result],
+        linewidth=linewidths[result],
         zorder=2
     )
 
@@ -182,27 +185,24 @@ for result in ['BioDynaMo', 'Chaste', 'PhysiCell', 'TiSim']:
 ax2.axhline(y=0, color='black', linestyle='-', alpha=0.3, linewidth=0.5, zorder=1)
 
 # Customize second plot
-ax2.set_xlabel("Time (days)", labelpad=2)
-ax2.set_ylabel("Deviation from Experimental (μm)", labelpad=2)
-ax2.set_xlim(left=df_all['dt'].min() - 0.5, right=df_all['dt'].max() + 0.5)
+ax2.set_xlabel("Time (days)", labelpad=8, fontsize=12)
+ax2.set_ylabel("Deviation (μm)", labelpad=8, fontsize=12)
+ax2.set_xlim(0, 27)
+ax2.set_xticks(np.arange(0, 28, 1))
 
-# Add grid to second plot (subtle)
-ax2.grid(True, which='major', axis='both', color='grey', linestyle='-', linewidth=0.2, alpha=0.2)
+ax2.grid(False)
 ax2.set_axisbelow(True)
 
 # Remove top and right spines
 ax2.spines['top'].set_visible(False)
 ax2.spines['right'].set_visible(False)
+ax2.tick_params(axis='both', which='major', labelsize=11)
 
 # Add shared legend
 handles, labels = ax1.get_legend_handles_labels()
 fig.legend(handles, labels, title="Results", 
           loc='center left', bbox_to_anchor=(1.02, 0.5), 
           borderaxespad=0., frameon=False)
-
-# Add subplot labels
-ax1.text(-0.1, 1.1, 'a', transform=ax1.transAxes, fontsize=12, fontweight='bold')
-ax2.text(-0.1, 1.1, 'b', transform=ax2.transAxes, fontsize=12, fontweight='bold')
 
 # Adjust layout
 plt.tight_layout()

@@ -248,8 +248,16 @@ total_phase_times["tool"] = pd.Categorical(total_phase_times["tool"], categories
 tool_colors = {
     'PhysiCell': '#4daf4a',
     'Chaste': '#377eb8',
-    'BioDynaMo': '#e41a1c',
+    'BioDynaMo': '#ff7f00',
     'TiSim': '#984ea3',
+}
+
+# Canonical phase durations (in hours)
+canonical_phase_durations = {
+    "G0/G1": 7,
+    "S": 6,
+    "G2": 3,
+    "M": 2
 }
 
 # Update font and axes settings for publication
@@ -257,97 +265,91 @@ plt.rcParams.update({
     'font.family': 'sans-serif',
     'font.sans-serif': ['DejaVu Sans', 'Helvetica', 'Arial', 'sans-serif'],
     'font.size': 8,
-    'axes.labelsize': 10,
-    'axes.titlesize': 10,
+    'axes.labelsize': 9,
+    'axes.titlesize': 9,
     'xtick.labelsize': 8,
     'ytick.labelsize': 8,
-    'legend.fontsize': 9,
-    'lines.linewidth': 1.5,
-    'axes.linewidth': 0.5,
-    'xtick.major.width': 0.5,
-    'ytick.major.width': 0.5,
-    'xtick.major.size': 3,
-    'ytick.major.size': 3,
+    'legend.fontsize': 8,
+    'lines.linewidth': 2.0,
+    'axes.linewidth': 1.0,
+    'xtick.major.width': 1.0,
+    'ytick.major.width': 1.0,
+    'xtick.major.size': 4,
+    'ytick.major.size': 4,
     'figure.dpi': 400
 })
 
-# Create the boxplot with tools on the Y axis and phases as columns
-g = sns.catplot(
-    data=total_phase_times,
-    y="tool",
-    x="duration",
-    col="phase",
-    kind="box",
-    order=tool_order,
-    col_order=phase_order,
-    palette=tool_colors,
-    height=3.5,
-    aspect=1,
-    linewidth=1,
-    fliersize=2,
-    showmeans=True,
-    meanprops={"marker":"o",
-               "markerfacecolor":"white", 
-               "markeredgecolor":"black",
-               "markersize":"5"}
-)
+# Create a single 1x4 grid figure with matching proportions to diffusion_single_ut.py
+fig, axes = plt.subplots(1, 4, figsize=(8, 2.8))
 
-# Overlay stripplot (jittered points) and set y-ticks/labels
-letters = ['a', 'b', 'c', 'd']
 for i, phase in enumerate(phase_order):
-    ax = g.axes[0][i]
+    ax = axes[i]
+    phase_data = total_phase_times[total_phase_times["phase"] == phase]
+    
+    # Calculate x-axis limits based on data distribution
+    x_max = phase_data['duration'].max()
+    x_min = phase_data['duration'].min()
+    x_padding = (x_max - x_min) * 0.1
+    if phase == "G0/G1":
+        x_limits = (0, 25)
+    elif phase == "S":
+        x_limits = (0, 15)
+    elif phase == "G2":
+        x_limits = (0, 11)
+    else:  # M phase
+        x_limits = (0, 5)
+    
+    # Create scatterplot for all tools
     sns.stripplot(
-        data=total_phase_times[total_phase_times["phase"] == phase],
+        data=phase_data,
         y="tool",
         x="duration",
         order=tool_order,
         palette=tool_colors,
         ax=ax,
-        dodge=True,
-        alpha=0.6,
-        jitter=True,
-        size=3,
+        alpha=0.7,
+        jitter=0.12,
+        size=5,
         linewidth=0.5,
-        edgecolor='gray'
+        edgecolor='black'
     )
-    ax.spines['top'].set_visible(False)
-    ax.spines['right'].set_visible(False)
-    ax.spines['left'].set_visible(False)
-    ax.grid(True, axis='x', alpha=0.3, linewidth=0.5)
-    # Add subplot letter
-    ax.text(-0.12, 1.05, letters[i], transform=ax.transAxes, fontsize=14, fontweight='bold', va='top', ha='right')
-    # Show x-axis label and ticks for all subplots
-    ax.set_xlabel("Duration (hours)", fontsize=10)
-    # Explicitly set y-ticks and labels for all tools
-    ax.set_yticks(range(len(tool_order)))
-    ax.set_yticklabels(tool_order, fontsize=10)
+    
+    # Add canonical duration line if available
+    canonical_duration = canonical_phase_durations.get(phase, None)
+    if canonical_duration is not None:
+        ax.axvline(x=canonical_duration, color='black', linestyle=':', linewidth=0.8, alpha=0.7)
+    
+    # Customize axes
+    ax.set_title(phase, fontsize=11, fontweight='bold', pad=2)
+    ax.set_xlabel("")
     if i == 0:
-        ax.set_ylabel("Tool", fontsize=10)
+        ax.set_ylabel("Tool", fontsize=12)
+        ax.set_yticks(np.arange(len(tool_order)))
+        ax.set_yticklabels(tool_order, fontsize=11)
     else:
         ax.set_ylabel("")
+        ax.set_yticks([])
+        ax.set_yticklabels([])
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    ax.grid(True, axis='x', alpha=0.3, linewidth=0.5)
+    ax.set_xlim(x_limits)
+    ax.tick_params(axis='both', which='major', labelsize=11)
+    ax.set_ylim(-0.5, len(tool_order) - 0.5)
 
-g.set_titles("{col_name} phase")
-g.tight_layout()
-g.fig.subplots_adjust(top=0.95)
-g.fig.suptitle("")
+# Add a single shared x-axis label for the full plot
+fig.text(0.5, -0.04, 'Time (hours)', ha='center', va='center', fontsize=12)
 
-# Save the full panel
+plt.tight_layout(rect=[0, 0, 1, 0.98])
+plt.subplots_adjust(hspace=0.1, wspace=0.25)
+fig.align_xlabels()
+
+# Save figure
 save_dir = "./ResultAnalysis/plots/stochastic_cell_cycle_plots"
 os.makedirs(save_dir, exist_ok=True)
-g.savefig(os.path.join(save_dir, "stochastic_cell_cycle_boxplot_toolsYaxis.pdf"), format='pdf', bbox_inches='tight', pad_inches=0.1)
-g.savefig(os.path.join(save_dir, "stochastic_cell_cycle_boxplot_toolsYaxis.png"), dpi=300, bbox_inches='tight', pad_inches=0.1)
+fig.savefig(os.path.join(save_dir, "stochastic_cell_cycle_grid_all_phases_horizontal.pdf"),
+            format='pdf', bbox_inches='tight', pad_inches=0.1)
+fig.savefig(os.path.join(save_dir, "stochastic_cell_cycle_grid_all_phases_horizontal.png"),
+            dpi=600, bbox_inches='tight', pad_inches=0.1)
 
-# Save each phase subplot alone as PNG and PDF at 300 DPI
-for i, phase in enumerate(phase_order):
-    ax = g.axes[0][i]
-    safe_phase = phase.replace("/", "_")
-    fig = ax.get_figure()
-    # Hide other axes for saving
-    for j, other_ax in enumerate(g.axes[0]):
-        if j != i:
-            other_ax.set_visible(False)
-    fig.savefig(os.path.join(save_dir, f"stochastic_cell_cycle_boxplot_{safe_phase}.png"), dpi=300, bbox_inches='tight', pad_inches=0.1)
-    fig.savefig(os.path.join(save_dir, f"stochastic_cell_cycle_boxplot_{safe_phase}.pdf"), format='pdf', bbox_inches='tight', pad_inches=0.1)
-    # Restore visibility for next iteration
-    for j, other_ax in enumerate(g.axes[0]):
-        other_ax.set_visible(True)
+plt.close()
