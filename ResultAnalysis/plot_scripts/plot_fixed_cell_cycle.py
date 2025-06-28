@@ -64,7 +64,7 @@ plt.rcParams.update({
 })
 
 # Create figure with specific dimensions - made more compact
-fig, ax = plt.subplots(figsize=(8, 2.8))  # Match proportions to previous examples
+fig, ax = plt.subplots(figsize=(6, 2.8))  # Match proportions to previous examples
 
 # Normalize time to hours
 pc_df['dt'] = pc_df['dt'] / 60
@@ -89,11 +89,20 @@ linestyles = {
     'PhysiCell': '-',  # Solid
     'TiSim': '-'        # Solid
 }
+labels = {
+    'PhysiCell': 'PhysiCell',
+    'BioDynaMo': 'BioDynaMo',
+    'Chaste': 'Chaste',
+    'TiSim': 'TiSim'
+}
+
 
 # Plot all simulators with consistent styling
-ax.plot(pc_dts, pc_vols, 
-        color=colors['PhysiCell'], 
-        linestyle=linestyles['PhysiCell'], 
+# BioDynaMo
+ax.plot(bd_df['timestep'], bd_df["vol"] * 100, 
+        color=colors['BioDynaMo'], 
+        linestyle=linestyles['BioDynaMo'], 
+        label=labels['BioDynaMo'],
         linewidth=2.0,
         alpha=0.7)
 
@@ -105,6 +114,15 @@ vols = (ch_avg_vol / ch_init_vol * 100).tolist()
 ax.plot(dts, vols, 
         color=colors['Chaste'], 
         linestyle=linestyles['Chaste'], 
+        label=labels['Chaste'],
+        linewidth=2.0,
+        alpha=0.7)
+
+# PhysiCell
+ax.plot(pc_dts, pc_vols, 
+        color=colors['PhysiCell'], 
+        linestyle=linestyles['PhysiCell'], 
+        label=labels['PhysiCell'],
         linewidth=2.0,
         alpha=0.7)
 
@@ -112,13 +130,7 @@ ax.plot(dts, vols,
 ax.plot(ts_df['timestep'], ts_df['volumes'], 
         color=colors['TiSim'], 
         linestyle=linestyles['TiSim'], 
-        linewidth=2.0,
-        alpha=0.7)
-
-# BioDynaMo
-ax.plot(bd_df['timestep'], bd_df["vol"] * 100, 
-        color=colors['BioDynaMo'], 
-        linestyle=linestyles['BioDynaMo'], 
+        label=labels['TiSim'],
         linewidth=2.0,
         alpha=0.7)
 
@@ -151,8 +163,11 @@ ax.spines['right'].set_visible(False)
 # Remove grid
 ax.grid(False)
 
+# Add legend
+ax.legend(loc='center left', bbox_to_anchor=(0, 0.6), fontsize=8)
+
 # Set axis limits and labels with increased padding and font size
-ax.set_xlim(0, 36)
+ax.set_xlim(0, 36.5)
 ax.set_ylim(90, 220)
 ax.set_xlabel("Time (hours)", labelpad=8, fontsize=12)
 ax.set_ylabel("% of initial volume", labelpad=8, fontsize=12)

@@ -87,15 +87,15 @@ fig, ax = plt.subplots(figsize=(3, 2.8))
 #         color=colors['TiSim'],
 #         linestyle=linestyles['TiSim'], alpha=0.7, linewidth=1.8)
 
-ax.plot(pc_data['dt'], pc_data['mvx'],
-        color=colors['PhysiCell'], label=labels['PhysiCell'],
-        linestyle=linestyles['PhysiCell'], alpha=0.7, linewidth=1.8)
 ax.plot(bd_data['timestep'], bd_data['velocity'],
         color=colors['BioDynaMo'], label=labels['BioDynaMo'],
         linestyle=linestyles['BioDynaMo'], alpha=0.7, linewidth=1.8)
 ax.plot(ch_data['timestep'], ch_data['velocity'],
         color=colors['Chaste'], label=labels['Chaste'],
         linestyle=linestyles['Chaste'], alpha=0.7, linewidth=1.8)
+ax.plot(pc_data['dt'], pc_data['mvx'],
+        color=colors['PhysiCell'], label=labels['PhysiCell'],
+        linestyle=linestyles['PhysiCell'], alpha=0.7, linewidth=1.8)
 ax.plot(ts_data['dt'], ts_data['velocity'],
         color=colors['TiSim'], label=labels['TiSim'],
         linestyle=linestyles['TiSim'], alpha=0.7, linewidth=1.8)

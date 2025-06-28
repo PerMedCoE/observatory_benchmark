@@ -61,12 +61,12 @@ df_all = df_all.dropna(subset=['dt', 'diam'])
 df_all = df_all.sort_values('dt')
 
 # Print some diagnostic information
-print("\nDataFrame Info:")
-print(df_all.info())
-print("\nSample of combined data:")
-print(df_all.head())
-print("\nNumber of points per simulator:")
-print(df_all['Results'].value_counts())
+# print("\nDataFrame Info:")
+# print(df_all.info())
+# print("\nSample of combined data:")
+# print(df_all.head())
+# print("\nNumber of points per simulator:")
+# print(df_all['Results'].value_counts())
 
 # Set plotting order and color/marker mapping
 results_order = ['BioDynaMo', 'Chaste', 'PhysiCell', 'TiSim', 'Experimental']
@@ -142,20 +142,21 @@ ax1.plot(
 
 # Plot all other results
 for result in ['BioDynaMo', 'Chaste', 'PhysiCell', 'TiSim']:
-    df = df_all[df_all['Results'] == result]
+    df = df_all[(df_all['Results'] == result) & (df_all['dt'] <= 27)]
     ax1.plot(
         df['dt'], df['diam'],
         color=colors[result],
         label=result,
         linestyle=linestyles[result],
         linewidth=linewidths[result],
+        alpha=0.6,
         zorder=2
     )
 
 ax1.set_xlabel("Time (days)", labelpad=8, fontsize=12)
 ax1.set_ylabel("Diameter (μm)", labelpad=8, fontsize=12)
-ax1.set_xlim(0, 27)
-ax1.set_xticks(np.arange(0, 28, 1))
+ax1.set_xlim(13.8, 28)
+ax1.set_xticks(np.arange(14, 29, 1))
 ax1.set_ylim(bottom=df_all['diam'].min() - 100, top=df_all['diam'].max() + 100)
 
 ax1.grid(False)
@@ -168,7 +169,7 @@ ax1.tick_params(axis='both', which='major', labelsize=11)
 
 # Second plot (deviations)
 for result in ['BioDynaMo', 'Chaste', 'PhysiCell', 'TiSim']:
-    df = df_all[df_all['Results'] == result]
+    df = df_all[(df_all['Results'] == result) & (df_all['dt'] <= 27)]
     exp_values = exp_interp(df['dt'])
     deviations = df['diam'] - exp_values
     ax2.plot(
@@ -178,6 +179,7 @@ for result in ['BioDynaMo', 'Chaste', 'PhysiCell', 'TiSim']:
         label=result,
         linestyle=linestyles[result],
         linewidth=linewidths[result],
+        alpha=0.6,
         zorder=2
     )
 
@@ -187,8 +189,8 @@ ax2.axhline(y=0, color='black', linestyle='-', alpha=0.3, linewidth=0.5, zorder=
 # Customize second plot
 ax2.set_xlabel("Time (days)", labelpad=8, fontsize=12)
 ax2.set_ylabel("Deviation (μm)", labelpad=8, fontsize=12)
-ax2.set_xlim(0, 27)
-ax2.set_xticks(np.arange(0, 28, 1))
+ax2.set_xlim(13.8, 28)
+ax2.set_xticks(np.arange(14, 29, 1))
 
 ax2.grid(False)
 ax2.set_axisbelow(True)
@@ -229,6 +231,3 @@ plt.savefig(os.path.join(save_dir, "monolayer_comparison_combined.png"),
             bbox_inches='tight', 
             pad_inches=0.1,
             format='png')
-
-
-

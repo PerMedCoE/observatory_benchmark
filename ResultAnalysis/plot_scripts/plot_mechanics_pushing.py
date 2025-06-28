@@ -42,7 +42,13 @@ linestyles = {
     'BioDynaMo': '-',
     'Chaste': '-',
     'TiSim': '-',
-    'radius': '-'
+    'radius': 'dotted'
+}
+labels = {
+    'PhysiCell': 'PhysiCell',
+    'BioDynaMo': 'BioDynaMo',
+    'Chaste': 'Chaste',
+    'TiSim': 'TiSim'
 }
 
 # Update font settings for more compact plots
@@ -65,119 +71,139 @@ plt.rcParams.update({
 })
 
 # --- DUAL PANEL PLOT (Full and first 3 min) ---
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8, 2.8))  # Wider and more compact
+# fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8, 2.8))  # Wider and more compact
 
 # --- FULL PLOT (ax1) ---
-ax1.plot(pc_dist_dt['dt'], pc_dist_dt['dx'], color=colors['PhysiCell'], linestyle=linestyles['PhysiCell'], alpha=0.7)
-ax1.plot(bd_dist['dt'], bd_dist['dx'], color=colors['BioDynaMo'], linestyle=linestyles['BioDynaMo'], alpha=0.7)
-ax1.plot(ch_dist['dt'], ch_dist['dx'], color=colors['Chaste'], linestyle=linestyles['Chaste'], alpha=0.7)
-ax1.plot(ts_dist["time"], ts_dist['dx'], color=colors['TiSim'], linestyle=linestyles['TiSim'], alpha=0.7)
-ax1.plot(range(0, 11), [10] * len(range(0, 11)), color=colors['radius'], linestyle=linestyles['radius'], alpha=0.3)
-ax1.set_ylabel("Distance between cell centers (μm)", labelpad=8, fontsize=12)
-ax1.set_xlabel("Time (minutes)", labelpad=8, fontsize=12)
-ax1.set_xlim(left=0)
-ax1.set_ylim(bottom=0)
-ax1.spines['top'].set_visible(False)
-ax1.spines['right'].set_visible(False)
-ax1.grid(False)
-ax1.set_title("Full time course", fontsize=11)
-ax1.tick_params(axis='both', which='major', labelsize=11)
+# ax1.plot(pc_dist_dt['dt'], pc_dist_dt['dx'], color=colors['PhysiCell'], linestyle=linestyles['PhysiCell'], alpha=0.7)
+# ax1.plot(bd_dist['dt'], bd_dist['dx'], color=colors['BioDynaMo'], linestyle=linestyles['BioDynaMo'], alpha=0.7)
+# ax1.plot(ch_dist['dt'], ch_dist['dx'], color=colors['Chaste'], linestyle=linestyles['Chaste'], alpha=0.7)
+# ax1.plot(ts_dist["time"], ts_dist['dx'], color=colors['TiSim'], linestyle=linestyles['TiSim'], alpha=0.7)
+# ax1.plot(range(0, 11), [10] * len(range(0, 11)), color=colors['radius'], linestyle=linestyles['radius'], alpha=0.3)
+# ax1.set_ylabel("Distance between cell centers (μm)", labelpad=8, fontsize=12)
+# ax1.set_xlabel("Time (minutes)", labelpad=8, fontsize=12)
+# ax1.set_xlim(left=0)
+# ax1.set_ylim(bottom=0)
+# ax1.spines['top'].set_visible(False)
+# ax1.spines['right'].set_visible(False)
+# ax1.grid(False)
+# ax1.set_title("Full time course", fontsize=11)
+# ax1.tick_params(axis='both', which='major', labelsize=11)
 
 # --- ZOOMED PLOT (ax2) ---
-ax2.plot(pc_dist_dt['dt'][pc_dist_dt['dt'] <= 3], pc_dist_dt['dx'][pc_dist_dt['dt'] <= 3], color=colors['PhysiCell'], linestyle=linestyles['PhysiCell'], alpha=0.7)
-ax2.plot(bd_dist['dt'][bd_dist['dt'] <= 3], bd_dist['dx'][bd_dist['dt'] <= 3], color=colors['BioDynaMo'], linestyle=linestyles['BioDynaMo'], alpha=0.7)
-ax2.plot(ch_dist['dt'][np.array(ch_dist['dt']) <= 3], ch_dist['dx'][np.array(ch_dist['dt']) <= 3], color=colors['Chaste'], linestyle=linestyles['Chaste'], alpha=0.7)
-ax2.plot(ts_dist["time"][ts_dist["time"] <= 3], ts_dist['dx'][ts_dist["time"] <= 3], color=colors['TiSim'], linestyle=linestyles['TiSim'], alpha=0.7)
-ax2.plot(range(0, 4), [10] * len(range(0, 4)), color=colors['radius'], linestyle=linestyles['radius'], alpha=0.3)
-ax2.set_xlabel("Time (minutes)", labelpad=8, fontsize=12)
-ax2.set_xlim(0, 3)
-ax2.set_ylim(bottom=0)
-ax2.spines['top'].set_visible(False)
-ax2.spines['right'].set_visible(False)
-ax2.grid(False)
-ax2.set_title("First 3 minutes", fontsize=11)
-ax2.tick_params(axis='both', which='major', labelsize=11)
+# ax2.plot(pc_dist_dt['dt'][pc_dist_dt['dt'] <= 3], pc_dist_dt['dx'][pc_dist_dt['dt'] <= 3], color=colors['PhysiCell'], linestyle=linestyles['PhysiCell'], alpha=0.7)
+# ax2.plot(bd_dist['dt'][bd_dist['dt'] <= 3], bd_dist['dx'][bd_dist['dt'] <= 3], color=colors['BioDynaMo'], linestyle=linestyles['BioDynaMo'], alpha=0.7)
+# ax2.plot(ch_dist['dt'][np.array(ch_dist['dt']) <= 3], ch_dist['dx'][np.array(ch_dist['dt']) <= 3], color=colors['Chaste'], linestyle=linestyles['Chaste'], alpha=0.7)
+# ax2.plot(ts_dist["time"][ts_dist["time"] <= 3], ts_dist['dx'][ts_dist["time"] <= 3], color=colors['TiSim'], linestyle=linestyles['TiSim'], alpha=0.7)
+# ax2.plot(range(0, 4), [10] * len(range(0, 4)), color=colors['radius'], linestyle=linestyles['radius'], alpha=0.3)
+# ax2.set_xlabel("Time (minutes)", labelpad=8, fontsize=12)
+# ax2.set_xlim(0, 3)
+# ax2.set_ylim(bottom=0)
+# ax2.spines['top'].set_visible(False)
+# ax2.spines['right'].set_visible(False)
+# ax2.grid(False)
+# ax2.set_title("First 3 minutes", fontsize=11)
+# ax2.tick_params(axis='both', which='major', labelsize=11)
 
-plt.tight_layout()
-plt.subplots_adjust(bottom=0.15)
+# plt.tight_layout()
+# plt.subplots_adjust(bottom=0.15)
 
-# Save in vector and raster formats
-save_dir = "./ResultAnalysis/plots/mechanics_pushing_plots"
-os.makedirs(save_dir, exist_ok=True)
-plt.savefig(os.path.join(save_dir, "mechanics_movement_dualpanel.pdf"), format='pdf', bbox_inches='tight', pad_inches=0.1)
-plt.savefig(os.path.join(save_dir, "mechanics_movement_dualpanel.svg"), format='svg', bbox_inches='tight', pad_inches=0.1)
-plt.savefig(os.path.join(save_dir, "mechanics_movement_dualpanel.png"), dpi=600, bbox_inches='tight', pad_inches=0.1, format='png')
-plt.close(fig)
+# # Save in vector and raster formats
+# save_dir = "./ResultAnalysis/plots/mechanics_pushing_plots"
+# os.makedirs(save_dir, exist_ok=True)
+# plt.savefig(os.path.join(save_dir, "mechanics_movement_dualpanel.pdf"), format='pdf', bbox_inches='tight', pad_inches=0.1)
+# plt.savefig(os.path.join(save_dir, "mechanics_movement_dualpanel.svg"), format='svg', bbox_inches='tight', pad_inches=0.1)
+# plt.savefig(os.path.join(save_dir, "mechanics_movement_dualpanel.png"), dpi=600, bbox_inches='tight', pad_inches=0.1, format='png')
+# plt.close(fig)
 
 # --- INDIVIDUAL FULL PLOT ---
-fig_full, ax_full = plt.subplots(figsize=(3, 2.8))
-ax_full.plot(pc_dist_dt['dt'], pc_dist_dt['dx'], color=colors['PhysiCell'], linestyle=linestyles['PhysiCell'], alpha=0.7)
-ax_full.plot(bd_dist['dt'], bd_dist['dx'], color=colors['BioDynaMo'], linestyle=linestyles['BioDynaMo'], alpha=0.7)
-ax_full.plot(ch_dist['dt'], ch_dist['dx'], color=colors['Chaste'], linestyle=linestyles['Chaste'], alpha=0.7)
-ax_full.plot(ts_dist["time"], ts_dist['dx'], color=colors['TiSim'], linestyle=linestyles['TiSim'], alpha=0.7)
-ax_full.plot(range(0, 11), [10] * len(range(0, 11)), color=colors['radius'], linestyle=linestyles['radius'], alpha=0.3)
-ax_full.set_ylabel("Distance between cell centers (μm)", labelpad=8, fontsize=12)
-ax_full.set_xlabel("Time (minutes)", labelpad=8, fontsize=12)
-ax_full.set_xlim(left=0)
-ax_full.set_ylim(bottom=0)
-ax_full.spines['top'].set_visible(False)
-ax_full.spines['right'].set_visible(False)
-ax_full.grid(False)
-ax_full.tick_params(axis='both', which='major', labelsize=11)
-plt.tight_layout()
-plt.savefig(os.path.join(save_dir, "mechanics_movement_full.pdf"), format='pdf', bbox_inches='tight', pad_inches=0.1)
-plt.savefig(os.path.join(save_dir, "mechanics_movement_full.svg"), format='svg', bbox_inches='tight', pad_inches=0.1)
-plt.savefig(os.path.join(save_dir, "mechanics_movement_full.png"), dpi=600, bbox_inches='tight', pad_inches=0.1, format='png')
-plt.close(fig_full)
+# fig_full, ax_full = plt.subplots(figsize=(3, 2.8))
+# ax_full.plot(pc_dist_dt['dt'], pc_dist_dt['dx'], color=colors['PhysiCell'], linestyle=linestyles['PhysiCell'], alpha=0.7)
+# ax_full.plot(bd_dist['dt'], bd_dist['dx'], color=colors['BioDynaMo'], linestyle=linestyles['BioDynaMo'], alpha=0.7)
+# ax_full.plot(ch_dist['dt'], ch_dist['dx'], color=colors['Chaste'], linestyle=linestyles['Chaste'], alpha=0.7)
+# ax_full.plot(ts_dist["time"], ts_dist['dx'], color=colors['TiSim'], linestyle=linestyles['TiSim'], alpha=0.7)
+# ax_full.plot(range(0, 11), [10] * len(range(0, 11)), color=colors['radius'], linestyle=linestyles['radius'], alpha=0.3)
+# ax_full.set_ylabel("Distance between cell centers (μm)", labelpad=8, fontsize=12)
+# ax_full.set_xlabel("Time (minutes)", labelpad=8, fontsize=12)
+# ax_full.set_xlim(left=0)
+# ax_full.set_ylim(bottom=0)
+# ax_full.spines['top'].set_visible(False)
+# ax_full.spines['right'].set_visible(False)
+# ax_full.grid(False)
+# ax_full.tick_params(axis='both', which='major', labelsize=11)
+# plt.tight_layout()
+# plt.savefig(os.path.join(save_dir, "mechanics_movement_full.pdf"), format='pdf', bbox_inches='tight', pad_inches=0.1)
+# plt.savefig(os.path.join(save_dir, "mechanics_movement_full.svg"), format='svg', bbox_inches='tight', pad_inches=0.1)
+# plt.savefig(os.path.join(save_dir, "mechanics_movement_full.png"), dpi=600, bbox_inches='tight', pad_inches=0.1, format='png')
+# plt.close(fig_full)
 
 # --- INDIVIDUAL ZOOMED PLOT (First 3 min) ---
-fig_zoom, ax_zoom = plt.subplots(figsize=(3, 2.8))
-ax_zoom.plot(pc_dist_dt['dt'][pc_dist_dt['dt'] <= 3], pc_dist_dt['dx'][pc_dist_dt['dt'] <= 3], color=colors['PhysiCell'], linestyle=linestyles['PhysiCell'], alpha=0.7)
-ax_zoom.plot(bd_dist['dt'][bd_dist['dt'] <= 3], bd_dist['dx'][bd_dist['dt'] <= 3], color=colors['BioDynaMo'], linestyle=linestyles['BioDynaMo'], alpha=0.7)
-ax_zoom.plot(ch_dist['dt'][np.array(ch_dist['dt']) <= 3], ch_dist['dx'][np.array(ch_dist['dt']) <= 3], color=colors['Chaste'], linestyle=linestyles['Chaste'], alpha=0.7)
-ax_zoom.plot(ts_dist["time"][ts_dist["time"] <= 3], ts_dist['dx'][ts_dist["time"] <= 3], color=colors['TiSim'], linestyle=linestyles['TiSim'], alpha=0.7)
-ax_zoom.plot(range(0, 4), [10] * len(range(0, 4)), color=colors['radius'], linestyle=linestyles['radius'], alpha=0.3)
-ax_zoom.set_xlabel("Time (minutes)", labelpad=8, fontsize=12)
-ax_zoom.set_xlim(0, 3)
-ax_zoom.set_ylim(bottom=0)
-ax_zoom.spines['top'].set_visible(False)
-ax_zoom.spines['right'].set_visible(False)
-ax_zoom.grid(False)
-ax_zoom.tick_params(axis='both', which='major', labelsize=11)
-plt.tight_layout()
-plt.savefig(os.path.join(save_dir, "mechanics_movement_zoom3min.pdf"), format='pdf', bbox_inches='tight', pad_inches=0.1)
-plt.savefig(os.path.join(save_dir, "mechanics_movement_zoom3min.svg"), format='svg', bbox_inches='tight', pad_inches=0.1)
-plt.savefig(os.path.join(save_dir, "mechanics_movement_zoom3min.png"), dpi=600, bbox_inches='tight', pad_inches=0.1, format='png')
-plt.close(fig_zoom)
+# fig_zoom, ax_zoom = plt.subplots(figsize=(3, 2.8))
+# ax_zoom.plot(pc_dist_dt['dt'][pc_dist_dt['dt'] <= 3], pc_dist_dt['dx'][pc_dist_dt['dt'] <= 3], color=colors['PhysiCell'], linestyle=linestyles['PhysiCell'], alpha=0.7)
+# ax_zoom.plot(bd_dist['dt'][bd_dist['dt'] <= 3], bd_dist['dx'][bd_dist['dt'] <= 3], color=colors['BioDynaMo'], linestyle=linestyles['BioDynaMo'], alpha=0.7)
+# ax_zoom.plot(ch_dist['dt'][np.array(ch_dist['dt']) <= 3], ch_dist['dx'][np.array(ch_dist['dt']) <= 3], color=colors['Chaste'], linestyle=linestyles['Chaste'], alpha=0.7)
+# ax_zoom.plot(ts_dist["time"][ts_dist["time"] <= 3], ts_dist['dx'][ts_dist["time"] <= 3], color=colors['TiSim'], linestyle=linestyles['TiSim'], alpha=0.7)
+# ax_zoom.plot(range(0, 4), [10] * len(range(0, 4)), color=colors['radius'], linestyle=linestyles['radius'], alpha=0.3)
+# ax_zoom.set_xlabel("Time (minutes)", labelpad=8, fontsize=12)
+# ax_zoom.set_xlim(0, 3)
+# ax_zoom.set_ylim(bottom=0)
+# ax_zoom.spines['top'].set_visible(False)
+# ax_zoom.spines['right'].set_visible(False)
+# ax_zoom.grid(False)
+# ax_zoom.tick_params(axis='both', which='major', labelsize=11)
+# plt.tight_layout()
+# plt.savefig(os.path.join(save_dir, "mechanics_movement_zoom3min.pdf"), format='pdf', bbox_inches='tight', pad_inches=0.1)
+# plt.savefig(os.path.join(save_dir, "mechanics_movement_zoom3min.svg"), format='svg', bbox_inches='tight', pad_inches=0.1)
+# plt.savefig(os.path.join(save_dir, "mechanics_movement_zoom3min.png"), dpi=600, bbox_inches='tight', pad_inches=0.1, format='png')
+# plt.close(fig_zoom)
 
 # --- INDIVIDUAL NORMALIZED FULL PLOT ---
-cell_radius = 10.0
-fig2, ax_norm = plt.subplots(figsize=(3, 2.8))
-ax_norm.plot(pc_dist_dt['dt'], pc_dist_dt['dx'] / cell_radius, color=colors['PhysiCell'], linestyle=linestyles['PhysiCell'], alpha=0.7)
-ax_norm.plot(bd_dist['dt'], bd_dist['dx'] / cell_radius, color=colors['BioDynaMo'], linestyle=linestyles['BioDynaMo'], alpha=0.7)
-ax_norm.plot(ch_dist['dt'], ch_dist['dx'] / cell_radius, color=colors['Chaste'], linestyle=linestyles['Chaste'], alpha=0.7)
-ax_norm.plot(ts_dist["time"], ts_dist['dx'] / cell_radius, color=colors['TiSim'], linestyle=linestyles['TiSim'], alpha=0.7)
-ax_norm.axhline(1, color=colors['radius'], linestyle=linestyles['radius'], alpha=0.3)
-ax_norm.set_ylabel("Distance / cell radius (μm)", labelpad=8, fontsize=12)
-ax_norm.set_xlabel("Time (minutes)", labelpad=8, fontsize=12)
-ax_norm.set_xlim(left=0)
-ax_norm.set_ylim(bottom=0)
-ax_norm.spines['top'].set_visible(False)
-ax_norm.spines['right'].set_visible(False)
-ax_norm.grid(False)
-ax_norm.tick_params(axis='both', which='major', labelsize=11)
-plt.tight_layout()
-plt.savefig(os.path.join(save_dir, "mechanics_movement_normalized.pdf"), format='pdf', bbox_inches='tight', pad_inches=0.1)
-plt.savefig(os.path.join(save_dir, "mechanics_movement_normalized.svg"), format='svg', bbox_inches='tight', pad_inches=0.1)
-plt.savefig(os.path.join(save_dir, "mechanics_movement_normalized.png"), dpi=600, bbox_inches='tight', pad_inches=0.1, format='png')
-plt.close(fig2)
+# cell_radius = 10.0
+# fig2, ax_norm = plt.subplots(figsize=(3, 2.8))
+# ax_norm.plot(pc_dist_dt['dt'], pc_dist_dt['dx'] / cell_radius, color=colors['PhysiCell'], linestyle=linestyles['PhysiCell'], alpha=0.7)
+# ax_norm.plot(bd_dist['dt'], bd_dist['dx'] / cell_radius, color=colors['BioDynaMo'], linestyle=linestyles['BioDynaMo'], alpha=0.7)
+# ax_norm.plot(ch_dist['dt'], ch_dist['dx'] / cell_radius, color=colors['Chaste'], linestyle=linestyles['Chaste'], alpha=0.7)
+# ax_norm.plot(ts_dist["time"], ts_dist['dx'] / cell_radius, color=colors['TiSim'], linestyle=linestyles['TiSim'], alpha=0.7)
+# ax_norm.axhline(1, color=colors['radius'], linestyle=linestyles['radius'], alpha=0.3)
+# ax_norm.set_ylabel("Distance / cell radius (μm)", labelpad=8, fontsize=12)
+# ax_norm.set_xlabel("Time (minutes)", labelpad=8, fontsize=12)
+# ax_norm.set_xlim(left=0)
+# ax_norm.set_ylim(bottom=0)
+# ax_norm.spines['top'].set_visible(False)
+# ax_norm.spines['right'].set_visible(False)
+# ax_norm.grid(False)
+# ax_norm.tick_params(axis='both', which='major', labelsize=11)
+# plt.tight_layout()
+# plt.savefig(os.path.join(save_dir, "mechanics_movement_normalized.pdf"), format='pdf', bbox_inches='tight', pad_inches=0.1)
+# plt.savefig(os.path.join(save_dir, "mechanics_movement_normalized.svg"), format='svg', bbox_inches='tight', pad_inches=0.1)
+# plt.savefig(os.path.join(save_dir, "mechanics_movement_normalized.png"), dpi=600, bbox_inches='tight', pad_inches=0.1, format='png')
+# plt.close(fig2)
 
 # --- INDIVIDUAL NORMALIZED ZOOMED PLOT (First 3 min) ---
+save_dir = "./ResultAnalysis/plots/mechanics_pushing_plots"
+os.makedirs(save_dir, exist_ok=True)
+cell_radius = 10.0
+
 fig3, ax_norm_zoom = plt.subplots(figsize=(3, 2.8))
-ax_norm_zoom.plot(pc_dist_dt['dt'][pc_dist_dt['dt'] <= 3], (pc_dist_dt['dx'] / cell_radius)[pc_dist_dt['dt'] <= 3], color=colors['PhysiCell'], linestyle=linestyles['PhysiCell'], alpha=0.7)
-ax_norm_zoom.plot(bd_dist['dt'][bd_dist['dt'] <= 3], (bd_dist['dx'] / cell_radius)[bd_dist['dt'] <= 3], color=colors['BioDynaMo'], linestyle=linestyles['BioDynaMo'], alpha=0.7)
-ax_norm_zoom.plot(ch_dist['dt'][np.array(ch_dist['dt']) <= 3], (ch_dist['dx'] / cell_radius)[np.array(ch_dist['dt']) <= 3], color=colors['Chaste'], linestyle=linestyles['Chaste'], alpha=0.7)
-ax_norm_zoom.plot(ts_dist["time"][ts_dist["time"] <= 3], (ts_dist['dx'] / cell_radius)[ts_dist["time"] <= 3], color=colors['TiSim'], linestyle=linestyles['TiSim'], alpha=0.7)
+ax_norm_zoom.plot(bd_dist['dt'][bd_dist['dt'] <= 3], (bd_dist['dx'] / cell_radius)[bd_dist['dt'] <= 3], 
+                  color=colors['BioDynaMo'],
+                  linestyle=linestyles['BioDynaMo'], 
+                  label=labels['BioDynaMo'], 
+                  alpha=0.7)
+ax_norm_zoom.plot(ch_dist['dt'][np.array(ch_dist['dt']) <= 3], (ch_dist['dx'] / cell_radius)[np.array(ch_dist['dt']) <= 3], 
+                  color=colors['Chaste'], 
+                  linestyle=linestyles['Chaste'], 
+                  label=labels['Chaste'], 
+                  alpha=0.7)
+ax_norm_zoom.plot(ts_dist["time"][ts_dist["time"] <= 3], (ts_dist['dx'] / cell_radius)[ts_dist["time"] <= 3], 
+                  color=colors['TiSim'], 
+                  linestyle=linestyles['TiSim'], 
+                  label=labels['TiSim'], 
+                  alpha=0.7)
+ax_norm_zoom.plot(pc_dist_dt['dt'][pc_dist_dt['dt'] <= 3], (pc_dist_dt['dx'] / cell_radius)[pc_dist_dt['dt'] <= 3], 
+                  color=colors['PhysiCell'], 
+                  linestyle=linestyles['PhysiCell'], 
+                  label=labels['PhysiCell'],
+                  alpha=0.7)
 ax_norm_zoom.axhline(1, color=colors['radius'], linestyle=linestyles['radius'], alpha=0.3)
 ax_norm_zoom.set_ylabel("Distance / cell radius (μm)", labelpad=8, fontsize=12)
 ax_norm_zoom.set_xlabel("Time (minutes)", labelpad=8, fontsize=12)
@@ -187,6 +213,8 @@ ax_norm_zoom.spines['top'].set_visible(False)
 ax_norm_zoom.spines['right'].set_visible(False)
 ax_norm_zoom.grid(False)
 ax_norm_zoom.tick_params(axis='both', which='major', labelsize=11)
+ax_norm_zoom.legend(loc='upper right', bbox_to_anchor=(1, 1), fontsize=8)
+
 plt.tight_layout()
 plt.savefig(os.path.join(save_dir, "mechanics_movement_normalized_zoom3min.pdf"), format='pdf', bbox_inches='tight', pad_inches=0.1)
 plt.savefig(os.path.join(save_dir, "mechanics_movement_normalized_zoom3min.svg"), format='svg', bbox_inches='tight', pad_inches=0.1)
