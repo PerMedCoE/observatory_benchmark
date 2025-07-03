@@ -285,7 +285,7 @@ void custom_function( Cell* pCell, Phenotype& phenotype , double dt )
     double x0= pCell0->position[0];
     double x1= pCell1->position[0];
     std::cout <<"    x0= "<< x0 <<", x1=<< "<< x1 << std::endl;
-    if (x1-x0 < 10)
+    if (x1-x0 < 9)
     {
         pCell0->phenotype.motility.motility_vector[0] = 0.0;
         pCell1->phenotype.motility.motility_vector[0] = 0.0;
