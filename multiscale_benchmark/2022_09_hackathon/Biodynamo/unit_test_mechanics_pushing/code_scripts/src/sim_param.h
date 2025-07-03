@@ -11,13 +11,27 @@
 // regarding copyright ownership.
 //
 // -----------------------------------------------------------------------------
-#include "unit-test-mechanics-two-cells.h"
+
+#ifndef SIM_PARAM_H_
+#define SIM_PARAM_H_
+
+#include "biodynamo.h"
 
 namespace bdm {
 
-const ParamGroupUid SimParam::kUid = ParamGroupUidGenerator::Get()->NewUid();
+// Parameters specific for this simulation
+struct SimParam : public ParamGroup {
+  BDM_PARAM_GROUP_HEADER(SimParam, 1);
+
+  // Forces: attraction coeff default 1, unit is mass/time^2
+  real_t attraction_coeff = 1;
+
+  // Forces: repulsion coeff default 2, unit is mass/time^2
+  real_t repulsion_coeff = 2;
+
+
+};
 
 }  // namespace bdm
 
-int main(int argc, const char** argv) { return bdm::Simulate(argc, argv); }
-
+#endif  // SIM_PARAM_H_

@@ -11,13 +11,23 @@
 // regarding copyright ownership.
 //
 // -----------------------------------------------------------------------------
-#include "unit-test-mechanics-two-cells.h"
+
+#ifndef CELL_CELL_FORCE_H_
+#define CELL_CELL_FORCE_H_
+
+#include "biodynamo.h"
+#include "core/interaction_force.h"
 
 namespace bdm {
 
-const ParamGroupUid SimParam::kUid = ParamGroupUidGenerator::Get()->NewUid();
+class CellCellForce : public InteractionForce {
+ public:
+  CellCellForce() {}
+  virtual ~CellCellForce() {}
+
+  virtual Real4 Calculate(const Agent* lhs, const Agent* rhs) const override;
+};
 
 }  // namespace bdm
 
-int main(int argc, const char** argv) { return bdm::Simulate(argc, argv); }
-
+#endif
