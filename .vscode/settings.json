@@ -68,5 +68,6 @@
         "typeindex": "cpp",
         "typeinfo": "cpp",
         "variant": "cpp"
-    }
+    },
+    "r.lsp.promptToInstall": false
 }
