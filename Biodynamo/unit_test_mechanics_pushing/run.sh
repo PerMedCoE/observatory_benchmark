@@ -32,3 +32,4 @@ bdm run
 
 # Move the results to the correct folder
 mv output/unit-test-mechanics-two-cells/metadata $DIR/results
+mv positions.csv $DIR/results

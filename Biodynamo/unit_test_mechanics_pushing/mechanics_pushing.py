@@ -1,6 +1,6 @@
 import sys,os,re,argparse,glob
 sys.path.append('./pctk')
-from pctk import multicellds
+# from pctk import multicellds
 import pandas as pd
 from scipy.io import loadmat
 from pathlib import Path
@@ -21,15 +21,26 @@ def create_parser():
 def generate_pngs(data_folder,csv_fname):
     data_biod = pd.read_csv(data_folder+csv_fname,header = None,sep='\t|,',engine='python',index_col=0)
     print(data_biod)
+    distances = []
+    indexes = []
     # Create a 3D scatter plot
     for index,row in data_biod.iterrows():
         fig = plt.figure()
         ax = fig.add_subplot(111)
         
-        print(index)
+        # print(index)
         # Add voxels to the plot
-        circle1b = plt.Circle((row.iloc[0], row.iloc[1]),6)
-        circle2b = plt.Circle((row.iloc[3],row.iloc[4]),6)
+        circle1b = plt.Circle((row.iloc[0], row.iloc[1]),5)
+        circle2b = plt.Circle((row.iloc[3],row.iloc[4]),5)
+        x1 = row.iloc[0]
+        y1 = row.iloc[1]
+        x2 = row.iloc[3]
+        y2 = row.iloc[4]
+        
+        # Compute the distance between the two points
+        distance = ((x2 - x1)**2 + (y2 - y1)**2)**0.5
+        distances.append(distance)
+        indexes.append(index)
         # Set the axis labels
         ax.set_aspect( 1 )
         ax.add_artist( circle1b)
@@ -43,21 +54,49 @@ def generate_pngs(data_folder,csv_fname):
         # Show the plot
         num_ite = index*100
         plt.title("BiodyNamo Two cells pushing Timestep: "f"{index:.1f}""")
-        plt.legend()
+        # plt.legend()
         plt.savefig(data_folder+"/positions_timepoint"+str(int(num_ite))+".png")
         plt.close()
+    ##################### Plot distances
+    fig = plt.figure()
+    plt.plot(indexes, distances, color='red')
+    plt.axhline(y=10, color='black', linestyle='--')
+    plt.xlabel('Time')
+    plt.ylabel('Real distance travelled')
+    plt.title("Real distance between the two cells across time")
+    plt.xlim([-5, 105])
+    plt.ylim([0, 32])
+    plt.savefig(data_folder+"/distances_vs_time.png")
+    plt.close()
+    
 def get_key(fp):
     filename = os.path.splitext(os.path.basename(fp))[0]
-    int_part =  re.findall(r'\d+', filename)[0]
-    return int(int_part)
+    matches = re.findall(r'\d+', filename)
+    if matches:
+        # Return the first sequence of digits as an integer
+        return int(matches[0])
+    else:
+        # Return a default value if no digits are found
+        return 0
+    
+def generate_gif(output_folder, csv_out):
+    generate_pngs(output_folder, csv_out)
+        
+    # List of image file paths sorted by time point
+    image_files = sorted(glob.glob(f"{output_folder}/*.png"), key=get_key)
+        
+    # Open images one by one and append to frames
+    frames = []
+    for image in image_files:
+        with Image.open(image) as img:
+            frames.append(img.copy())  # Copy the image to store in memory
+        
+    # Save the frames as a GIF
+    if frames:
+        frame_one = frames[0]
+        frame_one.save("Biodynamo_two_cell_pushing.gif", format="GIF", append_images=frames[1:],
+                    save_all=True, duration=200, loop=0)
 
-def generate_gif(output_folder,csv_out):
-    generate_pngs(output_folder,csv_out)
-    frames = [Image.open(image) for image in sorted(glob.glob(f"{output_folder}/*.png"),key=get_key)]
-
-    frame_one = frames[0]
-    frame_one.save("Biodynamo_two_cell_pushing.gif", format="GIF", append_images=frames,
-               save_all=True, duration=200, loop=0)
 
 
 if __name__ == '__main__':

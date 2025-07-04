@@ -18,6 +18,11 @@
 #include "biodynamo.h"
 #include "custom_ops.h"
 #include "moving_cell.h"
+#include "cell_cell_force.h"
+#include "core/environment/uniform_grid_environment.h"
+#include "core/interaction_force.h"
+#include "core/operation/mechanical_forces_op.h"
+#include "sim_param.h"
 
 namespace bdm {
 
@@ -30,7 +35,12 @@ inline int Simulate(int argc, const char** argv) {
     param->export_visualization = false;
     param->visualize_agents["Moving_cell"] = {};
     param->statistics = true;
+    param->simulation_time_step = 0.01;
   };
+  
+  // Before we create a simulation we have to tell BioDynaMo about
+  // the new parameters.
+  Param::RegisterParamGroup(new SimParam());
 
   Simulation simulation(argc, argv, set_param);
   auto* scheduler = simulation.GetScheduler();
@@ -75,6 +85,13 @@ inline int Simulate(int argc, const char** argv) {
   // Move behaviour
   auto* behavior_op = scheduler->GetOps("behavior")[0];
   behavior_op->frequency_ = 1;  // Set behaviors' frequency
+
+  // Custom force module
+  auto* custom_force = new CellCellForce();
+  auto* mech_op = scheduler->GetOps("mechanical forces")[0];
+  auto* force_implementation = mech_op->GetImplementation<MechanicalForcesOp>();
+  force_implementation->SetInteractionForce(custom_force);
+  mech_op->frequency_ = 1;
 
   // Run simulation for 10 minutes (100 steps, 1 step = 0.1 min )
   scheduler->Simulate(time_steps);
