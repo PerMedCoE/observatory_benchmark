@@ -1,0 +1,223 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import os
+
+"""A small 3-D explicit finite-difference diffusion toy
+    (cleaned-up version of the code that was corrupted during PDF copy).
+
+The script defines:
+  • a constant boundary-condition helper
+  • a simple explicit solver ``diffusion_3d``
+then runs one call so that the module can be executed directly.
+
+It is *not* optimised – it is meant as a readable reference.
+"""
+
+# ----------------------------------------------------------------------------
+# Simulation parameters
+# ----------------------------------------------------------------------------
+
+x_domain = 240.0  # physical size along x (µm)
+y_domain = 240.0  # y-extent
+z_domain = 240.0  # z-extent
+t_domain = 10.0   # total simulated time (min)
+
+nx = ny = nz = 81         # number of nodes per direction
+nu = 2000.0               # diffusion coefficient (µm²/min)
+sigma = 0.9               # stability factor for explicit scheme
+
+# Derived grid spacing
+
+dx = x_domain / (nx - 1)
+dy = y_domain / (ny - 1)
+dz = z_domain / (nz - 1)
+
+# ----------------------------------------------------------------------------
+# Initial conditions
+# ----------------------------------------------------------------------------
+
+# Match ground-truth: start with 0 µM in the bulk; boundary will be reset to 10 µM each step
+u0 = np.zeros((ny, nx, nz))
+
+# ---------------------------------------------------------------------------
+# Point sinks (cells consuming nutrient)
+# ---------------------------------------------------------------------------
+# Each selected voxel *removes* concentration at a constant rate in µM/min.
+# To experiment, modify the two parameters below.
+
+N_SINKS = 1000          # how many voxels act as sinks
+SINK_RATE = -2000.0     # consumption rate per voxel (µM/min, **negative**)
+
+np.random.seed(0)
+P0 = np.zeros_like(u0)
+for _ in range(N_SINKS):
+    iy, ix, iz = np.random.randint(2, nx - 2, size=3)
+    P0[iy, ix, iz] += SINK_RATE
+
+print("Total sink strength (µM/min):", P0.sum())
+
+# ----------------------------------------------------------------------------
+# Boundary condition helper
+# ----------------------------------------------------------------------------
+
+def constant_bc(value: float = 10.0):
+    """Return a closure that applies a constant Dirichlet BC."""
+
+    def _bc(field: np.ndarray) -> np.ndarray:  # pylint: disable=unused-argument
+        return value
+
+    return _bc
+
+
+# ----------------------------------------------------------------------------
+# Diffusion solver (explicit FTCS scheme)
+# ----------------------------------------------------------------------------
+
+def diffusion_3d(
+    u_init: np.ndarray,
+    t_end: float,
+    dx: float,
+    dy: float,
+    dz: float,
+    nu: float,
+    sigma: float,
+    bc_func,
+    source_rate: np.ndarray | None = None,
+):
+    """Solve 3-D diffusion with constant Dirichlet boundaries.
+
+    Parameters
+    ----------
+    u_init : np.ndarray
+        Initial 3-D concentration field (ny × nx × nz).
+    t_end : float
+        End time of the simulation (same units as *nu*).
+    dx, dy, dz : float
+        Grid spacing (same units as *nu*).
+    nu : float
+        Diffusion coefficient.
+    sigma : float
+        Stability factor (≤ 1).
+    bc_func : callable
+        Function that returns the boundary value (can depend on *u_old*).
+    source_rate : np.ndarray | None, optional
+        Source rate field (ny × nx × nz), default None.
+    """
+
+    # time-step from stability criterion (explicit scheme)
+    dt = 0.5 * sigma / ((1.0 / dx ** 2) + (1.0 / dy ** 2) + (1.0 / dz ** 2)) / nu
+    nt = int(np.ceil(t_end / dt))
+    print(f"Δt = {dt:.5e} — total steps: {nt}")
+
+    u = u_init.copy()
+
+    coeff_x = nu * dt / dx ** 2
+    coeff_y = nu * dt / dy ** 2
+    coeff_z = nu * dt / dz ** 2
+
+    mean_conc = np.empty(nt, dtype=float)
+    std_conc = np.empty(nt, dtype=float)
+
+    for step in range(nt):
+        u_old = u.copy()
+
+        # interior update (vectorised)
+        lap = (
+            u_old[1:-1, 1:-1, 1:-1]
+            + coeff_x * (u_old[1:-1, 2:, 1:-1] - 2 * u_old[1:-1, 1:-1, 1:-1] + u_old[1:-1, :-2, 1:-1])
+            + coeff_y * (u_old[2:, 1:-1, 1:-1] - 2 * u_old[1:-1, 1:-1, 1:-1] + u_old[:-2, 1:-1, 1:-1])
+            + coeff_z * (u_old[1:-1, 1:-1, 2:] - 2 * u_old[1:-1, 1:-1, 1:-1] + u_old[1:-1, 1:-1, :-2])
+        )
+
+        if source_rate is not None:
+            lap += dt * source_rate[1:-1, 1:-1, 1:-1]
+
+        u[1:-1, 1:-1, 1:-1] = lap
+
+        # apply constant Dirichlet BCs on all six faces
+        bc_val = bc_func(u_old)
+        u[0, :, :] = bc_val  # y = 0 (bottom)
+        u[-1, :, :] = bc_val  # y = max (top)
+        u[:, 0, :] = bc_val  # x = 0 (left)
+        u[:, -1, :] = bc_val  # x = max (right)
+        u[:, :, 0] = bc_val  # z = 0 (front)
+        u[:, :, -1] = bc_val  # z = max (back)
+
+        # record mean and standard deviation after update
+        mean_conc[step] = u.mean()
+        std_conc[step] = u.std()
+
+    return u, dt, nt, mean_conc, std_conc
+
+
+# ----------------------------------------------------------------------------
+# Run a quick test if executed as a script
+# ----------------------------------------------------------------------------
+
+if __name__ == "__main__":
+    u_final, dt, nsteps, mean_ts, std_ts = diffusion_3d(
+        u0,
+        t_end=t_domain,
+        dx=dx,
+        dy=dy,
+        dz=dz,
+        nu=nu,
+        sigma=sigma,
+        bc_func=constant_bc(10.0),
+        source_rate=P0,
+    )
+
+    print("Simulation finished — mean concentration:", u_final.mean())
+
+    # -------------------------------------------------------------------
+    # Plot average concentration vs. time
+    # -------------------------------------------------------------------
+
+    # For direct comparison with ground-truth snapshots we use the raw step index as the x-axis
+    times = np.arange(nsteps)  # 0, 1, 2, ...
+
+    plt.rcParams.update({
+        "font.family": "sans-serif",
+        "font.size": 8,
+        "axes.labelsize": 9,
+        "axes.titlesize": 9,
+        "xtick.labelsize": 8,
+        "ytick.labelsize": 8,
+        "lines.linewidth": 1.8,
+        "axes.linewidth": 0.8,
+        "xtick.major.width": 0.8,
+        "ytick.major.width": 0.8,
+        "xtick.major.size": 3,
+        "ytick.major.size": 3,
+        "figure.dpi": 400,
+    })
+
+    fig, ax = plt.subplots(figsize=(4, 2.5))
+    ax.plot(times, mean_ts, color="#666666", linewidth=1.8)
+    ax.set_xlabel("Timestep")
+    ax.set_ylabel("Concentration (µM)")
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    plt.tight_layout()
+
+    # save outputs
+    save_dir = "ResultAnalysis/plots/diffusion_cfd_plots"
+    os.makedirs(save_dir, exist_ok=True)
+
+    fname = os.path.join(save_dir, "average_concentration_timecourse")
+    fig.savefig(f"{fname}.pdf", format="pdf", bbox_inches="tight", pad_inches=0.05)
+    fig.savefig(f"{fname}.svg", format="svg", bbox_inches="tight", pad_inches=0.05)
+    fig.savefig(f"{fname}.png", dpi=600, format="png", bbox_inches="tight", pad_inches=0.05)
+    plt.close(fig)
+
+    # Save CSV with mean and std
+    csv_path = os.path.join(save_dir, "average_concentration_time_series.csv")
+    import pandas as pd
+    pd.DataFrame({"snap": times, "conc_mean": mean_ts, "conc_std": std_ts}).to_csv(
+        csv_path, index=False
+    )
+
+
+
+
+
