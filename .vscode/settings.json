@@ -69,5 +69,7 @@
         "typeinfo": "cpp",
         "variant": "cpp"
     },
-    "r.lsp.promptToInstall": false
+    "r.lsp.promptToInstall": false,
+    "cmake.ignoreCMakeListsMissing": true,
+    "git.ignoreLimitWarning": true
 }
