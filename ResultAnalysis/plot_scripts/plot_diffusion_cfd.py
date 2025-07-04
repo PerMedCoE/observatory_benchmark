@@ -50,11 +50,15 @@ SINK_RATE = -2000.0     # consumption rate per voxel (µM/min, **negative**)
 
 np.random.seed(0)
 P0 = np.zeros_like(u0)
-for _ in range(N_SINKS):
-    iy, ix, iz = np.random.randint(2, nx - 2, size=3)
+# Pre-generate sink coordinates to allow picking a representative voxel later
+sink_coords = np.random.randint(2, nx - 2, size=(N_SINKS, 3))
+for iy, ix, iz in sink_coords:
     P0[iy, ix, iz] += SINK_RATE
 
+# Select the first sink as the "single cell" we will track
+single_voxel_coord = tuple(sink_coords[0])  # (iy, ix, iz)
 print("Total sink strength (µM/min):", P0.sum())
+print("Tracking single voxel at (y, x, z) =", single_voxel_coord)
 
 # ----------------------------------------------------------------------------
 # Boundary condition helper
@@ -83,25 +87,15 @@ def diffusion_3d(
     sigma: float,
     bc_func,
     source_rate: np.ndarray | None = None,
+    sample_coords: tuple[int, int, int] | None = None,
 ):
     """Solve 3-D diffusion with constant Dirichlet boundaries.
 
-    Parameters
-    ----------
-    u_init : np.ndarray
-        Initial 3-D concentration field (ny × nx × nz).
-    t_end : float
-        End time of the simulation (same units as *nu*).
-    dx, dy, dz : float
-        Grid spacing (same units as *nu*).
-    nu : float
-        Diffusion coefficient.
-    sigma : float
-        Stability factor (≤ 1).
-    bc_func : callable
-        Function that returns the boundary value (can depend on *u_old*).
-    source_rate : np.ndarray | None, optional
-        Source rate field (ny × nx × nz), default None.
+    Additional Parameters
+    ---------------------
+    sample_coords : tuple[int, int, int] | None, optional
+        If provided, record the concentration at this voxel each time-step
+        and return the time series as an additional array.
     """
 
     # time-step from stability criterion (explicit scheme)
@@ -117,6 +111,9 @@ def diffusion_3d(
 
     mean_conc = np.empty(nt, dtype=float)
     std_conc = np.empty(nt, dtype=float)
+    single_series = np.empty(nt, dtype=float) if sample_coords is not None else None
+
+    iy_s, ix_s, iz_s = sample_coords if sample_coords is not None else (None, None, None)
 
     for step in range(nt):
         u_old = u.copy()
@@ -143,11 +140,13 @@ def diffusion_3d(
         u[:, :, 0] = bc_val  # z = 0 (front)
         u[:, :, -1] = bc_val  # z = max (back)
 
-        # record mean and standard deviation after update
+        # record statistics
         mean_conc[step] = u.mean()
         std_conc[step] = u.std()
+        if sample_coords is not None:
+            single_series[step] = u[iy_s, ix_s, iz_s]
 
-    return u, dt, nt, mean_conc, std_conc
+    return u, dt, nt, mean_conc, std_conc, single_series
 
 
 # ----------------------------------------------------------------------------
@@ -155,7 +154,7 @@ def diffusion_3d(
 # ----------------------------------------------------------------------------
 
 if __name__ == "__main__":
-    u_final, dt, nsteps, mean_ts, std_ts = diffusion_3d(
+    u_final, dt, nsteps, mean_ts, std_ts, single_ts = diffusion_3d(
         u0,
         t_end=t_domain,
         dx=dx,
@@ -165,6 +164,7 @@ if __name__ == "__main__":
         sigma=sigma,
         bc_func=constant_bc(10.0),
         source_rate=P0,
+        sample_coords=single_voxel_coord,
     )
 
     print("Simulation finished — mean concentration:", u_final.mean())
@@ -216,6 +216,102 @@ if __name__ == "__main__":
     pd.DataFrame({"snap": times, "conc_mean": mean_ts, "conc_std": std_ts}).to_csv(
         csv_path, index=False
     )
+
+    # -------------------------------------------------------------
+    # Plot & save single-cell concentration time-course + CSV
+    # -------------------------------------------------------------
+    fig2, ax2 = plt.subplots(figsize=(4, 2.5))
+    ax2.plot(times, single_ts, color="#1f77b4", linewidth=1.8)
+    ax2.set_xlabel("Timestep")
+    ax2.set_ylabel("Concentration (μM)")
+    ax2.spines["top"].set_visible(False)
+    ax2.spines["right"].set_visible(False)
+    plt.tight_layout()
+
+    fname2 = os.path.join(save_dir, "single_cell_concentration_timecourse")
+    fig2.savefig(f"{fname2}.pdf", format="pdf", bbox_inches="tight", pad_inches=0.05)
+    fig2.savefig(f"{fname2}.svg", format="svg", bbox_inches="tight", pad_inches=0.05)
+    fig2.savefig(f"{fname2}.png", dpi=600, format="png", bbox_inches="tight", pad_inches=0.05)
+    plt.close(fig2)
+
+    # CSV for single cell
+    csv_single = os.path.join(save_dir, "single_cell_concentration_time_series.csv")
+    pd.DataFrame({"snap": times, "conc_single": single_ts}).to_csv(csv_single, index=False)
+
+    # =============================================================
+    # SECOND EXPERIMENT: single sink in the centre of the domain
+    # =============================================================
+    # Define sink field
+    P_center = np.zeros_like(u0)
+    center_coord = (ny // 2, nx // 2, nz // 2)
+    P_center[center_coord] = SINK_RATE
+
+    print("\n[INFO] Running single-centre-sink experiment …")
+
+    (
+        u_final2,
+        dt2,
+        nsteps2,
+        mean_ts2,
+        std_ts2,
+        single_ts2,
+    ) = diffusion_3d(
+        u0,
+        t_end=t_domain,
+        dx=dx,
+        dy=dy,
+        dz=dz,
+        nu=nu,
+        sigma=sigma,
+        bc_func=constant_bc(10.0),
+        source_rate=P_center,
+        sample_coords=center_coord,
+    )
+
+    print("Single-sink simulation finished — mean concentration:", u_final2.mean())
+
+    times2 = np.arange(nsteps2)
+
+    # Plot – global mean
+    save_dir2 = "ResultAnalysis/plots/diffusion_cfd_single_sink_plots"
+    os.makedirs(save_dir2, exist_ok=True)
+
+    fig3, ax3 = plt.subplots(figsize=(4, 2.5))
+    ax3.plot(times2, mean_ts2, color="#666666", linewidth=1.8)
+    ax3.set_xlabel("Timestep")
+    ax3.set_ylabel("Concentration (μM)")
+    ax3.spines["top"].set_visible(False)
+    ax3.spines["right"].set_visible(False)
+    plt.tight_layout()
+
+    fname3 = os.path.join(save_dir2, "average_concentration_timecourse")
+    fig3.savefig(f"{fname3}.pdf", format="pdf", bbox_inches="tight", pad_inches=0.05)
+    fig3.savefig(f"{fname3}.svg", format="svg", bbox_inches="tight", pad_inches=0.05)
+    fig3.savefig(f"{fname3}.png", dpi=600, format="png", bbox_inches="tight", pad_inches=0.05)
+    plt.close(fig3)
+
+    # CSV for global mean
+    csv2 = os.path.join(save_dir2, "average_concentration_time_series.csv")
+    pd.DataFrame({"snap": times2, "conc_mean": mean_ts2, "conc_std": std_ts2}).to_csv(csv2, index=False)
+
+    # Plot – centre voxel concentration
+    fig4, ax4 = plt.subplots(figsize=(4, 2.5))
+    ax4.plot(times2, single_ts2, color="#1f77b4", linewidth=1.8)
+    ax4.set_xlabel("Timestep")
+    ax4.set_ylabel("Concentration (μM)")
+    ax4.spines["top"].set_visible(False)
+    ax4.spines["right"].set_visible(False)
+    plt.tight_layout()
+
+    fname4 = os.path.join(save_dir2, "single_cell_concentration_timecourse")
+    fig4.savefig(f"{fname4}.pdf", format="pdf", bbox_inches="tight", pad_inches=0.05)
+    fig4.savefig(f"{fname4}.svg", format="svg", bbox_inches="tight", pad_inches=0.05)
+    fig4.savefig(f"{fname4}.png", dpi=600, format="png", bbox_inches="tight", pad_inches=0.05)
+    plt.close(fig4)
+
+    # CSV for centre voxel
+    csv_single2 = os.path.join(save_dir2, "single_cell_concentration_time_series.csv")
+    pd.DataFrame({"snap": times2, "conc_single": single_ts2}).to_csv(csv_single2, index=False)
 
 
 

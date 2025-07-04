@@ -6,6 +6,7 @@ from pathlib import Path
 import pandas as pd
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D  # noqa: F401 – needed for 3-D projection side-effect
+import numpy as np
 
 # ----------------------------------------------------------------------------
 # Configuration
@@ -97,6 +98,32 @@ def main():
     snap_stats.to_csv(ts_csv, index=False)
     print(f"[INFO] Saved time-series stats to {ts_csv.relative_to(Path.cwd())}")
 
+    # ---------------------------------------------------------------------
+    # NEW: Determine a representative single cell (voxel) and extract its
+    #       concentration time-series. We pick the voxel that on average has
+    #       the lowest concentration across the whole simulation – this is
+    #       almost certainly a sink location and thus biologically relevant.
+    # ---------------------------------------------------------------------
+    min_voxel = voxel_avg.loc[voxel_avg["conc_avg"].idxmin(), ["x", "y", "z"]]
+    vx, vy, vz = int(min_voxel.x), int(min_voxel.y), int(min_voxel.z)
+
+    single_voxel_series = (
+        data[(data["x"] == vx) & (data["y"] == vy) & (data["z"] == vz)]
+        .sort_values("snap")[["snap", "conc"]]
+        .rename(columns={"conc": "conc_single"})
+    )
+
+    # Guard against missing snapshots
+    if single_voxel_series.shape[0] != snap_stats.shape[0]:
+        raise RuntimeError(
+            "Single-voxel extraction failed – snapshot counts do not match."
+        )
+
+    # Save CSV for the single cell
+    single_csv = SNAPSHOT_DIR / "single_cell_concentration_time_series.csv"
+    single_voxel_series.to_csv(single_csv, index=False)
+    print(f"[INFO] Saved single-cell time-series stats to {single_csv.relative_to(Path.cwd())}")
+
     # ----------------------------------------------------------------------------
     # Plotting – dynamics over time only, save high-quality files (no 3-D scatter)
     # ----------------------------------------------------------------------------
@@ -121,11 +148,13 @@ def main():
         "figure.dpi": 400,
     })
 
+    # -----------------------------
+    # Plot 1 – global mean dynamics
+    # -----------------------------
     plt.figure(figsize=(4, 2.5), dpi=400)
 
     x = snap_stats["snap"]
     y = snap_stats["conc_mean"]
-    yerr = snap_stats["conc_std"]
 
     plt.plot(
         x,
@@ -148,10 +177,151 @@ def main():
         "svg": {"format": "svg"},
         "png": {"format": "png", "dpi": 600},
     }.items():
-        plt.savefig(save_dir / f"average_concentration_timecourse.{ext}",
-                    bbox_inches="tight", pad_inches=0.1, **fmt_kwargs)
+        plt.savefig(
+            save_dir / f"average_concentration_timecourse.{ext}",
+            bbox_inches="tight",
+            pad_inches=0.1,
+            **fmt_kwargs,
+        )
 
     plt.close()
+
+    # -----------------------------
+    # Plot 2 – single-cell dynamics
+    # -----------------------------
+    plt.figure(figsize=(4, 2.5), dpi=400)
+
+    x_sv = single_voxel_series["snap"]
+    y_sv = single_voxel_series["conc_single"]
+
+    plt.plot(
+        x_sv,
+        y_sv,
+        color="#1f77b4",  # default Matplotlib blue to distinguish
+        linestyle="-",
+        linewidth=1.8,
+    )
+
+    # Same styling adjustments
+    ax = plt.gca()
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+
+    plt.xlabel("Timestep")
+    plt.ylabel("Concentration (μM)")
+
+    for ext, fmt_kwargs in {
+        "pdf": {"format": "pdf"},
+        "svg": {"format": "svg"},
+        "png": {"format": "png", "dpi": 600},
+    }.items():
+        plt.savefig(
+            save_dir / f"single_cell_concentration_timecourse.{ext}",
+            bbox_inches="tight",
+            pad_inches=0.1,
+            **fmt_kwargs,
+        )
+
+    plt.close()
+
+    # =============================================================
+    # SECOND EXPERIMENT: run internal explicit solver with one sink
+    # =============================================================
+    print("\n[INFO] Running single-centre-sink explicit solver …")
+
+    # ------------- Simulation parameters (match CFD setup) -------------
+    x_domain = y_domain = z_domain = 240.0  # µm
+    t_domain = 10.0  # min
+    nx = ny = nz = 81
+    nu = 2000.0  # µm²/min
+    sigma = 0.9
+
+    dx = x_domain / (nx - 1)
+    dy = dx
+    dz = dx
+
+    # Initial condition and sink field
+    u0_sim = np.zeros((ny, nx, nz))
+    P_center = np.zeros_like(u0_sim)
+    center_coord = (ny // 2, nx // 2, nz // 2)
+    SINK_RATE = -2000.0  # µM/min (same magnitude as earlier)
+    P_center[center_coord] = SINK_RATE
+
+    # ----- Explicit solver (FTCS) – minimal version -----
+    def diffusion_3d_single(u_init: np.ndarray):
+        dt = 0.5 * sigma / ((1.0 / dx ** 2) * 3) / nu
+        nt = int(np.ceil(t_domain / dt))
+
+        u = u_init.copy()
+        coeff = nu * dt / dx ** 2  # equal spacing so use single coeff
+
+        mean_arr = np.empty(nt)
+        centre_arr = np.empty(nt)
+
+        for step in range(nt):
+            u_old = u.copy()
+
+            lap = (
+                u_old[1:-1, 1:-1, 1:-1]
+                + coeff * (
+                    (u_old[1:-1, 2:, 1:-1] - 2 * u_old[1:-1, 1:-1, 1:-1] + u_old[1:-1, :-2, 1:-1])
+                    + (u_old[2:, 1:-1, 1:-1] - 2 * u_old[1:-1, 1:-1, 1:-1] + u_old[:-2, 1:-1, 1:-1])
+                    + (u_old[1:-1, 1:-1, 2:] - 2 * u_old[1:-1, 1:-1, 1:-1] + u_old[1:-1, 1:-1, :-2])
+                )
+            )
+            lap += dt * P_center[1:-1, 1:-1, 1:-1]
+
+            u[1:-1, 1:-1, 1:-1] = lap
+
+            # Constant Dirichlet boundary 10 µM
+            u[0, :, :] = 10.0
+            u[-1, :, :] = 10.0
+            u[:, 0, :] = 10.0
+            u[:, -1, :] = 10.0
+            u[:, :, 0] = 10.0
+            u[:, :, -1] = 10.0
+
+            mean_arr[step] = u.mean()
+            centre_arr[step] = u[center_coord]
+
+        return mean_arr, centre_arr
+
+    mean_ts2, centre_ts2 = diffusion_3d_single(u0_sim)
+    steps2 = np.arange(mean_ts2.size)
+
+    # ----- Save & plot -----
+    save_dir2 = Path("./ResultAnalysis/plots/diffusion_ground_truth_single_sink_plots")
+    save_dir2.mkdir(parents=True, exist_ok=True)
+
+    # Global mean plot
+    plt.figure(figsize=(4, 2.5), dpi=400)
+    plt.plot(steps2, mean_ts2, color="#666666", linewidth=1.8)
+    ax = plt.gca()
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    plt.xlabel("Timestep")
+    plt.ylabel("Concentration (μM)")
+    for ext, fmt_kwargs in {"pdf": {"format": "pdf"}, "svg": {"format": "svg"}, "png": {"format": "png", "dpi": 600}}.items():
+        plt.savefig(save_dir2 / f"average_concentration_timecourse.{ext}", bbox_inches="tight", pad_inches=0.1, **fmt_kwargs)
+    plt.close()
+
+    # Centre voxel plot
+    plt.figure(figsize=(4, 2.5), dpi=400)
+    plt.plot(steps2, centre_ts2, color="#1f77b4", linewidth=1.8)
+    ax = plt.gca()
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    plt.xlabel("Timestep")
+    plt.ylabel("Concentration (μM)")
+    for ext, fmt_kwargs in {"pdf": {"format": "pdf"}, "svg": {"format": "svg"}, "png": {"format": "png", "dpi": 600}}.items():
+        plt.savefig(save_dir2 / f"single_cell_concentration_timecourse.{ext}", bbox_inches="tight", pad_inches=0.1, **fmt_kwargs)
+    plt.close()
+
+    # CSV outputs
+    pd.DataFrame({"snap": steps2, "conc_mean": mean_ts2}).to_csv(save_dir2 / "average_concentration_time_series.csv", index=False)
+    pd.DataFrame({"snap": steps2, "conc_single": centre_ts2}).to_csv(save_dir2 / "single_cell_concentration_time_series.csv", index=False)
+
+    print("[INFO] Single-centre-sink explicit simulation completed and saved.")
 
 
 if __name__ == "__main__":

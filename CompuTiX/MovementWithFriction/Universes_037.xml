@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompuTiX version="1.1"><Collection name="Universes" index_type="ParticleIndex"><Particles>0
+</Particles><Collection name="Spheres" index_type="ParticleIndex"><Particles>0
+</Particles><DegreeOfFreedom name="parent_index" type="ParticleIndex" unit="no_unit" refers_to="Universes">0
+</DegreeOfFreedom><DegreeOfFreedom name="x" type="Position" unit="m">1e-06 0 0
+</DegreeOfFreedom><DegreeOfFreedom name="v" type="Vector" unit="m / s">0 0 0
+</DegreeOfFreedom><DegreeOfFreedom name="M" type="Matrix" unit="kg">0.1 0 0 0 0.1 0 0 0 0.1
+</DegreeOfFreedom><DegreeOfFreedom name="F_loc" type="Vector" unit="N">0 0 0
+</DegreeOfFreedom><DegreeOfFreedom name="F" type="Vector" unit="N">0 0 0
+</DegreeOfFreedom><DegreeOfFreedom name="gamma" type="Scalar" unit="N * s / m">0.0166667
+</DegreeOfFreedom></Collection><DegreeOfFreedom name="dt" type="Scalar" unit="s">6
+</DegreeOfFreedom><DegreeOfFreedom name="t" type="Scalar" unit="s">222
+</DegreeOfFreedom><DegreeOfFreedom name="t_end" type="Scalar" unit="s">600
+</DegreeOfFreedom><DegreeOfFreedom name="t_elapsed" type="Scalar" unit="s">0.0676258
+</DegreeOfFreedom><DegreeOfFreedom name="current_frame" type="Count" unit="1">37
+</DegreeOfFreedom></Collection></CompuTiX>
