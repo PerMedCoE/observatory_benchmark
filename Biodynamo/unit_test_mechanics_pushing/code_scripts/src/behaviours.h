@@ -14,7 +14,8 @@ struct Move : public Behavior {
 
   void Run(Agent* a) override {
     if (auto* cell = bdm_static_cast<Moving_cell*>(a)) {
-      if (distance_covered.Norm()<15.)
+      if (distance_covered.Norm()<=10.)
+      // if (a->GetDisplacement().Norm() == 0.0)
       {
       cell->ApplyDisplacement(cell->GetSpeed());
       distance_covered += cell->GetSpeed();
