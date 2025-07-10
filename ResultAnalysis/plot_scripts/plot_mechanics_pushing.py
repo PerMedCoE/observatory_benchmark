@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import os
+import yaml
 
 # Load data
 output_folder = "PhysiCell/results/mechanics_pushing/mechanics_pushing_01_004/"
@@ -40,6 +41,17 @@ ch_dist['dx'] = abs(ch_dist[4] - ch_dist[1]) * 10
 ch_dist['dt'] = ch_dist.index * 60
 # ch_dist.index = ch_dist.index * 100
 
+# computix
+with open("CompuTiX/PushingCells/Cells.yaml", "r") as f:
+    data = yaml.safe_load(f)
+
+ct_t = np.array( data["t"]["values"] ) #[s]
+ct_x = np.array( data['Cells']['values']['x']['values'] ) #[m]
+
+#Compute absolute distance between spheres' centers
+ct_d = np.abs(ct_x[:, 0] - ct_x[:, 1])
+
+
 # Set up colorblind-friendly colors and linestyles
 colors = {
     'PhysiCell': '#98FB98',   # Light Green
@@ -47,6 +59,7 @@ colors = {
     'BioDynaMo': '#ff7f00',   # Orange (changed from red)
     'Chaste': '#377eb8',      # Blue
     'TiSim': '#984ea3',       # Purple
+    'Computix': "#fd2a2aff",       # Pink
     'radius': '#000000'       # Black
 }
 linestyles = {
@@ -55,6 +68,7 @@ linestyles = {
     'BioDynaMo': '-',
     'Chaste': '-',
     'TiSim': '-',
+    'Computix': '-',
     'radius': 'dotted'
 }
 labels = {
@@ -62,7 +76,8 @@ labels = {
     'PhysiCell2': 'PhysiCell x10res',
     'BioDynaMo': 'BioDynaMo',
     'Chaste': 'Chaste x10res',
-    'TiSim': 'TiSim'
+    'TiSim': 'TiSim',
+    'Computix': 'Computix'
 }
 
 # Update font settings for more compact plots
@@ -270,6 +285,11 @@ ax_norm_zoom.plot(ts_dist["time"][ts_dist["time"] <= 5], (ts_dist['dx'] / cell_r
                   color=colors['TiSim'], 
                   linestyle=linestyles['TiSim'], 
                   label=labels['TiSim'], 
+                  alpha=0.7)
+ax_norm_zoom.plot(ct_t[ct_t <= 300] / 60., (ct_d[ct_t <= 300] / 1e-6) / cell_radius,
+                  linestyle=linestyles['Computix'],
+                  label=labels['Computix'],
+                  color=colors['Computix'],
                   alpha=0.7)
 ax_norm_zoom.axhline(1, color=colors['radius'], linestyle=linestyles['radius'], alpha=0.3)
 ax_norm_zoom.set_ylabel("Distance / cell diam (μm)", labelpad=8, fontsize=12)
