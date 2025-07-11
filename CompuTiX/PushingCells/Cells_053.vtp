@@ -60,7 +60,7 @@
 </DataArray><DataArray type="Float64" Name="t_end" format="ascii" NumberOfComponents="1">
 600
 </DataArray><DataArray type="Float64" Name="t_elapsed" format="ascii" NumberOfComponents="1">
-0.235195
+0.248948
 </DataArray><DataArray type="Int64" Name="current_frame" format="ascii" NumberOfComponents="1">
 53
 </DataArray><DataArray type="Float64" Name="tension" format="ascii" NumberOfComponents="1">
