@@ -5,22 +5,22 @@ import matplotlib.gridspec as gridspec
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 import os
 pd.set_option('display.float_format', lambda x: '%.5f' % x)
-
+# diffusion_single
 
 pc_file = "PhysiCell/results/single_diffusion_cell_sink/summary.csv"
 pc_df= pd.read_csv(pc_file,index_col=0)
 pc_df = pc_df.loc[pc_df.index == 13]
 
-bdm_file = "Biodynamo/unit_test_diffusion_small/data.csv"
+bdm_file = "Biodynamo/diffusion_single/data.csv"
 bdm_df= pd.read_csv(bdm_file,index_col=None,header=None,sep = " ",names = ['timestep','avg_diff','cen_diff'])
 
 
-tisim_file = "Tisim/unit_test_diffusion/results/diffusion_1_cell.csv"
+tisim_file = "Tisim/diffusion_single/results/diffusion_1_cell.csv"
 tisim_df= pd.read_csv(tisim_file,names = ['timestep','diff'],header=0)
 tisim_df = pd.concat([pd.DataFrame({"timestep": [0],"diff":[0]}), tisim_df], ignore_index=True)
 
 
-chaste_file = "Chaste/unit_test_diffusion/results/TestDiffusionSmall03.dat"
+chaste_file = "Chaste/diffusion_single/results/TestDiffusionSmall03.dat"
 ch_df= pd.read_csv(chaste_file,sep='\s+',names = ['timestep','diff'],header=0)
 timesteps = np.concatenate((np.linspace(0, 1, num=11)[:-1], np.arange(1, 11, 1)))
 timesteps_rounded = np.round(timesteps, 2)

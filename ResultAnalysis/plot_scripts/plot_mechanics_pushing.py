@@ -23,17 +23,17 @@ pc_dist_dt2["dx"] = abs(x0 - x1)
 dt = df[df['id'] == 0]['dt'].reset_index(drop=True)
 pc_dist_dt2["dt"] = dt
 
-file = "Biodynamo/unit_test_mechanics_pushing/results_0.1/positions.csv"
+file = "Biodynamo/mechanics_pushing/results_0.1/positions.csv"
 bd_dist = pd.read_csv(file, index_col=0, header=None, sep='\t|,', engine='python').rename(columns={1: "x1", 4: "x2"})
 new_row = pd.DataFrame([[-15, 0, 0, 15, 0, 0]], columns=bd_dist.columns)
 bd_dist = pd.concat([new_row, bd_dist], ignore_index=True)
 bd_dist['dx'] = abs(bd_dist["x1"] - bd_dist["x2"])
 bd_dist['dt'] = bd_dist.index * 0.1
 
-file = "Tisim/unit_test_mechanics_pushing/mechanical pushing.csv"
+file = "Tisim/mechanics_pushing/mechanics_friction.csv"
 ts_dist = pd.read_csv(file, index_col=None, header=0, names=['time', 'dx'])
 
-file = "Chaste/unit_test_mechanics_pushing/results/results.viznodelocations"
+file = "Chaste/mechanics_pushing/results/results.viznodelocations"
 ch_dist = pd.read_csv(file, header=None, sep='\t| ', index_col=0, engine='python')
 ch_dist['dx'] = abs(ch_dist[4] - ch_dist[1]) * 10
 # ch_dist['dt'] = [x for x in np.arange(0,10.01,0.1)]
@@ -42,7 +42,7 @@ ch_dist['dt'] = ch_dist.index * 60
 # ch_dist.index = ch_dist.index * 100
 
 # computix
-with open("CompuTiX/PushingCells/Cells.yaml", "r") as f:
+with open("CompuTiX/mechanics_pushing/Cells.yaml", "r") as f:
     data = yaml.safe_load(f)
 
 ct_t = np.array( data["t"]["values"] ) #[s]

@@ -8,13 +8,13 @@ import os
 output_folder=("PhysiCell/results/fixed_cell_cycle/cell_volumes.csv")
 pc_df = pd.read_csv(output_folder,float_precision='round_trip').sort_values(by=['dt']).reset_index(drop=True)
 
-output_folder=("Biodynamo/unit_test_cellcycle/new_results/cell-0-sim1.csv")
+output_folder=("Biodynamo/fixed_cell_cycle/new_results/cell-0-sim1.csv")
 bd_df = pd.read_csv(output_folder,header=None)
 bd_df.columns = ['timestep', 'volume', 'Phase', 'Age']
 bd_df['vol']= bd_df['volume']/bd_df['volume'][0]
 
 
-output_folder=("Chaste/unit_test_cellcycle/results/cellcycle_fixed.dat")
+output_folder=("Chaste/fixed_cell_cycle/results/cellcycle_fixed.dat")
 ch_df = pd.DataFrame(columns=["dt","id","x","y","z","g1_duration","s_duration","g2_duration","m_duration","current_phase","target_area","volume"])
 with open(output_folder, "r") as f:
     for line in f.read().splitlines():
@@ -28,7 +28,7 @@ with open(output_folder, "r") as f:
 
             ch_df =pd.concat([ch_df,df2],ignore_index=True)
 
-file = "Tisim/unit_test_cellcycle/cell cycle fix.csv"
+file = "Tisim/fixed_cell_cycle/cell cycle fix.csv"
 data = pd.read_csv(file, header=0)
 time_steps = data['time (hour)']
 volume_columns = data.columns[1:]  # Assuming all other columns are cell volumes

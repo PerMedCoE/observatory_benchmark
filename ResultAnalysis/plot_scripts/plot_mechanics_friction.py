@@ -5,9 +5,9 @@ import os
 import yaml
 
 # Load data
-pc_data = pd.read_csv('PhysiCell/results/mechanics_movement/cell_position_time.csv')
+pc_data = pd.read_csv('PhysiCell/results/mechanics_friction/cell_position_time.csv')
 
-output_folder = 'Biodynamo/unit_test_mechanics_friction_single/results/'
+output_folder = 'Biodynamo/mechanics_friction/results/'
 bd_data = pd.read_csv(output_folder + 'positions.csv', index_col=0, header=None, sep='\t|,', engine='python').rename(columns={1: "x", 2: "y", 3: "z"})
 bd_data['dx'] = abs(bd_data['x'] - bd_data['x'].shift(1))
 bd_data.fillna({"dx": 0}, inplace=True)
@@ -15,7 +15,7 @@ bd_data['timestep'] = np.arange(0, 10, 0.1)
 bd_data['dt'] = 0.1
 bd_data['velocity'] = bd_data['dx'] / bd_data['dt']
 
-output_folder = 'Chaste/unit_test_mechanics_friction/results/'
+output_folder = 'Chaste/mechanics_friction/results/'
 ch_data = pd.read_csv(output_folder + 'node_locations.dat', header=None, names=["timestep", "x", "y"], sep='\t| ', index_col=None, engine='python')
 ch_data['dx'] = abs(ch_data["x"] - ch_data["x"].shift(1))
 ch_data.fillna({"dx": 0}, inplace=True)
@@ -23,12 +23,12 @@ ch_data['timestep'] = np.arange(0, 10.01, 0.1)
 ch_data['dt'] = 0.1
 ch_data['velocity'] = ch_data['dx'] / ch_data['dt']
 
-output_folder = "Tisim/unit_test_mechanics_friction/"
+output_folder = "Tisim/mechanics_friction/"
 # ts_data = pd.read_csv(output_folder + 'mechanical friction.csv', header=0, sep='\t|,', engine='python', names=["dt", "velocity"])
 ts_data = pd.read_csv(output_folder + 'mechanical friction_offset.csv', header=0, sep='\t|,', engine='python', names=["dt", "velocity"])
 
 # computix
-with open("CompuTiX/MovementWithFriction/Cells.yaml", "r") as f:
+with open("CompuTiX/mechanics_friction/Cells.yaml", "r") as f:
     mf_data = yaml.safe_load(f)
     
 ct_t = np.array( mf_data["t"]["values"] ) #[s]

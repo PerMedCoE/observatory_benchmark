@@ -11,14 +11,14 @@ expe_diam = [ 1140 , 1400 , 1590 , 2040 , 2250 , 3040 ]
 biodynamo_dt = [14, 14.8333333333333, 15.6666666666667, 16.5, 17.3333333333333, 18.1666666666666, 18.9999999999999, 19.8333333333332, 20.6666666666665, 21.4999999999998, 22.333333333333, 23.1666666666663, 23.9999999999996, 24.8333333333329, 25.6666666666665, 26.5]
 biodynamo_diam =  [1240, 1320, 1440, 1560, 1680, 1800, 1920, 2040, 2160, 2280, 2400, 2520, 2640, 2760, 2880, 3000]
 
-df_tsim_pre = pd.read_csv('Tisim/use_case_2Ddisk/old_results/result_2d_10_8_3.9_50.txt', sep='\t', engine='python')
+df_tsim_pre = pd.read_csv('Tisim/monolayer/old_results/result_2d_10_8_3.9_50.txt', sep='\t', engine='python')
 df_tisim = pd.DataFrame({
     'dt': df_tsim_pre['Time [s]'].iloc[140:] / 86400,  # Convert to days
     'diam': 2 * df_tsim_pre["Radius of cell population [μm]"].iloc[140:],
     'Results': 'TiSim'
 })
 
-with open("Chaste/use_case_2Ddisk/results/multiple-cells/tissuewidth.dat") as results_file:
+with open("Chaste/monolayer/results/multiple-cells/tissuewidth.dat") as results_file:
     times = []
     tissue_widths = []
     for line in results_file:
