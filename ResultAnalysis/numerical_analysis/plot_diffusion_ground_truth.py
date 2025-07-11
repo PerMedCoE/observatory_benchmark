@@ -1,3 +1,7 @@
+"""
+Authors: Jieling Zhao (INRIA), Othmane Hayoun-Mya (BSC)
+"""
+
 import os
 import re
 import glob
@@ -229,12 +233,15 @@ def main():
     # =============================================================
     print("\n[INFO] Running single-centre-sink explicit solver …")
 
-    # ------------- Simulation parameters (match CFD setup) -------------
+    # ------------- Simulation parameters (coarser 21³ grid) -------------
     x_domain = y_domain = z_domain = 240.0  # µm
     t_domain = 10.0  # min
-    nx = ny = nz = 81
+
+    # Coarse grid so that Δx ≈ 12 µm ≥ 11 µm threshold for Δt = 0.01 min
+    nx = ny = nz = 21
+
     nu = 2000.0  # µm²/min
-    sigma = 0.9
+    sigma = 0.9  # only used if dt_fixed is None
 
     dx = x_domain / (nx - 1)
     dy = dx
@@ -244,12 +251,24 @@ def main():
     u0_sim = np.zeros((ny, nx, nz))
     P_center = np.zeros_like(u0_sim)
     center_coord = (ny // 2, nx // 2, nz // 2)
-    SINK_RATE = -2000.0  # µM/min (same magnitude as earlier)
+    # Scale sink strength to account for 64× larger voxels (12 µm cube)
+    SINK_RATE = -2000.0 / 64.0  # µM/min per coarse voxel
     P_center[center_coord] = SINK_RATE
 
     # ----- Explicit solver (FTCS) – minimal version -----
-    def diffusion_3d_single(u_init: np.ndarray):
-        dt = 0.5 * sigma / ((1.0 / dx ** 2) * 3) / nu
+    def diffusion_3d_single(u_init: np.ndarray, dt_fixed: float | None = None):
+        # -------------------------------------------------------------
+        # Time-step selection
+        # -------------------------------------------------------------
+        if dt_fixed is None:
+            dt = 0.5 * sigma * dx ** 2 / (3 * nu)  # isotropic grid
+            reason = "(stability-limited)"
+        else:
+            dt = float(dt_fixed)
+            reason = "(user-specified)"
+
+        print(f"Δt = {dt:.5e} {reason}")
+
         nt = int(np.ceil(t_domain / dt))
 
         u = u_init.copy()
@@ -286,7 +305,8 @@ def main():
 
         return mean_arr, centre_arr
 
-    mean_ts2, centre_ts2 = diffusion_3d_single(u0_sim)
+    # Run solver with fixed Δt = 0.01 min
+    mean_ts2, centre_ts2 = diffusion_3d_single(u0_sim, dt_fixed=0.01)
     steps2 = np.arange(mean_ts2.size)
 
     # ----- Save & plot -----

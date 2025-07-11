@@ -11,18 +11,29 @@ The script defines:
 then runs one call so that the module can be executed directly.
 
 It is *not* optimised – it is meant as a readable reference.
+
+
+Authors: Paul Van Liedekerke (Uni. Ghent), Othmane Hayoun-Mya (BSC)
 """
 
 # ----------------------------------------------------------------------------
 # Simulation parameters
 # ----------------------------------------------------------------------------
 
-x_domain = 240.0  # physical size along x (µm)
-y_domain = 240.0  # y-extent
-z_domain = 240.0  # z-extent
-t_domain = 10.0   # total simulated time (min)
+# Physical domain extents (µm)
+x_domain = 240.0
+y_domain = 240.0
+z_domain = 240.0
 
-nx = ny = nz = 81         # number of nodes per direction
+# Total simulated time (min)
+t_domain = 10.0
+
+# -------------------------------------------------------------------------
+# Grid resolution — coarser 21³ mesh so that Δx ≈ 12 µm ≥ 11 µm threshold
+# which makes an explicit FTCS scheme stable for Δt = 0.01 min at ν=2000.
+# -------------------------------------------------------------------------
+
+nx = ny = nz = 21         # number of nodes per direction
 nu = 2000.0               # diffusion coefficient (µm²/min)
 sigma = 0.9               # stability factor for explicit scheme
 
@@ -42,11 +53,12 @@ u0 = np.zeros((ny, nx, nz))
 # ---------------------------------------------------------------------------
 # Point sinks (cells consuming nutrient)
 # ---------------------------------------------------------------------------
-# Each selected voxel *removes* concentration at a constant rate in µM/min.
-# To experiment, modify the two parameters below.
 
 N_SINKS = 1000          # how many voxels act as sinks
-SINK_RATE = -2000.0     # consumption rate per voxel (µM/min, **negative**)
+# Original fine-grid rate was −2000 µM/min per 3 µm cube; the new voxel
+# volume is 64 × larger (12 µm cube), so scale the rate to keep the same
+# volumetric consumption.
+SINK_RATE = -2000.0 / 64.0     # ≈ −31.25 µM/min per (12 µm)³ voxel
 
 np.random.seed(0)
 P0 = np.zeros_like(u0)
@@ -77,6 +89,12 @@ def constant_bc(value: float = 10.0):
 # Diffusion solver (explicit FTCS scheme)
 # ----------------------------------------------------------------------------
 
+# NOTE: Added `dt_fixed` argument to allow overriding the stability-restricted
+# time-step size with a user-specified value (e.g. 0.01 min) when desired.
+# If `dt_fixed` is provided, the solver will use it verbatim and ignore the
+# FTCS stability criterion – **use with care** as large values may render the
+# scheme unstable.
+
 def diffusion_3d(
     u_init: np.ndarray,
     t_end: float,
@@ -88,6 +106,7 @@ def diffusion_3d(
     bc_func,
     source_rate: np.ndarray | None = None,
     sample_coords: tuple[int, int, int] | None = None,
+    dt_fixed: float | None = None,
 ):
     """Solve 3-D diffusion with constant Dirichlet boundaries.
 
@@ -98,10 +117,21 @@ def diffusion_3d(
         and return the time series as an additional array.
     """
 
-    # time-step from stability criterion (explicit scheme)
-    dt = 0.5 * sigma / ((1.0 / dx ** 2) + (1.0 / dy ** 2) + (1.0 / dz ** 2)) / nu
+    # -------------------------------------------------------------
+    # Time-step selection
+    # -------------------------------------------------------------
+    if dt_fixed is None:
+        # Stability-restricted Δt (classic FTCS criterion)
+        dt = 0.5 * sigma / (
+            (1.0 / dx ** 2) + (1.0 / dy ** 2) + (1.0 / dz ** 2)
+        ) / nu
+        reason = "(stability-limited)"
+    else:
+        dt = float(dt_fixed)
+        reason = "(user-specified)"
+
     nt = int(np.ceil(t_end / dt))
-    print(f"Δt = {dt:.5e} — total steps: {nt}")
+    print(f"Δt = {dt:.5e} {reason} — total steps: {nt}")
 
     u = u_init.copy()
 
@@ -154,6 +184,10 @@ def diffusion_3d(
 # ----------------------------------------------------------------------------
 
 if __name__ == "__main__":
+    # ---------------------------------------------------------------------
+    # MAIN EXPERIMENT: multiple random point sinks (uses fixed Δt = 0.01 min)
+    # ---------------------------------------------------------------------
+
     u_final, dt, nsteps, mean_ts, std_ts, single_ts = diffusion_3d(
         u0,
         t_end=t_domain,
@@ -165,6 +199,7 @@ if __name__ == "__main__":
         bc_func=constant_bc(10.0),
         source_rate=P0,
         sample_coords=single_voxel_coord,
+        dt_fixed=0.01,  # <-- override stability Δt; use with caution
     )
 
     print("Simulation finished — mean concentration:", u_final.mean())
@@ -266,6 +301,7 @@ if __name__ == "__main__":
         bc_func=constant_bc(10.0),
         source_rate=P_center,
         sample_coords=center_coord,
+        dt_fixed=0.01,  # same fixed Δt for single-sink case
     )
 
     print("Single-sink simulation finished — mean concentration:", u_final2.mean())
