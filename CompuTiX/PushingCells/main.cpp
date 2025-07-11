@@ -3,7 +3,7 @@
 //!
 //! \subsection collisions_pushing_cells_problem_statement Problem statement
 //! This simulation illustrates the dynamics of two cells, identical in radius and properties, pushed towards each other with an external force
-//! which is removed when their overlap reaches a critical value equal to \f$10\%\f$ the volume of the spheres. JKR model is tested in this
+//! which is removed when their overlap reaches a critical value equal to \f$10\%\f$ the diameter of the spheres. JKR model is tested in this
 //! example rather than the Hertz one and friction with the external medium is modeled as a viscous friction.
 //!
 //! \subsubsection collisions_pushing_cells_problem_statement_equation_motion Equation of motion
@@ -16,15 +16,15 @@
 //! collision adhesive force force and \f$\gamma\f$ the friction coefficient with the external medium.
 //!
 //! \subsubsection collisions_pushing_cells_problem_statement_force External force
-//! Two forces, equal and opposite in direction, are applied to the two spheres until the value of the intersection volume reaches 10% their volume value:
+//! Two forces, equal and opposite in direction, are applied to the two spheres until the value of the intersection reaches 10% their diameter value:
 //! \f[
 //! F_{\text{loc}}(\delta) =
 //! \begin{cases}
-//! F_{\text{loc}}, & \text{if} \; V_{\text{overlap}} \leq \theta \cdot \frac{4}{3} \pi r^3
-//! \\ 0, & \text{if} \; V_{\text{overlap}} > \theta \cdot \frac{4}{3} \pi r^3
+//! F_{\text{loc}}, & \text{if} \; \delta \leq \theta \cdot 2 r
+//! \\ 0, & \text{if} \; \delta > \theta \cdot 2 r
 //! \end{cases}
 //! \f]
-//! where \f$\delta\f$ is the spheres' overlap, \f$r\f$ the radius of the two spheres and \f$\theta\f$ the threshold value, set equal to \f$0.1\f$ in this case to capture the \f$10\%\f$ volume overlap.
+//! where \f$\delta\f$ is the spheres' overlap, \f$r\f$ the radius of the two spheres and \f$\theta\f$ the threshold value, set equal to \f$0.1\f$ in this case to capture the \f$10\%\f$ overlap.
 //!
 //! \subsubsection collisions_pushing_cells_problem_statement_stokes Stokes drag force
 //! Stokes drag force is used to model the viscous firction, assuming a homogeneous isotropic friction coefficient that mimics friction of a cell with the extracellular matrix in an idealised way.
@@ -87,15 +87,13 @@
 //! * Check simulation time (`OnActions::Triggers::ExecuteWhileLess`)
 //! * Geometric pipeline (`OnActions::And`)
 //!     * Zero overlap (`Elementary::Reset`)
-//!     * Zero volume overlap (`Elementary::Reset`)
 //!     * Get Sphere-Sphere contact overlap (`Contact::Models::Geometry::Overlap::SphereSphere`)
-//!     * Get Sphere-Sphere contact volume overlap (`Contact::Models::Geometry::OverlapVolume::SphereSphere`)
 //! * Forces (`OnActions::And`)
 //!     * Zero total force (`Elementary::Reset`)
 //!     * Zero mass matrix (`Elementary::Reset`)
 //!     * Set mass matrix (`Elementary::Algebraic::Multiply`)
 //!     * Reset external force (`OnActions::Queue`)
-//!         * Trigger point based on overlap volume (`OnActions::Triggers::ExecuteWhileLess`)
+//!         * Trigger point based on overlap (`OnActions::Triggers::ExecuteWhileLess`)
 //!         * Zero local force (`Elementary::Reset`)
 //!     * Add initial local force (`Elementary::Algebraic::Add`)
 //!     * Sphere-Sphere JKR contact model (`Contact::Models::Collisions::JKR::Damped::SphereSphere::Overdamped`)
@@ -126,9 +124,7 @@
 //!             else( true )
 //!                 partition "Geometric pipeline\nOnActions::Queue" {
 //!                     :Zero overlap\nElementary::Reset;
-//!                     :Zero volume overlap\nElementary::Reset;
 //!                     :Get Sphere-Sphere contact overlap\nContact::Models::Geometry::Overlap::SphereSphere;
-//!                     :Get Sphere-Sphere contact volume overlap\nContact::Models::Geometry::OverlapVolume::SphereSphere;
 //!                     (E)
 //!                 }
 //!                 partition "Forces\nOnActions::And" {
@@ -136,7 +132,7 @@
 //!                     :Reset mass tensor\nElementary::Reset;
 //!                     :Set mass tensor\nElementary::Algebraic::Multiply;
 //!                     partition "Reset external force at trigger point\nOnActions::Queue" {
-//!                         if( Execute when overlap volume is higher than 10 % of sphere volume\nOnActions::Triggers::ExecuteWhileLess ) then( false )
+//!                         if( Execute when overlap is higher than 10 % of sphere diameter\nOnActions::Triggers::ExecuteWhileLess ) then( false )
 //!                         else( true )
 //!                             :Clear local force\nElementary::Reset;
 //!                         endif
@@ -206,9 +202,7 @@
 //!     Physical dimension: \link CompuTiX::SIUnits::dimensionless \f$1\f$\endlink.
 //!     - overlap - \link CompuTiX::Components::DegreesOfFreedom::DegreeOfFreedom<CompuTiX::Types::Scalar> DegreeOfFreedom\endlink of \link CompuTiX::Types::Scalar Scalar\endlink type representing the overlap between the two spheres.
 //!     Physical dimension: \link CompuTiX::SIUnits::meter \f$\unit{\meter}\f$\endlink.
-//!     - V_overlap - \link CompuTiX::Components::DegreesOfFreedom::DegreeOfFreedom<CompuTiX::Types::Scalar> DegreeOfFreedom\endlink of \link CompuTiX::Types::Scalar Scalar\endlink type representing the volume of the overlap between the two spheres.
-//!     Physical dimension: \link CompuTiX::SIUnits::meter ^ 3 \f$\unit{\meter^3}\f$\endlink.
-//!     - V_limit - \link CompuTiX::Components::DegreesOfFreedom::DegreeOfFreedom<CompuTiX::Types::Scalar> DegreeOfFreedom\endlink of \link CompuTiX::Types::Scalar Scalar\endlink type representing the threshold volume for the overlap to trigger removal of the external force.
+//!     - overlap_limit - \link CompuTiX::Components::DegreesOfFreedom::DegreeOfFreedom<CompuTiX::Types::Scalar> DegreeOfFreedom\endlink of \link CompuTiX::Types::Scalar Scalar\endlink type representing the threshold for the overlap to trigger removal of the external force.
 //!     Physical dimension: \link CompuTiX::SIUnits::meter ^ 3 \f$\unit{\meter^3}\f$\endlink.
 //! - Spheres - \link CompuTiX::Components::Collections::ParticleCollection ParticleCollection\endlink representing the spheres.
 //!     - x - \link CompuTiX::Components::DegreesOfFreedom::DegreeOfFreedom<CompuTiX::Types::Position> DegreeOfFreedom\endlink of
@@ -353,16 +347,15 @@ int main( int argc, char** argv )
     // - VTK printing parameters: current frame index (current_frame)
     universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Count >::create( "current_frame", SIUnits::dimensionless ) );
 
-    // - contact model DoFs: interfacial tension (tension), tangential friction coefficient (gamma_tangential), normal friction coefficient (gamma_normal), mass tensor (M), relative tolerance, ten percent of the cell volume (V_limit), contact radius (r_contact), overlap, volume of the intersection (volume_overlap), spheres' radius (r)
+    // - contact model DoFs: interfacial tension (tension), tangential friction coefficient (gamma_tangential), normal friction coefficient (gamma_normal), mass tensor (M), relative tolerance, ten percent of the cell diameter (d_limit), contact radius (r_contact), overlap, spheres' radius (r)
     universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "tension", SIUnits::newton / SIUnits::meter ) );
     universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "gamma_tangential", SIUnits::pascal * SIUnits::second / SIUnits::meter ) );
     universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "gamma_normal", SIUnits::pascal * SIUnits::second / SIUnits::meter ) );
     universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "relative_tolerance", SIUnits::dimensionless ) );
     universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Matrix >::create( "M", SIUnits::kilogram ) );
     universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "r_contact", SIUnits::meter ) );
-    universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "V_limit", SIUnits::meter ^ 3 ) );
+    universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "d_limit", SIUnits::meter ) );
     universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "overlap", SIUnits::meter ) );
-    universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "V_overlap", SIUnits::meter ^ 3 ) );
     universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "r", SIUnits::meter ) );
 
     //Prepare DoFs for Spheres
@@ -416,8 +409,8 @@ int main( int argc, char** argv )
     const Types::Vector F_loc = 100. * Types::Vector::UnitX(); // [ kg micro m / min^2 ]
     //Spheres radius
     constexpr Types::Scalar r = 5e-6; // [ m ]
-    //10% of sphere volume
-    constexpr Types::Scalar V_lim = 0.1 * 4. / 3. * Math::pi * Math::pow< 3 >( r ); // [ m^3 ]
+    //10% of sphere diameter
+    constexpr Types::Scalar d_lim = 0.1 * 2 * r; // [ m ]
     //Young's modulus
     constexpr Types::Scalar E = 750.; // [ Pa ]
     //Poisson's ratio
@@ -526,22 +519,11 @@ int main( int argc, char** argv )
                 auto action = geom_pipeline->add( create_executable( "Elementary::Reset", "Zero overlap" ) );
                 action->set_parameter_value( "dof", absolute_path( "Universes/overlap" ) );
             }
-            // -- reset overlap volume
-            {
-                auto action = geom_pipeline->add( create_executable( "Elementary::Reset", "Zero volume overlap" ) );
-                action->set_parameter_value( "dof", absolute_path( "Universes/V_overlap" ) );
-            }
             // -- get the overlap
             {
                 auto action = geom_pipeline->add( create_executable( "Contact::Models::Geometry::Overlap::SphereSphere", "Get Sphere-Sphere contact overlap" ) );
                 action->set_parameter_value( "collection", absolute_path( "Universes/Contacts" ) );
                 action->set_parameter_value( "overlap", absolute_path( "Universes/overlap" ) );
-            }
-            // -- get the volume overlap
-            {
-                auto action = geom_pipeline->add( create_executable( "Contact::Models::Geometry::OverlapVolume::SphereSphere", "Get Sphere-Sphere contact volume overlap" ) );
-                action->set_parameter_value( "collection", absolute_path( "Universes/Contacts" ) );
-                action->set_parameter_value( "overlap_volume", absolute_path( "Universes/V_overlap" ) );
             }
         }
 
@@ -575,9 +557,9 @@ int main( int argc, char** argv )
                 auto external_force = forces->add( create_executable( "OnActions::Queue", "Reset external force at trigger point" ) );
                 // --- execution condition
                 {
-                    auto action = external_force->add( create_executable( "OnActions::Triggers::ExecuteWhileLess", "Execute when overlap volume is higher than 10% of sphere volume" ) );
-                    action->set_parameter_value( "a", absolute_path( "Universes/V_limit" ) );
-                    action->set_parameter_value( "b", absolute_path( "Universes/V_overlap" ) );
+                    auto action = external_force->add( create_executable( "OnActions::Triggers::ExecuteWhileLess", "Execute when overlap is higher than 10% of sphere diameter" ) );
+                    action->set_parameter_value( "a", absolute_path( "Universes/d_limit" ) );
+                    action->set_parameter_value( "b", absolute_path( "Universes/overlap" ) );
                 }
                 // --- clears force (forever)
                 {
