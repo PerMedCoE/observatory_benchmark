@@ -51,7 +51,7 @@ To run the simulation simply use
 ```
 from the `build` folder.
 
-Use `-h` or `--help` option to see all possible options to control the run or look [here](src/main.cpp#L138-151
+Use `-h` or `--help` option to see all possible options to control the run or look [here](src/main.cpp#L138-151).
 
 # Postprocessing
 When the simulation finishes one can find two sets of files:
