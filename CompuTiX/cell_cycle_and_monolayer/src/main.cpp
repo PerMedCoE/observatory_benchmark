@@ -383,7 +383,7 @@ int main( int argc, char** argv )
     constexpr Types::Scalar V_infty = 5065.66e-18 * 4188.79 / 2494.; // [m^3]
     constexpr Types::Scalar tau = 7727.02; // [s]
     //constexpr Types::Scalar V_crowded_relative = 0.11; // [1]
-    constexpr Types::Scalar V_crowded_relative = 0.07; // [1]
+    constexpr Types::Scalar V_crowded_relative = 0.1; // [1]
 
     // - division: Stiffness and friction
     constexpr Types::Scalar k_div = 1e-5; // [N]

@@ -1,0 +1,43 @@
+Baseline:
+  V_init:
+    unit: um^3
+    value: 2494.0
+  r_init:
+    unit: um
+    value: 8.412710547954228
+Fit:
+  Parameters:
+    V_inf:
+      unit: um^3
+      value: 5065.663032705659
+    t_0:
+      unit: s
+      value: 25436.948718255062
+    tau:
+      unit: s
+      value: 7727.024507113732
+  Volumes:
+  - time:
+      unit: s
+      value: 25200.0
+    unit: um^3
+    value: 2493.999999999999
+  - time:
+      unit: s
+      value: 57600.0
+    unit: um^3
+    value: 4987.999999999998
+Growth period:
+  t_from:
+    unit: s
+    value: 25200.0
+  t_until:
+    unit: s
+    value: 57600.0
+Target:
+  V_final:
+    unit: um^3
+    value: 4988.0
+  r_final:
+    unit: um
+    value: 10.599351106040164
