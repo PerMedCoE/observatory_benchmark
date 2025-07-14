@@ -140,14 +140,14 @@ def create_plot(data, xlim=None, ylim=None, title=None, filename=None, markers=F
     if filename:
         save_dir = "./ResultAnalysis/plots/diffusion_single_ut_plots"
         os.makedirs(save_dir, exist_ok=True)
-        plt.savefig(os.path.join(save_dir, f"{filename}.pdf"), 
-                   format='pdf',
-                   bbox_inches='tight', 
-                   pad_inches=0.2)
-        plt.savefig(os.path.join(save_dir, f"{filename}.svg"), 
-                   format='svg',
-                   bbox_inches='tight', 
-                   pad_inches=0.2)
+        # plt.savefig(os.path.join(save_dir, f"{filename}.pdf"), 
+        #            format='pdf',
+        #            bbox_inches='tight', 
+        #            pad_inches=0.2)
+        # plt.savefig(os.path.join(save_dir, f"{filename}.svg"), 
+        #            format='svg',
+        #            bbox_inches='tight', 
+        #            pad_inches=0.2)
         plt.savefig(os.path.join(save_dir, f"{filename}.png"), 
                    format='png',
                    bbox_inches='tight', 

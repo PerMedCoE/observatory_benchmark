@@ -44,6 +44,12 @@ ts_df = pd.DataFrame({
     'volumes': percentage_total_volumes
 })
 
+file = "experimental_data/Cell cycle volume dynamics.txt"
+exp_df = pd.read_csv(file, header=0, sep="\t")
+exp_df = exp_df.iloc[:, 2:4]
+exp_df.columns = ['volume','timestep']
+
+
 # Update font settings with fallback options
 plt.rcParams.update({
     'font.family': 'sans-serif',
@@ -64,7 +70,7 @@ plt.rcParams.update({
 })
 
 # Create figure with specific dimensions - made more compact
-fig, ax = plt.subplots(figsize=(6, 2.8))  # Match proportions to previous examples
+fig, ax = plt.subplots(figsize=(8, 2.8))  # Match proportions to previous examples
 
 # Normalize time to hours
 pc_df['dt'] = pc_df['dt'] / 60
@@ -80,20 +86,23 @@ colors = {
     'BioDynaMo': '#ff7f00',   # Orange (changed from red)
     'Chaste': '#377eb8',      # Blue
     'PhysiCell': '#4daf4a',   # Green
-    'TiSim': '#984ea3'        # Purple
+    'TiSim': '#984ea3',        # Purple
+    'Exp': '#000000'  # Black for experimental data
 }
 
 linestyles = {
     'BioDynaMo': '-',   # Solid
     'Chaste': '-',     # Solid
     'PhysiCell': '-',  # Solid
-    'TiSim': '-'        # Solid
+    'TiSim': '-',        # Solid
+    'Exp': 'dotted'  # Dotted for experimental data
 }
 labels = {
     'PhysiCell': 'PhysiCell',
     'BioDynaMo': 'BioDynaMo',
     'Chaste': 'Chaste',
-    'TiSim': 'TiSim'
+    'TiSim': 'TiSim',
+    'Exp': 'Reference Data' 
 }
 
 
@@ -134,6 +143,14 @@ ax.plot(ts_df['timestep'], ts_df['volumes'],
         linewidth=2.0,
         alpha=0.7)
 
+# Experimental Data
+ax.plot(exp_df['timestep'], exp_df["volume"],
+        color=colors['Exp'], 
+        linestyle=linestyles['Exp'], 
+        label=labels['Exp'],
+        linewidth=2.0,
+        alpha=0.7)    
+
 # Add vertical bars to separate phases
 for i in range(3):  # keep 3 cycles for the phase names
     base = 18 * i
@@ -164,7 +181,7 @@ ax.spines['right'].set_visible(False)
 ax.grid(False)
 
 # Add legend
-ax.legend(loc='center left', bbox_to_anchor=(0, 0.6), fontsize=8)
+ax.legend(loc='center left', bbox_to_anchor=(0, 0.7), fontsize=8)
 
 # Set axis limits and labels with increased padding and font size
 ax.set_xlim(0, 36.5)
@@ -183,16 +200,16 @@ save_dir = "./ResultAnalysis/plots/cell_cycle_plots"
 os.makedirs(save_dir, exist_ok=True)
 
 # Save as PDF
-plt.savefig(os.path.join(save_dir, "fixed_cell_cycle_volumes.pdf"), 
-            format='pdf',
-            bbox_inches='tight', 
-            pad_inches=0.1)
+# plt.savefig(os.path.join(save_dir, "fixed_cell_cycle_volumes.pdf"), 
+#             format='pdf',
+#             bbox_inches='tight', 
+#             pad_inches=0.1)
 
 # Save as SVG
-plt.savefig(os.path.join(save_dir, "fixed_cell_cycle_volumes.svg"), 
-            format='svg',
-            bbox_inches='tight', 
-            pad_inches=0.1)
+# plt.savefig(os.path.join(save_dir, "fixed_cell_cycle_volumes.svg"), 
+#             format='svg',
+#             bbox_inches='tight', 
+#             pad_inches=0.1)
 
 # Save as PNG with high DPI
 plt.savefig(os.path.join(save_dir, "fixed_cell_cycle_volumes.png"), 

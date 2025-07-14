@@ -18,9 +18,10 @@ df_tisim = pd.DataFrame({
     'Results': 'TiSim'
 })
 
-with open("Chaste/monolayer/results/multiple-cells/tissuewidth.dat") as results_file:
+with open("Chaste/monolayer/results/monolayer.dat") as results_file:
     times = []
-    tissue_widths = []
+    diameter = []
+    cells = []
     for line in results_file:
         line = line.replace('\n', '')
         values = re.split('\t|,', line)
@@ -28,9 +29,10 @@ with open("Chaste/monolayer/results/multiple-cells/tissuewidth.dat") as results_
             continue
         
         times.append(float(values[0]))
-        tissue_widths.append(float(values[3]))
-df_chaste = pd.DataFrame(data = zip(times,tissue_widths),columns=['dt','diam'])
-df_chaste["dt"]=(df_chaste["dt"]+336)/24
+        diameter.append(float(values[1]))
+        cells.append(float(values[2]))
+df_chaste = pd.DataFrame(data = zip(times,diameter,cells),columns=['dt','diam','cells'])
+df_chaste["dt"]=(df_chaste["dt"])/24
 df_chaste['Results'] = 'Chaste'
 
 # Fix PhysiCell data loading - start from 14 days
@@ -214,16 +216,16 @@ save_dir = "./ResultAnalysis/plots/monolayer_plots"
 os.makedirs(save_dir, exist_ok=True)
 
 # Save as PDF 
-plt.savefig(os.path.join(save_dir, "monolayer_comparison_combined.pdf"), 
-            format='pdf',
-            bbox_inches='tight', 
-            pad_inches=0.1)
+# plt.savefig(os.path.join(save_dir, "monolayer_comparison_combined.pdf"), 
+#             format='pdf',
+#             bbox_inches='tight', 
+#             pad_inches=0.1)
 
 # Optionally, also save as SVG
-plt.savefig(os.path.join(save_dir, "monolayer_comparison_combined.svg"), 
-            format='svg',
-            bbox_inches='tight', 
-            pad_inches=0.1)
+# plt.savefig(os.path.join(save_dir, "monolayer_comparison_combined.svg"), 
+#             format='svg',
+#             bbox_inches='tight', 
+#             pad_inches=0.1)
 
 # Keep PNG for quick previews if needed
 plt.savefig(os.path.join(save_dir, "monolayer_comparison_combined.png"), 
