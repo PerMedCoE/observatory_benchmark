@@ -118,7 +118,7 @@ ax.plot(bd_df['timestep'], bd_df["vol"] * 100,
         linestyle=linestyles['BioDynaMo'], 
         label=labels['BioDynaMo'],
         linewidth=2.0,
-        alpha=0.7)
+        alpha=0.5)
 
 # Chaste
 ch_init_vol = ch_df.loc[0, "volume"]
@@ -130,7 +130,7 @@ ax.plot(dts, vols,
         linestyle=linestyles['Chaste'], 
         label=labels['Chaste'],
         linewidth=2.0,
-        alpha=0.7)
+        alpha=0.5)
 
 # PhysiCell
 ax.plot(pc_dts, pc_vols, 
@@ -138,7 +138,7 @@ ax.plot(pc_dts, pc_vols,
         linestyle=linestyles['PhysiCell'], 
         label=labels['PhysiCell'],
         linewidth=2.0,
-        alpha=0.7)
+        alpha=0.5)
 
 # TiSim
 ax.plot(ts_df['timestep'], ts_df['volumes'], 
@@ -146,18 +146,17 @@ ax.plot(ts_df['timestep'], ts_df['volumes'],
         linestyle=linestyles['TiSim'], 
         label=labels['TiSim'],
         linewidth=2.0,
-        alpha=0.7)
+        alpha=0.5)
 # CompuTiX
 file = "CompuTiX/fixed_cell_cycle/data/cell_cycle.csv"
 comp_df = pd.read_csv(file, header=0)
 comp_df['#Time (minutes)']/=60
-print(comp_df['#Time (minutes)'])
 ax.plot(comp_df['#Time (minutes)'], comp_df["relative_volume"],
         color=colors['CompuTix'], 
         linestyle=linestyles['CompuTix'], 
         label=labels['CompuTix'],
         linewidth=2.0,
-        alpha=0.7)
+        alpha=0.5)
 
 # Experimental Data
 ax.plot(exp_df['timestep'], exp_df["volume"],

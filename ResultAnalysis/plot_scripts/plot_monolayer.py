@@ -190,10 +190,12 @@ ax1.spines['right'].set_visible(False)
 ax1.tick_params(axis='both', which='major', labelsize=11)
 
 # Second plot (deviations)
-for result in ['BioDynaMo', 'Chaste', 'PhysiCell', 'TiSim' ]:
+for result in ['BioDynaMo', 'Chaste', 'PhysiCell', 'TiSim','CompuTix' ]:
     df = df_all[(df_all['Results'] == result) & (df_all['dt'] <= 27)]
-    exp_values = exp_interp(df['dt'])
+    exp_values = exp_interp(np.round(df['dt']))
     deviations = df['diam'] - exp_values
+    print(df)
+    print(deviations)
     ax2.plot(
         df['dt'], 
         deviations,
