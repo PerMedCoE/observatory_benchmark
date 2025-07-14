@@ -35,7 +35,8 @@ inline int Simulate(int argc, const char** argv) {
     param->export_visualization = false;
     param->visualize_agents["Moving_cell"] = {};
     param->statistics = true;
-    param->simulation_time_step = 0.01;
+    param->simulation_time_step = 0.1;
+    param->simulation_max_displacement = 100.0;  // um
   };
   
   // Before we create a simulation we have to tell BioDynaMo about

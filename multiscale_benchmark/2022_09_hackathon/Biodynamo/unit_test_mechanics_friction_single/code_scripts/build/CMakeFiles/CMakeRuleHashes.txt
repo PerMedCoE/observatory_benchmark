@@ -1,0 +1,3 @@
+# Hashes of file build rules.
+40a613c070a520e081f4d68dbc9b10cc libunit-test-mechanics_bdm_dict.cc
+4bfdc2f773b2bfc10b319fa41bf44719 libunit-test-mechanics_dict.cc

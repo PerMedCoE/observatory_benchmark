@@ -30,7 +30,7 @@ Real4 CellCellForce::Calculate(const Agent* lhs, const Agent* rhs) const {
   real_t r2 = 0.5 * nb_diameter;
   // We take virtual bigger radii to have a distant interaction, to get a
   // desired density.
-  real_t additional_radius_multiplier = 1.03; // We assume an interaction distance 3% larger then the agent's radius
+  real_t additional_radius_multiplier = 1.00; // We assume an interaction distance 0% larger then the agent's radius
   r1 *= additional_radius_multiplier;
   r2 *= additional_radius_multiplier;
   // the 3 components of the vector c2 -> c1
@@ -41,8 +41,8 @@ Real4 CellCellForce::Calculate(const Agent* lhs, const Agent* rhs) const {
       std::sqrt(comp1 * comp1 + comp2 * comp2 + comp3 * comp3);
   // the overlap distance (how much one penetrates in the other)
   real_t delta = r1 + r2 - center_distance;
-  std::cout << "The center distance is " << center_distance << "\n" << std::endl;
-  std::cout << "Delta is " << delta << "\n" << std::endl;
+  // std::cout << "The center distance is " << center_distance << "\n" << std::endl;
+  // std::cout << "Delta is " << delta << "\n" << std::endl;
   // if no overlap : no force
   if (delta < 0) {
     return {0.0, 0.0, 0.0, 0.0};
@@ -52,7 +52,7 @@ Real4 CellCellForce::Calculate(const Agent* lhs, const Agent* rhs) const {
   if (center_distance < 0.00000001) {
     auto* random = Simulation::GetActive()->GetRandom();
     auto force2on1 = random->template UniformArray<3>(-3.0, 3.0);
-    std::cout << "\n\nRandom force being applied\n\n" << std::endl;
+    // std::cout << "\n\nRandom force being applied\n\n" << std::endl;
     return {force2on1[0], force2on1[1], force2on1[2], 0};
   }
   // the force itself
@@ -65,10 +65,12 @@ Real4 CellCellForce::Calculate(const Agent* lhs, const Agent* rhs) const {
   real_t k = sparam->repulsion_coeff;
   real_t f = k * delta - gamma * std::sqrt(r * delta);
 
+  // std::cout << "The force is " << f << "\n" << std::endl;
+
   real_t module = f / center_distance;
-  std::cout << "The force module is " << module << "\n" << std::endl;
+  // std::cout << "The force module is " << module << "\n" << std::endl;
   Real3 force2on1({module * comp1, module * comp2, module * comp3});
-  std::cout << "The force is " << force2on1[0] << " " << force2on1[1] << " " << force2on1[2] << "\n" << std::endl;
+  // std::cout << "The force is " << force2on1[0] << " " << force2on1[1] << " " << force2on1[2] << "\n" << std::endl;
   return {force2on1[0], force2on1[1], force2on1[2], 0};
 }
 
