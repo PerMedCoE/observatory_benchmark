@@ -152,14 +152,14 @@ ax1.plot(
     df_exp_plot['dt'], df_exp_plot['diam'],
     color=colors['Experimental'],
     label='Experimental',
-    linestyle=linestyles['Experimental'],
-    linewidth=linewidths['Experimental'],
+    # linestyle=linestyles['Experimental'],
+    # linewidth=linewidths['Experimental'],
     marker=marker_map.get('Experimental', None),
     markersize=4,   # Smaller markers
     markeredgecolor='k',
     markerfacecolor=colors['Experimental'],
     alpha=0.8,
-    zorder=1
+    zorder=2
 )
 
 # Plot all other results
