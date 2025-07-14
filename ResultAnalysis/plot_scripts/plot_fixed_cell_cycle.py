@@ -72,7 +72,7 @@ plt.rcParams.update({
 })
 
 # Create figure with specific dimensions - made more compact
-fig, ax = plt.subplots(figsize=(8, 2.8))  # Match proportions to previous examples
+fig, ax = plt.subplots(figsize=(6, 2.8))  # Match proportions to previous examples
 
 # Normalize time to hours
 pc_df['dt'] = pc_df['dt'] / 60

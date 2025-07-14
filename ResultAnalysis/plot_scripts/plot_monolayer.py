@@ -11,10 +11,10 @@ expe_diam = [ 1140 , 1400 , 1590 , 2040 , 2250 , 3040 ]
 biodynamo_dt = [14, 14.8333333333333, 15.6666666666667, 16.5, 17.3333333333333, 18.1666666666666, 18.9999999999999, 19.8333333333332, 20.6666666666665, 21.4999999999998, 22.333333333333, 23.1666666666663, 23.9999999999996, 24.8333333333329, 25.6666666666665, 26.5]
 biodynamo_diam =  [1240, 1320, 1440, 1560, 1680, 1800, 1920, 2040, 2160, 2280, 2400, 2520, 2640, 2760, 2880, 3000]
 
-df_tsim_pre = pd.read_csv('Tisim/monolayer/old_results/result_2d_10_8_3.9_50.txt', sep='\t', engine='python')
+df_tsim_pre = pd.read_csv('./Tisim/monolayer/2D disk.csv', sep=',', engine='python')
 df_tisim = pd.DataFrame({
-    'dt': df_tsim_pre['Time [s]'].iloc[140:] / 86400,  # Convert to days
-    'diam': 2 * df_tsim_pre["Radius of cell population [μm]"].iloc[140:],
+    'dt': df_tsim_pre['time (day)'].iloc[140:],
+    'diam': df_tsim_pre["diameter (um)"].iloc[140:],
     'Results': 'TiSim'
 })
 
@@ -158,7 +158,7 @@ ax1.plot(
     markersize=4,   # Smaller markers
     markeredgecolor='k',
     markerfacecolor=colors['Experimental'],
-    alpha=0.4,
+    alpha=0.8,
     zorder=1
 )
 
@@ -172,7 +172,7 @@ for result in ['BioDynaMo', 'Chaste', 'PhysiCell', 'TiSim','CompuTix']:
         linestyle=linestyles[result],
         linewidth=linewidths[result],
         alpha=alphas[result],
-        zorder=2
+        zorder=1
     )
 
 ax1.set_xlabel("Time (days)", labelpad=8, fontsize=12)
@@ -192,10 +192,9 @@ ax1.tick_params(axis='both', which='major', labelsize=11)
 # Second plot (deviations)
 for result in ['BioDynaMo', 'Chaste', 'PhysiCell', 'TiSim','CompuTix' ]:
     df = df_all[(df_all['Results'] == result) & (df_all['dt'] <= 27)]
-    exp_values = exp_interp(np.round(df['dt']))
+    exp_values = exp_interp(df['dt'])
     deviations = df['diam'] - exp_values
-    print(df)
-    print(deviations)
+
     ax2.plot(
         df['dt'], 
         deviations,
@@ -209,6 +208,21 @@ for result in ['BioDynaMo', 'Chaste', 'PhysiCell', 'TiSim','CompuTix' ]:
 
 # Add zero line for reference
 ax2.axhline(y=0, color='black', linestyle='-', alpha=0.3, linewidth=0.5, zorder=1)
+ax2.plot(
+    df_exp_plot['dt'], 
+    [0, 0, 0, 0, 0, 0],  # Zero line for experimental data
+    'o',
+    color=colors['Experimental'],
+    label='Experimental',
+    # linestyle=linestyles['Experimental'],
+    linewidth=linewidths['Experimental'],
+    marker=marker_map.get('Experimental', None),
+    markersize=4,   # Smaller markers
+    markeredgecolor='k',
+    markerfacecolor=colors['Experimental'],
+    alpha=0.8,
+    zorder=2
+)
 
 # Customize second plot
 ax2.set_xlabel("Time (days)", labelpad=8, fontsize=12)
