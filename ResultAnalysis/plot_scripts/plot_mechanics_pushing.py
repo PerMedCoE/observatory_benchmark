@@ -23,14 +23,20 @@ pc_dist_dt2["dx"] = abs(x0 - x1)
 dt = df[df['id'] == 0]['dt'].reset_index(drop=True)
 pc_dist_dt2["dt"] = dt
 
-file = "Biodynamo/mechanics_pushing/results_0.1/positions.csv"
+file = "Biodynamo/mechanics_pushing/results_timestep0.1/positions.csv"
 bd_dist = pd.read_csv(file, index_col=0, header=None, sep='\t|,', engine='python').rename(columns={1: "x1", 4: "x2"})
 new_row = pd.DataFrame([[-15, 0, 0, 15, 0, 0]], columns=bd_dist.columns)
 bd_dist = pd.concat([new_row, bd_dist], ignore_index=True)
 bd_dist['dx'] = abs(bd_dist["x1"] - bd_dist["x2"])
-bd_dist['dt'] = bd_dist.index * 0.1
+bd_dist['dt'] = bd_dist.index *0.1
+file = "Biodynamo/mechanics_pushing/results_timestep0.01/positions.csv"
+bd_dist2 = pd.read_csv(file, index_col=0, header=None, sep='\t|,', engine='python').rename(columns={1: "x1", 4: "x2"})
+new_row = pd.DataFrame([[-15, 0, 0, 15, 0, 0]], columns=bd_dist2.columns)
+bd_dist2 = pd.concat([new_row, bd_dist2], ignore_index=True)
+bd_dist2['dx'] = abs(bd_dist2["x1"] - bd_dist2["x2"])
+bd_dist2['dt'] = bd_dist2.index * 0.01
 
-file = "Tisim/mechanics_pushing/mechanics_friction.csv"
+file = "Tisim/mechanics_pushing/mechanical pushing.csv"
 ts_dist = pd.read_csv(file, index_col=None, header=0, names=['time', 'dx'])
 
 file = "Chaste/mechanics_pushing/results/results.viznodelocations"
@@ -56,7 +62,8 @@ ct_d = np.abs(ct_x[:, 0] - ct_x[:, 1])
 colors = {
     'PhysiCell': '#98FB98',   # Light Green
     'PhysiCell2': '#4daf4a',   # Green
-    'BioDynaMo': '#ff7f00',   # Orange (changed from red)
+    'BioDynaMo': '#ff7f00', 
+    'BioDynaMo2': "#f85d25",    # Orange (changed from red)
     'Chaste': '#377eb8',      # Blue
     'TiSim': '#984ea3',       # Purple
     'Computix': "#fd2a2aff",       # Pink
@@ -66,6 +73,7 @@ linestyles = {
     'PhysiCell': '-',
     'PhysiCell2': '-',
     'BioDynaMo': '-',
+    'BioDynaMo2': '-',
     'Chaste': '-',
     'TiSim': '-',
     'Computix': '-',
@@ -75,6 +83,7 @@ labels = {
     'PhysiCell': 'PhysiCell',
     'PhysiCell2': 'PhysiCell x10res',
     'BioDynaMo': 'BioDynaMo',
+    'BioDynaMo2': 'BioDynaMo x10res',
     'Chaste': 'Chaste x10res',
     'TiSim': 'TiSim',
     'Computix': 'Computix'
@@ -266,6 +275,11 @@ ax_norm_zoom.plot(bd_dist['dt'][bd_dist['dt'] <= 5], (bd_dist['dx'] / cell_radiu
                   linestyle=linestyles['BioDynaMo'], 
                   label=labels['BioDynaMo'], 
                   alpha=0.7)
+# ax_norm_zoom.plot(bd_dist2['dt'][bd_dist2['dt'] <= 5], (bd_dist2['dx'] / cell_radius)[bd_dist2['dt'] <= 5], 
+#                   color=colors['BioDynaMo2'],
+#                   linestyle=linestyles['BioDynaMo2'], 
+#                   label=labels['BioDynaMo2'], 
+#                   alpha=0.7)
 ax_norm_zoom.plot(ch_dist['dt'][np.array(ch_dist['dt']) <= 5], (ch_dist['dx'] / cell_radius)[np.array(ch_dist['dt']) <= 5], 
                   color=colors['Chaste'], 
                   linestyle=linestyles['Chaste'], 

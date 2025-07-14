@@ -161,7 +161,7 @@ ax.plot(comp_df['#Time (minutes)'], comp_df["relative_volume"],
 # Experimental Data
 ax.plot(exp_df['timestep'], exp_df["volume"],
         color=colors['Exp'], 
-        linestyle=linestyles['Exp'], 
+        # linestyle=linestyles['Exp'], 
         label=labels['Exp'],
         linewidth=2.0,
         alpha=0.7)    
