@@ -1,7 +1,0 @@
-<map id="ztnPre" name="ztnPre">
-<area shape="rect" id="node2" href="$domdec_8c.html#ae7429f968958e491ffc5aa144f564e0a" title="decompositionInit" alt="" coords="115,5,239,32"/>
-<area shape="rect" id="node3" href="$init_8c.html#a6a28d9c038b4ef73a4e2177db89d40aa" title="simulationInit" alt="" coords="568,5,667,32"/>
-<area shape="rect" id="node5" href="$io_8c.html#abdc9000ea224eb0537e7efc3c036cddd" title="readRstFile" alt="" coords="289,31,378,57"/>
-<area shape="rect" id="node4" href="$main_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="715,5,765,32"/>
-<area shape="rect" id="node6" href="$io_8c.html#a96d45a43485aa727199f59f9a922d7d0" title="readParams" alt="" coords="427,31,519,57"/>
-</map>

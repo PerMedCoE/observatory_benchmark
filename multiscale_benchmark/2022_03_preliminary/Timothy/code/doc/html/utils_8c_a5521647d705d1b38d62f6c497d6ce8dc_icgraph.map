@@ -1,8 +1,0 @@
-<map id="swap_Nbyte" name="swap_Nbyte">
-<area shape="rect" id="node2" href="$io_8c.html#a5ce8a223424e836ad19b68f97d70fe7c" title="ioWriteStepVTK" alt="" coords="289,5,405,32"/>
-<area shape="rect" id="node4" href="$io_8c.html#abdc9000ea224eb0537e7efc3c036cddd" title="readRstFile" alt="" coords="150,56,239,83"/>
-<area shape="rect" id="node7" href="$io_8c.html#ab0cbd99d5921b8e5ebca76c15df87e29" title="ioWriteFields" alt="" coords="453,107,552,133"/>
-<area shape="rect" id="node3" href="$main_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="600,56,651,83"/>
-<area shape="rect" id="node5" href="$io_8c.html#a96d45a43485aa727199f59f9a922d7d0" title="readParams" alt="" coords="301,56,393,83"/>
-<area shape="rect" id="node6" href="$init_8c.html#a6a28d9c038b4ef73a4e2177db89d40aa" title="simulationInit" alt="" coords="453,56,552,83"/>
-</map>

@@ -1,6 +1,0 @@
-<map id="interpolateFieldsToCells" name="interpolateFieldsToCells">
-<area shape="rect" id="node2" href="$interp_8c.html#a08111192411fead96613d994aa95f960" title="applyFieldsPatches" alt="" coords="241,5,377,32"/>
-<area shape="rect" id="node3" href="$interp_8c.html#a4fe8eca69017d7e0f87fd2c6cdb9b2e2" title="initFieldsPatchesExchange" alt="" coords="219,56,399,83"/>
-<area shape="rect" id="node5" href="$interp_8c.html#a751d539b1af7ca1f9ce8e55a91084874" title="waitFieldsPatchesExchange" alt="" coords="216,107,403,133"/>
-<area shape="rect" id="node4" href="$utils_8c.html#a07dd99a04f2723be164531a7a862fb67" title="stopRun" alt="" coords="451,81,522,108"/>
-</map>

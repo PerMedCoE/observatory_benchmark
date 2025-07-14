@@ -1,9 +1,0 @@
-<map id="updateCellStates" name="updateCellStates">
-<area shape="rect" id="node2" href="$cells_8c.html#aa2ee543811c23ee4b487102bb71ba9c7" title="additionalScalarField" alt="" coords="182,5,325,32"/>
-<area shape="rect" id="node3" href="$cells_8c.html#a8101c456dae07ab9cbd918ccad3a2ff7" title="cellsDeath" alt="" coords="211,56,295,83"/>
-<area shape="rect" id="node4" href="$cells_8c.html#a00dbe1f9f23fc7385462c32b89d28cf8" title="markMiddleCancerCell" alt="" coords="176,107,331,133"/>
-<area shape="rect" id="node5" href="$cells_8c.html#aeeb6dee9938af6fef987f1c949458703" title="updateCellCounters" alt="" coords="185,157,322,184"/>
-<area shape="rect" id="node6" href="$cells_8c.html#a718a88fce87f8ebdb87ed2fafed4c5c4" title="updateCellCycles" alt="" coords="191,208,316,235"/>
-<area shape="rect" id="node7" href="$cells_8c.html#a2d9450bd2eebb8f4d645417b92666b87" title="mitosis" alt="" coords="379,208,443,235"/>
-<area shape="rect" id="node8" href="$utils_8c.html#a07dd99a04f2723be164531a7a862fb67" title="stopRun" alt="" coords="491,208,562,235"/>
-</map>

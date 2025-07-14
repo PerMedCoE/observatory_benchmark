@@ -1,1 +1,0 @@
-TestDiffusionSmall12 Average Concentration (For all cells and for central 1000 cells), over time.

@@ -1,7 +1,0 @@
-<map id="ioDefineRstGlobalParams" name="ioDefineRstGlobalParams">
-<area shape="rect" id="node2" href="$io_8c.html#a2c89483e97a24f7e79b42c1bb656821f" title="saveRstFile" alt="" coords="366,5,458,32"/>
-<area shape="rect" id="node4" href="$io_8c.html#abdc9000ea224eb0537e7efc3c036cddd" title="readRstFile" alt="" coords="227,56,317,83"/>
-<area shape="rect" id="node3" href="$main_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="main" alt="" coords="653,31,704,57"/>
-<area shape="rect" id="node5" href="$io_8c.html#a96d45a43485aa727199f59f9a922d7d0" title="readParams" alt="" coords="366,56,458,83"/>
-<area shape="rect" id="node6" href="$init_8c.html#a6a28d9c038b4ef73a4e2177db89d40aa" title="simulationInit" alt="" coords="507,56,605,83"/>
-</map>
