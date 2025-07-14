@@ -7,28 +7,29 @@
 [1mGeneral[0m
 Command				: ./build/unit-test-mechanics-two-cells 
 Simulation name			: unit-test-mechanics-two-cells
-Total simulation runtime	: 12 ms
-Peak memory usage (MB)		: 163.574
+Total simulation runtime	: 62 ms
+Peak memory usage (MB)		: 251.281
 Number of iterations executed	: 100
 Number of agents		: 2
 Output directory		: output/unit-test-mechanics-two-cells
   size				:   0B
-BioDynaMo version:		: v1.03.15-9589c6e2
+BioDynaMo version:		: v1.05.122-41da36ac
+BioDynaMo real type:		: double
 
 ***********************************************
 
 [1mTotal execution time per operation[0m
-agent ops: 0
+agent ops: 3
 behavior: 0
 bound space: 0
-diffusion: 0
+continuum: 0
 discretization: 0
-load balancing: 0
-mechanical forces: 0
-set up iteration: 0
-tear down iteration: 1
+load balancing: 1
+mechanical forces: 4
+set up iteration: 6
+tear down iteration: 6
 track_position: 0
-update environment: 0
+update environment: 3
 update staticness: 0
 update time series: 0
 visualize: 0
@@ -60,8 +61,6 @@ numa node 0 -> size: 2
     },
     "bdm::Param": {
         "_typename": "bdm::Param",
-        "agent_uid_defragmentation_high_watermark": 0.9,
-        "agent_uid_defragmentation_low_watermark": 0.5,
         "backup_file": "",
         "backup_interval": 1800,
         "bound_space": 1,
@@ -70,7 +69,7 @@ numa node 0 -> size: 2
         "compute_target": "cpu",
         "debug_numa": false,
         "detect_static_agents": false,
-        "diffusion_boundary_condition": "open",
+        "diffusion_boundary_condition": "Neumann",
         "diffusion_method": "euler",
         "environment": "uniform_grid",
         "execution_order": 0,
@@ -88,8 +87,9 @@ numa node 0 -> size: 2
         "opencl_debug": false,
         "output_dir": "output",
         "plot_memory_layout": false,
-        "preferred_gpu": 0,
-        "pv_insitu_pipeline": "/Users/marcodurante/biodynamo/build/include/core/visualization/paraview/default_insitu_pipeline.py",
+        "preferred_gpu": -1,
+        "progress_bar_time_unit": "s",
+        "pv_insitu_pipeline": "/Users/hp024/biodynamo_relativeAdditionalRadiusForce/build/include/core/visualization/paraview/default_insitu_pipeline.py",
         "pv_insitu_pipelinearguments": "",
         "random_seed": 4357,
         "remove_output_dir_contents": true,
@@ -97,14 +97,15 @@ numa node 0 -> size: 2
         "root_visualization": false,
         "scheduling_batch_size": 1000,
         "show_simulation_step": 0,
-        "simulation_max_displacement": 3,
-        "simulation_time_step": 0.01,
+        "simulation_max_displacement": 100,
+        "simulation_time_step": 0.001,
         "statistics": true,
         "thread_safety_mechanism": 1,
         "unibn_bucketsize": 16,
         "unschedule_default_operations": [],
         "use_bdm_mem_mgr": true,
         "use_progress_bar": false,
+        "virtual_agent_radius_scale_factor": 1.03,
         "visualization_compress_pv_files": true,
         "visualization_engine": "paraview",
         "visualization_export_generate_pvsm": true,
@@ -114,6 +115,11 @@ numa node 0 -> size: 2
             "_typename": "map<string,set<string> >"
         },
         "visualize_diffusion": []
+    },
+    "bdm::SimParam": {
+        "_typename": "bdm::SimParam",
+        "attraction_coeff": 1e-10,
+        "repulsion_coeff": 2e-10
     }
 }
 ***********************************************

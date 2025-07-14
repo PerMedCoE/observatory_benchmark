@@ -23,11 +23,11 @@ namespace bdm {
 struct SimParam : public ParamGroup {
   BDM_PARAM_GROUP_HEADER(SimParam, 1);
 
-  // Forces: attraction coeff default 1, unit is mass/time^2
-  real_t attraction_coeff = 1;
+  // Forces: attraction coeff default 1, unit is mass/time^2 or N/m
+  real_t attraction_coeff = 1*std::pow(10, -10);
 
-  // Forces: repulsion coeff default 2, unit is mass/time^2
-  real_t repulsion_coeff = 2;
+  // Forces: repulsion coeff default 2, unit is mass/time^2 or N/m
+  real_t repulsion_coeff = 2*std::pow(10, -10);
 
 
 };
