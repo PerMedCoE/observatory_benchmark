@@ -1,70 +1,20 @@
-build/
-#output/
+# Ignore all XML files
+# *.xml
 
-**/.DS_Store
+# But keep PhysiCell_settings.xml
+!PhysiCell_settings.xml
 
-#----------------- intellij -----------------
-.idea
-cx3d-cpp.iml
+# Ignore output folder
+PhysiCell/code/many_diffusion*
 
-#----------------- eclipse ------------------
-.project
-.cproject
-.settings/
+# Ignore SVG files
+*.svg
 
-#----------------- VS Code ------------------
-.vscode/*
+# Ignore MATLAB .mat files
+*.mat
 
-#----------------- GNU global ------------------
-GPATH
-GRTAGS
-GTAGS
 
-#------------------- C++ --------------------
-# Compiled Object files
-*.slo
-*.lo
+# Ignore compiled object files
 *.o
-*.obj
 
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-*.jnilib
-
-# Fortran module files
-*.mod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
-
-#------------------- CMake --------------------
-CMakeCache.txt
-CMakeFiles
-CMakeScripts
-cmake_install.cmake
-install_manifest.txt
-
-#------------------- Doxygen files --------------------
-Doxyfile
-doc/html
-doc/latex
-
-#------------------- Paraview --------------------
-*.vtu
-*.vti
-*.pvtu
-*.pvti
+.vscode
