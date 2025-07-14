@@ -47,13 +47,22 @@ df_exp.insert(loc=2, column='Results', value='Experimental')
 
 df_biod = pd.DataFrame(data=zip(biodynamo_dt,biodynamo_diam),columns=['dt','diam'])
 df_biod.insert(loc=2, column='Results', value='BioDynaMo')
+file = "CompuTiX/monolayer/data/monolayer_growth.csv"
+df_compu = pd.read_csv(file, header=0)
+df_compu.insert(loc=2, column='Results', value='CompuTix')
+df_compu.rename(columns={'Total time (hours)': 'dt', 'Diameter (um)': 'diam'}, inplace=True)
+df_compu['dt'] /= 24  # Convert hours to days
+
+
+
 
 df_all = pd.concat([
     df_exp,  # Experimental
     df_biod,  # BioDynaMo
     df_tisim,  # TiSim
     df_pc,    # PhysiCell
-    df_chaste # Chaste
+    df_chaste, # Chaste
+    df_compu   # CompuTiX
 ], ignore_index=True)
 
 # Remove any NaN values that might have been introduced
@@ -71,7 +80,7 @@ df_all = df_all.sort_values('dt')
 # print(df_all['Results'].value_counts())
 
 # Set plotting order and color/marker mapping
-results_order = ['BioDynaMo', 'Chaste', 'PhysiCell', 'TiSim', 'Experimental']
+results_order = ['BioDynaMo', 'Chaste', 'PhysiCell', 'TiSim','CompuTix', 'Experimental']
 marker_map = {
     'Experimental': 'X'
 }
@@ -82,6 +91,7 @@ colors = {
     'BioDynaMo': '#ff7f00',   # Orange
     'Chaste': '#377eb8',      # Blue
     'TiSim': '#984ea3',       # Purple
+    'CompuTix': "#fd2a2aff",
     'Experimental': '#000000' # Black
 }
 linestyles = {
@@ -89,6 +99,7 @@ linestyles = {
     'BioDynaMo': '-',
     'Chaste': '-',
     'TiSim': '-',
+    'CompuTix': '-',
     'Experimental': '-'
 }
 linewidths = {
@@ -96,9 +107,18 @@ linewidths = {
     'BioDynaMo': 1.8,
     'Chaste': 1.8,
     'TiSim': 1.8,
+    'CompuTix': 1.8,
     'Experimental': 2.5
 }
-
+alphas = {
+    'PhysiCell': 0.7,
+    'BioDynaMo': 0.7,
+    'Chaste': 0.7,
+    'TiSim': 0.7,
+    'CompuTix': 0.3,
+    'Experimental': 0.8
+    
+}
 # Set up the figure with specific dimensions (Nature's column width is 89mm)
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(8, 2.8))  # Compact, publication style
 
@@ -143,7 +163,7 @@ ax1.plot(
 )
 
 # Plot all other results
-for result in ['BioDynaMo', 'Chaste', 'PhysiCell', 'TiSim']:
+for result in ['BioDynaMo', 'Chaste', 'PhysiCell', 'TiSim','CompuTix']:
     df = df_all[(df_all['Results'] == result) & (df_all['dt'] <= 27)]
     ax1.plot(
         df['dt'], df['diam'],
@@ -151,7 +171,7 @@ for result in ['BioDynaMo', 'Chaste', 'PhysiCell', 'TiSim']:
         label=result,
         linestyle=linestyles[result],
         linewidth=linewidths[result],
-        alpha=0.6,
+        alpha=alphas[result],
         zorder=2
     )
 
@@ -170,7 +190,7 @@ ax1.spines['right'].set_visible(False)
 ax1.tick_params(axis='both', which='major', labelsize=11)
 
 # Second plot (deviations)
-for result in ['BioDynaMo', 'Chaste', 'PhysiCell', 'TiSim']:
+for result in ['BioDynaMo', 'Chaste', 'PhysiCell', 'TiSim' ]:
     df = df_all[(df_all['Results'] == result) & (df_all['dt'] <= 27)]
     exp_values = exp_interp(df['dt'])
     deviations = df['diam'] - exp_values

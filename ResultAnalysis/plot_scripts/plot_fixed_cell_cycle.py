@@ -50,6 +50,8 @@ exp_df = exp_df.iloc[:, 2:4]
 exp_df.columns = ['volume','timestep']
 
 
+# computix results
+
 # Update font settings with fallback options
 plt.rcParams.update({
     'font.family': 'sans-serif',
@@ -87,6 +89,7 @@ colors = {
     'Chaste': '#377eb8',      # Blue
     'PhysiCell': '#4daf4a',   # Green
     'TiSim': '#984ea3',        # Purple
+    'CompuTix': "#fd2a2aff",
     'Exp': '#000000'  # Black for experimental data
 }
 
@@ -95,6 +98,7 @@ linestyles = {
     'Chaste': '-',     # Solid
     'PhysiCell': '-',  # Solid
     'TiSim': '-',        # Solid
+    'CompuTix': '-',
     'Exp': 'dotted'  # Dotted for experimental data
 }
 labels = {
@@ -102,6 +106,7 @@ labels = {
     'BioDynaMo': 'BioDynaMo',
     'Chaste': 'Chaste',
     'TiSim': 'TiSim',
+    'CompuTix': 'CompuTix',
     'Exp': 'Reference Data' 
 }
 
@@ -140,6 +145,17 @@ ax.plot(ts_df['timestep'], ts_df['volumes'],
         color=colors['TiSim'], 
         linestyle=linestyles['TiSim'], 
         label=labels['TiSim'],
+        linewidth=2.0,
+        alpha=0.7)
+# CompuTiX
+file = "CompuTiX/fixed_cell_cycle/data/cell_cycle.csv"
+comp_df = pd.read_csv(file, header=0)
+comp_df['#Time (minutes)']/=60
+print(comp_df['#Time (minutes)'])
+ax.plot(comp_df['#Time (minutes)'], comp_df["relative_volume"],
+        color=colors['CompuTix'], 
+        linestyle=linestyles['CompuTix'], 
+        label=labels['CompuTix'],
         linewidth=2.0,
         alpha=0.7)
 
@@ -181,7 +197,7 @@ ax.spines['right'].set_visible(False)
 ax.grid(False)
 
 # Add legend
-ax.legend(loc='center left', bbox_to_anchor=(0, 0.7), fontsize=8)
+ax.legend(loc='center left', bbox_to_anchor=(0, 0.6), fontsize=8)
 
 # Set axis limits and labels with increased padding and font size
 ax.set_xlim(0, 36.5)
