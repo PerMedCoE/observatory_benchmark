@@ -203,7 +203,7 @@
 //!     - overlap - \link CompuTiX::Components::DegreesOfFreedom::DegreeOfFreedom<CompuTiX::Types::Scalar> DegreeOfFreedom\endlink of \link CompuTiX::Types::Scalar Scalar\endlink type representing the overlap between the two spheres.
 //!     Physical dimension: \link CompuTiX::SIUnits::meter \f$\unit{\meter}\f$\endlink.
 //!     - overlap_limit - \link CompuTiX::Components::DegreesOfFreedom::DegreeOfFreedom<CompuTiX::Types::Scalar> DegreeOfFreedom\endlink of \link CompuTiX::Types::Scalar Scalar\endlink type representing the threshold for the overlap to trigger removal of the external force.
-//!     Physical dimension: \link CompuTiX::SIUnits::meter ^ 3 \f$\unit{\meter^3}\f$\endlink.
+//!     Physical dimension: \link CompuTiX::SIUnits::meter \f$\unit{\meter}\f$\endlink.
 //! - Spheres - \link CompuTiX::Components::Collections::ParticleCollection ParticleCollection\endlink representing the spheres.
 //!     - x - \link CompuTiX::Components::DegreesOfFreedom::DegreeOfFreedom<CompuTiX::Types::Position> DegreeOfFreedom\endlink of
 //!       \link CompuTiX::Types::Position Position\endlink type representing the spheres' centers.
@@ -352,7 +352,7 @@ int main( int argc, char** argv )
     universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "gamma_tangential", SIUnits::pascal * SIUnits::second / SIUnits::meter ) );
     universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "gamma_normal", SIUnits::pascal * SIUnits::second / SIUnits::meter ) );
     universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "relative_tolerance", SIUnits::dimensionless ) );
-    universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Matrix >::create( "M", SIUnits::kilogram ) );
+    // universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Matrix >::create( "M", SIUnits::kilogram ) );
     universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "r_contact", SIUnits::meter ) );
     universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "d_limit", SIUnits::meter ) );
     universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "overlap", SIUnits::meter ) );
@@ -399,7 +399,7 @@ int main( int argc, char** argv )
 
     // - Physical and geometrical parameters:
     //Hepatocyte mass
-    constexpr Types::Scalar mass_hepatocyte = 1.; // [ kg ]
+    constexpr Types::Scalar mass_hepatocyte = 0.; // [ kg ]
     //Initial positions
     const Types::Position x_init_1 = Types::Position::Zero(); // [ m ]
     const Types::Position x_init_2 = 30e-6 * Types::Position::UnitX(); // [ m ]
@@ -418,7 +418,7 @@ int main( int argc, char** argv )
     //Friction coefficient
     const Types::Matrix gamma = 10. * Types::Matrix::Identity(); // [ kg / min ]
     //Adhesion energy density
-    constexpr Types::Scalar adhesion_energy_density = 1e-4; // [ J / m^2 ]
+    constexpr Types::Scalar adhesion_energy_density = 1e-8; // [ J / m^2 ]
 
     // - Collision parameters:
     //Tangential friction coefficient
@@ -444,7 +444,7 @@ int main( int argc, char** argv )
         u.set< Types::Scalar >( Access::Modes::read_write, "gamma_tangential", SIUnits::pascal * SIUnits::second / SIUnits::meter, gamma_tang );
         u.set< Types::Scalar >( Access::Modes::read_write, "gamma_normal", SIUnits::pascal * SIUnits::second / SIUnits::meter, gamma_norm );
         u.set< Types::Scalar >( Access::Modes::read_write, "relative_tolerance", SIUnits::dimensionless, Math::relative_tolerance );
-        u.set< Types::Scalar >( Access::Modes::read_write, "V_limit", SIUnits::meter ^ 3, V_lim );
+        u.set< Types::Scalar >( Access::Modes::read_write, "d_limit", SIUnits::meter, d_lim );
         u.set< Types::Scalar >( Access::Modes::read_write, "r", SIUnits::meter, r );
 
         // View for spheres
@@ -537,20 +537,27 @@ int main( int argc, char** argv )
                 action->set_parameter_value( "dof", absolute_path( "Universes/Spheres/F" ) );
             }
 
-            // -- reset the mass tensor
+            // -- reset the mass tensor in spheres
             {
-                auto action = forces->add( create_executable( "Elementary::Reset", "Reset mass tensor" ) );
+                auto action = forces->add( create_executable( "Elementary::Reset", "Reset spheres mass tensor" ) );
                 action->set_parameter_value( "collection", absolute_path( "Universes/Spheres" ) );
                 action->set_parameter_value( "dof", absolute_path( "Universes/Spheres/M" ) );
             }
 
-            // -- set mass tensor
+            // -- reset the mass tensor in contacts
             {
+                auto action = forces->add( create_executable( "Elementary::Reset", "Reset contacts mass tensor" ) );
+                action->set_parameter_value( "collection", absolute_path( "Universes/Contacts" ) );
+                action->set_parameter_value( "dof", absolute_path( "Universes/Contacts/M" ) );
+            }
+
+            // -- set mass tensor
+            /*{
                 auto action = forces->add( create_executable( "Elementary::Algebraic::Multiply", "Set mass tensor" ) );
                 action->set_parameter_value( "result", absolute_path( "Universes/Spheres/M" ) );
                 action->set_parameter_value( "a", absolute_path( "Universes/Spheres/id" ) );
                 action->set_parameter_value( "b", absolute_path( "Universes/Spheres/m" ) );
-            }
+            }*/
 
             // -- external force reset
             {
@@ -580,7 +587,7 @@ int main( int argc, char** argv )
                 auto action = forces->add( create_executable( "Contact::Models::Collisions::JKR::Damped::SphereSphere::Overdamped", "Sphere-Sphere JKR contact model" ) );
                 action->set_parameter_value( "collection", absolute_path( "Universes/Contacts" ) );
                 action->set_parameter_value( "r_contact", absolute_path( "Universes/r_contact" ) );
-                action->set_parameter_value( "M", absolute_path( "Universes/M" ) );
+                action->set_parameter_value( "M", absolute_path( "Universes/Contacts/M" ) );
                 action->set_parameter_value( "dt", absolute_path( "Universes/dt" ) );
             }
 
