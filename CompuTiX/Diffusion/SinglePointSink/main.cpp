@@ -130,7 +130,7 @@ int main( int argc, char** argv )
         option_adder( "N,num-voxels", "Number of voxels in one dimension [1]."
                                       "Must be an odd value to guarantee that there is one voxel at the center of the domain.",
                       cxxopts::value< Types::Count >()->default_value( "9" ) );
-        option_adder( "lambda", "Individual cell's uptake rate [mol/s].", cxxopts::value< Types::Scalar >()->default_value( "2.6666666666666673e-16" ) );
+        option_adder( "lambda", "Individual cell's uptake rate [mol/s].", cxxopts::value< Types::Scalar >()->default_value( "2.6666666666666673e-18" ) );
         option_adder( "output-dir", "Output directory.", cxxopts::value< std::string >()->default_value( "./" ) );
     }
 
