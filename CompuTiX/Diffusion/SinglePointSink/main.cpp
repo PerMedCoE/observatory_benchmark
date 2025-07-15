@@ -130,7 +130,7 @@ int main( int argc, char** argv )
         option_adder( "N,num-voxels", "Number of voxels in one dimension [1]."
                                       "Must be an odd value to guarantee that there is one voxel at the center of the domain.",
                       cxxopts::value< Types::Count >()->default_value( "9" ) );
-        option_adder( "lambda", "Individual cell's uptake rate [mol/s].", cxxopts::value< Types::Scalar >()->default_value( "2.6666666666666673e-18" ) );
+        option_adder( "lambda", "Individual cell's uptake rate [mol/s].", cxxopts::value< Types::Scalar >()->default_value( "2.6666666666666673e-16" ) );
         option_adder( "output-dir", "Output directory.", cxxopts::value< std::string >()->default_value( "./" ) );
     }
 
@@ -213,6 +213,9 @@ int main( int argc, char** argv )
     // - Courant number and -Courant
     universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "Courant", SIUnits::dimensionless ) );
     universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "minus_Courant", SIUnits::dimensionless ) );
+
+    // - For capping: 0 amount (zero_amount)
+    universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "zero_amount", SIUnits::mole ) );
 
     //Prepare DoFs for Cells
     // - Geometry: center (x)
@@ -639,6 +642,14 @@ int main( int argc, char** argv )
                     auto action = uptake->add( create_executable( "Elementary::Algebraic::Add", "Add uptake from rhs" ) );
                     action->set_parameter_value( "result", absolute_path( "Universes/Voxels/rhs" ) );
                     action->set_parameter_value( "b", absolute_path( "Universes/Voxels/uptake" ) );
+                }
+
+                // - Cap to zero - remove at most the amount in the voxel but not more
+                {
+                    auto action = uptake->add( create_executable( "Elementary::Algebraic::Max", "Cap rhs" ) );
+                    action->set_parameter_value( "result", absolute_path( "Universes/Voxels/rhs" ) );
+                    action->set_parameter_value( "a", absolute_path( "Universes/zero_amount" ) );
+                    action->set_parameter_value( "b", absolute_path( "Universes/Voxels/rhs" ) );
                 }
             }
         }

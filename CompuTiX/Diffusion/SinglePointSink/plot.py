@@ -6,8 +6,6 @@ import numpy as np
 from pathlib import Path
 import yaml
 
-from AnalyticalSolution import AnalyticalSolution
-
 def float_to_latex(x: float, precision: int = 2) -> str:
     """
     Convert float to its string representation in latex format with scientific precision
@@ -35,6 +33,7 @@ def float_to_latex(x: float, precision: int = 2) -> str:
 def main() -> None:
     """
     Plot the data contained in the given `yaml` files:
+    - Over time: concentration in central voxel vs analytical solution at domain's center
     - Over time: total concentration vs analytical solution
     - At last time step (stationnary state), 2D plot in plane (x,y,0)
     """
@@ -42,6 +41,7 @@ def main() -> None:
     parser.add_argument( "-p", "--prefix", default="", help="Filename prefix.")
     parser.add_argument( "-f", "--files", nargs="+", type=Path, required=True, help="List of YAML files that contain the data to plot.")
     parser.add_argument("--count-modes", type=int, default=25, help="Number of modes to consider per dimension [1].")
+    parser.add_argument("--without-center", action='store_true', help="Option to disable plot of concentration at center of domain (0,0,0) over time.")
     parser.add_argument("--without-average",action='store_true', help="Option to disable plot of average concentration over time.")
     parser.add_argument("--without-stationary-2D", action='store_true', help="Option to disable plot 2D stationary state on (x,y) plane at z=0.")
 
@@ -71,47 +71,6 @@ def main() -> None:
     with open( files[0], "r" ) as f:
         data = yaml.safe_load( f )
 
-
-    D = data["D"]["values"] #[m^2/s]
-    c_0 = data["c_0"]["values"] #[mol/m^3]
-    L = data["L"]["values"] #[m]
-    rate = data["lambda"]["values"] #[1/s]
-    x_central = data["x_central"]["values"] #[m]
-    x_cell = data["x_cell"]["values"] #[m]
-
-    #Number of modes to consider
-    count_modes=args.count_modes
-
-    #Initialize class with analytical solution helper methods
-    sol = AnalyticalSolution( c_0=c_0, D=D, L=L, rate=rate, x_cell=x_cell, count_modes=count_modes )
-    time_steps = np.linspace(0., 600, 200)
-
-    #Compute analytical solution - over domain over time
-    if(not args.without_average):
-        #Compute total amount on the whole domain
-        U_expected_domain = sol.amount( x=x_central,\
-                                        t=time_steps,\
-                                        x_first=-0.5 * L,\
-                                        x_second=0.5 * L,\
-                                        y_first=-0.5 * L,\
-                                        y_second=0.5 * L,\
-                                        z_first=-0.5 * L,\
-                                        z_second=0.5 * L )
-
-        c_expected_domain = U_expected_domain / L**3
-
-    #Compute analytical solution - stationnary state in plane (x,y) at z=0
-    if(not args.without_stationary_2D):
-        #Analytical solution 2D profile
-        x_analytical = np.linspace( -0.5 * L, 0.5*L, num=50 )
-        y_analytical = np.linspace( -0.5 * L, 0.5*L, num=50 )
-        z= 0.
-        c_2D_expected = np.zeros( [ len(x_analytical), len(y_analytical) ] )
-        for i, x_i in enumerate( x_analytical ):
-            for j, y_i in enumerate( y_analytical ):
-                c_2D_expected[i,j] = sol.concentration( x=[x_i,y_i,z],\
-                                                        t=60000. )
-
     #Parse all files
     processed_dt = set()
     for fname in files:
@@ -132,21 +91,31 @@ def main() -> None:
         #Get current marker
         marker = markers[N]
 
+        #Plot concentration at central position over time
+        if(not args.without_center):
+            #Over time
+            plt.figure( 10 )
+            plt.plot( t / 60., 1e3 * c_central, linestyle='None', marker=marker, color=color, label=r'$\Delta t = ' + float_to_latex( dt / 60. ) + '$ min' + f', N={N}')
+
+            #At stationary state
+            plt.figure( 100 )
+            if( dt not in processed_dt ):
+                plt.plot( N, 1e3 * c_central[-1], linestyle='None', marker='x', color=color, label=r'$\Delta t = ' + float_to_latex( dt / 60. ) + '$ min' )
+            else:
+                plt.plot( N, 1e3 * c_central[-1], linestyle='None', marker='x', color=color )
+
         #Plot concentration over domain over time
         if(not args.without_average):
-            print(f'concentration whole box stationary [µM]: {1e3 * c_domain[-1]}')
-
             #Over time
             plt.figure( 20 )
             plt.plot( t / 60., 1e3 * c_domain, linestyle='None', marker=marker, color=color, label=r'$\Delta t = ' + float_to_latex( dt / 60. ) + '$ min' + f', N={N}')
 
-            #Error at stationary state
-            rel_error = abs( c_domain[-1] - c_expected_domain[-1] ) / abs( c_expected_domain[-1] )
+            #At stationary state
             plt.figure( 200 )
             if( dt not in processed_dt ):
-                plt.plot( N, 100. * rel_error, linestyle='None', marker='x', color=color, label=r'$\Delta t = ' + float_to_latex( dt / 60. ) + '$ min' )
+                plt.plot( N, 1e3 * c_domain[-1], linestyle='None', marker='x', color=color, label=r'$\Delta t = ' + float_to_latex( dt / 60. ) + '$ min' )
             else:
-                plt.plot( N, 100. * rel_error, linestyle='None', marker='x', color=color )
+                plt.plot( N, 1e3 * c_domain[-1], linestyle='None', marker='x', color=color )
 
         #Plot stationnary state in plane (x,y) at z=0
         if(not args.without_stationary_2D):
@@ -184,11 +153,41 @@ def main() -> None:
         processed_dt.add( dt )
 
     #Add analytical solution to the plots and finalize plots
+    #Plot concentration at central position
+    if(not args.without_center):
+        #Plot expected - concentration over central voxel
+        plt.figure( 10 )
+        plt.xlabel( 't [min]' )
+        plt.ylabel( 'c [µM]' )
+        ax = plt.gca()
+        ax.xaxis.set_major_formatter(ticker.ScalarFormatter(useOffset=False))
+        ax.yaxis.set_major_formatter(ticker.ScalarFormatter(useOffset=False))
+        plt.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+        fig = plt.gcf()
+        fig.tight_layout()
+        fig.set_size_inches(8, 6)
+        plt.savefig( f'{prefix}center_of_box.png', bbox_inches='tight', dpi = 600 )
+        plt.close()
+
+        #Plot at stationary state
+        plt.figure( 100 )
+        plt.xlabel( 'N [1]' )
+        plt.ylabel( 'c [µM]' )
+        plt.xscale('log')
+        ax = plt.gca()
+        ax.xaxis.set_major_formatter(ticker.ScalarFormatter(useOffset=False))
+        ax.yaxis.set_major_formatter(ticker.ScalarFormatter(useOffset=False))
+        plt.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+        fig = plt.gcf()
+        fig.tight_layout()
+        fig.set_size_inches(8, 6)
+        plt.savefig( f'{prefix}center_of_box_stationary_state.png', bbox_inches='tight', dpi = 600 )
+        plt.close()
+
     #Plot concentration over domain over time
     if(not args.without_average):
         #Plot expected - concentration over the entire domain
         plt.figure( 20 )
-        plt.plot( time_steps / 60., 1e3 * c_expected_domain, label='Expected', color='black' )
         plt.xlabel( 't [min]' )
         plt.ylabel( r'$\bar{c}$ [µM]' )
         ax = plt.gca()
@@ -201,10 +200,10 @@ def main() -> None:
         plt.savefig( f'{prefix}whole_box.png', bbox_inches='tight', dpi = 600 )
         plt.close()
         
-        #Plot at stationary state - relative error over the entire domain
+        #Plot at stationary state
         plt.figure( 200 )
         plt.xlabel( 'N [1]' )
-        plt.ylabel( r'$\delta \bar{c}$ [%]' )
+        plt.ylabel( r'$\bar{c}$ [µM]' )
         plt.xscale('log')
         ax = plt.gca()
         ax.xaxis.set_major_formatter(ticker.ScalarFormatter(useOffset=False))
@@ -213,7 +212,7 @@ def main() -> None:
         fig = plt.gcf()
         fig.tight_layout()
         fig.set_size_inches(8, 6)
-        plt.savefig( f'{prefix}whole_box_error_stationary_state.png', bbox_inches='tight', dpi = 600 )
+        plt.savefig( f'{prefix}whole_box_stationary_state.png', bbox_inches='tight', dpi = 600 )
         plt.close()
 
 if __name__ == '__main__':
