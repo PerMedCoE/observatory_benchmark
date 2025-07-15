@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import os
+import yaml
 
 # Load data
 pc_data = pd.read_csv('PhysiCell/results/mechanics_movement/cell_position_time.csv')
@@ -26,24 +27,42 @@ output_folder = "Tisim/unit_test_mechanics_friction/"
 # ts_data = pd.read_csv(output_folder + 'mechanical friction.csv', header=0, sep='\t|,', engine='python', names=["dt", "velocity"])
 ts_data = pd.read_csv(output_folder + 'mechanical friction_offset.csv', header=0, sep='\t|,', engine='python', names=["dt", "velocity"])
 
+# computix
+with open("CompuTiX/MovementWithFriction/Cells.yaml", "r") as f:
+    mf_data = yaml.safe_load(f)
+    
+ct_t = np.array( mf_data["t"]["values"] ) #[s]
+ct_x = np.array( mf_data['x']['values'] ) #[m]
+ct_v = np.array( mf_data['v']['values'] ) #[m/s]
+
 # Set up colorblind-friendly colors and linestyles
 colors = {
     'PhysiCell': '#4daf4a',   # Green
     'BioDynaMo': '#ff7f00',   # Orange (changed from red)
     'Chaste': '#377eb8',      # Blue
-    'TiSim': '#984ea3'        # Purple
+    'TiSim': '#984ea3',       # Purple
+    'Computix': "#fd2a2aff"      # Pink
 }
 linestyles = {
     'PhysiCell': 'dotted',
     'BioDynaMo': 'dotted',
     'Chaste': 'dotted',
-    'TiSim': 'dotted'
+    'TiSim': 'dotted',
+    'Computix': 'dotted'
+}
+markers = {
+    'PhysiCell': 'o',  # Circle
+    'BioDynaMo': 'o',  # Circle
+    'Chaste': 'o',  # Circle
+    'TiSim': 'o',  # Circle
+    'Computix': 'o'  # Circle
 }
 labels = {
     'PhysiCell': 'PhysiCell',
     'BioDynaMo': 'BioDynaMo',
     'Chaste': 'Chaste',
-    'TiSim': 'TiSim'
+    'TiSim': 'TiSim',
+    'Computix': 'Computix'
 }
 
 # Update font and axes settings for better readability
@@ -88,17 +107,20 @@ fig, ax = plt.subplots(figsize=(3, 2.8))
 #         linestyle=linestyles['TiSim'], alpha=0.7, linewidth=1.8)
 
 ax.plot(bd_data['timestep'], bd_data['velocity'],
-        color=colors['BioDynaMo'], label=labels['BioDynaMo'],
-        linestyle=linestyles['BioDynaMo'], alpha=0.7, linewidth=1.8)
+        color=colors['BioDynaMo'], label=labels['BioDynaMo'], marker=markers['BioDynaMo'],
+        linestyle=linestyles['BioDynaMo'], alpha=0.5, linewidth=1.8)
 ax.plot(ch_data['timestep'], ch_data['velocity'],
-        color=colors['Chaste'], label=labels['Chaste'],
-        linestyle=linestyles['Chaste'], alpha=0.7, linewidth=1.8)
+        color=colors['Chaste'], label=labels['Chaste'], marker=markers['Chaste'],   
+        linestyle=linestyles['Chaste'], alpha=0.5, linewidth=1.8)
 ax.plot(pc_data['dt'], pc_data['mvx'],
-        color=colors['PhysiCell'], label=labels['PhysiCell'],
-        linestyle=linestyles['PhysiCell'], alpha=0.7, linewidth=1.8)
+        color=colors['PhysiCell'], label=labels['PhysiCell'], marker=markers['PhysiCell'],
+        linestyle=linestyles['PhysiCell'], alpha=0.5, linewidth=1.8)
 ax.plot(ts_data['dt'], ts_data['velocity'],
-        color=colors['TiSim'], label=labels['TiSim'],
-        linestyle=linestyles['TiSim'], alpha=0.7, linewidth=1.8)
+        color=colors['TiSim'], label=labels['TiSim'], marker=markers['TiSim'],
+        linestyle=linestyles['TiSim'], alpha=0.5, linewidth=1.8)
+ax.plot(ct_t/60, ct_v*60 / 1e-6,
+        color=colors['Computix'], label=labels['Computix'], marker=markers['Computix'],
+        linestyle=linestyles['Computix'], alpha=0.5, linewidth=1.8)
 
 # Axis labels and limits
 ax.set_ylabel("Velocity (μm/s)", labelpad=8, fontsize=12)
@@ -124,10 +146,10 @@ plt.tight_layout()
 # Save in vector and raster formats
 save_dir = "./ResultAnalysis/plots/mechanics_friction_plots"
 os.makedirs(save_dir, exist_ok=True)
-plt.savefig(os.path.join(save_dir, "mechanics_friction_zoomed.pdf"),
-            format='pdf', bbox_inches='tight', pad_inches=0.1)
-plt.savefig(os.path.join(save_dir, "mechanics_friction_zoomed.svg"),
-            format='svg', bbox_inches='tight', pad_inches=0.1)
+# plt.savefig(os.path.join(save_dir, "mechanics_friction_zoomed.pdf"),
+#             format='pdf', bbox_inches='tight', pad_inches=0.1)
+# plt.savefig(os.path.join(save_dir, "mechanics_friction_zoomed.svg"),
+#             format='svg', bbox_inches='tight', pad_inches=0.1)
 plt.savefig(os.path.join(save_dir, "mechanics_friction_zoomed.png"),
             dpi=600, bbox_inches='tight', pad_inches=0.1, format='png')
 plt.close(fig)
