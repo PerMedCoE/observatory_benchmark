@@ -29,7 +29,7 @@ timesteps_rounded = np.round(timesteps, 2)
 ch_df['timestep_rounded'] = ch_df['timestep'].round(2)
 selected_rows = ch_df[ch_df['timestep_rounded'].isin(timesteps_rounded)]
 
-with open("./CompuTiX/diffusion_single/dt-s-0-6_N-3.yaml", "r") as f:
+with open("./CompuTiX/diffusion_single/SinglePointSink/dt-s-0-6_N-3.yaml", "r") as f:
     mf_data = yaml.safe_load(f)
     
 # ct_t = np.array( mf_data["t"]["values"] ) #[s]
