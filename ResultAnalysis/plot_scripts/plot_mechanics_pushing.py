@@ -304,7 +304,7 @@ ax_norm_zoom.plot(ct_t[ct_t <= 300] / 60., (ct_d[ct_t <= 300] / 1e-6) / cell_rad
                   linestyle=linestyles['Computix'],
                   label=labels['Computix'],
                   color=colors['Computix'],
-                  alpha=0.7)
+                  alpha=0.6)
 ax_norm_zoom.axhline(1, color=colors['radius'], linestyle=linestyles['radius'], alpha=0.3)
 ax_norm_zoom.set_ylabel("Distance / cell diam (μm)", labelpad=8, fontsize=12)
 ax_norm_zoom.set_xlabel("Time (min)", labelpad=8, fontsize=12)
