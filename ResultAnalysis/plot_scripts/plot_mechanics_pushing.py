@@ -48,7 +48,7 @@ ch_dist['dt'] = ch_dist.index * 60
 # ch_dist.index = ch_dist.index * 100
 
 # computix
-with open("CompuTiX/mechanics_pushing/Cells.yaml", "r") as f:
+with open("CompuTiX/mechanics_pushing/benchmark_exmaple_2.yaml", "r") as f:
     data = yaml.safe_load(f)
 
 ct_t = np.array( data["t"]["values"] ) #[s]
