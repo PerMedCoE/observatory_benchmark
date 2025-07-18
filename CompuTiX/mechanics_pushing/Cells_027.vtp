@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <VTKFile version="1.0" type="PolyData" byte_order="LittleEndian"><PolyData><Piece NumberOfLines="0" NumberOfStrips="0" NumberOfPolys="0" NumberOfPoints="2" NumberOfVerts="1"><Points><DataArray type="Float64" Name="x" format="ascii" NumberOfComponents="3">
-1.0644754670677e-05 0 0
-1.9355245329323e-05 0 0
+1.05354538780078e-05 0 0
+1.94645461219922e-05 0 0
 </DataArray></Points><PointData><DataArray type="Int64" Name="particle_index" format="ascii" NumberOfComponents="1">
 0
 1
@@ -9,32 +9,26 @@
 0
 0
 </DataArray><DataArray type="Float64" Name="x" format="ascii" NumberOfComponents="3">
-1.0644754670677e-05 0 0
-1.9355245329323e-05 0 0
+1.05354538780078e-05 0 0
+1.94645461219922e-05 0 0
 </DataArray><DataArray type="Float64" Name="v" format="ascii" NumberOfComponents="3">
--5.74743458941523e-09 0 0
-5.74743458941523e-09 0 0
+-1.78976059687542e-09 0 0
+1.78976059687542e-09 0 0
 </DataArray><DataArray type="Float64" Name="a" format="ascii" NumberOfComponents="3">
-2.07203998453084e-10 0 0
--2.07203998453084e-10 0 0
+4.04688467284706e-11 0 0
+-4.04688467284706e-11 0 0
 </DataArray><DataArray type="Float64" Name="r" format="ascii" NumberOfComponents="1">
 5e-06
 5e-06
-</DataArray><DataArray type="Float64" Name="m" format="ascii" NumberOfComponents="1">
-1
-1
 </DataArray><DataArray type="Float64" Name="M" format="ascii" NumberOfComponents="9">
-2.01494027543028 0 0 0 2.01494027543028 0 0 0 2.01494027543028
-2.01494027543028 0 0 0 2.01494027543028 0 0 0 2.01494027543028
-</DataArray><DataArray type="Float64" Name="id" format="ascii" NumberOfComponents="9">
-1 0 0 0 1 0 0 0 1
-1 0 0 0 1 0 0 0 1
+1.01372395336829 0 0 0 1.01372395336829 0 0 0 1.01372395336829
+1.01372395336829 0 0 0 1.01372395336829 0 0 0 1.01372395336829
 </DataArray><DataArray type="Float64" Name="F_loc" format="ascii" NumberOfComponents="3">
 0 0 0
 0 0 0
 </DataArray><DataArray type="Float64" Name="F" format="ascii" NumberOfComponents="3">
-3.31399164107438e-10 0 0
--3.31399164107438e-10 0 0
+3.62830078921293e-11 0 0
+-3.62830078921293e-11 0 0
 </DataArray><DataArray type="Float64" Name="gamma" format="ascii" NumberOfComponents="9">
 0.166666666666667 0 0 0 0.166666666666667 0 0 0 0.166666666666667
 0.166666666666667 0 0 0 0.166666666666667 0 0 0 0.166666666666667
@@ -60,7 +54,7 @@
 </DataArray><DataArray type="Float64" Name="t_end" format="ascii" NumberOfComponents="1">
 600
 </DataArray><DataArray type="Float64" Name="t_elapsed" format="ascii" NumberOfComponents="1">
-0.121164
+0.0968108
 </DataArray><DataArray type="Int64" Name="current_frame" format="ascii" NumberOfComponents="1">
 27
 </DataArray><DataArray type="Float64" Name="tension" format="ascii" NumberOfComponents="1">
@@ -71,16 +65,12 @@
 1e+08
 </DataArray><DataArray type="Float64" Name="relative_tolerance" format="ascii" NumberOfComponents="1">
 1e-07
-</DataArray><DataArray type="Float64" Name="M" format="ascii" NumberOfComponents="9">
--0.367113818993155 0 0 0 -0.367113818993155 0 0 0 -0.367113818993155
 </DataArray><DataArray type="Float64" Name="r_contact" format="ascii" NumberOfComponents="1">
-2.81533e-06
-</DataArray><DataArray type="Float64" Name="V_limit" format="ascii" NumberOfComponents="1">
-5.23599e-17
+2.69829e-06
+</DataArray><DataArray type="Float64" Name="d_limit" format="ascii" NumberOfComponents="1">
+1e-06
 </DataArray><DataArray type="Float64" Name="overlap" format="ascii" NumberOfComponents="1">
-1.28951e-06
-</DataArray><DataArray type="Float64" Name="V_overlap" format="ascii" NumberOfComponents="1">
-1.24985e-17
+1.07091e-06
 </DataArray><DataArray type="Float64" Name="r" format="ascii" NumberOfComponents="1">
 5e-06
 </DataArray></CellData></Piece></PolyData></VTKFile>

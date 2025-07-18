@@ -4,43 +4,59 @@ import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 import os
+import yaml
 pd.set_option('display.float_format', lambda x: '%.5f' % x)
 # diffusion_single
 
-pc_file = "PhysiCell/results/single_diffusion_cell_sink/summary.csv"
+pc_file = "./PhysiCell/results/single_diffusion_cell_sink/summary.csv"
 pc_df= pd.read_csv(pc_file,index_col=0)
 pc_df = pc_df.loc[pc_df.index == 13]
 
-bdm_file = "Biodynamo/diffusion_single/data.csv"
+# bdm_file = "../Biodynamo/diffusion_single/data.csv"
+bdm_file = "./Biodynamo/diffusion_single/data.csv"
 bdm_df= pd.read_csv(bdm_file,index_col=None,header=None,sep = " ",names = ['timestep','avg_diff','cen_diff'])
 
 
-tisim_file = "Tisim/diffusion_single/results/diffusion_1_cell.csv"
+tisim_file = "./Tisim/diffusion_single/results/diffusion_1_cell.csv"
 tisim_df= pd.read_csv(tisim_file,names = ['timestep','diff'],header=0)
 tisim_df = pd.concat([pd.DataFrame({"timestep": [0],"diff":[0]}), tisim_df], ignore_index=True)
 
 
-chaste_file = "Chaste/diffusion_single/results/TestDiffusionSmall03.dat"
+chaste_file = "./Chaste/diffusion_single/results/TestDiffusionSmall03.dat"
 ch_df= pd.read_csv(chaste_file,sep='\s+',names = ['timestep','diff'],header=0)
 timesteps = np.concatenate((np.linspace(0, 1, num=11)[:-1], np.arange(1, 11, 1)))
 timesteps_rounded = np.round(timesteps, 2)
 ch_df['timestep_rounded'] = ch_df['timestep'].round(2)
 selected_rows = ch_df[ch_df['timestep_rounded'].isin(timesteps_rounded)]
 
+with open("./CompuTiX/diffusion_single/SinglePointSink/dt-s-0-6_N-3.yaml", "r") as f:
+    mf_data = yaml.safe_load(f)
+    
+# ct_t = np.array( mf_data["t"]["values"] ) #[s]
+# ct_x = np.array( mf_data['x']['values'] ) #[m]
+# ct_v = np.array( mf_data['v']['values'] ) #[m/s]
 
-
+ct_t = np.array( mf_data["time_series"]["values"]["t"]["values"] ) #[s]
+ct_cdomain = np.array( mf_data["time_series"]["values"]["c_domain"]["values"] ) #[mol/m^3]
+ct_ccentral = np.array( mf_data["time_series"]["values"]["c_central"]["values"] ) #[mol/m^3]
+# create dataframe with the above values of computix
+ct_df = pd.DataFrame({
+    'timestep': ct_t/ 60 ,
+    'c_domain': ct_cdomain*1e3 ,
+    'c_central': ct_ccentral *1e3 
+})
 # -------------------------------------------------------------------------
 # Load theoretical reference curves (CFD explicit solver & deal.II snapshots)
 # -------------------------------------------------------------------------
 cfd_csv = (
-    "ResultAnalysis/plots/diffusion_cfd_single_sink_plots/"
+    "./ResultAnalysis/plots/diffusion_cfd_single_sink_plots/"
     "average_concentration_time_series.csv"
 )
 deal_csv = (
-    "ResultAnalysis/plots/diffusion_ground_truth_single_sink_plots/"
+    "./ResultAnalysis/plots/diffusion_ground_truth_single_sink_plots/"
     "average_concentration_time_series.csv"
 )
-
+ct_df
 def _load_theory(csv_path: str, label: str) -> pd.DataFrame:
     df = pd.read_csv(csv_path)
     # Rescale snap index (0 .. N-1) → minutes (0 .. 10)
@@ -50,8 +66,8 @@ def _load_theory(csv_path: str, label: str) -> pd.DataFrame:
     df["label"] = label
     return df[["timestep", "diff", "label"]]
 
-cfd_df_ref = _load_theory(cfd_csv, "CFD theory")
-deal_df_ref = _load_theory(deal_csv, "deal.II theory")
+# cfd_df_ref = _load_theory(cfd_csv, "CFD theory")
+# deal_df_ref = _load_theory(deal_csv, "deal.II theory")
 
 # Nature/Cell Systems colorblind-friendly palette and correct linestyles
 colors = {
@@ -59,6 +75,7 @@ colors = {
     'Chaste': '#377eb8',      # Blue
     'PhysiCell': '#4daf4a',   # Green
     'TiSim': '#984ea3',       # Purple
+    'Computix': "#fd2a2aff",  # Pink
     'CFD theory': '#000000',  # Black
     'deal.II theory': '#555555'  # Darker gray for visibility
 }
@@ -68,6 +85,7 @@ linestyles = {
     'Chaste': '-',     # Solid
     'PhysiCell': '-',  # Solid
     'TiSim': '-',       # Solid
+    'Computix': '-',       # Solid
     'CFD theory': '--',
     'deal.II theory': ':'
 }
@@ -105,8 +123,8 @@ plt.rcParams.update({
 # Create individual figures instead of subplots
 def create_plot(data, xlim=None, ylim=None, title=None, filename=None, markers=False, figsize=(3, 3)):
     fig, ax = plt.subplots(figsize=figsize, dpi=400)
-    
     # Plot data
+    print(data[0])
     for label, df, y, mask in data:
         x = df['timestep'][mask]
         y = y[mask]
@@ -140,14 +158,14 @@ def create_plot(data, xlim=None, ylim=None, title=None, filename=None, markers=F
     if filename:
         save_dir = "./ResultAnalysis/plots/diffusion_single_ut_plots"
         os.makedirs(save_dir, exist_ok=True)
-        plt.savefig(os.path.join(save_dir, f"{filename}.pdf"), 
-                   format='pdf',
-                   bbox_inches='tight', 
-                   pad_inches=0.2)
-        plt.savefig(os.path.join(save_dir, f"{filename}.svg"), 
-                   format='svg',
-                   bbox_inches='tight', 
-                   pad_inches=0.2)
+        # plt.savefig(os.path.join(save_dir, f"{filename}.pdf"), 
+        #            format='pdf',
+        #            bbox_inches='tight', 
+        #            pad_inches=0.2)
+        # plt.savefig(os.path.join(save_dir, f"{filename}.svg"), 
+        #            format='svg',
+        #            bbox_inches='tight', 
+        #            pad_inches=0.2)
         plt.savefig(os.path.join(save_dir, f"{filename}.png"), 
                    format='png',
                    bbox_inches='tight', 
@@ -163,17 +181,22 @@ def _plot_entries():
         ('Chaste', ch_df, ch_df['diff'], slice(None)),
         ('PhysiCell', pc_df, pc_df['diff']/602.2, slice(None)),
         ('TiSim', tisim_df, tisim_df['diff'], tisim_df['timestep'] <= 10),
-        ('CFD theory', cfd_df_ref, cfd_df_ref['diff'], slice(None)),
-        ('deal.II theory', deal_df_ref, deal_df_ref['diff'], slice(None)),
+        ('Computix', ct_df, ct_df['c_central'], slice(None))
+        # Reference curves
+        # ('CFD theory', cfd_df_ref, cfd_df_ref['diff'], slice(None)),
+        # ('deal.II theory', deal_df_ref, deal_df_ref['diff'], slice(None)),
     ]
+
     return entries
+
 
 # Create and save individual plots
 create_plot(_plot_entries(), title='a', filename='diffusion_full_time', figsize=(7, 3.5))
 
 create_plot(_plot_entries(), xlim=(0, 0.5), ylim=(0, None), title='b', filename='diffusion_early_time', markers=True)
 
-create_plot(_plot_entries(), xlim=(9.5, 10), ylim=(9.3, 9.6), title='c', filename='diffusion_late_time', markers=False)
+create_plot(_plot_entries(), xlim=(9.5, 10), ylim=(9.1, 9.6), title='c', filename='diffusion_late_time', markers=False)
+
 
 def create_complete_plot():
     fig = plt.figure(figsize=(8, 5))
@@ -193,10 +216,10 @@ def create_complete_plot():
     # Top right: full timecourse
     ax_full = fig.add_subplot(gs[0, 1])
     # Reference curves (full plot first to keep them behind if desired)
-    ax_full.plot(cfd_df_ref['timestep'], cfd_df_ref['diff'],
-                 label='CFD', color=colors['CFD theory'], linestyle=linestyles['CFD theory'], linewidth=linewidths.get('CFD theory', 1.8), alpha=0.7)
-    ax_full.plot(deal_df_ref['timestep'], deal_df_ref['diff'],
-                 label='deal.II', color=colors['deal.II theory'], linestyle=linestyles['deal.II theory'], linewidth=linewidths.get('deal.II theory', 1.8), alpha=0.7)
+    # ax_full.plot(cfd_df_ref['timestep'], cfd_df_ref['diff'],
+    #              label='CFD', color=colors['CFD theory'], linestyle=linestyles['CFD theory'], linewidth=linewidths.get('CFD theory', 1.8), alpha=0.7)
+    # ax_full.plot(deal_df_ref['timestep'], deal_df_ref['diff'],
+    #              label='deal.II', color=colors['deal.II theory'], linestyle=linestyles['deal.II theory'], linewidth=linewidths.get('deal.II theory', 1.8), alpha=0.7)
 
     ax_full.plot(bdm_df['timestep'], bdm_df['cen_diff'],
                  label='BioDynaMo', color=colors['BioDynaMo'], linestyle=linestyles['BioDynaMo'], linewidth=linewidths.get('BioDynaMo', 1.8), alpha=0.7)
@@ -207,6 +230,9 @@ def create_complete_plot():
     ax_full.plot(tisim_df[tisim_df['timestep'] <= 10]['timestep'],
                  tisim_df[tisim_df['timestep'] <= 10]['diff'],
                  label='TiSim', color=colors['TiSim'], linestyle=linestyles['TiSim'], linewidth=linewidths.get('TiSim', 1.8), alpha=0.7)
+    ax_full.plot(ct_df['timestep'], ct_df['c_central'],
+                 label='Computix', color=colors['Computix'], linestyle=linestyles['Computix'], linewidth=linewidths.get('Computix', 1.8), alpha=0.7)
+    # ax_full.plot(cfd_df_ref['timestep'], cfd_df_ref
     ax_full.set_ylabel("Concentration (μM)", fontsize=12, labelpad=4)
     ax_full.set_xlabel("Time (min)", fontsize=12, labelpad=4)
     ax_full.tick_params(axis='both', which='major', labelsize=11)
@@ -224,8 +250,11 @@ def create_complete_plot():
     ax_zoom_start.plot(tisim_df[tisim_df['timestep'] <= 10]['timestep'],
                       tisim_df[tisim_df['timestep'] <= 10]['diff'],
                       label='TiSim', color=colors['TiSim'], linestyle=linestyles['TiSim'], linewidth=linewidths.get('TiSim', 1.8), alpha=0.7)
-    ax_zoom_start.plot(cfd_df_ref['timestep'], cfd_df_ref['diff'], label='CFD', color=colors['CFD theory'], linestyle=linestyles['CFD theory'], linewidth=linewidths.get('CFD theory', 1.8), alpha=0.7)
-    ax_zoom_start.plot(deal_df_ref['timestep'], deal_df_ref['diff'], label='deal.II', color=colors['deal.II theory'], linestyle=linestyles['deal.II theory'], linewidth=linewidths.get('deal.II theory', 1.8), alpha=0.7)
+    ax_zoom_start.scatter(ct_df['timestep'], ct_df['c_central'],
+                          label='Computix', color=colors['Computix'],linestyle=linestyles['Computix'], linewidth=linewidths.get('Computix', 1.8), alpha=0.7)
+    # Reference curves (zoomed in)
+    # ax_zoom_start.plot(cfd_df_ref['timestep'], cfd_df_ref['diff'], label='CFD', color=colors['CFD theory'], linestyle=linestyles['CFD theory'], linewidth=linewidths.get('CFD theory', 1.8), alpha=0.7)
+    # ax_zoom_start.plot(deal_df_ref['timestep'], deal_df_ref['diff'], label='deal.II', color=colors['deal.II theory'], linestyle=linestyles['deal.II theory'], linewidth=linewidths.get('deal.II theory', 1.8), alpha=0.7)
     ax_zoom_start.set_xlim(0, 0.5)
     ax_zoom_start.set_ylim(0, None)
     ax_zoom_start.set_xlabel("Time (min)", fontsize=12, labelpad=4)
@@ -244,10 +273,13 @@ def create_complete_plot():
                      label='PhysiCell', color=colors['PhysiCell'], linestyle=linestyles['PhysiCell'], linewidth=linewidths.get('PhysiCell', 1.8), alpha=0.7)
     ax_zoom_end.plot(tisim_df['timestep'], tisim_df['diff'],
                      label='TiSim', color=colors['TiSim'], linestyle=linestyles['TiSim'], linewidth=linewidths.get('TiSim', 1.8), alpha=0.7)
-    ax_zoom_end.plot(cfd_df_ref['timestep'], cfd_df_ref['diff'], label='CFD', color=colors['CFD theory'], linestyle=linestyles['CFD theory'], linewidth=linewidths.get('CFD theory', 1.8), alpha=0.7)
-    ax_zoom_end.plot(deal_df_ref['timestep'], deal_df_ref['diff'], label='deal.II', color=colors['deal.II theory'], linestyle=linestyles['deal.II theory'], linewidth=linewidths.get('deal.II theory', 1.8), alpha=0.7)
+    ax_zoom_end.scatter(ct_df['timestep'], ct_df['c_central'],
+                        label='Computix', color=colors['Computix'], linestyle=linestyles['Computix'], linewidth=linewidths.get('Computix', 1.8), alpha=0.7)
+    # Reference curves (zoomed in)
+    # ax_zoom_end.plot(cfd_df_ref['timestep'], cfd_df_ref['diff'], label='CFD', color=colors['CFD theory'], linestyle=linestyles['CFD theory'], linewidth=linewidths.get('CFD theory', 1.8), alpha=0.7)
+    # ax_zoom_end.plot(deal_df_ref['timestep'], deal_df_ref['diff'], label='deal.II', color=colors['deal.II theory'], linestyle=linestyles['deal.II theory'], linewidth=linewidths.get('deal.II theory', 1.8), alpha=0.7)
     ax_zoom_end.set_xlim(9.5, 10)
-    ax_zoom_end.set_ylim(9.3, 10.1)
+    ax_zoom_end.set_ylim(9.1, 10.1)
     ax_zoom_end.set_xlabel("Time (min)", fontsize=12, labelpad=4)
     ax_zoom_end.set_ylabel("Concentration (μM)", fontsize=12, labelpad=4)
     ax_zoom_end.tick_params(axis='both', which='major', labelsize=11)
@@ -272,13 +304,15 @@ def create_complete_plot():
     plt.subplots_adjust(left=0.08, top=0.97, hspace=0.45, wspace=0.3)
     save_dir = "./ResultAnalysis/plots/diffusion_single_ut_plots"
     os.makedirs(save_dir, exist_ok=True)
-    plt.savefig(os.path.join(save_dir, "diffusion_single_ut.pdf"), format='pdf', bbox_inches='tight', pad_inches=0.2)
+    # plt.savefig(os.path.join(save_dir, "diffusion_single_ut.pdf"), format='pdf', bbox_inches='tight', pad_inches=0.2)
     plt.savefig(os.path.join(save_dir, "diffusion_single_ut.svg"), format='svg', bbox_inches='tight', pad_inches=0.2)
     plt.savefig(os.path.join(save_dir, "diffusion_single_ut.png"), format='png', bbox_inches='tight', pad_inches=0.2, dpi=600)
     plt.close()
 
+
 # Create complete plot
 create_complete_plot()
+
 
 def create_complete_scatter_plot():
     fig = plt.figure(figsize=(8, 5))
@@ -296,6 +330,7 @@ def create_complete_scatter_plot():
         'Chaste': 's',
         'PhysiCell': '^',
         'TiSim': 'D',
+        'Computix': 'x',
         'CFD': 'P',
         'deal.II': 'X',
     }
@@ -316,8 +351,11 @@ def create_complete_scatter_plot():
     ax_full.scatter(tisim_df[tisim_df['timestep'] <= 10]['timestep'],
                  tisim_df[tisim_df['timestep'] <= 10]['diff'],
                  label='TiSim', color=colors['TiSim'], marker=marker_dict['TiSim'], alpha=0.7, s=point_size)
-    ax_full.scatter(cfd_df_ref['timestep'], cfd_df_ref['diff'], label='CFD', color=colors['CFD theory'], marker=marker_dict['CFD'], alpha=0.7, s=point_size)
-    ax_full.scatter(deal_df_ref['timestep'], deal_df_ref['diff'], label='deal.II', color=colors['deal.II theory'], marker=marker_dict['deal.II'], alpha=0.7, s=point_size)
+    ax_full.scatter(ct_df['timestep'], ct_df['c_central'],
+                 label='Computix', color=colors['Computix'], marker=marker_dict['Computix'], s=point_size, alpha=0.7)
+    # Reference curves (full plot first to keep them
+    # ax_full.scatter(cfd_df_ref['timestep'], cfd_df_ref['diff'], label='CFD', color=colors['CFD theory'], marker=marker_dict['CFD'], alpha=0.7, s=point_size)
+    # ax_full.scatter(deal_df_ref['timestep'], deal_df_ref['diff'], label='deal.II', color=colors['deal.II theory'], marker=marker_dict['deal.II'], alpha=0.7, s=point_size)
     ax_full.set_ylabel("Concentration (μM)", fontsize=12, labelpad=4)
     ax_full.set_xlabel("Time (min)", fontsize=12, labelpad=4)
     ax_full.tick_params(axis='both', which='major', labelsize=11)
@@ -335,8 +373,11 @@ def create_complete_scatter_plot():
     ax_zoom_start.scatter(tisim_df[tisim_df['timestep'] <= 10]['timestep'],
                       tisim_df[tisim_df['timestep'] <= 10]['diff'],
                       label='TiSim', color=colors['TiSim'], marker=marker_dict['TiSim'], alpha=0.7, s=point_size)
-    ax_zoom_start.scatter(cfd_df_ref['timestep'], cfd_df_ref['diff'], label='CFD', color=colors['CFD theory'], marker=marker_dict['CFD'], alpha=0.7, s=point_size)
-    ax_zoom_start.scatter(deal_df_ref['timestep'], deal_df_ref['diff'], label='deal.II', color=colors['deal.II theory'], marker=marker_dict['deal.II'], alpha=0.7, s=point_size)
+    ax_zoom_start.scatter(ct_df['timestep'], ct_df['c_central'],
+                          label='Computix', color=colors['Computix'], marker=marker_dict['Computix'], s=point_size, alpha=0.7)
+    # Reference curves (zoomed in)
+    # ax_zoom_start.scatter(cfd_df_ref['timestep'], cfd_df_ref['diff'], label='CFD', color=colors['CFD theory'], marker=marker_dict['CFD'], alpha=0.7, s=point_size)
+    # ax_zoom_start.scatter(deal_df_ref['timestep'], deal_df_ref['diff'], label='deal.II', color=colors['deal.II theory'], marker=marker_dict['deal.II'], alpha=0.7, s=point_size)
     ax_zoom_start.set_xlim(0, 0.5)
     ax_zoom_start.set_ylim(0, None)
     ax_zoom_start.set_xlabel("Time (min)", fontsize=12, labelpad=4)
@@ -355,10 +396,13 @@ def create_complete_scatter_plot():
                      label='PhysiCell', color=colors['PhysiCell'], marker=marker_dict['PhysiCell'], alpha=0.7, s=point_size)
     ax_zoom_end.scatter(tisim_df['timestep'], tisim_df['diff'],
                      label='TiSim', color=colors['TiSim'], marker=marker_dict['TiSim'], alpha=0.7, s=point_size)
-    ax_zoom_end.scatter(cfd_df_ref['timestep'], cfd_df_ref['diff'], label='CFD', color=colors['CFD theory'], marker=marker_dict['CFD'], alpha=0.7, s=point_size)
-    ax_zoom_end.scatter(deal_df_ref['timestep'], deal_df_ref['diff'], label='deal.II', color=colors['deal.II theory'], marker=marker_dict['deal.II'], alpha=0.7, s=point_size)
+    ax_zoom_end.scatter(ct_df['timestep'], ct_df['c_central'],
+                        label='Computix', color=colors['Computix'], marker=marker_dict['Computix'], s= point_size, alpha=0.7)
+    # Reference curves (zoomed in)
+    # ax_zoom_end.scatter(cfd_df_ref['timestep'], cfd_df_ref['diff'], label='CFD', color=colors['CFD theory'], marker=marker_dict['CFD'], alpha=0.7, s=point_size)
+    # ax_zoom_end.scatter(deal_df_ref['timestep'], deal_df_ref['diff'], label='deal.II', color=colors['deal.II theory'], marker=marker_dict['deal.II'], alpha=0.7, s=point_size)
     ax_zoom_end.set_xlim(9.5, 10)
-    ax_zoom_end.set_ylim(9.3, 10.1)
+    ax_zoom_end.set_ylim(9.1, 10.1)
     ax_zoom_end.set_xlabel("Time (min)", fontsize=12, labelpad=4)
     ax_zoom_end.set_ylabel("Concentration (μM)", fontsize=12, labelpad=4)
     ax_zoom_end.tick_params(axis='both', which='major', labelsize=11)
@@ -390,13 +434,3 @@ def create_complete_scatter_plot():
 
 # Create complete scatter plot
 create_complete_scatter_plot()
-
-
-
-
-
-
-
-
-
-

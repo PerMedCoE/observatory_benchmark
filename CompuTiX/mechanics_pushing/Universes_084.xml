@@ -4,24 +4,20 @@
 1
 </Particles><DegreeOfFreedom name="parent_index" type="ParticleIndex" unit="no_unit" refers_to="Universes">0
 0
-</DegreeOfFreedom><DegreeOfFreedom name="x" type="Position" unit="m">1.04523644020067e-05 0 0
-1.95476355979933e-05 0 0
-</DegreeOfFreedom><DegreeOfFreedom name="v" type="Vector" unit="m / s">-1.64575962590206e-12 0 0
-1.64575962590206e-12 0 0
-</DegreeOfFreedom><DegreeOfFreedom name="a" type="Vector" unit="m / s^2">4.01671470391467e-14 0 0
--4.01671470391467e-14 0 0
+</DegreeOfFreedom><DegreeOfFreedom name="x" type="Position" unit="m">1.04524028379782e-05 0 0
+1.95475971620218e-05 0 0
+</DegreeOfFreedom><DegreeOfFreedom name="v" type="Vector" unit="m / s">-2.17472355492772e-12 0 0
+2.17472355492772e-12 0 0
+</DegreeOfFreedom><DegreeOfFreedom name="a" type="Vector" unit="m / s^2">4.46739995487273e-14 0 0
+-4.46739995487273e-14 0 0
 </DegreeOfFreedom><DegreeOfFreedom name="r" type="Scalar" unit="m">5e-06
 5e-06
-</DegreeOfFreedom><DegreeOfFreedom name="m" type="Scalar" unit="kg">1
-1
-</DegreeOfFreedom><DegreeOfFreedom name="M" type="Matrix" unit="kg">2.01278915810013 0 0 0 2.01278915810013 0 0 0 2.01278915810013
-2.01278915810013 0 0 0 2.01278915810013 0 0 0 2.01278915810013
-</DegreeOfFreedom><DegreeOfFreedom name="id" type="Matrix" unit="1">1 0 0 0 1 0 0 0 1
-1 0 0 0 1 0 0 0 1
+</DegreeOfFreedom><DegreeOfFreedom name="M" type="Matrix" unit="kg">1.01278959279573 0 0 0 1.01278959279573 0 0 0 1.01278959279573
+1.01278959279573 0 0 0 1.01278959279573 0 0 0 1.01278959279573
 </DegreeOfFreedom><DegreeOfFreedom name="F_loc" type="Vector" unit="N">0 0 0
 0 0 0
-</DegreeOfFreedom><DegreeOfFreedom name="F" type="Vector" unit="N">7.05198456623398e-14 0 0
--7.05198456623398e-14 0 0
+</DegreeOfFreedom><DegreeOfFreedom name="F" type="Vector" unit="N">4.0788746939302e-14 0 0
+-4.0788746939302e-14 0 0
 </DegreeOfFreedom><DegreeOfFreedom name="gamma" type="Matrix" unit="N * s / m">0.166666666666667 0 0 0 0.166666666666667 0 0 0 0.166666666666667
 0.166666666666667 0 0 0 0.166666666666667 0 0 0 0.166666666666667
 </DegreeOfFreedom><DegreeOfFreedom name="E" type="Scalar" unit="Pa">750
@@ -32,20 +28,18 @@
 0.0001
 </DegreeOfFreedom></Collection><Collection name="Contacts" index_type="PairIndex" first_refers_to="Universes/Spheres" second_refers_to="Universes/Spheres"><Particles>0 1
 </Particles><DegreeOfFreedom name="parent_index" type="ParticleIndex" unit="no_unit" refers_to="Universes">0
-</DegreeOfFreedom><DegreeOfFreedom name="M" type="Matrix" unit="kg">0 0 0 0 0 0 0 0 0
+</DegreeOfFreedom><DegreeOfFreedom name="M" type="Matrix" unit="kg">-0.01278959279573 0 0 0 -0.01278959279573 0 0 0 -0.01278959279573
 </DegreeOfFreedom></Collection><DegreeOfFreedom name="dt" type="Scalar" unit="s">6
 </DegreeOfFreedom><DegreeOfFreedom name="t" type="Scalar" unit="s">504
 </DegreeOfFreedom><DegreeOfFreedom name="t_end" type="Scalar" unit="s">600
-</DegreeOfFreedom><DegreeOfFreedom name="t_elapsed" type="Scalar" unit="s">0.478465
+</DegreeOfFreedom><DegreeOfFreedom name="t_elapsed" type="Scalar" unit="s">0.38995
 </DegreeOfFreedom><DegreeOfFreedom name="current_frame" type="Count" unit="1">84
 </DegreeOfFreedom><DegreeOfFreedom name="tension" type="Scalar" unit="N / m">0.0001
 </DegreeOfFreedom><DegreeOfFreedom name="gamma_tangential" type="Scalar" unit="Pa * s / m">1e+08
 </DegreeOfFreedom><DegreeOfFreedom name="gamma_normal" type="Scalar" unit="Pa * s / m">1e+08
 </DegreeOfFreedom><DegreeOfFreedom name="relative_tolerance" type="Scalar" unit="1">1e-07
-</DegreeOfFreedom><DegreeOfFreedom name="M" type="Matrix" unit="kg">-1.10952091434966 0 0 0 -1.10952091434966 0 0 0 -1.10952091434966
-</DegreeOfFreedom><DegreeOfFreedom name="r_contact" type="Scalar" unit="m">2.60478e-06
-</DegreeOfFreedom><DegreeOfFreedom name="V_limit" type="Scalar" unit="m^3">5.23599e-17
-</DegreeOfFreedom><DegreeOfFreedom name="overlap" type="Scalar" unit="m">9.04729e-07
-</DegreeOfFreedom><DegreeOfFreedom name="V_overlap" type="Scalar" unit="m^3">6.23488e-18
+</DegreeOfFreedom><DegreeOfFreedom name="r_contact" type="Scalar" unit="m">2.60482e-06
+</DegreeOfFreedom><DegreeOfFreedom name="d_limit" type="Scalar" unit="m">1e-06
+</DegreeOfFreedom><DegreeOfFreedom name="overlap" type="Scalar" unit="m">9.04806e-07
 </DegreeOfFreedom><DegreeOfFreedom name="r" type="Scalar" unit="m">5e-06
 </DegreeOfFreedom></Collection></CompuTiX>
