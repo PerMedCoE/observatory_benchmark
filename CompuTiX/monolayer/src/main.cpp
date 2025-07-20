@@ -112,6 +112,7 @@
 #include <CompuTiX/Components/DegreesOfFreedom/DegreeOfFreedom.h>
 #include <CompuTiX/Components/Parameters/Values/ComponentList.h>
 #include <CompuTiX/Components/Parameters/Values/Root.h>
+#include <CompuTiX/Components/Parameters/Values/String.h>
 #include <CompuTiX/Components/Parameters/Values/absolute_path.h>
 #include <CompuTiX/Components/Random/MersenneTwister.h>
 #include <CompuTiX/Components/tree_to_yaml.h>
@@ -213,8 +214,12 @@ int main( int argc, char** argv )
 
     // - IO: output interval (dt_out), next print (t_out), current frame (frame)
     universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "dt_out", SIUnits::second ) );
+    universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "dt_out_cell_cycle", SIUnits::second ) );
     universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "t_out", SIUnits::second ) );
+    universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "t_out_cell_cycle", SIUnits::second ) );
     universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Count >::create( "frame", SIUnits::dimensionless ) );
+    universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Count >::create( "frame_cell_cycle", SIUnits::dimensionless ) );
+    universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "t_cell_cycle", SIUnits::second ) );
 
     // - cell cycle: growth time (dt_grow), division time (dt_division), quiescent time (dt_quiescent),
     universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "dt_grow", SIUnits::second ) );
@@ -349,29 +354,29 @@ int main( int argc, char** argv )
     // Simulation:
     const auto t_end = result["T"].as< Types::Scalar >(); //[s]
     constexpr Types::Scalar dt = 10.; // [s]
-    constexpr Types::Scalar dt_out = 6. * 60.; // [s]
+    constexpr Types::Scalar dt_out = 60. * 60.; // [s]
+    constexpr Types::Scalar dt_out_cell_cycle = 6. * 60.; // [s]
+    constexpr Types::Scalar t_cell_cycle = 38. * 60. * 60.; // [s]
 
     // Environment: water viscosity
-    //constexpr Types::Scalar mu = 1e-3; // [Pa s]
-    constexpr Types::Scalar mu = 10000.; // [Pa s]
+    constexpr Types::Scalar mu = 1000.; // [Pa s]
 
     // Shift during division:
     constexpr Types::Scalar shift_rel = 0.01; // [1]
 
     // Relative tolerance for CG:
     constexpr auto relative_tolerance = 1e-5; //[1]
-    constexpr auto CG_tolerance = 1e-10; //[1]
+    constexpr auto CG_tolerance = 1e-7; //[1]
 
     // Cell:
     // - initial radius, density, Young's modulus, Poission ratio, adhesion energy density, frictions:
-    //constexpr Types::Scalar V_0 = 2494e-18; // [m^3]
-    constexpr Types::Scalar V_0 = 4188.79e-18; // [m^3]
-    constexpr Types::Scalar r_0 = std::cbrt( V_0 / ( 4. / 3. * Math::pi ) ); // [m]
+    constexpr Types::Scalar r_0 = 5e-6; // [m]
+    constexpr Types::Scalar V_0 = 4. / 3. * Math::pi * Math::pow< 3 >( r_0 ); // [m^3]
     constexpr Types::Scalar rho = 1000.; // [m^3]
     constexpr Types::Scalar E = 450.; // [Pa]
     constexpr Types::Scalar nu = 0.4; // [1]
     constexpr Types::Scalar e_adh = 1e-19 * 1e15; // [J/m^2] : 1e-19 J / bond * 1e15 bonds / m^2
-    constexpr Types::Scalar gamma = 1e8; // [Pa s / m ]
+    constexpr Types::Scalar gamma = 5e7; // [Pa s / m ]
 
     // - cell cycle:
     constexpr Types::Scalar dt_grow = 9. * 60. * 60.; // [s]
@@ -379,15 +384,14 @@ int main( int argc, char** argv )
     constexpr Types::Scalar dt_quiescent = 7. * 60. * 60.; // [s]
 
     // - growth: Limiting value, characteristic growth time and crowding
-    //constexpr Types::Scalar V_infty = 5065.66e-18; // [m^3]
-    constexpr Types::Scalar V_infty = 5065.66e-18 * 4188.79 / 2494.; // [m^3]
+    constexpr Types::Scalar V_infty = 5065.66e-18 * V_0 / 2494.e-18; // [m^3]
     constexpr Types::Scalar tau = 7727.02; // [s]
-    //constexpr Types::Scalar V_crowded_relative = 0.11; // [1]
-    constexpr Types::Scalar V_crowded_relative = 0.1; // [1]
+    //constexpr Types::Scalar V_crowded_relative = 0.1; // [1]
+    constexpr Types::Scalar V_crowded_relative = 0.095; // [1]
 
     // - division: Stiffness and friction
     constexpr Types::Scalar k_div = 1e-5; // [N]
-    constexpr Types::Scalar gamma_div = 1e-2; // [N s / m ] //Has to be bigger than bulk
+    constexpr Types::Scalar gamma_div = 30.; // [N s / m ] //Has to be bigger than bulk
 
     std::cout << "- Parameters:\n"
               << "    Execution:\n"
@@ -397,6 +401,7 @@ int main( int argc, char** argv )
               << "      t_end: " << t_end << "\n"
               << "      dt: " << dt << "\n"
               << "      dt_out: " << dt_out << "\n"
+              << "      dt_out_cell_cycle: " << dt_out_cell_cycle << "\n"
               << "      CG relative tolerance: " << relative_tolerance << "\n"
               << "    Environment:\n"
               << "      mu: " << mu << "\n"
@@ -445,6 +450,8 @@ int main( int argc, char** argv )
         p.set< Types::Scalar >( Access::Modes::read_write, "t_end", SIUnits::second, t_end );
         p.set< Types::Scalar >( Access::Modes::read_write, "dt", SIUnits::second, dt );
         p.set< Types::Scalar >( Access::Modes::read_write, "dt_out", SIUnits::second, dt_out );
+        p.set< Types::Scalar >( Access::Modes::read_write, "dt_out_cell_cycle", SIUnits::second, dt_out_cell_cycle );
+        p.set< Types::Scalar >( Access::Modes::read_write, "t_cell_cycle", SIUnits::second, t_cell_cycle );
         p.set< Types::Scalar >( Access::Modes::read_write, "t_elapsed_max", SIUnits::second, maximal_run_time );
 
         // - set cell cycle
@@ -1234,40 +1241,84 @@ int main( int argc, char** argv )
 
         // - IO
         if( !without_io ) {
-            auto io = loop->add( create_executable( "OnActions::Queue", "IO" ) );
-
-            // - check whether we should print out
+            //Long IO
             {
-                auto action = io->add( create_executable( "OnActions::Triggers::ExecuteWhileLessOrEqual", "Check time" ) );
-                action->set_parameter_value( "a", absolute_path( "Universes/t_out" ) );
-                action->set_parameter_value( "b", absolute_path( "Universes/t" ) );
+                auto io = loop->add( create_executable( "OnActions::Queue", "IO" ) );
+
+                // - check whether we should print out
+                {
+                    auto action = io->add( create_executable( "OnActions::Triggers::ExecuteWhileLessOrEqual", "t_out <= t ?" ) );
+                    action->set_parameter_value( "a", absolute_path( "Universes/t_out" ) );
+                    action->set_parameter_value( "b", absolute_path( "Universes/t" ) );
+                }
+
+                // - save the cells
+                {
+                    auto action = io->add( create_executable( "IO::SimpleVTKWriter", "VTK writer for Cells" ) );
+                    action->set_parameter_value( "collection", absolute_path( "Universes/Cells" ) );
+                    action->set_parameter_value( "file_index", absolute_path( "Universes/frame" ) );
+                }
+
+                // - print whole simulation to .xml.gz
+                {
+                    auto action = io->add( create_executable( "IO::Save", "Write whole simulation data" ) );
+                    action->set_parameter_value( "root", absolute_path( "Universes" ) );
+                    action->set_parameter_value( "file_index", absolute_path( "Universes/frame" ) );
+                }
+
+                // - increase frame
+                {
+                    auto action = io->add( create_executable( "Elementary::Algebraic::Increment", "frame += 1" ) );
+                    action->set_parameter_value( "result", absolute_path( "Universes/frame" ) );
+                }
+
+                // - update next output time
+                {
+                    auto action = io->add( create_executable( "Elementary::Algebraic::Add", "t_out += dt_out" ) );
+                    action->set_parameter_value( "a", absolute_path( "Universes/t_out" ) );
+                    action->set_parameter_value( "b", absolute_path( "Universes/dt_out" ) );
+                }
             }
 
-            // - save the cells
+            //Cell cycle IO
             {
-                auto action = io->add( create_executable( "IO::SimpleVTKWriter", "VTK writer for Cells" ) );
-                action->set_parameter_value( "collection", absolute_path( "Universes/Cells" ) );
-                action->set_parameter_value( "file_index", absolute_path( "Universes/frame" ) );
-            }
+                auto io = loop->add( create_executable( "OnActions::Queue", "Cell cycle IO" ) );
 
-            // - print whole simulation to .xml.gz
-            {
-                auto action = io->add( create_executable( "IO::Save", "Write whole simulation data" ) );
-                action->set_parameter_value( "root", absolute_path( "Universes" ) );
-                action->set_parameter_value( "file_index", absolute_path( "Universes/frame" ) );
-            }
+                // - check end time
+                {
+                    auto action = io->add( create_executable( "OnActions::Triggers::ExecuteWhileLessOrEqual", "t <= t_cell_cycle ?" ) );
+                    action->set_parameter_value( "a", absolute_path( "Universes/t" ) );
+                    action->set_parameter_value( "b", absolute_path( "Universes/t_cell_cycle" ) );
+                }
 
-            // - increase frame
-            {
-                auto action = io->add( create_executable( "Elementary::Algebraic::Increment", "Increment frame counter" ) );
-                action->set_parameter_value( "result", absolute_path( "Universes/frame" ) );
-            }
 
-            // - update next output time
-            {
-                auto action = io->add( create_executable( "Elementary::Algebraic::Add", "Advance output time" ) );
-                action->set_parameter_value( "a", absolute_path( "Universes/t_out" ) );
-                action->set_parameter_value( "b", absolute_path( "Universes/dt_out" ) );
+                // - check whether we should print out
+                {
+                    auto action = io->add( create_executable( "OnActions::Triggers::ExecuteWhileLessOrEqual", "t_out_cell_cycle <= t ?" ) );
+                    action->set_parameter_value( "a", absolute_path( "Universes/t_out_cell_cycle" ) );
+                    action->set_parameter_value( "b", absolute_path( "Universes/t" ) );
+                }
+
+                // - print whole simulation to .xml.gz
+                {
+                    auto action = io->add( create_executable( "IO::Save", "Write whole simulation data" ) );
+                    action->set_parameter_value( "root", absolute_path( "Universes" ) );
+                    action->set_parameter_value( "file_index", absolute_path( "Universes/frame_cell_cycle" ) );
+                    action->set_parameter_value( "filename", std::make_unique< String >( "CellCycle_{:04d}.xml" ) );
+                }
+
+                // - increase frame
+                {
+                    auto action = io->add( create_executable( "Elementary::Algebraic::Increment", "frame_cell_cycle += 1" ) );
+                    action->set_parameter_value( "result", absolute_path( "Universes/frame_cell_cycle" ) );
+                }
+
+                // - update next output time
+                {
+                    auto action = io->add( create_executable( "Elementary::Algebraic::Add", "t_out_cell_cycle += dt_out_cell_cycle" ) );
+                    action->set_parameter_value( "a", absolute_path( "Universes/t_out_cell_cycle" ) );
+                    action->set_parameter_value( "b", absolute_path( "Universes/dt_out_cell_cycle" ) );
+                }
             }
         }
 
