@@ -3,6 +3,8 @@ import numpy as np
 import yaml
 
 from computix.utils.parse import parse_tree
+from scipy.spatial import ConvexHull
+from scipy.spatial.distance import cdist
 from pathlib import Path
 from tqdm import tqdm
 from xml.etree import ElementTree
@@ -21,13 +23,13 @@ parser.add_argument("RESULTS_DIR",
 
 parser.add_argument("-f", "--frames",
                     type=int,
-                    default=6480,
-                    help="Number of frames to use. Default: 6720 (corresponds to 28d)")
+                    default=672,
+                    help="Number of frames to use. Default: 672 (corresponds to 28d)")
 
 parser.add_argument("-s", "--spacing",
                     type=int,
-                    default=10,
-                    help="Takes every N-th frame. Default: 10 (corresponds to 1h)")
+                    default=1,
+                    help="Takes every N-th frame. Default: 1 (corresponds to 1h)")
 
 parser.add_argument("-o", "--output",
                     type=Path,
@@ -44,7 +46,11 @@ Ns = np.zeros((0), dtype=np.int64)
 
 # First 48 hours with interval once pre 6 minutes
 for frame in tqdm(range(0, args.frames, args.spacing)):
-    with open(args.RESULTS_DIR / f"Universes_{frame:04d}.xml", "r") as f:
+    file = args.RESULTS_DIR / f"Universes_{frame:04d}.xml"
+    if not file.exists():
+        continue
+
+    with open(file, "r") as f:
         tree = ElementTree.parse(f)
         data = parse_tree(tree.getroot())[0]
 
@@ -52,23 +58,20 @@ for frame in tqdm(range(0, args.frames, args.spacing)):
         times = np.append(times, data["t"].values)
         xs = data["Cells/x"].values
 
-        # Take 50% furthest cells from center of mass from system size of 512 cells
-        N, _ = xs.shape
-        K = N // 2 if N > 512 else min(N, 256)
+        # Number of data points
+        N, _ = xs.shape 
+        if N > 3 : 
+            # Point has to be part of the convex hull 
+            # Take the plane
+            hull = ConvexHull(xs[:,1:])
 
-        xc = np.mean(xs, axis=0)
-        ds = np.linalg.norm(xs - xc, axis=1)
-        indices = np.argsort(ds)[-K:]
+            # Extract the points forming the hull
+            hullpoints = xs[hull.vertices,:]
 
-        xs = xs[indices]
-
-        # Expand to matrix
-        ones = np.ones(K, dtype=np.float64)
-        x_matr = np.einsum("i, jk -> ijk", ones, xs)
-
-        # ... and compude distance matrix
-        dx = np.transpose(x_matr, axes=(1, 0, 2)) - x_matr
-        dx = np.sqrt(np.einsum("ijk, ijk -> ij", dx, dx))
+            # Naive way of finding the best pair in O(H^2) 
+            dx = cdist(hullpoints, hullpoints, metric='euclidean')
+        else:
+            dx = cdist(xs, xs, metric='euclidean')
 
         rs = np.append(rs, dx.max())
         Ns = np.append(Ns, N)

@@ -61,5 +61,5 @@ plt.plot(t_data, 100. * V_data / V0_data, ".",
 plt.xlabel(r"$t \; [\mathrm{h}]$")
 plt.ylabel(r"$\frac{V}{V_0} \; [\%]$")
 
-plt.legend(loc="upper right", frameon=False)
+plt.legend(loc="upper left", frameon=False)
 plt.savefig(args.output)

@@ -21,8 +21,8 @@ parser.add_argument("RESULTS_DIR",
 
 parser.add_argument("-f", "--frames",
                     type=int,
-                    default=480,
-                    help="Number of frames to use. Default: 480 (corresponds to 48h)")
+                    default=380,
+                    help="Number of frames to use. Default: 380 (corresponds to 38h)")
 
 parser.add_argument("-o", "--output",
                     type=Path,
@@ -40,7 +40,11 @@ V_eq = np.zeros((0), dtype=np.float64)
 
 # First 48 hours with interval once pre 6 minutes
 for frame in tqdm(range(args.frames)):
-    with open(args.RESULTS_DIR / f"Universes_{frame:04d}.xml", "r") as f:
+    file = args.RESULTS_DIR / f"CellCycle_{frame:04d}.xml"
+    if not file.exists():
+        continue
+
+    with open(file, "r") as f:
         tree = ElementTree.parse(f)
         data = parse_tree(tree.getroot())[0]
 
