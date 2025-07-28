@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import re
 from scipy.interpolate import interp1d
 import os
+import yaml
 expe_dt = [336,386,408,481,506,646]
 expe_dt = [x/24. for x in expe_dt]
 expe_diam = [ 1140 , 1400 , 1590 , 2040 , 2250 , 3040 ]
@@ -41,19 +42,25 @@ df_pc = df_pc.rename(columns={df_pc.columns[0]: 'dt', df_pc.columns[1]: 'diam'})
 # Filter data to start from 14 days
 df_pc = df_pc[df_pc['dt'] >= 14]
 df_pc['Results'] = 'PhysiCell'
-
+print(df_pc)
 df_exp = pd.DataFrame(data=zip(expe_dt,expe_diam),columns=['dt','diam'])
 df_exp.insert(loc=2, column='Results', value='Experimental')
 
 df_biod = pd.DataFrame(data=zip(biodynamo_dt,biodynamo_diam),columns=['dt','diam'])
 df_biod.insert(loc=2, column='Results', value='BioDynaMo')
-file = "CompuTiX/monolayer/data/monolayer_growth.csv"
-df_compu = pd.read_csv(file, header=0)
+file = "CompuTiX/monolayer/results/monolayer.yaml"
+with open(file, "r") as f:
+    results = yaml.safe_load(f)
+
+t_results = np.array(results["time"]["values"]) / 24.  # To days
+d_results = np.array(results["d"]["values"])
+df_compu = pd.DataFrame(data=zip(t_results, d_results), columns=['dt', 'diam'])
+df_compu = df_compu[df_compu['dt'] >= 14]
+
 df_compu.insert(loc=2, column='Results', value='CompuTix')
-df_compu.rename(columns={'Total time (hours)': 'dt', 'Diameter (um)': 'diam'}, inplace=True)
-df_compu['dt'] /= 24  # Convert hours to days
+# df_compu['dt'] /= 24  # Convert hours to days
 
-
+print(df_compu)
 
 
 df_all = pd.concat([
@@ -194,7 +201,8 @@ for result in ['BioDynaMo', 'Chaste', 'PhysiCell', 'TiSim','CompuTix' ]:
     df = df_all[(df_all['Results'] == result) & (df_all['dt'] <= 27)]
     exp_values = exp_interp(df['dt'])
     deviations = df['diam'] - exp_values
-
+    print(result)
+    print(deviations)
     ax2.plot(
         df['dt'], 
         deviations,
