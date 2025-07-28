@@ -36,7 +36,7 @@ bd_dist2 = pd.concat([new_row, bd_dist2], ignore_index=True)
 bd_dist2['dx'] = abs(bd_dist2["x1"] - bd_dist2["x2"])
 bd_dist2['dt'] = bd_dist2.index * 0.01
 
-file = "Tisim/mechanics_pushing/mechanical pushing.csv"
+file = "Tisim/mechanics_pushing/mechanics_pushing.csv"
 ts_dist = pd.read_csv(file, index_col=None, header=0, names=['time', 'dx'])
 
 file = "Chaste/mechanics_pushing/results/results.viznodelocations"
