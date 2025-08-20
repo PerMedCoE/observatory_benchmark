@@ -71,8 +71,6 @@
 using namespace BioFVM; 
 using namespace PhysiCell;
 
-static const double EPSILON = std::numeric_limits<double>::epsilon();
-
 // setup functions to help us along 
 
 void create_cell_types( void );
@@ -92,8 +90,5 @@ void custom_function( Cell* pCell, Phenotype& phenotype , double dt );
 
 void contact_function( Cell* pMe, Phenotype& phenoMe , Cell* pOther, Phenotype& phenoOther , double dt ); 
 
-void add_friction_term(Cell* pC, Phenotype& phenotype, double dt);
-
-
-
-
+// double NormalRandom(double mean, double std_dev);
+void custom_update_phenotype(Cell* pCell, Phenotype& phenotype, double dt);
