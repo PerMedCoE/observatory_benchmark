@@ -52,8 +52,32 @@ inline void SetupResultCollection(Simulation* sim) {
     const auto* sparam = param->Get<SimParam>();
     return (real_t)(sparam->t0 + scheduler->GetSimulatedTime() / 24.);
   };
+
+  auto get_tumor_diameter = [](Simulation* sim) {
+    auto* rm = sim->GetResourceManager();
+    real_t max_x = std::numeric_limits<real_t>::lowest();
+    real_t min_x = std::numeric_limits<real_t>::max();
+    real_t max_y = std::numeric_limits<real_t>::lowest();
+    real_t min_y = std::numeric_limits<real_t>::max();
+
+    rm->ForEachAgent([&](Agent* agent) {
+      const auto& pos = agent->GetPosition();
+      max_x = std::max(max_x, pos[0]);
+      min_x = std::min(min_x, pos[0]);
+      max_y = std::max(max_y, pos[1]);
+      min_y = std::min(min_y, pos[1]);
+    });
+
+    real_t dx = max_x - min_x;
+    real_t dy = max_y - min_y;
+    return std::max(dx, dy); // diameter in same units as pos (e.g., µm)
+};
+
+
+  // Add collectors
   ts->AddCollector("total_cells", get_num_cells, get_time);
   ts->AddCollector("env_dims", get_env_dims, get_time);
+  ts->AddCollector("tumor_diameter", get_tumor_diameter, get_time);
 }
 
 inline void ExportResults(const bool plot_legend = true,
@@ -62,12 +86,13 @@ inline void ExportResults(const bool plot_legend = true,
   const std::string folder = Simulation::GetActive()->GetOutputDir();
   auto* ts = Simulation::GetActive()->GetTimeSeries();
   TimeSeries allts;
-  std::vector<real_t> times, sizes;
+  std::vector<real_t> times, sizes, tumor_diameter;
 
   // Add simulated data
   allts.Add(*ts, Concat("i", 0));
   times = ts->GetXValues("env_dims");
   sizes = ts->GetYValues("env_dims");
+  tumor_diameter = ts->GetYValues("tumor_diameter");
 
   // Add experimental data from Figure 1 from Drasdo and Hoehme (2005)
   allts.Add("experimental_data",
@@ -79,8 +104,12 @@ inline void ExportResults(const bool plot_legend = true,
                nullptr, 350, 250);
 
   // Add simulated data
-  lg.Add(Concat("env_dims-i", 0), "Sim data ", "LP", kBlue, 0.2, kSolid, 2,
+  lg.Add(Concat("env_dims-i", 0), "Sim data env size", "LP", kBlue, 0.2, kSolid, 2,
          kBlue, 0.7, kFullCircle, 0.5);
+
+  // Add simulated data
+  lg.Add(Concat("tumor_diameter-i", 0), "Sim data tumor diameter", "LP", kGreen, 0.2, kSolid, 2,
+         kGreen, 0.7, kFullCircle, 0.5);
 
   // Add style for exp data
   lg.Add("experimental_data", "Exp data ", "LP", kBlack, 0.2, kSolid, 2, kBlack,
