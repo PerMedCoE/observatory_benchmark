@@ -27,7 +27,7 @@ struct SimParam : public ParamGroup {
   real_t attraction_coeff = 1*std::pow(10, -12);
 
   // Forces: repulsion coeff default 2, unit is mass/time^2 or N/m
-  real_t repulsion_coeff = 2*std::pow(10, -12);
+  real_t repulsion_coeff = 10*std::pow(10, -12);
 
 
 };
