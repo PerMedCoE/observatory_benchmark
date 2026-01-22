@@ -32,11 +32,12 @@ if [ ! -d "$DIR/results" ]; then
     mkdir $DIR/results
 else
     # If it exists, delete its contents
-    rm -r $DIR/results/*
+    rm -r $DIR/results/* 2>/dev/null || true
 fi
 
 
-# Run the simulation
+# Run the simulation with single thread for reproducibility
+export OMP_NUM_THREADS=1
 bdm run
 
 # Move the results to the correct folder

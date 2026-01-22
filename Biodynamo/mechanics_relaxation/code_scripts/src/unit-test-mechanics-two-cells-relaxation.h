@@ -35,8 +35,9 @@ inline int Simulate(int argc, const char** argv) {
     param->export_visualization = false;
     param->visualize_agents["Moving_cell"] = {};
     param->statistics = true;
-    param->simulation_time_step = 0.001;
+    param->simulation_time_step = 0.1;
     param->simulation_max_displacement = 100.0;  // um
+    param->random_seed = 4357;  // Fixed seed for reproducible results
   };
   
   // Before we create a simulation we have to tell BioDynaMo about
@@ -71,12 +72,12 @@ inline int Simulate(int argc, const char** argv) {
   rm->AddAgent(cell2);
 
   // Track positions
-  const int time_steps = 3000;  // 3000 timesteps of 0.001 min = 3 min
+  const int time_steps = 30;  // 3000 timesteps of 0.001 min = 3 min
   std::vector<std::vector<Double3>> cell_positions(number_of_cells);
   auto* track_pos_op = NewOperation("track_position");
   track_pos_op->GetImplementation<TrackPosition>()->positions_ =
       &cell_positions;
-  track_pos_op->frequency_ = 100;  // every 1 -> timestep 0.1 min, every 10 -> timestep 0.01 min, every 100 -> timestep 0.001 min
+  track_pos_op->frequency_ = 1;  // every 1 -> timestep 0.1 min, every 10 -> timestep 0.01 min, every 100 -> timestep 0.001 min
   scheduler->ScheduleOp(track_pos_op);
 
   // Move behaviour

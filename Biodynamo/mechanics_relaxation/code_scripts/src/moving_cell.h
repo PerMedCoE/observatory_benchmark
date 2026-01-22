@@ -22,7 +22,7 @@ class Moving_cell : public Cell {
 
   void SetId(int id) { id_ = id; }
 
-  int GetId() { return id_; }
+  int GetId() const { return id_; }
 
  private:
   // 10 um/min -> 1um/0.1 min
