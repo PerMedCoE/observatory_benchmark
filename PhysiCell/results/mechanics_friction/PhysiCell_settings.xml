@@ -27,7 +27,7 @@
     </parallel>
 
     <save>
-        <folder>mechanics_movement</folder>
+        <folder>../results/mechanics_friction/</folder>
         <full_data>
             <interval units="min">0.1</interval>
             <enable>true</enable>

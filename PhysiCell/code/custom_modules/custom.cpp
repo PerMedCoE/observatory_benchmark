@@ -67,158 +67,123 @@
 
 #include "./custom.h"
 
-void create_cell_types( void )
+void create_cell_types(void)
 {
-	// set the random seed 
-	// SeedRandom( parameters.ints("random_seed") );  
-	
-	/* 
-	   Put any modifications to default cell definition here if you 
-	   want to have "inherited" by other cell types. 
-	   
-	   This is a good place to set default functions. 
-	*/ 
-	
-	initialize_default_cell_definition(); 
-	cell_defaults.phenotype.secretion.sync_to_microenvironment( &microenvironment ); 
-	
-	cell_defaults.functions.volume_update_function = standard_volume_update_function;
-	cell_defaults.functions.update_velocity = standard_update_cell_velocity;
+    // set the random seed 
+    SeedRandom(parameters.ints("random_seed"));  
 
-	cell_defaults.functions.update_migration_bias = NULL; 
-	// cell_defaults.functions.update_phenotype = NULL;
-	cell_defaults.functions.update_phenotype = custom_update_phenotype; // update_cell_and_death_parameters_O2_based; 
-	cell_defaults.functions.custom_cell_rule = NULL; 
-	cell_defaults.functions.contact_function = NULL; 
-	
-	cell_defaults.functions.add_cell_basement_membrane_interactions = NULL; 
-	cell_defaults.functions.calculate_distance_to_membrane = NULL; 
-	
-	/*
-	   This parses the cell definitions in the XML config file. 
-	*/
-	
-	initialize_cell_definitions_from_pugixml(); 
+    initialize_default_cell_definition(); 
+    cell_defaults.phenotype.secretion.sync_to_microenvironment(&microenvironment); 
 
-	/*
-	   This builds the map of cell definitions and summarizes the setup. 
-	*/
-		
-	build_cell_definitions_maps(); 
+    cell_defaults.functions.volume_update_function = NULL;
+    cell_defaults.functions.update_velocity = custom_update_velocity;
 
-	/*
-	   This intializes cell signal and response dictionaries 
-	*/
+    cell_defaults.functions.update_migration_bias = NULL; 
+    cell_defaults.functions.update_phenotype = phenotype_function; 
+    cell_defaults.functions.custom_cell_rule = NULL; 
+    cell_defaults.functions.contact_function = NULL; 
 
-	setup_signal_behavior_dictionaries(); 	
+    cell_defaults.functions.add_cell_basement_membrane_interactions = NULL; 
+    cell_defaults.functions.calculate_distance_to_membrane = NULL; 
 
-	/* 
-	   Put any modifications to individual cell definitions here. 
-	   
-	   This is a good place to set custom functions. 
-	*/ 
-	
-	// cell_defaults.functions.update_phenotype = phenotype_function; 
-	// cell_defaults.functions.custom_cell_rule = custom_function; 
-	// cell_defaults.functions.contact_function = contact_function; 
-	
-	/*
-	   This builds the map of cell definitions and summarizes the setup. 
-	*/
-		
-	display_cell_definitions( std::cout ); 
-	
-	return; 
+    initialize_cell_definitions_from_pugixml(); 
+    build_cell_definitions_maps(); 
+    setup_signal_behavior_dictionaries();     
+
+    display_cell_definitions(std::cout); 
+
+    return; 
 }
 
-void setup_microenvironment( void )
+void setup_microenvironment(void)
 {
-	// initialize BioFVM 
-	
-	initialize_microenvironment(); 	
-
-    int idx_oxygen = 0;
-    double oxy_value = 6022.0;
-
-    int idx_xmax = microenvironment.mesh.x_coordinates.size() - 1; 
-    int idx_ymax = microenvironment.mesh.y_coordinates.size() - 1;
-    int idx_zmax = microenvironment.mesh.z_coordinates.size() - 1;
-
-    microenvironment.update_dirichlet_node( 
-        microenvironment.voxel_index(idx_xmax, idx_ymax, idx_zmax), 
-        idx_oxygen, oxy_value);
-    microenvironment.set_substrate_dirichlet_activation( idx_oxygen, 
-        microenvironment.voxel_index(idx_xmax, idx_ymax, idx_zmax), true);
-	
-	return; 
+    // initialize BioFVM 
+    initialize_microenvironment();     
+    return; 
 }
 
-void setup_tissue( void )
+void setup_tissue(void)
 {
+    // load cells from your CSV file (if enabled)
+    load_cells_from_pugixml();     
 
-	// create some of each type of cell 
-	
-	
-	
-	// load cells from your CSV file (if enabled)
-	load_cells_from_pugixml(); 	
-	PhysiCell::Cell* pCell = (*all_cells)[0];
-	std::cout<<pCell->phenotype.cycle.data.transition_rates[0]<<std::endl;;
-	
-	// // Force cell to start in G0/G1
-	// pCell->phenotype.cycle.sync_to_cycle_model(flow_cytometry_cycle_model);
-	// // pCell->phenotype.cycle. // G0/G1
+    for(int idx = 0; idx < all_cells->size(); idx++)
+    {
+        PhysiCell::Cell* pCell = (*all_cells)[idx];
 
-	// // Optionally, reset elapsed time in phase
-	// pCell->phenotype.cycle.data.elapsed_time_in_phase = 0.0;
+        // Constrain motility to x-direction
+        pCell->phenotype.motility.migration_bias_direction[0] = 1.0;
+        pCell->phenotype.motility.migration_bias_direction[1] = 0.0;
+        pCell->phenotype.motility.migration_bias_direction[2] = 0.0;
 
-		return; 
+        // Set motile state, but don't apply motility vector yet
+        pCell->phenotype.motility.is_motile = true;
+        pCell->phenotype.motility.migration_speed = 10;
+
+        // Start with zero velocity and motility vector
+        pCell->velocity.assign(3, 0.0);
+        pCell->phenotype.motility.motility_vector.assign(3, 0.0);
+
+        std::cout << "setup_tissue(): pCell->velocity = " << pCell->velocity << std::endl;
+        std::cout << "migration_speed = " << pCell->phenotype.motility.migration_speed << std::endl;
+        std::cout << "motility_vector = " << pCell->phenotype.motility.motility_vector << std::endl;
+    }
+
+    return; 
 }
 
-std::vector<std::string> my_coloring_function( Cell* pCell )
-{ return paint_by_number_cell_coloring(pCell); }
-
-
-
-// Custom function for stochastic phase durations
-void custom_update_phenotype(Cell* pCell, Phenotype& phenotype, double dt)
-{	
-    if (pCell->phenotype.cycle.model().code != 6) return;
-
-    int phase = pCell->phenotype.cycle.current_phase_index();
-	// std::cout<<phenotype.cycle.data.elapsed_time_in_phase<<" elapsed time in phase " << phase << " and "<<dt<<std::endl;
-    // Only assign a new duration when entering a new phase
-	if (phenotype.cycle.data.elapsed_time_in_phase < dt)
-	{
-		// std::cout << phenotype.cycle.data.elapsed_time_in_phase << " elapsed time in phase " << phase << " and " << dt << std::endl;
-	
-		if (phase == 0) // G0/G1 → S
-		{
-			phenotype.cycle.data.transition_rate(0, 1) = 1.0 / (NormalRandom(7.0, 1.0) * 60.0);
-			std::cout << "G0/G1 phase: " << phenotype.cycle.data.transition_rate(0, 1) << std::endl;
-		}
-		else if (phase == 1) // S → G2
-		{
-			phenotype.cycle.data.transition_rate(1, 2) = 1.0 / (NormalRandom(6.0, 1.0) * 60.0);
-			std::cout << "S phase: " << phenotype.cycle.data.transition_rate(1, 2) << std::endl;
-		}
-		else if (phase == 2) // G2 → M
-		{
-			phenotype.cycle.data.transition_rate(2, 3) = 1.0 / (NormalRandom(2.0, 0.5) * 60.0); // for example
-			std::cout << "G2 phase: " << phenotype.cycle.data.transition_rate(2, 3) << std::endl;
-		}
-		else if (phase == 3) // M → G0/G1
-		{
-			phenotype.cycle.data.transition_rate(3, 0) = 1.0 / (3.0 * 60.0); // fixed or stochastic
-			std::cout << "M phase: " << phenotype.cycle.data.transition_rate(3, 0) << std::endl;
-		}
-	}
-	return;
+std::vector<std::string> my_coloring_function(Cell* pCell)
+{ 
+    return paint_by_number_cell_coloring(pCell); 
 }
 
+void phenotype_function(Cell* pCell, Phenotype& phenotype, double dt)
+{ 
+    std::cout << "phenotype_function(): t = " << PhysiCell_globals.current_time
+              << " motility_vector = (" << pCell->phenotype.motility.motility_vector[0]
+              << ", " << pCell->phenotype.motility.motility_vector[1]
+              << ", " << pCell->phenotype.motility.motility_vector[2] << ")" << std::endl;
+    return; 
+}
 
-void custom_function( Cell* pCell, Phenotype& phenotype , double dt )
-{ return; } 
+void custom_function(Cell* pCell, Phenotype& phenotype , double dt)
+{ 
+    return; 
+} 
 
-void contact_function( Cell* pMe, Phenotype& phenoMe , Cell* pOther, Phenotype& phenoOther , double dt )
-{ return; } 
+void contact_function(Cell* pMe, Phenotype& phenoMe , Cell* pOther, Phenotype& phenoOther , double dt)
+{ 
+    return; 
+} 
+
+bool first_mechanics_update_done = false;
+
+void custom_update_velocity(Cell* pCell, Phenotype& phenotype, double dt)
+{
+    if (!first_mechanics_update_done)
+    {
+        // Apply movement in x-direction only once
+        pCell->velocity[0] = 10.0;
+        pCell->velocity[1] = 0.0;
+        pCell->velocity[2] = 0.0;
+
+        pCell->phenotype.motility.motility_vector[0] = 10.0;
+        pCell->phenotype.motility.motility_vector[1] = 0.0;
+        pCell->phenotype.motility.motility_vector[2] = 0.0;
+
+        std::cout << "custom_update_velocity(): First move applied." << std::endl;
+
+        first_mechanics_update_done = true;
+    }
+    else
+    {
+        // Freeze motion after first step
+        pCell->velocity.assign(3, 0.0);
+        pCell->phenotype.motility.motility_vector.assign(3, 0.0);
+
+        
+        pCell->phenotype.motility.is_motile = false;
+
+        std::cout << "custom_update_velocity(): Velocity reset to zero." << std::endl;
+    }
+}
