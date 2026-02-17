@@ -5,34 +5,35 @@
 ***********************************************
 
 [1mGeneral[0m
-Command				: ./build/sphere  
-Simulation name			: sphere
-Total simulation runtime	: 440306 ms
-Peak memory usage (MB)		: 332.359
-Number of iterations executed	: 3100
-Number of agents		: 96918
-Output directory		: output/sphere
-  size				: 36K
+Command				: ./build/unit-test-mechanics-external-impulse  
+Simulation name			: unit-test-mechanics-external-impulse
+Total simulation runtime	: 81 ms
+Peak memory usage (MB)		: 285.621
+Number of iterations executed	: 61
+Number of agents		: 1
+Output directory		: output/unit-test-mechanics-external-impulse
+  size				: 4.0K
 BioDynaMo version:		: v1.05.148-b8aa2280
 BioDynaMo real type:		: double
 
 ***********************************************
 
 [1mTotal execution time per operation[0m
-agent ops: 132550
+agent ops: 14
 behavior: 0
-bound space: 2
-continuum: 46
-discretization: 5
-load balancing: 487
-mechanical forces: 1
-move_cells_plane: 3
-set up iteration: 87309
-tear down iteration: 89022
-update environment: 129590
-update staticness: 7
-update time series: 431
-visualize: 9
+bound space: 0
+continuum: 0
+discretization: 0
+load balancing: 0
+mechanical forces: 0
+set up iteration: 21
+tear down iteration: 15
+track_position: 0
+track_speed: 0
+update environment: 26
+update staticness: 0
+update time series: 0
+visualize: 0
 
 ***********************************************
 
@@ -46,7 +47,7 @@ num threads per numa	: 20
 ***********************************************
 
 [1mAgents per numa node[0m
-numa node 0 -> size: 96918
+numa node 0 -> size: 1
 
 ***********************************************
 
@@ -63,7 +64,7 @@ numa node 0 -> size: 96918
         "_typename": "bdm::Param",
         "backup_file": "",
         "backup_interval": 1800,
-        "bound_space": 0,
+        "bound_space": 1,
         "cache_neighbors": false,
         "calculate_gradients": true,
         "compute_target": "cpu",
@@ -76,11 +77,11 @@ numa node 0 -> size: 96918
         "export_visualization": false,
         "insitu_visualization": false,
         "mapped_data_array_mode": 0,
-        "max_bound": 2000,
+        "max_bound": 30,
         "mem_mgr_aligned_pages_shift": 5,
         "mem_mgr_growth_rate": 1.1,
         "mem_mgr_max_mem_per_thread_factor": 1,
-        "min_bound": -2000,
+        "min_bound": -30,
         "minimize_memory_while_rebalancing": true,
         "nanoflann_depth": 10,
         "numerical_ode_solver": 1,
@@ -98,35 +99,25 @@ numa node 0 -> size: 96918
         "scheduling_batch_size": 1000,
         "show_simulation_step": 0,
         "simulation_max_displacement": 100,
-        "simulation_time_step": 0.1,
+        "simulation_time_step": 0.2,
         "statistics": true,
         "thread_safety_mechanism": 1,
         "unibn_bucketsize": 16,
         "unschedule_default_operations": [],
         "use_bdm_mem_mgr": true,
-        "use_progress_bar": true,
+        "use_progress_bar": false,
         "visualization_compress_pv_files": true,
         "visualization_engine": "paraview",
         "visualization_export_generate_pvsm": true,
-        "visualization_interval": 500,
+        "visualization_interval": 1,
         "visualize_agents": {
-            "CyclingCell": [],
+            "Moving_cell": [],
             "_typename": "map<string,set<string> >"
         },
         "visualize_diffusion": []
     },
     "bdm::SimParam": {
-        "_typename": "bdm::SimParam",
-        "attraction_coeff": 0.001,
-        "cell_diam": 20,
-        "neighbours_threshold": 20,
-        "nn": 1140,
-        "pos0": -560,
-        "posN": 570,
-        "repulsion_coeff": 300,
-        "t0": 14,
-        "total_time": 310,
-        "ts_freq": 200
+        "_typename": "bdm::SimParam"
     }
 }
 ***********************************************
