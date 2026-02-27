@@ -28,8 +28,11 @@ def parse_data( input_dir: Path ) -> dict :
     #Get root
     root = tree.getroot()
 
-    #Parse tree and skip "CompuTiX" root
-    universe = parse_tree( root )[0]
+    #Parse tree
+    simulation = parse_tree( root )[0]
+
+    #Get universe
+    universe = simulation["Universes"]
 
     #Get relevant data
     spheres = universe["Spheres"]
@@ -52,8 +55,11 @@ def parse_data( input_dir: Path ) -> dict :
         #Get root
         root = tree.getroot()
 
-        #Parse tree and skip "CompuTiX" root
-        universe = parse_tree( root )[0]
+        #Parse tree
+        simulation = parse_tree( root )[0]
+
+        #Get universe
+        universe = simulation["Universes"]
 
         #Time
         t[n] = universe["t"].values[0] #[s]
@@ -97,4 +103,3 @@ def main() -> None:
 
 if __name__ == '__main__':
     main()
-
