@@ -2,29 +2,16 @@
 //! \section collisions_pushing_cells Two cells pusing each other
 //!
 //! \subsection collisions_pushing_cells_problem_statement Problem statement
-//! This simulation illustrates the dynamics of two cells, identical in radius and properties, pushed towards each other with an external force
-//! which is removed when their overlap reaches a critical value equal to \f$10\%\f$ the diameter of the spheres. JKR model is tested in this
-//! example rather than the Hertz one and friction with the external medium is modeled as a viscous friction.
+//! This simulation illustrates the relaxation dynamics of two cells, identical in radius and properties, detaching from an initial configuration where the overlap exceeds the JKR equilibrium one.
 //!
 //! \subsubsection collisions_pushing_cells_problem_statement_equation_motion Equation of motion
 //! The system to solve for the two spheres is then composed of the two equation of motion for velocity and position:
 //! \f{align*}
-//! \gamma \vec{ v }(t) &= \vec{F}_\text{loc} + \vec{F}_\text{Hertz} + \vec{F}_\text{JKR}
+//! \gamma \vec{ v }(t) &= \vec{F}_\text{Hertz} + \vec{F}_\text{JKR}
 //! \\ \frac{\mathrm{d}\vec{x}}{\mathrm{d}t}(t) &= \vec{v}(t)
 //! \f}
-//! with \f$\vec{ x }\f$ the position, \f$\vec{ v }\f$ the velocity, \f$\vec{F}_\text{loc}\f$ the external force, \f$\vec{F}_\text{JKR}\f$ a
+//! with \f$\vec{ x }\f$ the position, \f$\vec{ v }\f$ the velocity, \f$\vec{F}_\text{JKR}\f$ a
 //! collision adhesive force force and \f$\gamma\f$ the friction coefficient with the external medium.
-//!
-//! \subsubsection collisions_pushing_cells_problem_statement_force External force
-//! Two forces, equal and opposite in direction, are applied to the two spheres until the value of the intersection reaches 10% their diameter value:
-//! \f[
-//! F_{\text{loc}}(\delta) =
-//! \begin{cases}
-//! F_{\text{loc}}, & \text{if} \; \delta \leq \theta \cdot 2 r
-//! \\ 0, & \text{if} \; \delta > \theta \cdot 2 r
-//! \end{cases}
-//! \f]
-//! where \f$\delta\f$ is the spheres' overlap, \f$r\f$ the radius of the two spheres and \f$\theta\f$ the threshold value, set equal to \f$0.1\f$ in this case to capture the \f$10\%\f$ overlap.
 //!
 //! \subsubsection collisions_pushing_cells_problem_statement_stokes Stokes drag force
 //! Stokes drag force is used to model the viscous firction, assuming a homogeneous isotropic friction coefficient that mimics friction of a cell with the extracellular matrix in an idealised way.
@@ -66,7 +53,7 @@
 //! \f]
 //! and all the contributions to the total force can be written shorthand as
 //! \f[
-//! \vec{F} = F_\text{loc} + \vec{F}^\text{Stokes} + \vec{F}_\text{Hertz} + \vec{F}_\text{JKR}.
+//! \vec{F} = \vec{F}^\text{Stokes} + \vec{F}_\text{Hertz} + \vec{F}_\text{JKR}.
 //! \f]
 //! Allowing for approximation of the acceleration \f$\vec{a}\f$ at time \f$t\f$ in the first equation as
 //! \f[
@@ -92,10 +79,6 @@
 //!     * Zero total force (`Elementary::Reset`)
 //!     * Zero mass matrix (`Elementary::Reset`)
 //!     * Set mass matrix (`Elementary::Algebraic::Multiply`)
-//!     * Reset external force (`OnActions::Queue`)
-//!         * Trigger point based on overlap (`OnActions::Triggers::ExecuteWhileLess`)
-//!         * Zero local force (`Elementary::Reset`)
-//!     * Add initial local force (`Elementary::Algebraic::Add`)
 //!     * Sphere-Sphere JKR contact model (`Contact::Models::Collisions::JKR::Damped::SphereSphere::Overdamped`)
 //!     * Compute Stokes drag force (`Forces::StokesDrag`)
 //! * Write out data:
@@ -131,14 +114,8 @@
 //!                     :Zero total Sphere force\nElementary::Reset;
 //!                     :Reset mass tensor\nElementary::Reset;
 //!                     :Set mass tensor\nElementary::Algebraic::Multiply;
-//!                     partition "Reset external force at trigger point\nOnActions::Queue" {
-//!                         if( Execute when overlap is higher than 10 % of sphere diameter\nOnActions::Triggers::ExecuteWhileLess ) then( false )
-//!                         else( true )
-//!                             :Clear local force\nElementary::Reset;
-//!                         endif
 //!                     (E)
 //!                     }
-//!                     :Apply local force\nElementary::Algebraic::Add;
 //!                     :Sphere-Sphere JKR contact model\nContact::Models::Collisions::JKR::Damped::SphereSphere::Overdamped;
 //!                     :Compute Stokes drag force\nForces::StokesDrag;
 //!                     (E)
@@ -202,8 +179,6 @@
 //!     Physical dimension: \link CompuTiX::SIUnits::dimensionless \f$1\f$\endlink.
 //!     - overlap - \link CompuTiX::Components::DegreesOfFreedom::DegreeOfFreedom<CompuTiX::Types::Scalar> DegreeOfFreedom\endlink of \link CompuTiX::Types::Scalar Scalar\endlink type representing the overlap between the two spheres.
 //!     Physical dimension: \link CompuTiX::SIUnits::meter \f$\unit{\meter}\f$\endlink.
-//!     - overlap_limit - \link CompuTiX::Components::DegreesOfFreedom::DegreeOfFreedom<CompuTiX::Types::Scalar> DegreeOfFreedom\endlink of \link CompuTiX::Types::Scalar Scalar\endlink type representing the threshold for the overlap to trigger removal of the external force.
-//!     Physical dimension: \link CompuTiX::SIUnits::meter \f$\unit{\meter}\f$\endlink.
 //! - Spheres - \link CompuTiX::Components::Collections::ParticleCollection ParticleCollection\endlink representing the spheres.
 //!     - x - \link CompuTiX::Components::DegreesOfFreedom::DegreeOfFreedom<CompuTiX::Types::Position> DegreeOfFreedom\endlink of
 //!       \link CompuTiX::Types::Position Position\endlink type representing the spheres' centers.
@@ -241,9 +216,6 @@
 //!     - F - \link CompuTiX::Components::DegreesOfFreedom::DegreeOfFreedom<CompuTiX::Types::Vector> DegreeOfFreedom\endlink of
 //!       \link CompuTiX::Types::Vector Vector\endlink type representing the total force applied on the spheres.
 //!       Physical dimension: \link CompuTiX::SIUnits::newton \f$\unit{\newton}\f$\endlink.
-//!     - F_loc - \link CompuTiX::Components::DegreesOfFreedom::DegreeOfFreedom<CompuTiX::Types::Vector> DegreeOfFreedom\endlink of
-//!       \link CompuTiX::Types::Vector Vector\endlink type representing the external force initially applied on the spheres.
-//!       Physical dimension: \link CompuTiX::SIUnits::newton \f$\unit{\newton}\f$\endlink.
 //! - Contacts - \link CompuTiX::Components::Collections::ParticleCollection ParticleCollection\endlink representing the spheres.
 //!     - M - \link CompuTiX::Components::DegreesOfFreedom::DegreeOfFreedom<CompuTiX::Types::Matrix> DegreeOfFreedom\endlink of
 //!       \link CompuTiX::Types::Matrix Matrix\endlink type representing the spheres' mass tensors.
@@ -257,10 +229,8 @@
 //! | Target time 	           | \f$t_\text{end}\f$     | \f$10\f$	          | \f$\unit{\minute}\f$        | prescribed	  |
 //! | Time step 	           | \f$\Delta t\f$         | \f$0.1\f$	          | \f$\unit{\minute}\f$        | prescribed	  |
 //! | Cell's radius            | \f$r\f$		        | \f$5\f$             | \f$\unit{\micro\meter}\f$   | prescribed      |
-//! | Initial force            | \f$F_\text{loc}\f$     | \f$\begin{pmatrix} 100 & 0 & 0 \end{pmatrix}\f$   | \f$\unit{\kilogram\micro\meter\per\minute\tothe{2}}\f$   | free  |
-//! | Medium friction coefficient  | \f$\gamma\f$  | \f$10\f$   | \f$\unit{\kilogram\per\minute}\f$ | \f$\gamma = 0.1 F_\text{loc}\f$ |
-//! | Young's modulus              | \f$E\f$	   | \f$750\f$  | \f$\unit{\pascal}\f$              | free |
-//! | Poisson's ratio              | \f$\nu\f$	   | \f$0.5\f$  | \f$1\f$                           | free |
+//! | Young's modulus              | \f$E\f$	   | \f$450\f$  | \f$\unit{\pascal}\f$              | free |
+//! | Poisson's ratio              | \f$\nu\f$	   | \f$0.4\f$  | \f$1\f$                           | free |
 //! | Adhesion energy density      | \f$E_\text{adh}\f$	| \f$10^{-4}\f$  | \f$\unit{\joule\per\meter\tothe{2}}\f$  | free |
 //! | Tangential friction coefficient  | \f$\gamma_\text{tang}\f$	     | \f$10^{8}\f$   | \f$\unit{\newton\per\meter}\f$  | free |
 //! | Normal friction coefficient    | \f$\gamma_\text{norm}\f$	  | \f$10^{8}\f$          | \f$\unit{\newton\per\meter}\f$  | free |
@@ -347,14 +317,13 @@ int main( int argc, char** argv )
     // - VTK printing parameters: current frame index (current_frame)
     universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Count >::create( "current_frame", SIUnits::dimensionless ) );
 
-    // - contact model DoFs: interfacial tension (tension), tangential friction coefficient (gamma_tangential), normal friction coefficient (gamma_normal), mass tensor (M), relative tolerance, ten percent of the cell diameter (d_limit), contact radius (r_contact), overlap, spheres' radius (r)
+    // - contact model DoFs: interfacial tension (tension), tangential friction coefficient (gamma_tangential), normal friction coefficient (gamma_normal), mass tensor (M), relative tolerance, contact radius (r_contact), overlap, spheres' radius (r)
     universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "tension", SIUnits::newton / SIUnits::meter ) );
     universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "gamma_tangential", SIUnits::pascal * SIUnits::second / SIUnits::meter ) );
     universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "gamma_normal", SIUnits::pascal * SIUnits::second / SIUnits::meter ) );
     universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "relative_tolerance", SIUnits::dimensionless ) );
     // universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Matrix >::create( "M", SIUnits::kilogram ) );
     universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "r_contact", SIUnits::meter ) );
-    universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "d_limit", SIUnits::meter ) );
     universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "overlap", SIUnits::meter ) );
     universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "r", SIUnits::meter ) );
 
@@ -367,11 +336,10 @@ int main( int argc, char** argv )
     // - geometric DoFs: radius (r)
     spheres->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "r", SIUnits::meter ) );
 
-    // - dynamic DoFs: mass (m), mass tensor (M), identity matrix (id), local initial force (F_loc), force (F), friction coefficient (gamma)
+    // - dynamic DoFs: mass (m), mass tensor (M), identity matrix (id), force (F), friction coefficient (gamma)
     spheres->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "m", SIUnits::kilogram ) );
     spheres->add( DegreesOfFreedom::DegreeOfFreedom< Types::Matrix >::create( "M", SIUnits::kilogram ) );
     spheres->add( DegreesOfFreedom::DegreeOfFreedom< Types::Matrix >::create( "id", SIUnits::dimensionless ) );
-    spheres->add( DegreesOfFreedom::DegreeOfFreedom< Types::Vector >::create( "F_loc", SIUnits::newton ) );
     spheres->add( DegreesOfFreedom::DegreeOfFreedom< Types::Vector >::create( "F", SIUnits::newton ) );
     spheres->add( DegreesOfFreedom::DegreeOfFreedom< Types::Matrix >::create( "gamma", SIUnits::newton * SIUnits::second / ( SIUnits::meter ) ) );
 
@@ -402,23 +370,17 @@ int main( int argc, char** argv )
     constexpr Types::Scalar mass_hepatocyte = 0.; // [ kg ]
     //Initial positions
     const Types::Position x_init_1 = Types::Position::Zero(); // [ m ]
-    const Types::Position x_init_2 = 30e-6 * Types::Position::UnitX(); // [ m ]
-    //Initial velocity
-    const Types::Vector v_init = 10. * Types::Vector::UnitX(); // [ micro m / min ]
-    //Initial external local force
-    const Types::Vector F_loc = 100. * Types::Vector::UnitX(); // [ kg micro m / min^2 ]
+    const Types::Position x_init_2 = 7e-6 * Types::Position::UnitX(); // [ m ]
     //Spheres radius
     constexpr Types::Scalar r = 5e-6; // [ m ]
-    //10% of sphere diameter
-    constexpr Types::Scalar d_lim = 0.1 * 2 * r; // [ m ]
     //Young's modulus
-    constexpr Types::Scalar E = 750.; // [ Pa ]
+    constexpr Types::Scalar E = 450.; // [ Pa ]
     //Poisson's ratio
-    constexpr Types::Scalar nu = 0.5; // [ 1 ]
+    constexpr Types::Scalar nu = 0.4; // [ 1 ]
     //Friction coefficient
-    const Types::Matrix gamma = 10. * Types::Matrix::Identity(); // [ kg / min ]
+    const Types::Matrix gamma = 0.1 * Types::Matrix::Identity(); // [ kg / s ]
     //Adhesion energy density
-    constexpr Types::Scalar adhesion_energy_density = 1e-8; // [ J / m^2 ]
+    constexpr Types::Scalar adhesion_energy_density = 1e-4; // [J / m^2]
 
     // - Collision parameters:
     //Tangential friction coefficient
@@ -444,7 +406,6 @@ int main( int argc, char** argv )
         u.set< Types::Scalar >( Access::Modes::read_write, "gamma_tangential", SIUnits::pascal * SIUnits::second / SIUnits::meter, gamma_tang );
         u.set< Types::Scalar >( Access::Modes::read_write, "gamma_normal", SIUnits::pascal * SIUnits::second / SIUnits::meter, gamma_norm );
         u.set< Types::Scalar >( Access::Modes::read_write, "relative_tolerance", SIUnits::dimensionless, Math::relative_tolerance );
-        u.set< Types::Scalar >( Access::Modes::read_write, "d_limit", SIUnits::meter, d_lim );
         u.set< Types::Scalar >( Access::Modes::read_write, "r", SIUnits::meter, r );
 
         // View for spheres
@@ -455,10 +416,8 @@ int main( int argc, char** argv )
         // Set values for first sphere
         s1.set< Types::Scalar >( Access::Modes::read_write, "m", SIUnits::kilogram, mass_hepatocyte );
         s1.set< Types::Position >( Access::Modes::read_write, "x", SIUnits::meter, x_init_1 );
-        s1.set< Types::Vector >( Access::Modes::read_write, "v", SIUnits::micro * SIUnits::meter / SIUnits::minute, v_init );
         s1.set< Types::Scalar >( Access::Modes::read_write, "r", SIUnits::meter, r );
-        s1.set< Types::Vector >( Access::Modes::read_write, "F_loc", SIUnits::kilogram * ( SIUnits::micro * SIUnits::meter ) / ( SIUnits::minute ^ 2 ), F_loc );
-        s1.set< Types::Matrix >( Access::Modes::read_write, "gamma", SIUnits::kilogram / SIUnits::minute, gamma );
+        s1.set< Types::Matrix >( Access::Modes::read_write, "gamma", SIUnits::kilogram / SIUnits::second, gamma );
         s1.set< Types::Scalar >( Access::Modes::read_write, "E", SIUnits::pascal, E );
         s1.set< Types::Scalar >( Access::Modes::read_write, "nu", SIUnits::dimensionless, nu );
         s1.set< Types::Scalar >( Access::Modes::read_write, "e_adh", SIUnits::joule / ( SIUnits::meter ^ 2 ), adhesion_energy_density );
@@ -467,10 +426,8 @@ int main( int argc, char** argv )
         // Set values for second sphere
         s2.set< Types::Scalar >( Access::Modes::read_write, "m", SIUnits::kilogram, mass_hepatocyte );
         s2.set< Types::Position >( Access::Modes::read_write, "x", SIUnits::meter, x_init_2 );
-        s2.set< Types::Vector >( Access::Modes::read_write, "v", SIUnits::micro * SIUnits::meter / SIUnits::minute, -v_init );
         s2.set< Types::Scalar >( Access::Modes::read_write, "r", SIUnits::meter, r );
-        s2.set< Types::Vector >( Access::Modes::read_write, "F_loc", SIUnits::kilogram * ( SIUnits::micro * SIUnits::meter ) / ( SIUnits::minute ^ 2 ), -F_loc );
-        s2.set< Types::Matrix >( Access::Modes::read_write, "gamma", SIUnits::kilogram / SIUnits::minute, gamma );
+        s2.set< Types::Matrix >( Access::Modes::read_write, "gamma", SIUnits::kilogram / SIUnits::second, gamma );
         s2.set< Types::Scalar >( Access::Modes::read_write, "E", SIUnits::pascal, E );
         s2.set< Types::Scalar >( Access::Modes::read_write, "nu", SIUnits::dimensionless, nu );
         s2.set< Types::Scalar >( Access::Modes::read_write, "e_adh", SIUnits::joule / ( SIUnits::meter ^ 2 ), adhesion_energy_density );
@@ -559,29 +516,6 @@ int main( int argc, char** argv )
                 action->set_parameter_value( "b", absolute_path( "Universes/Spheres/m" ) );
             }*/
 
-            // -- external force reset
-            {
-                auto external_force = forces->add( create_executable( "OnActions::Queue", "Reset external force at trigger point" ) );
-                // --- execution condition
-                {
-                    auto action = external_force->add( create_executable( "OnActions::Triggers::ExecuteWhileLess", "Execute when overlap is higher than 10% of sphere diameter" ) );
-                    action->set_parameter_value( "a", absolute_path( "Universes/d_limit" ) );
-                    action->set_parameter_value( "b", absolute_path( "Universes/overlap" ) );
-                }
-                // --- clears force (forever)
-                {
-                    auto action = external_force->add( create_executable( "Elementary::Reset", "Clear local force" ) );
-                    action->set_parameter_value( "dof", absolute_path( "Universes/Spheres/F_loc" ) );
-                }
-            }
-
-            // -- apply external force
-            {
-                auto action = forces->add( create_executable( "Elementary::Algebraic::Add", "Apply local force" ) );
-                action->set_parameter_value( "result", absolute_path( "Universes/Spheres/F" ) );
-                action->set_parameter_value( "b", absolute_path( "Universes/Spheres/F_loc" ) );
-            }
-
             // -- compute JKR interaction force and set mass matrix
             {
                 auto action = forces->add( create_executable( "Contact::Models::Collisions::JKR::Damped::SphereSphere::Overdamped", "Sphere-Sphere JKR contact model" ) );
@@ -616,8 +550,7 @@ int main( int argc, char** argv )
 
             // -- write the whole data to XML file
             {
-                auto action = io_pipeline->add( create_executable( "IO::Save", "Write VTK files for faces" ) );
-                action->set_parameter_value( "root", absolute_path( "Universes" ) );
+                auto action = io_pipeline->add( create_executable( "IO::Save", "Write VTK files for universes" ) );
                 action->set_parameter_value( "file_index", absolute_path( "Universes/current_frame" ) );
                 action->set_parameter_value( "filename", std::make_unique< String >( output_dir + "/Universes_{:03}.xml" ) );
             }
