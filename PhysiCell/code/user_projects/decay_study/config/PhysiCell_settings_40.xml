@@ -27,7 +27,7 @@
     </parallel>
 
     <save>
-        <folder>many_diffusion_voxel_sink_40</folder>
+        <folder>../results/decay_study/size_40</folder>
         <full_data>
             <interval units="min">0.01</interval>
             <enable>true</enable>
