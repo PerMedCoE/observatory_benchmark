@@ -1,0 +1,17 @@
+name: studio
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - paraview 
+  - python
+  - matplotlib
+  - scipy
+  - pandas
+  - anndata>=0.12.2
+  - pip
+  - pip:
+    - pyqt5
+    - simulariumio[physicell]
+    - requests
+    - git+https://github.com/PhysiBoSS-Models/physiboss-models/
