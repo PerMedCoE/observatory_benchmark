@@ -23,13 +23,13 @@
     </overall>
 
     <parallel>
-        <omp_num_threads>6</omp_num_threads>
+        <omp_num_threads>1</omp_num_threads>
     </parallel>
 
     <save>
         <folder>../results/decay_study/size_10_uptake</folder>
         <full_data>
-            <interval units="min">0.01</interval>
+            <interval units="min">0.1</interval>
             <enable>true</enable>
         </full_data>
         <SVG>

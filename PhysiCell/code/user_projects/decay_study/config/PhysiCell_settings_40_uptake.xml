@@ -23,13 +23,13 @@
     </overall>
 
     <parallel>
-        <omp_num_threads>6</omp_num_threads>
+        <omp_num_threads>1</omp_num_threads>
     </parallel>
 
     <save>
         <folder>../results/decay_study/size_40_uptake</folder>
         <full_data>
-            <interval units="min">0.01</interval>
+            <interval units="min">0.1</interval>
             <enable>true</enable>
         </full_data>
         <SVG>
@@ -177,7 +177,7 @@
                     <substrate name="oxygen">
                         <secretion_rate units="1/min">0</secretion_rate>
                         <secretion_target units="substrate density">1</secretion_target>
-                        <uptake_rate units="1/min">0</uptake_rate>
+                        <uptake_rate units="1/min">12044</uptake_rate>
                         <net_export_rate units="total substrate/min">0</net_export_rate>
                     </substrate>
                 </secretion>
@@ -213,7 +213,7 @@
     <initial_conditions>
         <cell_positions type="csv" enabled="true">
             <folder>./config</folder>
-            <filename>cells_40.csv</filename>
+            <filename>cells_10.csv</filename>
         </cell_positions>
     </initial_conditions>
 
