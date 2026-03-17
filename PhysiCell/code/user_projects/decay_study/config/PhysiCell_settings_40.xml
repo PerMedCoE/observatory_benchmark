@@ -23,13 +23,13 @@
     </overall>
 
     <parallel>
-        <omp_num_threads>6</omp_num_threads>
+        <omp_num_threads>1</omp_num_threads>
     </parallel>
 
     <save>
         <folder>../results/decay_study/size_40</folder>
         <full_data>
-            <interval units="min">0.01</interval>
+            <interval units="min">0.1</interval>
             <enable>true</enable>
         </full_data>
         <SVG>
@@ -50,7 +50,7 @@
         <variable name="oxygen" units="dimensionless" ID="0">
             <physical_parameter_set>
                 <diffusion_coefficient units="micron^2/min">2000.0</diffusion_coefficient>
-                <decay_rate units="1/min">0</decay_rate>
+                <decay_rate units="1/min">1</decay_rate>
             </physical_parameter_set>
             <initial_condition units="particles/micron^3">6022</initial_condition>
 			<Dirichlet_boundary_condition units="particles/micron^3" enabled="True">6022</Dirichlet_boundary_condition> <!-- era 10uM-->

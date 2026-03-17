@@ -646,8 +646,10 @@ void standard_update_cell_velocity( Cell* pCell, Phenotype& phenotype, double dt
 		}
 	}
 
-	pCell->update_motility_vector(dt); 
-	pCell->velocity += phenotype.motility.motility_vector; 
+	pCell->update_motility_vector(dt);
+	std::cout << "[VELOCITY_UPDATE] Before: velocity=" << pCell->velocity << " motility_vector=" << phenotype.motility.motility_vector << std::endl;
+	pCell->velocity += phenotype.motility.motility_vector;
+	std::cout << "[VELOCITY_UPDATE] After: velocity=" << pCell->velocity << std::endl;
 	
 	return; 
 }

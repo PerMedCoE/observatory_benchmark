@@ -76,11 +76,11 @@ void create_cell_types(void)
     cell_defaults.phenotype.secretion.sync_to_microenvironment(&microenvironment); 
 
     cell_defaults.functions.volume_update_function = NULL;
-    cell_defaults.functions.update_velocity = custom_update_velocity;
+    cell_defaults.functions.update_velocity = standard_update_cell_velocity;
 
     cell_defaults.functions.update_migration_bias = NULL; 
     cell_defaults.functions.update_phenotype = phenotype_function; 
-    cell_defaults.functions.custom_cell_rule = NULL; 
+    cell_defaults.functions.custom_cell_rule = custom_function;
     cell_defaults.functions.contact_function = NULL; 
 
     cell_defaults.functions.add_cell_basement_membrane_interactions = NULL; 
@@ -111,24 +111,24 @@ void setup_tissue(void)
     {
         PhysiCell::Cell* pCell = (*all_cells)[idx];
 
+        // Start with zero motility; custom_function will apply a one-step pulse
+        pCell->phenotype.motility.is_motile = false;
+        pCell->phenotype.motility.migration_speed = 0.0;
+
         // Constrain motility to x-direction
         pCell->phenotype.motility.migration_bias_direction[0] = 1.0;
         pCell->phenotype.motility.migration_bias_direction[1] = 0.0;
         pCell->phenotype.motility.migration_bias_direction[2] = 0.0;
 
-        // Set motile state, but don't apply motility vector yet
-        pCell->phenotype.motility.is_motile = true;
-        pCell->phenotype.motility.migration_speed = 10;
-
-        // Start with zero velocity and motility vector
-        pCell->velocity.assign(3, 0.0);
         pCell->phenotype.motility.motility_vector.assign(3, 0.0);
-
+        pCell->set_previous_velocity(0.0, 0.0, 0.0);
+        
+        std::cout << "setup_tissue(): INITIALIZED motility_vector = " << pCell->phenotype.motility.motility_vector << std::endl;
         std::cout << "setup_tissue(): pCell->velocity = " << pCell->velocity << std::endl;
         std::cout << "migration_speed = " << pCell->phenotype.motility.migration_speed << std::endl;
         std::cout << "motility_vector = " << pCell->phenotype.motility.motility_vector << std::endl;
     }
-
+    
     return; 
 }
 
@@ -139,15 +139,42 @@ std::vector<std::string> my_coloring_function(Cell* pCell)
 
 void phenotype_function(Cell* pCell, Phenotype& phenotype, double dt)
 { 
-    std::cout << "phenotype_function(): t = " << PhysiCell_globals.current_time
-              << " motility_vector = (" << pCell->phenotype.motility.motility_vector[0]
-              << ", " << pCell->phenotype.motility.motility_vector[1]
-              << ", " << pCell->phenotype.motility.motility_vector[2] << ")" << std::endl;
+
     return; 
 }
 
 void custom_function(Cell* pCell, Phenotype& phenotype , double dt)
+
 { 
+
+    std::cout << "[CUSTOM_FUNC] time=" << PhysiCell_globals.current_time << " dt=" << dt << std::endl;
+
+    if (PhysiCell_globals.current_time < dt - 1e-12)
+    {
+        // First mechanics step only: apply motility pulse
+        pCell->phenotype.motility.is_motile = true;
+        pCell->phenotype.motility.migration_speed = 10.0;
+        pCell->phenotype.motility.motility_vector = pCell->phenotype.motility.migration_bias_direction;
+        pCell->phenotype.motility.motility_vector *= pCell->phenotype.motility.migration_speed;
+
+        // Adams-Bashforth warm start: gives exactly dt*speed displacement on first step
+        pCell->set_previous_velocity(
+            pCell->phenotype.motility.motility_vector[0],
+            pCell->phenotype.motility.motility_vector[1],
+            pCell->phenotype.motility.motility_vector[2]
+        );
+    }
+    else
+    {
+        // After first step, stop the motion
+        std::cout << "[CUSTOM_FUNC] DISABLING MOTION at time=" << PhysiCell_globals.current_time << std::endl;
+        pCell->phenotype.motility.is_motile = false;
+        pCell->phenotype.motility.migration_speed = 0;
+        pCell->phenotype.motility.motility_vector.assign(3, 0.0);
+        pCell->velocity.assign(3, 0.0);
+        pCell->set_previous_velocity(0.0, 0.0, 0.0);
+    }
+        std::cout << "[CUSTOM_FUNC] velocity=" << pCell->velocity << " migration_speed=" << pCell->phenotype.motility.migration_speed << " motility_vector=" << pCell->phenotype.motility.motility_vector << " is_motile=" << pCell->phenotype.motility.is_motile << std::endl;
     return; 
 } 
 
@@ -156,34 +183,9 @@ void contact_function(Cell* pMe, Phenotype& phenoMe , Cell* pOther, Phenotype& p
     return; 
 } 
 
-bool first_mechanics_update_done = false;
 
 void custom_update_velocity(Cell* pCell, Phenotype& phenotype, double dt)
 {
-    if (!first_mechanics_update_done)
-    {
-        // Apply movement in x-direction only once
-        pCell->velocity[0] = 10.0;
-        pCell->velocity[1] = 0.0;
-        pCell->velocity[2] = 0.0;
 
-        pCell->phenotype.motility.motility_vector[0] = 10.0;
-        pCell->phenotype.motility.motility_vector[1] = 0.0;
-        pCell->phenotype.motility.motility_vector[2] = 0.0;
-
-        std::cout << "custom_update_velocity(): First move applied." << std::endl;
-
-        first_mechanics_update_done = true;
-    }
-    else
-    {
-        // Freeze motion after first step
-        pCell->velocity.assign(3, 0.0);
-        pCell->phenotype.motility.motility_vector.assign(3, 0.0);
-
-        pCell->is_movable = false;
-        pCell->phenotype.motility.is_motile = false;
-
-        std::cout << "custom_update_velocity(): Velocity reset to zero." << std::endl;
-    }
+    return;
 }

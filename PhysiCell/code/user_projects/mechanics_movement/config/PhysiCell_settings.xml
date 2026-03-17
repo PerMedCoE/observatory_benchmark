@@ -14,7 +14,7 @@
     </domain>
 
     <overall>
-        <max_time units="min">10</max_time>
+        <max_time units="min">4</max_time>
         <time_units>min</time_units>
         <space_units>micron</space_units>
         <dt_diffusion units="min">0.01</dt_diffusion>
@@ -27,7 +27,7 @@
     </parallel>
 
     <save>
-        <folder>mechanics_friction</folder>
+        <folder>../results/mechanics_movement</folder>
         <full_data>
             <interval units="min">0.1</interval>
             <enable>true</enable>
@@ -154,7 +154,7 @@
                 </mechanics>
                 <motility>
                     <speed units="micron/min">0</speed>
-                    <persistence_time units="min">0.01</persistence_time>
+                    <persistence_time units="min">10</persistence_time>
                     <migration_bias units="dimensionless">1</migration_bias>
                     <options>
                         <enabled>true</enabled>

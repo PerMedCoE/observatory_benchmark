@@ -1,7 +1,7 @@
 DEBUG:root:studio.py: Assume a 3D model
-DEBUG:root:studio.py: config file is config/PhysiCell_settings_5_uptake.xml
+DEBUG:root:studio.py: config file is config/PhysiCell_settings_40.xml
 DEBUG:root:studio.py: open_as_cb():  filePath is valid
-DEBUG:root:len(config_file) = 38
+DEBUG:root:len(config_file) = 32
 DEBUG:root:done with args.config
 DEBUG:root:exec pgm is ./project
 DEBUG:root:self.current_dir = /home/tntiniak/Work/observatory_benchmark/PhysiCell/code
@@ -11,17 +11,17 @@ DEBUG:root:cell_def_tab.py: ------- fill_substrate_colormap_comboboxes
 DEBUG:root:=======================  microenv populate_tree  ======================= 
 DEBUG:root:dc_ic_units =  particles/micron^3
 DEBUG:root:dc_bc_units = particles/micron^3
-DEBUG:root:bv = <Element 'boundary_value' at 0x773a4a303dd0>
+DEBUG:root:bv = <Element 'boundary_value' at 0x788c3af150d0>
 DEBUG:root:   -------- oxygen:  dirichlet_xmin = 6022
-DEBUG:root:bv = <Element 'boundary_value' at 0x773a4a303e20>
-DEBUG:root:bv = <Element 'boundary_value' at 0x773a4a303e70>
-DEBUG:root:bv = <Element 'boundary_value' at 0x773a4a303ec0>
-DEBUG:root:bv = <Element 'boundary_value' at 0x773a4a303f10>
-DEBUG:root:bv = <Element 'boundary_value' at 0x773a4a303f60>
-DEBUG:root:------- options: <Element 'calculate_gradients' at 0x773a4a324090>
-DEBUG:root:------- options: <Element 'track_internalized_substrates_in_each_agent' at 0x773a4a324130>
-DEBUG:root:------- options: <Element 'initial_condition' at 0x773a4a324180>
-DEBUG:root:------- options: <Element 'dirichlet_nodes' at 0x773a4a3242c0>
+DEBUG:root:bv = <Element 'boundary_value' at 0x788c3af15120>
+DEBUG:root:bv = <Element 'boundary_value' at 0x788c3af15170>
+DEBUG:root:bv = <Element 'boundary_value' at 0x788c3af151c0>
+DEBUG:root:bv = <Element 'boundary_value' at 0x788c3af15210>
+DEBUG:root:bv = <Element 'boundary_value' at 0x788c3af15260>
+DEBUG:root:------- options: <Element 'calculate_gradients' at 0x788c3af15350>
+DEBUG:root:------- options: <Element 'track_internalized_substrates_in_each_agent' at 0x788c3af153f0>
+DEBUG:root:------- options: <Element 'initial_condition' at 0x788c3af15440>
+DEBUG:root:------- options: <Element 'dirichlet_nodes' at 0x788c3af15580>
 DEBUG:root:
 
 =======================  leaving microenv populate_tree  =====================
@@ -51,20 +51,20 @@ DEBUG:root:
 ===== populate_tree():  cycle
 DEBUG:root: >> cycle_path= .//cell_definition[1]//phenotype//cycle
 DEBUG:root:   cycle code= 5
-DEBUG:root:<Element 'rate' at 0x773a4a324720>
+DEBUG:root:<Element 'rate' at 0x788c3af159e0>
 DEBUG:root:---- asymmetric_division_probabilities_path = .//cell_definition[1]//phenotype//cycle//standard_asymmetric_division
 DEBUG:root:
 ===== populate_tree():  death
-DEBUG:root:death_uep=<Element 'death' at 0x773a4a324860>
+DEBUG:root:death_uep=<Element 'death' at 0x788c3af15b20>
 DEBUG:root:-------- parsing apoptosis!
-DEBUG:root: >> pd_uep =<Element 'phase_durations' at 0x773a4a3249f0>
-DEBUG:root:phase_duration= <Element 'duration' at 0x773a4a324a90>
+DEBUG:root: >> pd_uep =<Element 'phase_durations' at 0x788c3af15cb0>
+DEBUG:root:phase_duration= <Element 'duration' at 0x788c3af15d50>
 DEBUG:root:index= 0
 DEBUG:root:-------- parsing necrosis!
-DEBUG:root: >> pd_uep =<Element 'phase_durations' at 0x773a4a325350>
-DEBUG:root:<Element 'duration' at 0x773a4a3253f0>
+DEBUG:root: >> pd_uep =<Element 'phase_durations' at 0x788c3af16610>
+DEBUG:root:<Element 'duration' at 0x788c3af166b0>
 DEBUG:root:index= 0
-DEBUG:root:<Element 'duration' at 0x773a4a325490>
+DEBUG:root:<Element 'duration' at 0x788c3af16750>
 DEBUG:root:index= 1
 DEBUG:root:volume_path=.//cell_definition[1]//phenotype//volume//
 DEBUG:root:
@@ -81,8 +81,8 @@ DEBUG:root:
 DEBUG:root:motility_advanced_chemotaxis_path= .//cell_definition[1]//phenotype//motility//options//advanced_chemotaxis//
 DEBUG:root:chemotactic_sensitivity= {'oxygen': '0.0'}
 DEBUG:root:sensitivity_path= .//cell_definition[1]//phenotype//motility//options//advanced_chemotaxis//chemotactic_sensitivities
-DEBUG:root:---- found chemotactic_sensitivities: <Element 'chemotactic_sensitivities' at 0x773a4a327790>
-DEBUG:root:subelm=<Element 'chemotactic_sensitivity' at 0x773a4a327830>
+DEBUG:root:---- found chemotactic_sensitivities: <Element 'chemotactic_sensitivities' at 0x788c3af28a90>
+DEBUG:root:subelm=<Element 'chemotactic_sensitivity' at 0x788c3af28b30>
 DEBUG:root: chemotactic_sensitivity--> oxygen = 0.0
 DEBUG:root:{'oxygen': '0.0'}
 DEBUG:root:------ motility2_substrate_changed_cb(): idx = 0
@@ -95,14 +95,14 @@ DEBUG:root:     chemotactic_sensitivity (dict)= {'oxygen': '0.0'}
 DEBUG:root:
 ===== populate_tree():  secretion
 DEBUG:root:secretion_path = .//cell_definition[1]//phenotype//secretion
-DEBUG:root:uep_secretion = <Element 'secretion' at 0x773a4a327a10>
+DEBUG:root:uep_secretion = <Element 'secretion' at 0x788c3af28d10>
 DEBUG:root:0) -- secretion substrate = oxygen
 DEBUG:root:------ done parsing secretion:
 DEBUG:root:
 ===== populate_tree():  cell_interactions
 DEBUG:root:---- cell_interactions_path= .//cell_definition[1]//phenotype//cell_interactions
 DEBUG:root:---- found cell_interactions:
-DEBUG:root:uep2= <Element 'live_phagocytosis_rates' at 0x773a4a32c1d0>
+DEBUG:root:uep2= <Element 'live_phagocytosis_rates' at 0x788c3af29490>
 DEBUG:root: live_phagocytosis_rate= {'malignant epithelial': '0', 'default': '0'}
 DEBUG:root: attack_rate= {'malignant epithelial': '0', 'default': '0'}
 DEBUG:root: fusion_rate= {'malignant epithelial': '0', 'default': '0'}
@@ -121,7 +121,7 @@ DEBUG:root:
 DEBUG:root:------ done parsing intracellular:
 DEBUG:root:
 ===== populate_tree():  custom data
-DEBUG:root:uep_custom_data= <Element 'custom_data' at 0x773a4a32cea0>
+DEBUG:root:uep_custom_data= <Element 'custom_data' at 0x788c3af2a160>
 DEBUG:root:--------------- populate_tree: (empty)custom_data = {}
 DEBUG:root:var.attrib.keys() = dict_keys(['conserved', 'units', 'description'])
 DEBUG:root:populate: cell_def_name= default --> custom_data: {'sample': ['1.0', False]}
@@ -143,7 +143,7 @@ DEBUG:root:----- leave update_motility_params()
 
 DEBUG:root:update_secretion_params(): cdname = default
 DEBUG:root:update_secretion_params(): self.current_secretion_substrate = oxygen
-DEBUG:root:{'oxygen': {'secretion_rate': '0', 'secretion_target': '1', 'uptake_rate': '12044', 'net_export_rate': '0'}}
+DEBUG:root:{'oxygen': {'secretion_rate': '0', 'secretion_target': '1', 'uptake_rate': '0', 'net_export_rate': '0'}}
 DEBUG:root:cell_def_tab.py: ------- fill_celltypes_comboboxes
 DEBUG:root:
 
@@ -151,44 +151,44 @@ DEBUG:root:
 DEBUG:root:studio.py: self.current_dir = /home/tntiniak/Work/observatory_benchmark/PhysiCell/code
 DEBUG:root:studio.py: creating ICs, Run, and Plot tabs
 DEBUG:matplotlib.font_manager:findfont: Matching sans\-serif:style=normal:variant=normal:weight=normal:stretch=normal:size=10.0.
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmr10.ttf', name='cmr10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerif-Bold.ttf', name='DejaVu Serif', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXNonUniIta.ttf', name='STIXNonUnicode', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansMono-Bold.ttf', name='DejaVu Sans Mono', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerif-Italic.ttf', name='DejaVu Serif', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizFourSymBol.ttf', name='STIXSizeFourSym', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXGeneralItalic.ttf', name='STIXGeneral', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizFourSymReg.ttf', name='STIXSizeFourSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizThreeSymReg.ttf', name='STIXSizeThreeSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmtt10.ttf', name='cmtt10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans-BoldOblique.ttf', name='DejaVu Sans', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 1.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizFiveSymReg.ttf', name='STIXSizeFiveSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizTwoSymBol.ttf', name='STIXSizeTwoSym', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmsy10.ttf', name='cmsy10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXGeneralBolIta.ttf', name='STIXGeneral', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmb10.ttf', name='cmb10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXGeneral.ttf', name='STIXGeneral', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansDisplay.ttf', name='DejaVu Sans Display', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXNonUniBolIta.ttf', name='STIXNonUnicode', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansMono-Oblique.ttf', name='DejaVu Sans Mono', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansMono-BoldOblique.ttf', name='DejaVu Sans Mono', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansMono.ttf', name='DejaVu Sans Mono', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmss10.ttf', name='cmss10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXGeneralBol.ttf', name='STIXGeneral', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizOneSymBol.ttf', name='STIXSizeOneSym', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizThreeSymBol.ttf', name='STIXSizeThreeSym', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans-Oblique.ttf', name='DejaVu Sans', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 1.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans-Bold.ttf', name='DejaVu Sans', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 0.33499999999999996
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXNonUniBol.ttf', name='STIXNonUnicode', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerif-BoldItalic.ttf', name='DejaVu Serif', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizTwoSymReg.ttf', name='STIXSizeTwoSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans.ttf', name='DejaVu Sans', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 0.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmmi10.ttf', name='cmmi10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerifDisplay.ttf', name='DejaVu Serif Display', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizOneSymReg.ttf', name='STIXSizeOneSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXNonUni.ttf', name='STIXNonUnicode', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmex10.ttf', name='cmex10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerif.ttf', name='DejaVu Serif', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmr10.ttf', name='cmr10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerif-Bold.ttf', name='DejaVu Serif', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXNonUniIta.ttf', name='STIXNonUnicode', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansMono-Bold.ttf', name='DejaVu Sans Mono', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerif-Italic.ttf', name='DejaVu Serif', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizFourSymBol.ttf', name='STIXSizeFourSym', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXGeneralItalic.ttf', name='STIXGeneral', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizFourSymReg.ttf', name='STIXSizeFourSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizThreeSymReg.ttf', name='STIXSizeThreeSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmtt10.ttf', name='cmtt10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans-BoldOblique.ttf', name='DejaVu Sans', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 1.335
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizFiveSymReg.ttf', name='STIXSizeFiveSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizTwoSymBol.ttf', name='STIXSizeTwoSym', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmsy10.ttf', name='cmsy10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXGeneralBolIta.ttf', name='STIXGeneral', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmb10.ttf', name='cmb10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXGeneral.ttf', name='STIXGeneral', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansDisplay.ttf', name='DejaVu Sans Display', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXNonUniBolIta.ttf', name='STIXNonUnicode', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansMono-Oblique.ttf', name='DejaVu Sans Mono', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansMono-BoldOblique.ttf', name='DejaVu Sans Mono', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansMono.ttf', name='DejaVu Sans Mono', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmss10.ttf', name='cmss10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXGeneralBol.ttf', name='STIXGeneral', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizOneSymBol.ttf', name='STIXSizeOneSym', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizThreeSymBol.ttf', name='STIXSizeThreeSym', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans-Oblique.ttf', name='DejaVu Sans', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 1.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans-Bold.ttf', name='DejaVu Sans', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 0.33499999999999996
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXNonUniBol.ttf', name='STIXNonUnicode', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerif-BoldItalic.ttf', name='DejaVu Serif', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizTwoSymReg.ttf', name='STIXSizeTwoSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans.ttf', name='DejaVu Sans', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 0.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmmi10.ttf', name='cmmi10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerifDisplay.ttf', name='DejaVu Serif Display', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizOneSymReg.ttf', name='STIXSizeOneSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXNonUni.ttf', name='STIXNonUnicode', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmex10.ttf', name='cmex10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerif.ttf', name='DejaVu Serif', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
 DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/NimbusSansNarrow-Regular.otf', name='Nimbus Sans Narrow', style='normal', variant='normal', weight=400, stretch='condensed', size='scalable')) = 10.25
 DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation2/LiberationSans-Regular.ttf', name='Liberation Sans', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
 DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation/LiberationSerif-Regular.ttf', name='Liberation Serif', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
@@ -487,47 +487,47 @@ DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/
 DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/kacst/KacstPoster.ttf', name='KacstPoster', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
 DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Waree-BoldOblique.ttf', name='Waree', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
 DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/padauk/Padauk-Regular.ttf', name='Padauk', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: Matching sans\-serif:style=normal:variant=normal:weight=normal:stretch=normal:size=10.0 to DejaVu Sans ('/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans.ttf') with score of 0.050000.
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x773a394f4e80>
+DEBUG:matplotlib.font_manager:findfont: Matching sans\-serif:style=normal:variant=normal:weight=normal:stretch=normal:size=10.0 to DejaVu Sans ('/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans.ttf') with score of 0.050000.
+DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x788c2c0aceb0>
 DEBUG:matplotlib.font_manager:findfont: Matching sans\-serif:style=normal:variant=normal:weight=normal:stretch=normal:size=9.0.
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmr10.ttf', name='cmr10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerif-Bold.ttf', name='DejaVu Serif', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXNonUniIta.ttf', name='STIXNonUnicode', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansMono-Bold.ttf', name='DejaVu Sans Mono', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerif-Italic.ttf', name='DejaVu Serif', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizFourSymBol.ttf', name='STIXSizeFourSym', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXGeneralItalic.ttf', name='STIXGeneral', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizFourSymReg.ttf', name='STIXSizeFourSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizThreeSymReg.ttf', name='STIXSizeThreeSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmtt10.ttf', name='cmtt10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans-BoldOblique.ttf', name='DejaVu Sans', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 1.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizFiveSymReg.ttf', name='STIXSizeFiveSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizTwoSymBol.ttf', name='STIXSizeTwoSym', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmsy10.ttf', name='cmsy10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXGeneralBolIta.ttf', name='STIXGeneral', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmb10.ttf', name='cmb10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXGeneral.ttf', name='STIXGeneral', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansDisplay.ttf', name='DejaVu Sans Display', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXNonUniBolIta.ttf', name='STIXNonUnicode', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansMono-Oblique.ttf', name='DejaVu Sans Mono', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansMono-BoldOblique.ttf', name='DejaVu Sans Mono', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansMono.ttf', name='DejaVu Sans Mono', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmss10.ttf', name='cmss10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXGeneralBol.ttf', name='STIXGeneral', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizOneSymBol.ttf', name='STIXSizeOneSym', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizThreeSymBol.ttf', name='STIXSizeThreeSym', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans-Oblique.ttf', name='DejaVu Sans', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 1.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans-Bold.ttf', name='DejaVu Sans', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 0.33499999999999996
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXNonUniBol.ttf', name='STIXNonUnicode', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerif-BoldItalic.ttf', name='DejaVu Serif', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizTwoSymReg.ttf', name='STIXSizeTwoSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans.ttf', name='DejaVu Sans', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 0.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmmi10.ttf', name='cmmi10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerifDisplay.ttf', name='DejaVu Serif Display', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizOneSymReg.ttf', name='STIXSizeOneSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXNonUni.ttf', name='STIXNonUnicode', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmex10.ttf', name='cmex10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerif.ttf', name='DejaVu Serif', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmr10.ttf', name='cmr10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerif-Bold.ttf', name='DejaVu Serif', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXNonUniIta.ttf', name='STIXNonUnicode', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansMono-Bold.ttf', name='DejaVu Sans Mono', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerif-Italic.ttf', name='DejaVu Serif', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizFourSymBol.ttf', name='STIXSizeFourSym', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXGeneralItalic.ttf', name='STIXGeneral', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizFourSymReg.ttf', name='STIXSizeFourSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizThreeSymReg.ttf', name='STIXSizeThreeSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmtt10.ttf', name='cmtt10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans-BoldOblique.ttf', name='DejaVu Sans', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 1.335
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizFiveSymReg.ttf', name='STIXSizeFiveSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizTwoSymBol.ttf', name='STIXSizeTwoSym', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmsy10.ttf', name='cmsy10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXGeneralBolIta.ttf', name='STIXGeneral', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmb10.ttf', name='cmb10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXGeneral.ttf', name='STIXGeneral', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansDisplay.ttf', name='DejaVu Sans Display', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXNonUniBolIta.ttf', name='STIXNonUnicode', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansMono-Oblique.ttf', name='DejaVu Sans Mono', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansMono-BoldOblique.ttf', name='DejaVu Sans Mono', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansMono.ttf', name='DejaVu Sans Mono', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmss10.ttf', name='cmss10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXGeneralBol.ttf', name='STIXGeneral', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizOneSymBol.ttf', name='STIXSizeOneSym', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizThreeSymBol.ttf', name='STIXSizeThreeSym', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans-Oblique.ttf', name='DejaVu Sans', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 1.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans-Bold.ttf', name='DejaVu Sans', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 0.33499999999999996
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXNonUniBol.ttf', name='STIXNonUnicode', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerif-BoldItalic.ttf', name='DejaVu Serif', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizTwoSymReg.ttf', name='STIXSizeTwoSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans.ttf', name='DejaVu Sans', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 0.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmmi10.ttf', name='cmmi10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerifDisplay.ttf', name='DejaVu Serif Display', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizOneSymReg.ttf', name='STIXSizeOneSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXNonUni.ttf', name='STIXNonUnicode', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmex10.ttf', name='cmex10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
+DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerif.ttf', name='DejaVu Serif', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
 DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/NimbusSansNarrow-Regular.otf', name='Nimbus Sans Narrow', style='normal', variant='normal', weight=400, stretch='condensed', size='scalable')) = 10.25
 DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation2/LiberationSans-Regular.ttf', name='Liberation Sans', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
 DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation/LiberationSerif-Regular.ttf', name='Liberation Serif', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
@@ -826,33 +826,68 @@ DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/
 DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/kacst/KacstPoster.ttf', name='KacstPoster', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
 DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Waree-BoldOblique.ttf', name='Waree', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
 DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/padauk/Padauk-Regular.ttf', name='Padauk', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: Matching sans\-serif:style=normal:variant=normal:weight=normal:stretch=normal:size=9.0 to DejaVu Sans ('/home/tntiniak/Work/new_studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans.ttf') with score of 0.050000.
+DEBUG:matplotlib.font_manager:findfont: Matching sans\-serif:style=normal:variant=normal:weight=normal:stretch=normal:size=9.0 to DejaVu Sans ('/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans.ttf') with score of 0.050000.
 DEBUG:root:ics_tab.py: fill_celltype_combobox(): ['default']
 DEBUG:root:ics_tab.py: ------- fill_substrate_combobox
 DEBUG:root: --> oxygen
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x773a39521990> <matplotlib.colors.Normalize object at 0x773a396a6830>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x773a39520fa0>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x773a396a66b0> <matplotlib.colors.Normalize object at 0x773a39521990>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x773a395231f0>
+DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x788c2c0d99c0> <matplotlib.colors.Normalize object at 0x788c2c266860>
+DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x788c2c0d8fd0>
+DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x788c2c2666e0> <matplotlib.colors.Normalize object at 0x788c2c0d99c0>
+DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x788c2c0db250>
 DEBUG:root:ics_tab.py: fill_celltype_combobox(): ['default']
 DEBUG:root:ics_tab.py: ------- fill_substrate_combobox
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x773a394f4a30> <matplotlib.colors.Normalize object at 0x773a396a66b0>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x773a3959a290>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x773a3959a950> <matplotlib.colors.Normalize object at 0x773a394f4a30>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x773a395218d0>
+DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x788c2c0aca60> <matplotlib.colors.Normalize object at 0x788c2c2666e0>
+DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x788c2c14a2c0>
+DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x788c2c14a980> <matplotlib.colors.Normalize object at 0x788c2c0aca60>
+DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x788c2c0d9900>
 DEBUG:root: --> oxygen
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x773a396a66b0> <matplotlib.colors.Normalize object at 0x773a3959a950>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x773a39521810>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x773a39575e40> <matplotlib.colors.Normalize object at 0x773a396a66b0>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x773a395212d0>
+DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x788c2c2666e0> <matplotlib.colors.Normalize object at 0x788c2c14a980>
+DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x788c2c0d9840>
+DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x788c2c12de70> <matplotlib.colors.Normalize object at 0x788c2c2666e0>
+DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x788c2c0d9300>
 DEBUG:root:ics_tab.py: ------- fill_substrate_combobox
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x773a396a74f0> <matplotlib.colors.Normalize object at 0x773a39575e40>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x773a3959a650>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x773a396a76a0> <matplotlib.colors.Normalize object at 0x773a396a74f0>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x773a3959a710>
+DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x788c2c267520> <matplotlib.colors.Normalize object at 0x788c2c12de70>
+DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x788c2c14a680>
+DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x788c2c2676d0> <matplotlib.colors.Normalize object at 0x788c2c267520>
+DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x788c2c14a740>
 DEBUG:root: --> oxygen
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x773a396a74f0> <matplotlib.colors.Normalize object at 0x773a396a76a0>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x773a39575e40>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x773a3959a740> <matplotlib.colors.Normalize object at 0x773a396a74f0>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x773a39574400>
+DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x788c2c267520> <matplotlib.colors.Normalize object at 0x788c2c2676d0>
+DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x788c2c12de70>
+DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x788c2c266890> <matplotlib.colors.Normalize object at 0x788c2c267520>
+DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x788c2c14a500>
 DEBUG:root:studio.py: calling vis_tab.substrates_cbox_changed_cb(2)
+INFO:matplotlib.animation:Animation.save using <class 'matplotlib.animation.FFMpegWriter'>
+DEBUG:matplotlib.animation:frame size in pixels is 1280 x 960
+INFO:matplotlib.animation:MovieWriter._run: running command: ffmpeg -f rawvideo -vcodec rawvideo -s 1280x960 -pix_fmt rgba -framerate 10.0 -i pipe: -vcodec h264 -pix_fmt yuv420p -y substrates.mp4
+DEBUG:matplotlib.animation:MovieWriter stderr:
+ffmpeg version 4.4.2-0ubuntu0.22.04.1 Copyright (c) 2000-2021 the FFmpeg developers
+  built with gcc 11 (Ubuntu 11.2.0-19ubuntu1)
+  configuration: --prefix=/usr --extra-version=0ubuntu0.22.04.1 --toolchain=hardened --libdir=/usr/lib/x86_64-linux-gnu --incdir=/usr/include/x86_64-linux-gnu --arch=amd64 --enable-gpl --disable-stripping --enable-gnutls --enable-ladspa --enable-libaom --enable-libass --enable-libbluray --enable-libbs2b --enable-libcaca --enable-libcdio --enable-libcodec2 --enable-libdav1d --enable-libflite --enable-libfontconfig --enable-libfreetype --enable-libfribidi --enable-libgme --enable-libgsm --enable-libjack --enable-libmp3lame --enable-libmysofa --enable-libopenjpeg --enable-libopenmpt --enable-libopus --enable-libpulse --enable-librabbitmq --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libsrt --enable-libssh --enable-libtheora --enable-libtwolame --enable-libvidstab --enable-libvorbis --enable-libvpx --enable-libwebp --enable-libx265 --enable-libxml2 --enable-libxvid --enable-libzimg --enable-libzmq --enable-libzvbi --enable-lv2 --enable-omx --enable-openal --enable-opencl --enable-opengl --enable-sdl2 --enable-pocketsphinx --enable-librsvg --enable-libmfx --enable-libdc1394 --enable-libdrm --enable-libiec61883 --enable-chromaprint --enable-frei0r --enable-libx264 --enable-shared
+  libavutil      56. 70.100 / 56. 70.100
+  libavcodec     58.134.100 / 58.134.100
+  libavformat    58. 76.100 / 58. 76.100
+  libavdevice    58. 13.100 / 58. 13.100
+  libavfilter     7.110.100 /  7.110.100
+  libswscale      5.  9.100 /  5.  9.100
+  libswresample   3.  9.100 /  3.  9.100
+  libpostproc    55.  9.100 / 55.  9.100
+Input #0, rawvideo, from 'pipe:':
+  Duration: N/A, bitrate: 393216 kb/s
+  Stream #0:0: Video: rawvideo (RGBA / 0x41424752), rgba, 1280x960, 393216 kb/s, 10 tbr, 10 tbn, 10 tbc
+Stream mapping:
+  Stream #0:0 -> #0:0 (rawvideo (native) -> h264 (libx264))
+[libx264 @ 0x5af93bc51dc0] using cpu capabilities: MMX2 SSE2Fast SSSE3 SSE4.2 AVX FMA3 BMI2 AVX2
+[libx264 @ 0x5af93bc51dc0] profile High, level 3.2, 4:2:0, 8-bit
+[libx264 @ 0x5af93bc51dc0] 264 - core 163 r3060 5db6aa6 - H.264/MPEG-4 AVC codec - Copyleft 2003-2021 - http://www.videolan.org/x264.html - options: cabac=1 ref=3 deblock=1:0:0 analyse=0x3:0x113 me=hex subme=7 psy=1 psy_rd=1.00:0.00 mixed_ref=1 me_range=16 chroma_me=1 trellis=1 8x8dct=1 cqm=0 deadzone=21,11 fast_pskip=1 chroma_qp_offset=-2 threads=18 lookahead_threads=3 sliced_threads=0 nr=0 decimate=1 interlaced=0 bluray_compat=0 constrained_intra=0 bframes=3 b_pyramid=2 b_adapt=1 b_bias=0 direct=1 weightb=1 open_gop=0 weightp=2 keyint=250 keyint_min=10 scenecut=40 intra_refresh=0 rc_lookahead=40 rc=crf mbtree=1 crf=23.0 qcomp=0.60 qpmin=0 qpmax=69 qpstep=4 ip_ratio=1.40 aq=1:1.00
+Output #0, mp4, to 'substrates.mp4':
+  Metadata:
+    encoder         : Lavf58.76.100
+  Stream #0:0: Video: h264 (avc1 / 0x31637661), yuv420p, 1280x960, q=2-31, 10 fps, 10240 tbn
+    Metadata:
+      encoder         : Lavc58.134.100 libx264
+    Side data:
+      cpb: bitrate max/min/avg: 0/0/0 buffer size: 0 vbv_delay: N/A
+frame=    0 fps=0.0 q=0.0 size=       0kB time=00:00:00.00 bitrate=N/A speed=   0x    
+frame=    0 fps=0.0 q=0.0 Lsize=       0kB time=00:00:00.00 bitrate=N/A speed=   0x    
+video:0kB audio:0kB subtitle:0kB other streams:0kB global headers:0kB muxing overhead: unknown
+

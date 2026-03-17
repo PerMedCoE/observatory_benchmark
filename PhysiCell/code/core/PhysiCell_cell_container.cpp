@@ -241,7 +241,9 @@ void Cell_Container::update_all_cells(double t, double phenotype_dt_ , double me
 		{
 			Cell* pC = (*all_cells)[i]; 
 			if( pC->functions.update_velocity && pC->is_out_of_domain == false && pC->is_movable )
-			{ pC->functions.update_velocity( pC,pC->phenotype,time_since_last_mechanics ); }
+			{ 
+				pC->functions.update_velocity( pC,pC->phenotype,time_since_last_mechanics ); 
+			}
 		}
 
 		// new March 2023: 
@@ -302,7 +304,9 @@ void Cell_Container::update_all_cells(double t, double phenotype_dt_ , double me
 		{
 			Cell* pC = (*all_cells)[i]; 
 			if( pC->is_out_of_domain == false && pC->is_movable)
-			{ pC->update_position(time_since_last_mechanics); }
+			{ 
+				pC->update_position(time_since_last_mechanics);
+			}
 		}
 		
 		// When somebody reviews this code, let's add proper braces for clarity!!! 

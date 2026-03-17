@@ -26,10 +26,10 @@
 			<user />
 		</software>
 		<citation />
-		<current_time units="min">0.160000</current_time>
-		<current_runtime units="sec">0.005615</current_runtime>
-		<created>2026-03-03T09:11:39Z</created>
-		<last_modified>2026-03-03T09:11:39Z</last_modified>
+		<current_time units="min">1.600000</current_time>
+		<current_runtime units="sec">0.021991</current_runtime>
+		<created>2026-03-04T09:38:46Z</created>
+		<last_modified>2026-03-04T09:38:46Z</last_modified>
 	</metadata>
 	<microenvironment>
 		<domain name="microenvironment">
@@ -47,7 +47,7 @@
 					<physical_parameter_set>
 						<conditions />
 						<diffusion_coefficient units="micron^2/min">2000.000000</diffusion_coefficient>
-						<decay_rate units="1/min">0.000000</decay_rate>
+						<decay_rate units="1/min">1.000000</decay_rate>
 					</physical_parameter_set>
 				</variable>
 			</variables>
