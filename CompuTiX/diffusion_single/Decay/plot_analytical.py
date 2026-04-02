@@ -2,6 +2,7 @@ import argparse
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import numpy as np
+from pathlib import Path
 
 from AnalyticalSolution import AnalyticalSolution
 
@@ -18,6 +19,9 @@ def main() -> None:
     parser.add_argument("--rate", type=float, default=2., help="Uptake rate [1/min].")
     parser.add_argument("-T", "--tend", type=float, default=3., help="End time [min].")
     parser.add_argument("--count-modes", type=int, default=25, help="Number of modes to consider per dimension [1].")
+    parser.add_argument("--sample-dt", type=float, default=0.1, help="Sampling time step for exported values [min].")
+    parser.add_argument("--sample-tend", type=float, default=10.0, help="End time for exported values [min].")
+    parser.add_argument("--output-data", type=Path, default=None, help="Optional output file for sampled analytical values.")
     parser.add_argument("--without-center", action='store_true', help="Option to disable plot of concentration at center of domain (0,0,0) over time.")
     parser.add_argument("--without-average",action='store_true', help="Option to disable plot of average concentration over time.")
     parser.add_argument("--without-stationary-2D", action='store_true', help="Option to disable plot 2D stationary state on (x,y) plane at z=0.")
@@ -40,6 +44,30 @@ def main() -> None:
 
     #Initialize class with analytical solution helper methods
     sol = AnalyticalSolution( c_0=c_0, D=D, L=L, rate=rate, count_modes=count_modes )
+
+    #Sample analytical values on a regular time grid and optionally export them.
+    sample_times_min = np.arange(0.0, args.sample_tend + 0.5 * args.sample_dt, args.sample_dt)
+    sample_times_s = sample_times_min * 60.0
+    c_expected_central_sampled = sol.concentration( x=x_central, t=sample_times_s )
+    U_expected_domain_sampled = sol.amount( x=x_central,
+                                            t=sample_times_s,
+                                            x_first=-0.5 * L,
+                                            x_second=0.5 * L,
+                                            y_first=-0.5 * L,
+                                            y_second=0.5 * L,
+                                            z_first=-0.5 * L,
+                                            z_second=0.5 * L )
+    c_expected_domain_sampled = U_expected_domain_sampled / L**3
+
+    if args.output_data is not None:
+        output_path = args.output_data
+        np.savetxt(
+            output_path,
+            np.column_stack((sample_times_min, 1e3 * c_expected_central_sampled, 1e3 * c_expected_domain_sampled)),
+            delimiter=",",
+            header="time_min,center_concentration_uM,average_concentration_uM",
+            comments="",
+        )
 
     #Plot concentration at central position over time
     if(not args.without_center):

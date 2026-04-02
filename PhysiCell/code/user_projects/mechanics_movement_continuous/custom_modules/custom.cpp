@@ -1,0 +1,233 @@
+/*
+###############################################################################
+# If you use PhysiCell in your project, please cite PhysiCell and the version #
+# number, such as below:                                                      #
+#                                                                             #
+# We implemented and solved the model using PhysiCell (Version x.y.z) [1].    #
+#                                                                             #
+# [1] A Ghaffarizadeh, R Heiland, SH Friedman, SM Mumenthaler, and P Macklin, #
+#     PhysiCell: an Open Source Physics-Based Cell Simulator for Multicellu-  #
+#     lar Systems, PLoS Comput. Biol. 14(2): e1005991, 2018                   #
+#     DOI: 10.1371/journal.pcbi.1005991                                       #
+#                                                                             #
+# See VERSION.txt or call get_PhysiCell_version() to get the current version  #
+#     x.y.z. Call display_citations() to get detailed information on all cite-#
+#     able software used in your PhysiCell application.                       #
+#                                                                             #
+# Because PhysiCell extensively uses BioFVM, we suggest you also cite BioFVM  #
+#     as below:                                                               #
+#                                                                             #
+# We implemented and solved the model using PhysiCell (Version x.y.z) [1],    #
+# with BioFVM [2] to solve the transport equations.                           #
+#                                                                             #
+# [1] A Ghaffarizadeh, R Heiland, SH Friedman, SM Mumenthaler, and P Macklin, #
+#     PhysiCell: an Open Source Physics-Based Cell Simulator for Multicellu-  #
+#     lar Systems, PLoS Comput. Biol. 14(2): e1005991, 2018                   #
+#     DOI: 10.1371/journal.pcbi.1005991                                       #
+#                                                                             #
+# [2] A Ghaffarizadeh, SH Friedman, and P Macklin, BioFVM: an efficient para- #
+#     llelized diffusive transport solver for 3-D biological simulations,     #
+#     Bioinformatics 32(8): 1256-8, 2016. DOI: 10.1093/bioinformatics/btv730  #
+#                                                                             #
+###############################################################################
+#                                                                             #
+# BSD 3-Clause License (see https://opensource.org/licenses/BSD-3-Clause)     #
+#                                                                             #
+# Copyright (c) 2015-2021, Paul Macklin and the PhysiCell Project             #
+# All rights reserved.                                                        #
+#                                                                             #
+# Redistribution and use in source and binary forms, with or without          #
+# modification, are permitted provided that the following conditions are met: #
+#                                                                             #
+# 1. Redistributions of source code must retain the above copyright notice,   #
+# this list of conditions and the following disclaimer.                       #
+#                                                                             #
+# 2. Redistributions in binary form must reproduce the above copyright        #
+# notice, this list of conditions and the following disclaimer in the         #
+# documentation and/or other materials provided with the distribution.        #
+#                                                                             #
+# 3. Neither the name of the copyright holder nor the names of its            #
+# contributors may be used to endorse or promote products derived from this   #
+# software without specific prior written permission.                         #
+#                                                                             #
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" #
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE   #
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE  #
+# ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE   #
+# LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR         #
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF        #
+# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS    #
+# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN     #
+# CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)     #
+# ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE  #
+# POSSIBILITY OF SUCH DAMAGE.                                                 #
+#                                                                             #
+###############################################################################
+*/
+
+#include "./custom.h"
+
+namespace
+{
+const double pulse_start_time = 0.05;   // min = 3 s
+const double pulse_duration = 0.1;      // min = 6 s
+const double pulse_end_time = pulse_start_time + pulse_duration;
+const double seconds_per_minute = 60.0;
+const double target_speed_microns_per_second = 10.0;
+const double target_speed_microns_per_minute =
+    target_speed_microns_per_second * seconds_per_minute;
+}
+
+void create_cell_types(void)
+{
+    // set the random seed 
+    SeedRandom(parameters.ints("random_seed"));  
+
+    initialize_default_cell_definition(); 
+    cell_defaults.phenotype.secretion.sync_to_microenvironment(&microenvironment); 
+
+    cell_defaults.functions.volume_update_function = NULL;
+    // cell_defaults.functions.update_velocity = standard_update_cell_velocity;
+    cell_defaults.functions.update_velocity = custom_update_velocity;
+
+    cell_defaults.functions.update_migration_bias = NULL; 
+    cell_defaults.functions.update_phenotype = phenotype_function; 
+    cell_defaults.functions.custom_cell_rule = custom_function;
+    cell_defaults.functions.contact_function = NULL; 
+
+    cell_defaults.functions.add_cell_basement_membrane_interactions = NULL; 
+    cell_defaults.functions.calculate_distance_to_membrane = NULL; 
+
+    initialize_cell_definitions_from_pugixml(); 
+    build_cell_definitions_maps(); 
+    setup_signal_behavior_dictionaries();     
+
+    display_cell_definitions(std::cout); 
+
+    return; 
+}
+
+void setup_microenvironment(void)
+{
+    // initialize BioFVM 
+    initialize_microenvironment();     
+    return; 
+}
+
+void setup_tissue(void)
+{
+    // load cells from your CSV file (if enabled)
+    load_cells_from_pugixml();     
+
+    for(int idx = 0; idx < all_cells->size(); idx++)
+    {
+        PhysiCell::Cell* pCell = (*all_cells)[idx];
+
+        // Start with zero motility; custom_function will apply a one-step pulse
+        pCell->phenotype.motility.is_motile = false;
+        pCell->phenotype.motility.migration_speed = 0.0;
+
+        // Constrain motility to x-direction
+        pCell->phenotype.motility.migration_bias_direction[0] = 1.0;
+        pCell->phenotype.motility.migration_bias_direction[1] = 0.0;
+        pCell->phenotype.motility.migration_bias_direction[2] = 0.0;
+
+        pCell->phenotype.motility.motility_vector.assign(3, 0.0);
+        pCell->set_previous_velocity(0.0, 0.0, 0.0);
+        
+        std::cout << "setup_tissue(): INITIALIZED motility_vector = " << pCell->phenotype.motility.motility_vector << std::endl;
+        std::cout << "setup_tissue(): pCell->velocity = " << pCell->velocity << std::endl;
+        std::cout << "migration_speed = " << pCell->phenotype.motility.migration_speed << std::endl;
+        std::cout << "motility_vector = " << pCell->phenotype.motility.motility_vector << std::endl;
+    }
+    
+    return; 
+}
+
+std::vector<std::string> my_coloring_function(Cell* pCell)
+{ 
+    return paint_by_number_cell_coloring(pCell); 
+}
+
+void phenotype_function(Cell* pCell, Phenotype& phenotype, double dt)
+{ 
+
+    return; 
+}
+
+void custom_function(Cell* pCell, Phenotype& phenotype , double dt)
+
+{ 
+
+    // Previous motility-based pulse retained for reference.
+    // std::cout << "[CUSTOM_FUNC] time=" << PhysiCell_globals.current_time << " dt=" << dt << std::endl;
+    //
+    // if (PhysiCell_globals.current_time < dt - 1e-12)
+    // {
+    //     // First mechanics step only: apply motility pulse
+    //     pCell->phenotype.motility.is_motile = true;
+    //     pCell->phenotype.motility.migration_speed = 10.0;
+    //     pCell->phenotype.motility.motility_vector = pCell->phenotype.motility.migration_bias_direction;
+    //     pCell->phenotype.motility.motility_vector *= pCell->phenotype.motility.migration_speed;
+    // }
+    // else
+    // {
+    //     // After first step, stop the motion
+    //     std::cout << "[CUSTOM_FUNC] DISABLING MOTION at time=" << PhysiCell_globals.current_time << std::endl;
+    //     pCell->phenotype.motility.is_motile = false;
+    //     pCell->phenotype.motility.migration_speed = 0;
+    //     pCell->phenotype.motility.motility_vector.assign(3, 0.0);
+    //     pCell->velocity.assign(3, 0.0);
+    //     pCell->set_previous_velocity(0.0, 0.0, 0.0);
+    // }
+    // std::cout << "[CUSTOM_FUNC] velocity=" << pCell->velocity << " migration_speed=" << pCell->phenotype.motility.migration_speed << " motility_vector=" << pCell->phenotype.motility.motility_vector << " is_motile=" << pCell->phenotype.motility.is_motile << std::endl;
+
+    const bool pulse_is_active =
+        PhysiCell_globals.current_time >= pulse_start_time - 0.5 * diffusion_dt &&
+        PhysiCell_globals.current_time < pulse_end_time - 0.5 * diffusion_dt;
+
+    pCell->phenotype.motility.is_motile = pulse_is_active;
+    pCell->phenotype.motility.migration_speed = pulse_is_active ? target_speed_microns_per_minute : 0.0;
+
+    pCell->phenotype.motility.motility_vector.assign(3, 0.0);
+    if (pulse_is_active)
+    {
+        pCell->phenotype.motility.motility_vector[0] = target_speed_microns_per_minute;
+    }
+
+    return; 
+} 
+
+void contact_function(Cell* pMe, Phenotype& phenoMe , Cell* pOther, Phenotype& phenoOther , double dt)
+{ 
+    return; 
+} 
+
+
+void custom_update_velocity(Cell* pCell, Phenotype& phenotype, double dt)
+{
+
+    const bool pulse_is_active =
+        PhysiCell_globals.current_time >= pulse_start_time - 0.5 * diffusion_dt &&
+        PhysiCell_globals.current_time < pulse_end_time - 0.5 * diffusion_dt;
+
+    pCell->velocity.assign(3, 0.0);
+
+    if (pulse_is_active)
+    {
+        pCell->velocity[0] = target_speed_microns_per_minute;
+
+        const bool pulse_just_started =
+            PhysiCell_globals.current_time < pulse_start_time + dt + 0.5 * diffusion_dt;
+        if (pulse_just_started)
+        {
+            pCell->set_previous_velocity(target_speed_microns_per_minute, 0.0, 0.0);
+        }
+    }
+    else
+    {
+        pCell->set_previous_velocity(0.0, 0.0, 0.0);
+    }
+
+    return;
+}
