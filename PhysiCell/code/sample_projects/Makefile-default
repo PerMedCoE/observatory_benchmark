@@ -335,8 +335,8 @@ PhysiCell_phenotype.o: ./core/PhysiCell_phenotype.cpp
 PhysiCell_digital_cell_line.o: ./core/PhysiCell_digital_cell_line.cpp
 	$(COMPILE_COMMAND) -c ./core/PhysiCell_digital_cell_line.cpp
 
-PhysiCell_cell.o: ./core/PhysiCell_cell.cpp
-	$(COMPILE_COMMAND) -c ./core/PhysiCell_cell.cpp 
+PhysiCell_cell.o: ./core/PhysiCell_cell.cpp ./core/PhysiCell_cell.h
+	$(COMPILE_COMMAND) -I./core -c ./core/PhysiCell_cell.cpp 
 
 PhysiCell_cell_container.o: ./core/PhysiCell_cell_container.cpp
 	$(COMPILE_COMMAND) -c ./core/PhysiCell_cell_container.cpp 

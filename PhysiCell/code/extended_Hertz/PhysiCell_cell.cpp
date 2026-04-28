@@ -257,6 +257,7 @@ Cell_State::Cell_State()
 
 void Cell::update_motility_vector( double dt_ )
 {
+	std::cout << "update_motility_vector: is motile: " << phenotype.motility.is_motile << std::endl;
 	if( phenotype.motility.is_motile == false )
 	{
 		phenotype.motility.motility_vector.assign( 3, 0.0 ); 
@@ -961,8 +962,12 @@ void Cell::copy_function_pointers(Cell* copy_me)
 
 void Cell::add_potentials(Cell* other_agent)
 {
-	const double specific_adhesion_energy = 8.56e-5; // 1/min, from Gamma ~= sigma_m * W_s with sigma_m ~= 1e5 1/m^2 and W_s ~= 20 k_B T at 310 K.
-	std::cout<<"using extended hertz"<<std::endl;
+	const double adhesion_density = 1e5;
+	const double single_bond_energy = 8.56e-20;
+	const double micron_to_meter = 1e-6;
+	const double seconds_per_minute = 60.0;
+	const double translational_drag = 0.1;
+	std::cout << "using extended Hertz"<< std::endl;
 	// if( this->ID == other_agent->ID )
 	if( this == other_agent )
 	{ return; }
@@ -976,37 +981,43 @@ void Cell::add_potentials(Cell* other_agent)
 	// Make sure that the distance is not zero
 	
 	distance = std::max(sqrt(distance), 0.00001); 
-	std::cout<<"distance: "<<distance<<std::endl;
-	double effective_radius = 1 / phenotype.geometry.radius + 1 / (*other_agent).phenotype.geometry.radius;
-	std::cout<<"effective_radius: "<<effective_radius<<std::endl;
+	double a_radius = phenotype.geometry.radius;
+	double b_radius = (*other_agent).phenotype.geometry.radius;
+	double deformation = a_radius + b_radius - distance;
+	if( deformation <= 0.0 )
+	{ return; }
 
-	effective_radius = 1.0 / effective_radius;
-	double deformation = phenotype.geometry.radius + (*other_agent).phenotype.geometry.radius - distance;
+	double a_radius_m = a_radius * micron_to_meter;
+	double b_radius_m = b_radius * micron_to_meter;
+	double deformation_m = deformation * micron_to_meter;
+	double effective_radius_m = ( a_radius_m * b_radius_m ) / ( a_radius_m + b_radius_m );
 
-	double composite_young_modulus = (1 - poisson_ratio * poisson_ratio) * (1 / young_modulus) +
-	 								 (1 - (*other_agent).poisson_ratio * (*other_agent).poisson_ratio) * (1 / (*other_agent).young_modulus);
-	composite_young_modulus = 1.0 / composite_young_modulus;
-	double force_repulsion = (4.0 / 3.0) * composite_young_modulus * sqrt(effective_radius) * pow(deformation, 1.5);
-	double force_adhesion = M_PI * specific_adhesion_energy * effective_radius;
-	// double force = (4.0 / 3.0) * composite_young_modulus * sqrt(effective_radius) * pow(deformation, 1.5) 
-	// 				- M_PI * specific_adhesion_energy * effective_radius;
-	double force = force_repulsion - force_adhesion;
-	std::cout<<"force: "<<force<<std::endl;
-	std::cout<<"force_repulsion: "<<force_repulsion<<std::endl;
-	std::cout<<"force_adhesion: "<<force_adhesion<<std::endl;
+	double a_poisson_ratio = poisson_ratio;
+	double b_poisson_ratio = (*other_agent).poisson_ratio;
+	double a_young_modulus = young_modulus;
+	double b_young_modulus = (*other_agent).young_modulus;
+	double interaction_force = 4.0 / 3.0 /
+		(
+			( 1.0 - a_poisson_ratio * a_poisson_ratio ) / a_young_modulus +
+			( 1.0 - b_poisson_ratio * b_poisson_ratio ) / b_young_modulus
+		) * sqrt( effective_radius_m ) * pow( deformation_m , (double) 1.5 )
+		- M_PI * single_bond_energy * adhesion_density * effective_radius_m;
 
 	/////////////////////////////////////////////////////////////////
-	if( fabs(force) < 1e-16 )
+	if( fabs(interaction_force) < 1e-16 )
 	{ return; }
-	force /= distance;
+
+
+	// Convert the SI contact force into PhysiCell's native micron/min velocity.
+	double speed_um_per_min = interaction_force / translational_drag * seconds_per_minute / micron_to_meter;
+	double velocity_scale = speed_um_per_min / distance;
 	// for( int i = 0 ; i < 3 ; i++ ) 
 	// {
 	//	velocity[i] += displacement[i] * temp_r; 
 	// }
-	axpy( &velocity , force , displacement ); 
+	axpy( &velocity , velocity_scale , displacement ); 
 	
 	
-	// state.neighbors.push_back(other_agent); // new 1.8.0
 	
 	return;
 }
