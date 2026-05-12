@@ -5,32 +5,32 @@ DEBUG:root:done with args.config
 DEBUG:root:exec pgm is ./project
 DEBUG:root:self.current_dir = /home/tntiniak/Work/observatory_benchmark/PhysiCell/code
 DEBUG:root:cell_def_tab.py: ------- fill_substrates_comboboxes
-DEBUG:root: --> oxygen
+DEBUG:root: --> signal
 DEBUG:root:cell_def_tab.py: ------- fill_substrate_colormap_comboboxes
 DEBUG:root:=======================  microenv populate_tree  ======================= 
-DEBUG:root:dc_ic_units =  particles/micron^3
-DEBUG:root:dc_bc_units = particles/micron^3
-DEBUG:root:bv = <Element 'boundary_value' at 0x7d10be19ef20>
-DEBUG:root:   -------- oxygen:  dirichlet_xmin = 0
-DEBUG:root:bv = <Element 'boundary_value' at 0x7d10be19efc0>
-DEBUG:root:bv = <Element 'boundary_value' at 0x7d10be19f060>
-DEBUG:root:bv = <Element 'boundary_value' at 0x7d10be19f100>
-DEBUG:root:bv = <Element 'boundary_value' at 0x7d10be19f1a0>
-DEBUG:root:bv = <Element 'boundary_value' at 0x7d10be19f240>
-DEBUG:root:------- options: <Element 'calculate_gradients' at 0x7d10be19f330>
-DEBUG:root:------- options: <Element 'track_internalized_substrates_in_each_agent' at 0x7d10be19f3d0>
-DEBUG:root:------- options: <Element 'initial_condition' at 0x7d10be19f420>
-DEBUG:root:------- options: <Element 'dirichlet_nodes' at 0x7d10be19f560>
+DEBUG:root:dc_ic_units =  mmHG
+DEBUG:root:dc_bc_units = mmHG
+DEBUG:root:bv = <Element 'boundary_value' at 0x7a9826d06e80>
+DEBUG:root:   -------- signal:  dirichlet_xmin = 0
+DEBUG:root:bv = <Element 'boundary_value' at 0x7a9826d06f20>
+DEBUG:root:bv = <Element 'boundary_value' at 0x7a9826d06fc0>
+DEBUG:root:bv = <Element 'boundary_value' at 0x7a9826d07060>
+DEBUG:root:bv = <Element 'boundary_value' at 0x7a9826d07100>
+DEBUG:root:bv = <Element 'boundary_value' at 0x7a9826d071a0>
+DEBUG:root:------- options: <Element 'calculate_gradients' at 0x7a9826d07290>
+DEBUG:root:------- options: <Element 'track_internalized_substrates_in_each_agent' at 0x7a9826d07330>
+DEBUG:root:------- options: <Element 'initial_condition' at 0x7a9826d07380>
+DEBUG:root:------- options: <Element 'dirichlet_nodes' at 0x7a9826d074c0>
 DEBUG:root:
 
 =======================  leaving microenv populate_tree  =====================
 DEBUG:root:studio.py: first_cell_def_name= agent
 DEBUG:root:cell_def_tab.py: ------- fill_substrates_comboboxes
-DEBUG:root: --> oxygen
+DEBUG:root: --> signal
 DEBUG:root:------ motility_substrate_changed_cb(): idx = 0
 DEBUG:root:       motility_substrate_changed_cb(): self.current_cell_def = None
 DEBUG:root:------ motility2_substrate_changed_cb(): idx = 0
-DEBUG:root:   text (subname) = oxygen
+DEBUG:root:   text (subname) = signal
 DEBUG:root:=======================  populate_tree_cell_defs(): ======================= 
 DEBUG:root:    cell_def_tab.param_d = {}
 DEBUG:root:
@@ -49,21 +49,24 @@ DEBUG:root:------- new_custom_data_params() -----
 DEBUG:root:
 ===== populate_tree():  cycle
 DEBUG:root: >> cycle_path= .//cell_definition[1]//phenotype//cycle
-DEBUG:root:   cycle code= 5
-DEBUG:root:<Element 'rate' at 0x7d10be19f9c0>
+DEBUG:root:   cycle code= 6
+DEBUG:root:<Element 'duration' at 0x7a9826d078d0>
+DEBUG:root:<Element 'duration' at 0x7a9826d07970>
+DEBUG:root:<Element 'duration' at 0x7a9826d07a10>
+DEBUG:root:<Element 'duration' at 0x7a9826d07ab0>
 DEBUG:root:---- asymmetric_division_probabilities_path = .//cell_definition[1]//phenotype//cycle//standard_asymmetric_division
 DEBUG:root:
 ===== populate_tree():  death
-DEBUG:root:death_uep=<Element 'death' at 0x7d10be19fd30>
+DEBUG:root:death_uep=<Element 'death' at 0x7a9826d07e20>
 DEBUG:root:-------- parsing apoptosis!
-DEBUG:root: >> pd_uep =<Element 'phase_durations' at 0x7d10be19ff10>
-DEBUG:root:phase_duration= <Element 'duration' at 0x7d10be19ffb0>
+DEBUG:root: >> pd_uep =<Element 'phase_durations' at 0x7a9826d18040>
+DEBUG:root:phase_duration= <Element 'duration' at 0x7a9826d180e0>
 DEBUG:root:index= 0
 DEBUG:root:-------- parsing necrosis!
-DEBUG:root: >> pd_uep =<Element 'phase_durations' at 0x7d10bc50c900>
-DEBUG:root:<Element 'duration' at 0x7d10bc50c9a0>
+DEBUG:root: >> pd_uep =<Element 'phase_durations' at 0x7a9826d189f0>
+DEBUG:root:<Element 'duration' at 0x7a9826d18a90>
 DEBUG:root:index= 0
-DEBUG:root:<Element 'duration' at 0x7d10bc50ca40>
+DEBUG:root:<Element 'duration' at 0x7a9826d18b30>
 DEBUG:root:index= 1
 DEBUG:root:volume_path=.//cell_definition[1]//phenotype//volume//
 DEBUG:root:
@@ -76,32 +79,32 @@ DEBUG:root:
 ===== populate_tree():  motility
 DEBUG:root:motility_path=.//cell_definition[1]//phenotype//motility//
 DEBUG:root:
------------ populate_tree_cell_defs.py: cell_def_name= agent,  cell_def_tab.param_d[cell_def_name]["motility_chemotaxis_substrate"] = oxygen
+----------- populate_tree_cell_defs.py: cell_def_name= agent,  cell_def_tab.param_d[cell_def_name]["motility_chemotaxis_substrate"] = signal
 DEBUG:root:motility_advanced_chemotaxis_path= .//cell_definition[1]//phenotype//motility//options//advanced_chemotaxis//
-DEBUG:root:chemotactic_sensitivity= {'oxygen': '0.0'}
+DEBUG:root:chemotactic_sensitivity= {'signal': '0.0'}
 DEBUG:root:sensitivity_path= .//cell_definition[1]//phenotype//motility//options//advanced_chemotaxis//chemotactic_sensitivities
-DEBUG:root:---- found chemotactic_sensitivities: <Element 'chemotactic_sensitivities' at 0x7d10bc50ede0>
-DEBUG:root:subelm=<Element 'chemotactic_sensitivity' at 0x7d10bc50ee80>
-DEBUG:root: chemotactic_sensitivity--> oxygen = 0.00
-DEBUG:root:{'oxygen': '0.00'}
+DEBUG:root:---- found chemotactic_sensitivities: <Element 'chemotactic_sensitivities' at 0x7a9826d1aed0>
+DEBUG:root:subelm=<Element 'chemotactic_sensitivity' at 0x7a9826d1af70>
+DEBUG:root: chemotactic_sensitivity--> signal = 0.01
+DEBUG:root:{'signal': '0.01'}
 DEBUG:root:------ motility2_substrate_changed_cb(): idx = 0
-DEBUG:root:   text (subname) = oxygen
-DEBUG:root:    motility_advanced_chemotaxis_substrate= oxygen
-DEBUG:root:   chemotactic_sensitivity = {'oxygen': '0.00'}
-DEBUG:root:----- chemo_sensitivity_changed() = 0.00
-DEBUG:root:----- chemo_sensitivity_changed(): subname = oxygen
-DEBUG:root:     chemotactic_sensitivity (dict)= {'oxygen': '0.00'}
+DEBUG:root:   text (subname) = signal
+DEBUG:root:    motility_advanced_chemotaxis_substrate= signal
+DEBUG:root:   chemotactic_sensitivity = {'signal': '0.01'}
+DEBUG:root:----- chemo_sensitivity_changed() = 0.01
+DEBUG:root:----- chemo_sensitivity_changed(): subname = signal
+DEBUG:root:     chemotactic_sensitivity (dict)= {'signal': '0.01'}
 DEBUG:root:
 ===== populate_tree():  secretion
 DEBUG:root:secretion_path = .//cell_definition[1]//phenotype//secretion
-DEBUG:root:uep_secretion = <Element 'secretion' at 0x7d10bc50f060>
-DEBUG:root:0) -- secretion substrate = oxygen
+DEBUG:root:uep_secretion = <Element 'secretion' at 0x7a9826d1b150>
+DEBUG:root:0) -- secretion substrate = signal
 DEBUG:root:------ done parsing secretion:
 DEBUG:root:
 ===== populate_tree():  cell_interactions
 DEBUG:root:---- cell_interactions_path= .//cell_definition[1]//phenotype//cell_interactions
 DEBUG:root:---- found cell_interactions:
-DEBUG:root:uep2= <Element 'live_phagocytosis_rates' at 0x7d10bc50f9c0>
+DEBUG:root:uep2= <Element 'live_phagocytosis_rates' at 0x7a9826d1bab0>
 DEBUG:root: live_phagocytosis_rate= {'agent': '0.0'}
 DEBUG:root: attack_rate= {'agent': '0.0'}
 DEBUG:root: fusion_rate= {'agent': '0.0'}
@@ -119,7 +122,7 @@ DEBUG:root:
 DEBUG:root:------ done parsing intracellular:
 DEBUG:root:
 ===== populate_tree():  custom data
-DEBUG:root:uep_custom_data= <Element 'custom_data' at 0x7d10bc518680>
+DEBUG:root:uep_custom_data= <Element 'custom_data' at 0x7a9826d28770>
 DEBUG:root:--------------- populate_tree: (empty)custom_data = {}
 DEBUG:root:var.attrib.keys() = dict_keys(['conserved', 'units', 'description'])
 DEBUG:root:populate: cell_def_name= agent --> custom_data: {'sample': ['1.0', False]}
@@ -133,15 +136,15 @@ DEBUG:root:necrosis: ------>>duration
 DEBUG:root:necrosis_phase_transition_cb: --> duration
 DEBUG:root:
 ----- update_motility_params():  cdname= agent
-DEBUG:root:     setting motility_substrate_dropdown (for cdname= agent ) = oxygen
-DEBUG:root:     setting motility2_substrate_dropdown (for cdname= agent ) = oxygen
-DEBUG:root:    chemotactic_sensitivity= {'oxygen': '0.00'}
-DEBUG:root:new val = 0.00
+DEBUG:root:     setting motility_substrate_dropdown (for cdname= agent ) = signal
+DEBUG:root:     setting motility2_substrate_dropdown (for cdname= agent ) = signal
+DEBUG:root:    chemotactic_sensitivity= {'signal': '0.01'}
+DEBUG:root:new val = 0.01
 DEBUG:root:----- leave update_motility_params()
 
 DEBUG:root:update_secretion_params(): cdname = agent
-DEBUG:root:update_secretion_params(): self.current_secretion_substrate = oxygen
-DEBUG:root:{'oxygen': {'secretion_rate': '0', 'secretion_target': '1', 'uptake_rate': '0', 'net_export_rate': '0'}}
+DEBUG:root:update_secretion_params(): self.current_secretion_substrate = signal
+DEBUG:root:{'signal': {'secretion_rate': '0', 'secretion_target': '10', 'uptake_rate': '0.0', 'net_export_rate': '0'}}
 DEBUG:root:cell_def_tab.py: ------- fill_celltypes_comboboxes
 DEBUG:root:
 
@@ -486,7 +489,7 @@ DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/
 DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Waree-BoldOblique.ttf', name='Waree', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
 DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/padauk/Padauk-Regular.ttf', name='Padauk', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
 DEBUG:matplotlib.font_manager:findfont: Matching sans\-serif:style=normal:variant=normal:weight=normal:stretch=normal:size=10.0 to DejaVu Sans ('/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans.ttf') with score of 0.050000.
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10b631cfd0>
+DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7a9824d313f0>
 DEBUG:matplotlib.font_manager:findfont: Matching sans\-serif:style=normal:variant=normal:weight=normal:stretch=normal:size=9.0.
 DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmr10.ttf', name='cmr10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
 DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerif-Bold.ttf', name='DejaVu Serif', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
@@ -827,40 +830,40 @@ DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/
 DEBUG:matplotlib.font_manager:findfont: Matching sans\-serif:style=normal:variant=normal:weight=normal:stretch=normal:size=9.0 to DejaVu Sans ('/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans.ttf') with score of 0.050000.
 DEBUG:root:ics_tab.py: fill_celltype_combobox(): ['agent']
 DEBUG:root:ics_tab.py: ------- fill_substrate_combobox
-DEBUG:root: --> oxygen
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10b6345ab0> <matplotlib.colors.Normalize object at 0x7d10b67cf5e0>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10b6345210>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10b67cf5e0> <matplotlib.colors.Normalize object at 0x7d10b6345ab0>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10b63c2ef0>
+DEBUG:root: --> signal
+DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7a9824dd2ce0> <matplotlib.colors.Normalize object at 0x7a98255d3a00>
+DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7a9824dd2e00>
+DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7a98255d3a00> <matplotlib.colors.Normalize object at 0x7a9824dd2ce0>
+DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7a9824dd3280>
 DEBUG:root:ics_tab.py: fill_celltype_combobox(): ['agent']
 DEBUG:root:ics_tab.py: ------- fill_substrate_combobox
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10b631eda0> <matplotlib.colors.Normalize object at 0x7d10b67cf5e0>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10b63c3880>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10b63449a0> <matplotlib.colors.Normalize object at 0x7d10b631eda0>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10b63c1fc0>
-DEBUG:root: --> oxygen
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10b67cf520> <matplotlib.colors.Normalize object at 0x7d10b63449a0>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10b67cf7f0>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10b631d060> <matplotlib.colors.Normalize object at 0x7d10b67cf520>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10b639bdf0>
+DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7a9824d30f70> <matplotlib.colors.Normalize object at 0x7a98255d3a00>
+DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7a9824d5dd20>
+DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7a98297bc610> <matplotlib.colors.Normalize object at 0x7a9824d30f70>
+DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7a9824d5d600>
+DEBUG:root: --> signal
+DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7a98297bc850> <matplotlib.colors.Normalize object at 0x7a98297bc610>
+DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7a9824d31b10>
+DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7a98297bc610> <matplotlib.colors.Normalize object at 0x7a98297bc850>
+DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7a9824dae050>
 DEBUG:root:ics_tab.py: ------- fill_substrate_combobox
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10b67cf5e0> <matplotlib.colors.Normalize object at 0x7d10b631d060>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10b6345540>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10b67cf610> <matplotlib.colors.Normalize object at 0x7d10b67cf5e0>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10b639bc40>
-DEBUG:root: --> oxygen
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10b67cf520> <matplotlib.colors.Normalize object at 0x7d10b67cf610>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10b63e2f50>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10b67cf610> <matplotlib.colors.Normalize object at 0x7d10b67cf520>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10b63c2f80>
+DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7a98255d3940> <matplotlib.colors.Normalize object at 0x7a98297bc610>
+DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7a9824dae8f0>
+DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7a9849fbf7f0> <matplotlib.colors.Normalize object at 0x7a98255d3940>
+DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7a9824d5dd50>
+DEBUG:root: --> signal
+DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7a98255d3a00> <matplotlib.colors.Normalize object at 0x7a9849fbf7f0>
+DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7a9824dd3a90>
+DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7a9824d5d7e0> <matplotlib.colors.Normalize object at 0x7a98255d3a00>
+DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7a9824d31450>
 DEBUG:root:studio.py: calling vis_tab.substrates_cbox_changed_cb(2)
 DEBUG:root:===========  run_model_cb():  ============
-DEBUG:root:run_tab.py:  doing: mkdir ../results/mechanics_pushing_extended_hertz
+DEBUG:root:run_tab.py:  doing: mkdir ../results/monolayer/
 DEBUG:root:----------- microenv_tab.py: fill_xml(): ----------
 DEBUG:root:microenv_tab.py: fill_xml(): num subtrates = 1
-DEBUG:root:substrates_in_tree =['oxygen']
-DEBUG:root:microrenv_tab.py: key in param_d.keys() = oxygen
-DEBUG:root:matched! oxygen
+DEBUG:root:substrates_in_tree =['signal']
+DEBUG:root:microrenv_tab.py: key in param_d.keys() = signal
+DEBUG:root:matched! signal
 DEBUG:root:microrenv_tab.py: key in param_d.keys() = gradients
 DEBUG:root:microrenv_tab.py: key in param_d.keys() = track_in_agents
 DEBUG:root:
@@ -875,17 +878,17 @@ DEBUG:root:--- cell_adhesion_affinity= {'agent': '1.0'}
 DEBUG:root:agent  --> 1.0
 DEBUG:root:
 
- ====================> fill_xml_motility(): oxygen = oxygen 
+ ====================> fill_xml_motility(): signal = signal 
 
 
-DEBUG:root:fill_xml_motility(): {'oxygen': '0.00'}
-DEBUG:root:oxygen  --> 0.00
+DEBUG:root:fill_xml_motility(): {'signal': '0.01'}
+DEBUG:root:signal  --> 0.01
 DEBUG:root:
 
  ====================> fill_xml_secretion()
 
-DEBUG:root:self.substrate_list = ['oxygen']
-DEBUG:root:substrate = oxygen
+DEBUG:root:self.substrate_list = ['signal']
+DEBUG:root:substrate = signal
 DEBUG:root:------------------- fill_xml_interactions():  cdef= agent
 DEBUG:root:--- live_phagocytosis_rate= {'agent': '0.0', '': '0.0'}
 DEBUG:root:  key in live_phagocytosis_rate= agent
@@ -910,757 +913,3 @@ DEBUG:root:--------- found //user_parameters
 DEBUG:root:random_seed
 DEBUG:root:number_of_cells
 DEBUG:root:found 2
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10b5b6dd50> <matplotlib.colors.Normalize object at 0x7d10b5b6dd50>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10b5ba9840>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10b5b6dd50> <matplotlib.colors.Normalize object at 0x7d10b5b6dd50>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10b5ba9840>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10b5baba60>
-DEBUG:matplotlib.font_manager:findfont: Matching sans\-serif:style=normal:variant=normal:weight=normal:stretch=normal:size=7.0.
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmr10.ttf', name='cmr10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerif-Bold.ttf', name='DejaVu Serif', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXNonUniIta.ttf', name='STIXNonUnicode', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansMono-Bold.ttf', name='DejaVu Sans Mono', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerif-Italic.ttf', name='DejaVu Serif', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizFourSymBol.ttf', name='STIXSizeFourSym', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXGeneralItalic.ttf', name='STIXGeneral', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizFourSymReg.ttf', name='STIXSizeFourSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizThreeSymReg.ttf', name='STIXSizeThreeSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmtt10.ttf', name='cmtt10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans-BoldOblique.ttf', name='DejaVu Sans', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 1.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizFiveSymReg.ttf', name='STIXSizeFiveSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizTwoSymBol.ttf', name='STIXSizeTwoSym', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmsy10.ttf', name='cmsy10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXGeneralBolIta.ttf', name='STIXGeneral', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmb10.ttf', name='cmb10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXGeneral.ttf', name='STIXGeneral', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansDisplay.ttf', name='DejaVu Sans Display', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXNonUniBolIta.ttf', name='STIXNonUnicode', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansMono-Oblique.ttf', name='DejaVu Sans Mono', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansMono-BoldOblique.ttf', name='DejaVu Sans Mono', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansMono.ttf', name='DejaVu Sans Mono', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmss10.ttf', name='cmss10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXGeneralBol.ttf', name='STIXGeneral', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizOneSymBol.ttf', name='STIXSizeOneSym', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizThreeSymBol.ttf', name='STIXSizeThreeSym', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans-Oblique.ttf', name='DejaVu Sans', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 1.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans-Bold.ttf', name='DejaVu Sans', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 0.33499999999999996
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXNonUniBol.ttf', name='STIXNonUnicode', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerif-BoldItalic.ttf', name='DejaVu Serif', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizTwoSymReg.ttf', name='STIXSizeTwoSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans.ttf', name='DejaVu Sans', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 0.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmmi10.ttf', name='cmmi10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerifDisplay.ttf', name='DejaVu Serif Display', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizOneSymReg.ttf', name='STIXSizeOneSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXNonUni.ttf', name='STIXNonUnicode', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmex10.ttf', name='cmex10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerif.ttf', name='DejaVu Serif', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/NimbusSansNarrow-Regular.otf', name='Nimbus Sans Narrow', style='normal', variant='normal', weight=400, stretch='condensed', size='scalable')) = 10.25
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation2/LiberationSans-Regular.ttf', name='Liberation Sans', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation/LiberationSerif-Regular.ttf', name='Liberation Serif', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Norasi-Italic.ttf', name='Norasi', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-telu-extra/vemana2000.ttf', name='Vemana2000', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/TlwgMono-Bold.ttf', name='Tlwg Mono', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-yrsa-rasa/Yrsa-SemiBold.ttf', name='Yrsa', style='normal', variant='normal', weight=600, stretch='normal', size='scalable')) = 10.24
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/lohit-devanagari/Lohit-Devanagari.ttf', name='Lohit Devanagari', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/TlwgTypist-Oblique.ttf', name='Tlwg Typist', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/ubuntu/Ubuntu-R.ttf', name='Ubuntu', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/samyak/Samyak-Devanagari.ttf', name='Samyak Devanagari', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Laksaman-Italic.ttf', name='Laksaman', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/teluguvijayam/dhurjati.ttf', name='Dhurjati', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Umpush.ttf', name='Umpush', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/C059-Bold.otf', name='C059', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Garuda-BoldOblique.ttf', name='Garuda', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/P052-Roman.otf', name='P052', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/NimbusSans-Italic.otf', name='Nimbus Sans', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Sawasdee-Bold.ttf', name='Sawasdee', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Umpush-Light.ttf', name='Umpush', style='normal', variant='normal', weight=300, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/kacst/KacstLetter.ttf', name='KacstLetter', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation2/LiberationSerif-BoldItalic.ttf', name='Liberation Serif', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/malayalam/Karumbi-Regular.ttf', name='Karumbi', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/URWGothic-BookOblique.otf', name='URW Gothic', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSerifCondensed-Bold.ttf', name='DejaVu Serif', style='normal', variant='normal', weight=700, stretch='condensed', size='scalable')) = 10.535
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/ubuntu/Ubuntu-MI.ttf', name='Ubuntu', style='italic', variant='normal', weight=500, stretch='normal', size='scalable')) = 11.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/Sahadeva/sahadeva.ttf', name='Sahadeva', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/kacst/KacstOffice.ttf', name='KacstOffice', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/samyak-fonts/Samyak-Tamil.ttf', name='Samyak Tamil', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/kacst/KacstQurn.ttf', name='KacstQurn', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/URWBookman-Light.otf', name='URW Bookman', style='normal', variant='normal', weight=300, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/TlwgTypo-BoldOblique.ttf', name='Tlwg Typo', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Kinnari-Oblique.ttf', name='Kinnari', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Loma-Oblique.ttf', name='Loma', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/Sarai/Sarai.ttf', name='Sarai', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/sinhala/lklug.ttf', name='LKLUG', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation/LiberationSans-Italic.ttf', name='Liberation Sans', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Purisa-BoldOblique.ttf', name='Purisa', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf', name='Liberation Sans', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Norasi-BoldItalic.ttf', name='Norasi', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/NimbusSans-Regular.otf', name='Nimbus Sans', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/TlwgTypo-Bold.ttf', name='Tlwg Typo', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/teluguvijayam/LakkiReddy.ttf', name='LakkiReddy', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/abyssinica/AbyssinicaSIL-Regular.ttf', name='Abyssinica SIL', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/freefont/FreeSerifBoldItalic.ttf', name='FreeSerif', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-yrsa-rasa/Yrsa-Regular.ttf', name='Yrsa', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Umpush-LightOblique.ttf', name='Umpush', style='oblique', variant='normal', weight=300, stretch='normal', size='scalable')) = 11.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/freefont/FreeSansBold.ttf', name='FreeSans', style='normal', variant='normal', weight=600, stretch='normal', size='scalable')) = 10.24
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation2/LiberationSans-BoldItalic.ttf', name='Liberation Sans', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-orya-extra/utkal.ttf', name='ori1Uni', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Norasi-Bold.ttf', name='Norasi', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/TlwgTypist-BoldOblique.ttf', name='Tlwg Typist', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/teluguvijayam/Gurajada.ttf', name='Gurajada', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation2/LiberationMono-Bold.ttf', name='Liberation Mono', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/lao/Phetsarath_OT.ttf', name='Phetsarath OT', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc', name='Noto Sans CJK JP', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/malayalam/Chilanka-Regular.otf', name='Chilanka', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-beng-extra/Mukti.ttf', name='Mukti', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/malayalam/Gayathri-Regular.otf', name='Gayathri', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation/LiberationSans-BoldItalic.ttf', name='Liberation Sans', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-yrsa-rasa/Rasa-Bold.ttf', name='Rasa', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/noto/NotoSerifCJK-Bold.ttc', name='Noto Serif CJK JP', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation/LiberationSerif-Italic.ttf', name='Liberation Serif', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation2/LiberationSerif-Regular.ttf', name='Liberation Serif', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Purisa-Bold.ttf', name='Purisa', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/kacst/KacstDigital.ttf', name='KacstDigital', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Umpush-Bold.ttf', name='Umpush', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/lohit-bengali/Lohit-Bengali.ttf', name='Lohit Bengali', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Garuda-Bold.ttf', name='Garuda', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation2/LiberationMono-Italic.ttf', name='Liberation Mono', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/malayalam/AnjaliOldLipi-Regular.ttf', name='AnjaliOldLipi', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Waree.ttf', name='Waree', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/TlwgTypewriter.ttf', name='Tlwg Typewriter', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/teluguvijayam/PottiSreeramulu.ttf', name='Potti Sreeramulu', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/teluguvijayam/mallanna.ttf', name='Mallanna', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/ubuntu/UbuntuMono-R.ttf', name='Ubuntu Mono', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/C059-BdIta.otf', name='C059', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/padauk/PadaukBook-Bold.ttf', name='Padauk Book', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSansMono-Oblique.ttf', name='DejaVu Sans Mono', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-yrsa-rasa/Rasa-SemiBold.ttf', name='Rasa', style='normal', variant='normal', weight=600, stretch='normal', size='scalable')) = 10.24
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/ubuntu/Ubuntu-Th.ttf', name='Ubuntu', style='normal', variant='normal', weight=250, stretch='normal', size='scalable')) = 10.1925
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-telu-extra/Pothana2000.ttf', name='Pothana2000', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation/LiberationSerif-BoldItalic.ttf', name='Liberation Serif', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/kacst-one/KacstOne-Bold.ttf', name='KacstOne', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/freefont/FreeMonoOblique.ttf', name='FreeMono', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/TlwgMono-Oblique.ttf', name='Tlwg Mono', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Garuda.ttf', name='Garuda', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/freefont/FreeSansBoldOblique.ttf', name='FreeSans', style='oblique', variant='normal', weight=600, stretch='normal', size='scalable')) = 11.24
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/freefont/FreeSans.ttf', name='FreeSans', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Norasi-BoldOblique.ttf', name='Norasi', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf', name='DejaVu Sans Mono', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-yrsa-rasa/Yrsa-BoldItalic.ttf', name='Yrsa', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/samyak-fonts/Samyak-Malayalam.ttf', name='Samyak Malayalam', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/malayalam/Uroob-Regular.ttf', name='Uroob', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/NimbusRoman-Italic.otf', name='Nimbus Roman', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-yrsa-rasa/Yrsa-Light.ttf', name='Yrsa', style='normal', variant='normal', weight=300, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/ubuntu/UbuntuMono-RI.ttf', name='Ubuntu Mono', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/malayalam/Manjari-Thin.otf', name='Manjari', style='normal', variant='normal', weight=100, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation/LiberationSerif-Bold.ttf', name='Liberation Serif', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/NimbusRoman-Bold.otf', name='Nimbus Roman', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSansCondensed.ttf', name='DejaVu Sans', style='normal', variant='normal', weight=400, stretch='condensed', size='scalable')) = 0.25
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/lohit-tamil/Lohit-Tamil.ttf', name='Lohit Tamil', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Sawasdee-BoldOblique.ttf', name='Sawasdee', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/TlwgMono.ttf', name='Tlwg Mono', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/NimbusSansNarrow-Bold.otf', name='Nimbus Sans Narrow', style='normal', variant='normal', weight=700, stretch='condensed', size='scalable')) = 10.535
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/lohit-tamil-classical/Lohit-Tamil-Classical.ttf', name='Lohit Tamil Classical', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/URWGothic-Demi.otf', name='URW Gothic', style='normal', variant='normal', weight=600, stretch='normal', size='scalable')) = 10.24
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-deva-extra/chandas1-2.ttf', name='Chandas', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Loma.ttf', name='Loma', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', name='DejaVu Sans', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 0.33499999999999996
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/kacst/KacstScreen.ttf', name='KacstScreen', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSerif-Italic.ttf', name='DejaVu Serif', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/lohit-malayalam/Lohit-Malayalam.ttf', name='Lohit Malayalam', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/NimbusSans-BoldItalic.otf', name='Nimbus Sans', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-gujr-extra/padmaa-Medium-0.5.ttf', name='padmaa', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/teluguvijayam/Mandali-Regular.ttf', name='Mandali', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/kacst/KacstTitleL.ttf', name='KacstTitleL', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/NimbusMonoPS-BoldItalic.otf', name='Nimbus Mono PS', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/kacst/KacstDecorative.ttf', name='KacstDecorative', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/ubuntu/Ubuntu-BI.ttf', name='Ubuntu', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/URWGothic-Book.otf', name='URW Gothic', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/TlwgTypist.ttf', name='Tlwg Typist', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/freefont/FreeSansOblique.ttf', name='FreeSans', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation/LiberationMono-Bold.ttf', name='Liberation Mono', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/teluguvijayam/RaviPrakash.ttf', name='RaviPrakash', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/lohit-gujarati/Lohit-Gujarati.ttf', name='Lohit Gujarati', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-yrsa-rasa/Yrsa-SemiBoldItalic.ttf', name='Yrsa', style='italic', variant='normal', weight=600, stretch='normal', size='scalable')) = 11.24
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tibetan-machine/TibetanMachineUni.ttf', name='Tibetan Machine Uni', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/NimbusRoman-Regular.otf', name='Nimbus Roman', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/malayalam/Suruma.ttf', name='Suruma', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/Nakula/nakula.ttf', name='Nakula', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSansCondensed-Oblique.ttf', name='DejaVu Sans', style='oblique', variant='normal', weight=400, stretch='condensed', size='scalable')) = 1.25
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-gujr-extra/Rekha.ttf', name='Rekha', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-beng-extra/LikhanNormal.ttf', name='Likhan', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation/LiberationSansNarrow-Italic.ttf', name='Liberation Sans Narrow', style='italic', variant='normal', weight=400, stretch='condensed', size='scalable')) = 11.25
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/ubuntu/Ubuntu-RI.ttf', name='Ubuntu', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/TlwgTypewriter-BoldOblique.ttf', name='Tlwg Typewriter', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/malayalam/RaghuMalayalamSans-Regular.ttf', name='RaghuMalayalamSans', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation/LiberationMono-BoldItalic.ttf', name='Liberation Mono', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/TlwgTypo-Oblique.ttf', name='Tlwg Typo', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-yrsa-rasa/Yrsa-MediumItalic.ttf', name='Yrsa', style='italic', variant='normal', weight=500, stretch='normal', size='scalable')) = 11.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-deva-extra/kalimati.ttf', name='Kalimati', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation2/LiberationSerif-Bold.ttf', name='Liberation Serif', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/malayalam/Gayathri-Thin.otf', name='Gayathri', style='normal', variant='normal', weight=100, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Kinnari-Italic.ttf', name='Kinnari', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/noto/NotoSerifCJK-Regular.ttc', name='Noto Serif CJK JP', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/kacst/KacstBook.ttf', name='KacstBook', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-yrsa-rasa/Yrsa-LightItalic.ttf', name='Yrsa', style='italic', variant='normal', weight=300, stretch='normal', size='scalable')) = 11.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/teluguvijayam/suranna.ttf', name='Suranna', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/teluguvijayam/Ponnala.ttf', name='Ponnala', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/ubuntu/Ubuntu-C.ttf', name='Ubuntu Condensed', style='normal', variant='normal', weight=400, stretch='condensed', size='scalable')) = 10.25
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/P052-Bold.otf', name='P052', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/StandardSymbolsPS.otf', name='Standard Symbols PS', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/NimbusSansNarrow-BoldOblique.otf', name='Nimbus Sans Narrow', style='oblique', variant='normal', weight=700, stretch='condensed', size='scalable')) = 11.535
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-yrsa-rasa/Rasa-Medium.ttf', name='Rasa', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSansCondensed-Bold.ttf', name='DejaVu Sans', style='normal', variant='normal', weight=700, stretch='condensed', size='scalable')) = 0.5349999999999999
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/kacst/KacstArt.ttf', name='KacstArt', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Sawasdee.ttf', name='Sawasdee', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Norasi.ttf', name='Norasi', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/droid/DroidSansFallbackFull.ttf', name='Droid Sans Fallback', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-yrsa-rasa/Yrsa-Bold.ttf', name='Yrsa', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/URWGothic-DemiOblique.otf', name='URW Gothic', style='oblique', variant='normal', weight=600, stretch='normal', size='scalable')) = 11.24
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-yrsa-rasa/Rasa-Light.ttf', name='Rasa', style='normal', variant='normal', weight=300, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Kinnari-Bold.ttf', name='Kinnari', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-gujr-extra/padmaa-Bold.1.1.ttf', name='padmaa-Bold.1.1', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSansMono-Bold.ttf', name='DejaVu Sans Mono', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSansMono-BoldOblique.ttf', name='DejaVu Sans Mono', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-beng-extra/JamrulNormal.ttf', name='Jamrul', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/samyak-fonts/Samyak-Gujarati.ttf', name='Samyak Gujarati', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation2/LiberationSans-Bold.ttf', name='Liberation Sans', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/malayalam/Rachana-Regular.ttf', name='Rachana', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSans-Oblique.ttf', name='DejaVu Sans', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 1.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/lohit-telugu/Lohit-Telugu.ttf', name='Lohit Telugu', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/URWBookman-LightItalic.otf', name='URW Bookman', style='italic', variant='normal', weight=300, stretch='normal', size='scalable')) = 11.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSansCondensed-BoldOblique.ttf', name='DejaVu Sans', style='oblique', variant='normal', weight=700, stretch='condensed', size='scalable')) = 1.535
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/teluguvijayam/Suravaram.ttf', name='Suravaram', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-yrsa-rasa/Yrsa-Italic.ttf', name='Yrsa', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/lohit-assamese/Lohit-Assamese.ttf', name='Lohit Assamese', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Umpush-Oblique.ttf', name='Umpush', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Loma-Bold.ttf', name='Loma', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-beng-extra/Muktibold.ttf', name='Mukti', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSans-BoldOblique.ttf', name='DejaVu Sans', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 1.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/padauk/Padauk-Bold.ttf', name='Padauk', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/Gargi/Gargi.ttf', name='Gargi', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-beng-extra/Ani.ttf', name='Ani', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-kalapi/Kalapi.ttf', name='Kalapi', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/freefont/FreeMonoBoldOblique.ttf', name='FreeMono', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/lohit-punjabi/Lohit-Gurmukhi.ttf', name='Lohit Gurmukhi', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/URWBookman-Demi.otf', name='URW Bookman', style='normal', variant='normal', weight=600, stretch='normal', size='scalable')) = 10.24
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Kinnari.ttf', name='Kinnari', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/teluguvijayam/ramabhadra.ttf', name='Ramabhadra', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/kacst/KacstNaskh.ttf', name='KacstNaskh', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation2/LiberationMono-Regular.ttf', name='Liberation Mono', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/padauk/PadaukBook-Regular.ttf', name='Padauk Book', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Laksaman-BoldItalic.ttf', name='Laksaman', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/ubuntu/UbuntuMono-B.ttf', name='Ubuntu Mono', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSans-ExtraLight.ttf', name='DejaVu Sans', style='normal', variant='normal', weight=200, stretch='normal', size='scalable')) = 0.24
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSerifCondensed-BoldItalic.ttf', name='DejaVu Serif', style='italic', variant='normal', weight=700, stretch='condensed', size='scalable')) = 11.535
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/teluguvijayam/Ramaraja-Regular.ttf', name='Ramaraja', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/teluguvijayam/NTR.ttf', name='NTR', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/NimbusMonoPS-Regular.otf', name='Nimbus Mono PS', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/kacst/mry_KacstQurn.ttf', name='mry_KacstQurn', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Sawasdee-Oblique.ttf', name='Sawasdee', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/TlwgMono-BoldOblique.ttf', name='Tlwg Mono', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/malayalam/Rachana-Bold.ttf', name='Rachana', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/NimbusMonoPS-Bold.otf', name='Nimbus Mono PS', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Laksaman.ttf', name='Laksaman', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/P052-Italic.otf', name='P052', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/teluguvijayam/SreeKrushnadevaraya.ttf', name='Sree Krushnadevaraya', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/lohit-oriya/Lohit-Odia.ttf', name='Lohit Odia', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/C059-Roman.otf', name='C059', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Garuda-Oblique.ttf', name='Garuda', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-guru-extra/Saab.ttf', name='Saab', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/Gubbi/Gubbi.ttf', name='Gubbi', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Waree-Bold.ttf', name='Waree', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/malayalam/Gayathri-Bold.otf', name='Gayathri', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/NimbusRoman-BoldItalic.otf', name='Nimbus Roman', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-yrsa-rasa/Yrsa-Medium.ttf', name='Yrsa', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/teluguvijayam/TimmanaRegular.ttf', name='Timmana', style='normal', variant='normal', weight=900, stretch='normal', size='scalable')) = 10.525
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Laksaman-Bold.ttf', name='Laksaman', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-beng-extra/MitraMono.ttf', name='Mitra ', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/C059-Italic.otf', name='C059', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf', name='DejaVu Serif', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/freefont/FreeSerif.ttf', name='FreeSerif', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation/LiberationMono-Italic.ttf', name='Liberation Mono', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation/LiberationMono-Regular.ttf', name='Liberation Mono', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/teluguvijayam/Gidugu.ttf', name='Gidugu', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/NimbusMonoPS-Italic.otf', name='Nimbus Mono PS', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/ubuntu/Ubuntu-M.ttf', name='Ubuntu', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Norasi-Oblique.ttf', name='Norasi', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Loma-BoldOblique.ttf', name='Loma', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSerifCondensed.ttf', name='DejaVu Serif', style='normal', variant='normal', weight=400, stretch='condensed', size='scalable')) = 10.25
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/freefont/FreeMono.ttf', name='FreeMono', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/malayalam/Meera-Regular.ttf', name='Meera', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-yrsa-rasa/Rasa-Regular.ttf', name='Rasa', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation2/LiberationMono-BoldItalic.ttf', name='Liberation Mono', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', name='DejaVu Sans', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 0.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/ubuntu/Ubuntu-B.ttf', name='Ubuntu', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSerif-BoldItalic.ttf', name='DejaVu Serif', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/NimbusSans-Bold.otf', name='Nimbus Sans', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Purisa-Oblique.ttf', name='Purisa', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/D050000L.otf', name='D050000L', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/teluguvijayam/SyamalaRamana.ttf', name='Syamala Ramana', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/TlwgTypist-Bold.ttf', name='Tlwg Typist', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/TlwgTypo.ttf', name='Tlwg Typo', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/ubuntu/Ubuntu-LI.ttf', name='Ubuntu', style='italic', variant='normal', weight=300, stretch='normal', size='scalable')) = 11.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/libreoffice/opens___.ttf', name='OpenSymbol', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation/LiberationSansNarrow-Bold.ttf', name='Liberation Sans Narrow', style='normal', variant='normal', weight=700, stretch='condensed', size='scalable')) = 10.535
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-gujr-extra/padmaa.ttf', name='padmaa', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/ttf-khmeros-core/KhmerOS.ttf', name='Khmer OS', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/kacst-one/KacstOne.ttf', name='KacstOne', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/ubuntu/Ubuntu-L.ttf', name='Ubuntu', style='normal', variant='normal', weight=300, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-gujr-extra/aakar-medium.ttf', name='aakar', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/malayalam/Manjari-Bold.otf', name='Manjari', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-deva-extra/samanata.ttf', name='Samanata', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/noto/NotoMono-Regular.ttf', name='Noto Mono', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/teluguvijayam/TenaliRamakrishna-Regular.ttf', name='TenaliRamakrishna', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/teluguvijayam/NATS.ttf', name='NATS', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/freefont/FreeMonoBold.ttf', name='FreeMono', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation/LiberationSansNarrow-Regular.ttf', name='Liberation Sans Narrow', style='normal', variant='normal', weight=400, stretch='condensed', size='scalable')) = 10.25
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Umpush-BoldOblique.ttf', name='Umpush', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/freefont/FreeSerifItalic.ttf', name='FreeSerif', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Kinnari-BoldItalic.ttf', name='Kinnari', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/ubuntu/UbuntuMono-BI.ttf', name='Ubuntu Mono', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/teluguvijayam/Peddana-Regular.ttf', name='Peddana', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/lohit-kannada/Lohit-Kannada.ttf', name='Lohit Kannada', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/TlwgTypewriter-Bold.ttf', name='Tlwg Typewriter', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation/LiberationSansNarrow-BoldItalic.ttf', name='Liberation Sans Narrow', style='italic', variant='normal', weight=700, stretch='condensed', size='scalable')) = 11.535
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/kacst/KacstFarsi.ttf', name='KacstFarsi', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/ttf-khmeros-core/KhmerOSsys.ttf', name='Khmer OS System', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSerif-Bold.ttf', name='DejaVu Serif', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation2/LiberationSans-Italic.ttf', name='Liberation Sans', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/malayalam/Manjari-Regular.otf', name='Manjari', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/kacst/KacstPen.ttf', name='KacstPen', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf', name='Liberation Sans', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/malayalam/Keraleeyam-Regular.ttf', name='Keraleeyam', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/NimbusSansNarrow-Oblique.otf', name='Nimbus Sans Narrow', style='oblique', variant='normal', weight=400, stretch='condensed', size='scalable')) = 11.25
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/freefont/FreeSerifBold.ttf', name='FreeSerif', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/malayalam/Dyuthi-Regular.ttf', name='Dyuthi', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/P052-BoldItalic.otf', name='P052', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Purisa.ttf', name='Purisa', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation2/LiberationSerif-Italic.ttf', name='Liberation Serif', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/noto/NotoSansMono-Regular.ttf', name='Noto Sans Mono', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/TlwgTypewriter-Oblique.ttf', name='Tlwg Typewriter', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/pagul/Pagul.ttf', name='Pagul', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/Navilu/Navilu.ttf', name='Navilu', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/kacst/KacstTitle.ttf', name='KacstTitle', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuMathTeXGyre.ttf', name='DejaVu Math TeX Gyre', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/Z003-MediumItalic.otf', name='Z003', style='italic', variant='normal', weight=500, stretch='normal', size='scalable')) = 11.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/URWBookman-DemiItalic.otf', name='URW Bookman', style='italic', variant='normal', weight=600, stretch='normal', size='scalable')) = 11.24
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc', name='Noto Sans CJK JP', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Waree-Oblique.ttf', name='Waree', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSerifCondensed-Italic.ttf', name='DejaVu Serif', style='italic', variant='normal', weight=400, stretch='condensed', size='scalable')) = 11.25
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Kinnari-BoldOblique.ttf', name='Kinnari', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/noto/NotoSansMono-Bold.ttf', name='Noto Sans Mono', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/kacst/KacstPoster.ttf', name='KacstPoster', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Waree-BoldOblique.ttf', name='Waree', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/padauk/Padauk-Regular.ttf', name='Padauk', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: Matching sans\-serif:style=normal:variant=normal:weight=normal:stretch=normal:size=7.0 to DejaVu Sans ('/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans.ttf') with score of 0.050000.
-DEBUG:matplotlib.font_manager:findfont: Matching sans\-serif:style=normal:variant=normal:weight=normal:stretch=normal:size=8.0.
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmr10.ttf', name='cmr10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerif-Bold.ttf', name='DejaVu Serif', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXNonUniIta.ttf', name='STIXNonUnicode', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansMono-Bold.ttf', name='DejaVu Sans Mono', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerif-Italic.ttf', name='DejaVu Serif', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizFourSymBol.ttf', name='STIXSizeFourSym', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXGeneralItalic.ttf', name='STIXGeneral', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizFourSymReg.ttf', name='STIXSizeFourSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizThreeSymReg.ttf', name='STIXSizeThreeSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmtt10.ttf', name='cmtt10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans-BoldOblique.ttf', name='DejaVu Sans', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 1.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizFiveSymReg.ttf', name='STIXSizeFiveSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizTwoSymBol.ttf', name='STIXSizeTwoSym', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmsy10.ttf', name='cmsy10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXGeneralBolIta.ttf', name='STIXGeneral', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmb10.ttf', name='cmb10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXGeneral.ttf', name='STIXGeneral', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansDisplay.ttf', name='DejaVu Sans Display', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXNonUniBolIta.ttf', name='STIXNonUnicode', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansMono-Oblique.ttf', name='DejaVu Sans Mono', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansMono-BoldOblique.ttf', name='DejaVu Sans Mono', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSansMono.ttf', name='DejaVu Sans Mono', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmss10.ttf', name='cmss10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXGeneralBol.ttf', name='STIXGeneral', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizOneSymBol.ttf', name='STIXSizeOneSym', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizThreeSymBol.ttf', name='STIXSizeThreeSym', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans-Oblique.ttf', name='DejaVu Sans', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 1.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans-Bold.ttf', name='DejaVu Sans', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 0.33499999999999996
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXNonUniBol.ttf', name='STIXNonUnicode', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerif-BoldItalic.ttf', name='DejaVu Serif', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizTwoSymReg.ttf', name='STIXSizeTwoSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans.ttf', name='DejaVu Sans', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 0.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmmi10.ttf', name='cmmi10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerifDisplay.ttf', name='DejaVu Serif Display', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXSizOneSymReg.ttf', name='STIXSizeOneSym', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/STIXNonUni.ttf', name='STIXNonUnicode', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmex10.ttf', name='cmex10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerif.ttf', name='DejaVu Serif', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/NimbusSansNarrow-Regular.otf', name='Nimbus Sans Narrow', style='normal', variant='normal', weight=400, stretch='condensed', size='scalable')) = 10.25
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation2/LiberationSans-Regular.ttf', name='Liberation Sans', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation/LiberationSerif-Regular.ttf', name='Liberation Serif', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Norasi-Italic.ttf', name='Norasi', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-telu-extra/vemana2000.ttf', name='Vemana2000', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/TlwgMono-Bold.ttf', name='Tlwg Mono', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-yrsa-rasa/Yrsa-SemiBold.ttf', name='Yrsa', style='normal', variant='normal', weight=600, stretch='normal', size='scalable')) = 10.24
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/lohit-devanagari/Lohit-Devanagari.ttf', name='Lohit Devanagari', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/TlwgTypist-Oblique.ttf', name='Tlwg Typist', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/ubuntu/Ubuntu-R.ttf', name='Ubuntu', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/samyak/Samyak-Devanagari.ttf', name='Samyak Devanagari', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Laksaman-Italic.ttf', name='Laksaman', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/teluguvijayam/dhurjati.ttf', name='Dhurjati', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Umpush.ttf', name='Umpush', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/C059-Bold.otf', name='C059', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Garuda-BoldOblique.ttf', name='Garuda', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/P052-Roman.otf', name='P052', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/NimbusSans-Italic.otf', name='Nimbus Sans', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Sawasdee-Bold.ttf', name='Sawasdee', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Umpush-Light.ttf', name='Umpush', style='normal', variant='normal', weight=300, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/kacst/KacstLetter.ttf', name='KacstLetter', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation2/LiberationSerif-BoldItalic.ttf', name='Liberation Serif', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/malayalam/Karumbi-Regular.ttf', name='Karumbi', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/URWGothic-BookOblique.otf', name='URW Gothic', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSerifCondensed-Bold.ttf', name='DejaVu Serif', style='normal', variant='normal', weight=700, stretch='condensed', size='scalable')) = 10.535
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/ubuntu/Ubuntu-MI.ttf', name='Ubuntu', style='italic', variant='normal', weight=500, stretch='normal', size='scalable')) = 11.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/Sahadeva/sahadeva.ttf', name='Sahadeva', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/kacst/KacstOffice.ttf', name='KacstOffice', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/samyak-fonts/Samyak-Tamil.ttf', name='Samyak Tamil', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/kacst/KacstQurn.ttf', name='KacstQurn', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/URWBookman-Light.otf', name='URW Bookman', style='normal', variant='normal', weight=300, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/TlwgTypo-BoldOblique.ttf', name='Tlwg Typo', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Kinnari-Oblique.ttf', name='Kinnari', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Loma-Oblique.ttf', name='Loma', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/Sarai/Sarai.ttf', name='Sarai', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/sinhala/lklug.ttf', name='LKLUG', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation/LiberationSans-Italic.ttf', name='Liberation Sans', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Purisa-BoldOblique.ttf', name='Purisa', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf', name='Liberation Sans', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Norasi-BoldItalic.ttf', name='Norasi', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/NimbusSans-Regular.otf', name='Nimbus Sans', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/TlwgTypo-Bold.ttf', name='Tlwg Typo', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/teluguvijayam/LakkiReddy.ttf', name='LakkiReddy', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/abyssinica/AbyssinicaSIL-Regular.ttf', name='Abyssinica SIL', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/freefont/FreeSerifBoldItalic.ttf', name='FreeSerif', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-yrsa-rasa/Yrsa-Regular.ttf', name='Yrsa', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Umpush-LightOblique.ttf', name='Umpush', style='oblique', variant='normal', weight=300, stretch='normal', size='scalable')) = 11.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/freefont/FreeSansBold.ttf', name='FreeSans', style='normal', variant='normal', weight=600, stretch='normal', size='scalable')) = 10.24
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation2/LiberationSans-BoldItalic.ttf', name='Liberation Sans', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-orya-extra/utkal.ttf', name='ori1Uni', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Norasi-Bold.ttf', name='Norasi', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/TlwgTypist-BoldOblique.ttf', name='Tlwg Typist', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/teluguvijayam/Gurajada.ttf', name='Gurajada', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation2/LiberationMono-Bold.ttf', name='Liberation Mono', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/lao/Phetsarath_OT.ttf', name='Phetsarath OT', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc', name='Noto Sans CJK JP', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/malayalam/Chilanka-Regular.otf', name='Chilanka', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-beng-extra/Mukti.ttf', name='Mukti', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/malayalam/Gayathri-Regular.otf', name='Gayathri', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation/LiberationSans-BoldItalic.ttf', name='Liberation Sans', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-yrsa-rasa/Rasa-Bold.ttf', name='Rasa', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/noto/NotoSerifCJK-Bold.ttc', name='Noto Serif CJK JP', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation/LiberationSerif-Italic.ttf', name='Liberation Serif', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation2/LiberationSerif-Regular.ttf', name='Liberation Serif', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Purisa-Bold.ttf', name='Purisa', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/kacst/KacstDigital.ttf', name='KacstDigital', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Umpush-Bold.ttf', name='Umpush', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/lohit-bengali/Lohit-Bengali.ttf', name='Lohit Bengali', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Garuda-Bold.ttf', name='Garuda', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation2/LiberationMono-Italic.ttf', name='Liberation Mono', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/malayalam/AnjaliOldLipi-Regular.ttf', name='AnjaliOldLipi', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Waree.ttf', name='Waree', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/TlwgTypewriter.ttf', name='Tlwg Typewriter', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/teluguvijayam/PottiSreeramulu.ttf', name='Potti Sreeramulu', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/teluguvijayam/mallanna.ttf', name='Mallanna', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/ubuntu/UbuntuMono-R.ttf', name='Ubuntu Mono', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/C059-BdIta.otf', name='C059', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/padauk/PadaukBook-Bold.ttf', name='Padauk Book', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSansMono-Oblique.ttf', name='DejaVu Sans Mono', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-yrsa-rasa/Rasa-SemiBold.ttf', name='Rasa', style='normal', variant='normal', weight=600, stretch='normal', size='scalable')) = 10.24
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/ubuntu/Ubuntu-Th.ttf', name='Ubuntu', style='normal', variant='normal', weight=250, stretch='normal', size='scalable')) = 10.1925
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-telu-extra/Pothana2000.ttf', name='Pothana2000', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation/LiberationSerif-BoldItalic.ttf', name='Liberation Serif', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/kacst-one/KacstOne-Bold.ttf', name='KacstOne', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/freefont/FreeMonoOblique.ttf', name='FreeMono', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/TlwgMono-Oblique.ttf', name='Tlwg Mono', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Garuda.ttf', name='Garuda', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/freefont/FreeSansBoldOblique.ttf', name='FreeSans', style='oblique', variant='normal', weight=600, stretch='normal', size='scalable')) = 11.24
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/freefont/FreeSans.ttf', name='FreeSans', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Norasi-BoldOblique.ttf', name='Norasi', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf', name='DejaVu Sans Mono', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-yrsa-rasa/Yrsa-BoldItalic.ttf', name='Yrsa', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/samyak-fonts/Samyak-Malayalam.ttf', name='Samyak Malayalam', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/malayalam/Uroob-Regular.ttf', name='Uroob', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/NimbusRoman-Italic.otf', name='Nimbus Roman', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-yrsa-rasa/Yrsa-Light.ttf', name='Yrsa', style='normal', variant='normal', weight=300, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/ubuntu/UbuntuMono-RI.ttf', name='Ubuntu Mono', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/malayalam/Manjari-Thin.otf', name='Manjari', style='normal', variant='normal', weight=100, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation/LiberationSerif-Bold.ttf', name='Liberation Serif', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/NimbusRoman-Bold.otf', name='Nimbus Roman', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSansCondensed.ttf', name='DejaVu Sans', style='normal', variant='normal', weight=400, stretch='condensed', size='scalable')) = 0.25
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/lohit-tamil/Lohit-Tamil.ttf', name='Lohit Tamil', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Sawasdee-BoldOblique.ttf', name='Sawasdee', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/TlwgMono.ttf', name='Tlwg Mono', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/NimbusSansNarrow-Bold.otf', name='Nimbus Sans Narrow', style='normal', variant='normal', weight=700, stretch='condensed', size='scalable')) = 10.535
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/lohit-tamil-classical/Lohit-Tamil-Classical.ttf', name='Lohit Tamil Classical', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/URWGothic-Demi.otf', name='URW Gothic', style='normal', variant='normal', weight=600, stretch='normal', size='scalable')) = 10.24
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-deva-extra/chandas1-2.ttf', name='Chandas', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Loma.ttf', name='Loma', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', name='DejaVu Sans', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 0.33499999999999996
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/kacst/KacstScreen.ttf', name='KacstScreen', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSerif-Italic.ttf', name='DejaVu Serif', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/lohit-malayalam/Lohit-Malayalam.ttf', name='Lohit Malayalam', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/NimbusSans-BoldItalic.otf', name='Nimbus Sans', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-gujr-extra/padmaa-Medium-0.5.ttf', name='padmaa', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/teluguvijayam/Mandali-Regular.ttf', name='Mandali', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/kacst/KacstTitleL.ttf', name='KacstTitleL', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/NimbusMonoPS-BoldItalic.otf', name='Nimbus Mono PS', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/kacst/KacstDecorative.ttf', name='KacstDecorative', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/ubuntu/Ubuntu-BI.ttf', name='Ubuntu', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/URWGothic-Book.otf', name='URW Gothic', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/TlwgTypist.ttf', name='Tlwg Typist', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/freefont/FreeSansOblique.ttf', name='FreeSans', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation/LiberationMono-Bold.ttf', name='Liberation Mono', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/teluguvijayam/RaviPrakash.ttf', name='RaviPrakash', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/lohit-gujarati/Lohit-Gujarati.ttf', name='Lohit Gujarati', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-yrsa-rasa/Yrsa-SemiBoldItalic.ttf', name='Yrsa', style='italic', variant='normal', weight=600, stretch='normal', size='scalable')) = 11.24
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tibetan-machine/TibetanMachineUni.ttf', name='Tibetan Machine Uni', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/NimbusRoman-Regular.otf', name='Nimbus Roman', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/malayalam/Suruma.ttf', name='Suruma', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/Nakula/nakula.ttf', name='Nakula', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSansCondensed-Oblique.ttf', name='DejaVu Sans', style='oblique', variant='normal', weight=400, stretch='condensed', size='scalable')) = 1.25
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-gujr-extra/Rekha.ttf', name='Rekha', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-beng-extra/LikhanNormal.ttf', name='Likhan', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation/LiberationSansNarrow-Italic.ttf', name='Liberation Sans Narrow', style='italic', variant='normal', weight=400, stretch='condensed', size='scalable')) = 11.25
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/ubuntu/Ubuntu-RI.ttf', name='Ubuntu', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/TlwgTypewriter-BoldOblique.ttf', name='Tlwg Typewriter', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/malayalam/RaghuMalayalamSans-Regular.ttf', name='RaghuMalayalamSans', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation/LiberationMono-BoldItalic.ttf', name='Liberation Mono', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/TlwgTypo-Oblique.ttf', name='Tlwg Typo', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-yrsa-rasa/Yrsa-MediumItalic.ttf', name='Yrsa', style='italic', variant='normal', weight=500, stretch='normal', size='scalable')) = 11.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-deva-extra/kalimati.ttf', name='Kalimati', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation2/LiberationSerif-Bold.ttf', name='Liberation Serif', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/malayalam/Gayathri-Thin.otf', name='Gayathri', style='normal', variant='normal', weight=100, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Kinnari-Italic.ttf', name='Kinnari', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/noto/NotoSerifCJK-Regular.ttc', name='Noto Serif CJK JP', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/kacst/KacstBook.ttf', name='KacstBook', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-yrsa-rasa/Yrsa-LightItalic.ttf', name='Yrsa', style='italic', variant='normal', weight=300, stretch='normal', size='scalable')) = 11.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/teluguvijayam/suranna.ttf', name='Suranna', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/teluguvijayam/Ponnala.ttf', name='Ponnala', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/ubuntu/Ubuntu-C.ttf', name='Ubuntu Condensed', style='normal', variant='normal', weight=400, stretch='condensed', size='scalable')) = 10.25
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/P052-Bold.otf', name='P052', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/StandardSymbolsPS.otf', name='Standard Symbols PS', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/NimbusSansNarrow-BoldOblique.otf', name='Nimbus Sans Narrow', style='oblique', variant='normal', weight=700, stretch='condensed', size='scalable')) = 11.535
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-yrsa-rasa/Rasa-Medium.ttf', name='Rasa', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSansCondensed-Bold.ttf', name='DejaVu Sans', style='normal', variant='normal', weight=700, stretch='condensed', size='scalable')) = 0.5349999999999999
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/kacst/KacstArt.ttf', name='KacstArt', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Sawasdee.ttf', name='Sawasdee', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Norasi.ttf', name='Norasi', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/droid/DroidSansFallbackFull.ttf', name='Droid Sans Fallback', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-yrsa-rasa/Yrsa-Bold.ttf', name='Yrsa', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/URWGothic-DemiOblique.otf', name='URW Gothic', style='oblique', variant='normal', weight=600, stretch='normal', size='scalable')) = 11.24
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-yrsa-rasa/Rasa-Light.ttf', name='Rasa', style='normal', variant='normal', weight=300, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Kinnari-Bold.ttf', name='Kinnari', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-gujr-extra/padmaa-Bold.1.1.ttf', name='padmaa-Bold.1.1', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSansMono-Bold.ttf', name='DejaVu Sans Mono', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSansMono-BoldOblique.ttf', name='DejaVu Sans Mono', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-beng-extra/JamrulNormal.ttf', name='Jamrul', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/samyak-fonts/Samyak-Gujarati.ttf', name='Samyak Gujarati', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation2/LiberationSans-Bold.ttf', name='Liberation Sans', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/malayalam/Rachana-Regular.ttf', name='Rachana', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSans-Oblique.ttf', name='DejaVu Sans', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 1.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/lohit-telugu/Lohit-Telugu.ttf', name='Lohit Telugu', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/URWBookman-LightItalic.otf', name='URW Bookman', style='italic', variant='normal', weight=300, stretch='normal', size='scalable')) = 11.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSansCondensed-BoldOblique.ttf', name='DejaVu Sans', style='oblique', variant='normal', weight=700, stretch='condensed', size='scalable')) = 1.535
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/teluguvijayam/Suravaram.ttf', name='Suravaram', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-yrsa-rasa/Yrsa-Italic.ttf', name='Yrsa', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/lohit-assamese/Lohit-Assamese.ttf', name='Lohit Assamese', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Umpush-Oblique.ttf', name='Umpush', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Loma-Bold.ttf', name='Loma', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-beng-extra/Muktibold.ttf', name='Mukti', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSans-BoldOblique.ttf', name='DejaVu Sans', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 1.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/padauk/Padauk-Bold.ttf', name='Padauk', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/Gargi/Gargi.ttf', name='Gargi', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-beng-extra/Ani.ttf', name='Ani', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-kalapi/Kalapi.ttf', name='Kalapi', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/freefont/FreeMonoBoldOblique.ttf', name='FreeMono', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/lohit-punjabi/Lohit-Gurmukhi.ttf', name='Lohit Gurmukhi', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/URWBookman-Demi.otf', name='URW Bookman', style='normal', variant='normal', weight=600, stretch='normal', size='scalable')) = 10.24
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Kinnari.ttf', name='Kinnari', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/teluguvijayam/ramabhadra.ttf', name='Ramabhadra', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/kacst/KacstNaskh.ttf', name='KacstNaskh', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation2/LiberationMono-Regular.ttf', name='Liberation Mono', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/padauk/PadaukBook-Regular.ttf', name='Padauk Book', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Laksaman-BoldItalic.ttf', name='Laksaman', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/ubuntu/UbuntuMono-B.ttf', name='Ubuntu Mono', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSans-ExtraLight.ttf', name='DejaVu Sans', style='normal', variant='normal', weight=200, stretch='normal', size='scalable')) = 0.24
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSerifCondensed-BoldItalic.ttf', name='DejaVu Serif', style='italic', variant='normal', weight=700, stretch='condensed', size='scalable')) = 11.535
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/teluguvijayam/Ramaraja-Regular.ttf', name='Ramaraja', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/teluguvijayam/NTR.ttf', name='NTR', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/NimbusMonoPS-Regular.otf', name='Nimbus Mono PS', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/kacst/mry_KacstQurn.ttf', name='mry_KacstQurn', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Sawasdee-Oblique.ttf', name='Sawasdee', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/TlwgMono-BoldOblique.ttf', name='Tlwg Mono', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/malayalam/Rachana-Bold.ttf', name='Rachana', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/NimbusMonoPS-Bold.otf', name='Nimbus Mono PS', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Laksaman.ttf', name='Laksaman', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/P052-Italic.otf', name='P052', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/teluguvijayam/SreeKrushnadevaraya.ttf', name='Sree Krushnadevaraya', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/lohit-oriya/Lohit-Odia.ttf', name='Lohit Odia', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/C059-Roman.otf', name='C059', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Garuda-Oblique.ttf', name='Garuda', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-guru-extra/Saab.ttf', name='Saab', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/Gubbi/Gubbi.ttf', name='Gubbi', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Waree-Bold.ttf', name='Waree', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/malayalam/Gayathri-Bold.otf', name='Gayathri', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/NimbusRoman-BoldItalic.otf', name='Nimbus Roman', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-yrsa-rasa/Yrsa-Medium.ttf', name='Yrsa', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/teluguvijayam/TimmanaRegular.ttf', name='Timmana', style='normal', variant='normal', weight=900, stretch='normal', size='scalable')) = 10.525
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Laksaman-Bold.ttf', name='Laksaman', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-beng-extra/MitraMono.ttf', name='Mitra ', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/C059-Italic.otf', name='C059', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf', name='DejaVu Serif', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/freefont/FreeSerif.ttf', name='FreeSerif', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation/LiberationMono-Italic.ttf', name='Liberation Mono', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation/LiberationMono-Regular.ttf', name='Liberation Mono', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/teluguvijayam/Gidugu.ttf', name='Gidugu', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/NimbusMonoPS-Italic.otf', name='Nimbus Mono PS', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/ubuntu/Ubuntu-M.ttf', name='Ubuntu', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Norasi-Oblique.ttf', name='Norasi', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Loma-BoldOblique.ttf', name='Loma', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSerifCondensed.ttf', name='DejaVu Serif', style='normal', variant='normal', weight=400, stretch='condensed', size='scalable')) = 10.25
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/freefont/FreeMono.ttf', name='FreeMono', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/malayalam/Meera-Regular.ttf', name='Meera', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-yrsa-rasa/Rasa-Regular.ttf', name='Rasa', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation2/LiberationMono-BoldItalic.ttf', name='Liberation Mono', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', name='DejaVu Sans', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 0.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/ubuntu/Ubuntu-B.ttf', name='Ubuntu', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSerif-BoldItalic.ttf', name='DejaVu Serif', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/NimbusSans-Bold.otf', name='Nimbus Sans', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Purisa-Oblique.ttf', name='Purisa', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/D050000L.otf', name='D050000L', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/teluguvijayam/SyamalaRamana.ttf', name='Syamala Ramana', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/TlwgTypist-Bold.ttf', name='Tlwg Typist', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/TlwgTypo.ttf', name='Tlwg Typo', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/ubuntu/Ubuntu-LI.ttf', name='Ubuntu', style='italic', variant='normal', weight=300, stretch='normal', size='scalable')) = 11.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/libreoffice/opens___.ttf', name='OpenSymbol', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation/LiberationSansNarrow-Bold.ttf', name='Liberation Sans Narrow', style='normal', variant='normal', weight=700, stretch='condensed', size='scalable')) = 10.535
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-gujr-extra/padmaa.ttf', name='padmaa', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/ttf-khmeros-core/KhmerOS.ttf', name='Khmer OS', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/kacst-one/KacstOne.ttf', name='KacstOne', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/ubuntu/Ubuntu-L.ttf', name='Ubuntu', style='normal', variant='normal', weight=300, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-gujr-extra/aakar-medium.ttf', name='aakar', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/malayalam/Manjari-Bold.otf', name='Manjari', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/fonts-deva-extra/samanata.ttf', name='Samanata', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/noto/NotoMono-Regular.ttf', name='Noto Mono', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/teluguvijayam/TenaliRamakrishna-Regular.ttf', name='TenaliRamakrishna', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/teluguvijayam/NATS.ttf', name='NATS', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/freefont/FreeMonoBold.ttf', name='FreeMono', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation/LiberationSansNarrow-Regular.ttf', name='Liberation Sans Narrow', style='normal', variant='normal', weight=400, stretch='condensed', size='scalable')) = 10.25
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Umpush-BoldOblique.ttf', name='Umpush', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/freefont/FreeSerifItalic.ttf', name='FreeSerif', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Kinnari-BoldItalic.ttf', name='Kinnari', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/ubuntu/UbuntuMono-BI.ttf', name='Ubuntu Mono', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/teluguvijayam/Peddana-Regular.ttf', name='Peddana', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/lohit-kannada/Lohit-Kannada.ttf', name='Lohit Kannada', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/TlwgTypewriter-Bold.ttf', name='Tlwg Typewriter', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation/LiberationSansNarrow-BoldItalic.ttf', name='Liberation Sans Narrow', style='italic', variant='normal', weight=700, stretch='condensed', size='scalable')) = 11.535
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/kacst/KacstFarsi.ttf', name='KacstFarsi', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/ttf-khmeros-core/KhmerOSsys.ttf', name='Khmer OS System', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSerif-Bold.ttf', name='DejaVu Serif', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation2/LiberationSans-Italic.ttf', name='Liberation Sans', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/malayalam/Manjari-Regular.otf', name='Manjari', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/kacst/KacstPen.ttf', name='KacstPen', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf', name='Liberation Sans', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/malayalam/Keraleeyam-Regular.ttf', name='Keraleeyam', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/NimbusSansNarrow-Oblique.otf', name='Nimbus Sans Narrow', style='oblique', variant='normal', weight=400, stretch='condensed', size='scalable')) = 11.25
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/freefont/FreeSerifBold.ttf', name='FreeSerif', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/malayalam/Dyuthi-Regular.ttf', name='Dyuthi', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/P052-BoldItalic.otf', name='P052', style='italic', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Purisa.ttf', name='Purisa', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/liberation2/LiberationSerif-Italic.ttf', name='Liberation Serif', style='italic', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/noto/NotoSansMono-Regular.ttf', name='Noto Sans Mono', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/TlwgTypewriter-Oblique.ttf', name='Tlwg Typewriter', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/pagul/Pagul.ttf', name='Pagul', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/Navilu/Navilu.ttf', name='Navilu', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/kacst/KacstTitle.ttf', name='KacstTitle', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuMathTeXGyre.ttf', name='DejaVu Math TeX Gyre', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/Z003-MediumItalic.otf', name='Z003', style='italic', variant='normal', weight=500, stretch='normal', size='scalable')) = 11.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/urw-base35/URWBookman-DemiItalic.otf', name='URW Bookman', style='italic', variant='normal', weight=600, stretch='normal', size='scalable')) = 11.24
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc', name='Noto Sans CJK JP', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Waree-Oblique.ttf', name='Waree', style='oblique', variant='normal', weight=400, stretch='normal', size='scalable')) = 11.05
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/dejavu/DejaVuSerifCondensed-Italic.ttf', name='DejaVu Serif', style='italic', variant='normal', weight=400, stretch='condensed', size='scalable')) = 11.25
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Kinnari-BoldOblique.ttf', name='Kinnari', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/noto/NotoSansMono-Bold.ttf', name='Noto Sans Mono', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/kacst/KacstPoster.ttf', name='KacstPoster', style='normal', variant='normal', weight=500, stretch='normal', size='scalable')) = 10.145
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Waree-BoldOblique.ttf', name='Waree', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
-DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/padauk/Padauk-Regular.ttf', name='Padauk', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
-DEBUG:matplotlib.font_manager:findfont: Matching sans\-serif:style=normal:variant=normal:weight=normal:stretch=normal:size=8.0 to DejaVu Sans ('/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans.ttf') with score of 0.050000.
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10b5bb7430> <matplotlib.colors.Normalize object at 0x7d10b5bb7430>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10b5baba60>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10b5bb7430> <matplotlib.colors.Normalize object at 0x7d10b5bb7430>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10b5baba60>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10b5baa9e0>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10b5bd8070> <matplotlib.colors.Normalize object at 0x7d10b5bb7430>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10b5b833a0>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10b5bd9570> <matplotlib.colors.Normalize object at 0x7d10b5bd8070>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10b5bdb310>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10b5bd9f30> <matplotlib.colors.Normalize object at 0x7d10b5bd9570>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10b5bd9480>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10ef5953f0> <matplotlib.colors.Normalize object at 0x7d10b5bd9f30>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10b5bdae90>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10ef5b8160> <matplotlib.colors.Normalize object at 0x7d10ef5953f0>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10b5b4ff40>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10bc5e1d20> <matplotlib.colors.Normalize object at 0x7d10ef5b8160>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10ef5b9780>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10ef595600> <matplotlib.colors.Normalize object at 0x7d10bc5e1d20>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10ef5b96c0>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10b5bc17b0> <matplotlib.colors.Normalize object at 0x7d10ef595600>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10b5b2dcf0>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10b5bb4160> <matplotlib.colors.Normalize object at 0x7d10b5bc17b0>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10ef596a70>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10ef5dfd00> <matplotlib.colors.Normalize object at 0x7d10b5bb4160>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10b5bb4a30>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10b5bc1ab0> <matplotlib.colors.Normalize object at 0x7d10ef5dfd00>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10b5bc0c70>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10b5bb4340> <matplotlib.colors.Normalize object at 0x7d10b5bc1ab0>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10ef596770>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10b5b4d840> <matplotlib.colors.Normalize object at 0x7d10b5bb4340>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10ef5965f0>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10ef5dc280> <matplotlib.colors.Normalize object at 0x7d10b5b4d840>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10b5bb5cc0>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10b5bd9fc0> <matplotlib.colors.Normalize object at 0x7d10ef5dc280>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10b5b4fd60>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10ef5dca60> <matplotlib.colors.Normalize object at 0x7d10b5bd9fc0>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10ef5deaa0>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10ef594580> <matplotlib.colors.Normalize object at 0x7d10ef5dca60>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10ef594a00>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10ef594370> <matplotlib.colors.Normalize object at 0x7d10ef594580>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10ef5955d0>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10ef595690> <matplotlib.colors.Normalize object at 0x7d10ef594370>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10ef5958d0>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10ef5945b0> <matplotlib.colors.Normalize object at 0x7d10ef595690>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10ef594970>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10ef5ded40> <matplotlib.colors.Normalize object at 0x7d10ef5945b0>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10ef5dc910>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10b63e1930> <matplotlib.colors.Normalize object at 0x7d10ef5ded40>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10b63e1300>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10bc5cdb70> <matplotlib.colors.Normalize object at 0x7d10b63e1930>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10b63e0af0>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10bc5cf130> <matplotlib.colors.Normalize object at 0x7d10bc5cdb70>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10b63e0ac0>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10b5bb6380> <matplotlib.colors.Normalize object at 0x7d10bc5cf130>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10bc530c70>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10bc5ce5c0> <matplotlib.colors.Normalize object at 0x7d10b5bb6380>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10b5bb4880>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10b5b4f8e0> <matplotlib.colors.Normalize object at 0x7d10bc5ce5c0>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10b5bb6230>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10bc5e1870> <matplotlib.colors.Normalize object at 0x7d10b5b4f8e0>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10b5ba9030>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10bc5cf820> <matplotlib.colors.Normalize object at 0x7d10bc5e1870>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10b5b2ee90>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10b63e1690> <matplotlib.colors.Normalize object at 0x7d10bc5cf820>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10b5b82aa0>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10b5b4f700> <matplotlib.colors.Normalize object at 0x7d10b63e1690>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10b5b82ec0>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10bc5ce8c0> <matplotlib.colors.Normalize object at 0x7d10b5b4f700>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10b63e1330>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10b5ba98d0> <matplotlib.colors.Normalize object at 0x7d10bc5ce8c0>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10b5bdae30>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7d10b5babc40> <matplotlib.colors.Normalize object at 0x7d10b5ba98d0>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7d10be269b10>

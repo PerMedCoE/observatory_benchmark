@@ -70,6 +70,7 @@
 #include "PhysiCell_utilities.h"
 #include "PhysiCell_constants.h"
 #include "../BioFVM/BioFVM_vector.h" 
+#include "../modules/PhysiCell_settings.h"
 
 #ifdef ADDON_PHYSIBOSS
 #include "../addons/PhysiBoSS/src/maboss_intracellular.h"
@@ -962,11 +963,13 @@ void Cell::copy_function_pointers(Cell* copy_me)
 
 void Cell::add_potentials(Cell* other_agent)
 {
-	const double adhesion_density = 1e5;
-	const double single_bond_energy = 8.56e-20;
+	const double adhesion_density = ::PhysiCell::parameters.doubles("adhesion_density");
+	const double boltzmann_constant = 1.38e-23;
+	const double temperature_kelvin = 310.0;
+	const double single_bond_work = 20.0 * boltzmann_constant * temperature_kelvin;
 	const double micron_to_meter = 1e-6;
 	const double seconds_per_minute = 60.0;
-	const double translational_drag = 0.1;
+	const double translational_drag = ::PhysiCell::parameters.doubles("translational_drag"); 
 	std::cout << "using extended Hertz"<< std::endl;
 	// if( this->ID == other_agent->ID )
 	if( this == other_agent )
@@ -991,6 +994,7 @@ void Cell::add_potentials(Cell* other_agent)
 	double b_radius_m = b_radius * micron_to_meter;
 	double deformation_m = deformation * micron_to_meter;
 	double effective_radius_m = ( a_radius_m * b_radius_m ) / ( a_radius_m + b_radius_m );
+	double gamma = adhesion_density * single_bond_work;
 
 	double a_poisson_ratio = poisson_ratio;
 	double b_poisson_ratio = (*other_agent).poisson_ratio;
@@ -1001,7 +1005,7 @@ void Cell::add_potentials(Cell* other_agent)
 			( 1.0 - a_poisson_ratio * a_poisson_ratio ) / a_young_modulus +
 			( 1.0 - b_poisson_ratio * b_poisson_ratio ) / b_young_modulus
 		) * sqrt( effective_radius_m ) * pow( deformation_m , (double) 1.5 )
-		- M_PI * single_bond_energy * adhesion_density * effective_radius_m;
+		- M_PI * gamma * effective_radius_m;
 
 	/////////////////////////////////////////////////////////////////
 	if( fabs(interaction_force) < 1e-16 )
@@ -1010,6 +1014,8 @@ void Cell::add_potentials(Cell* other_agent)
 
 	// Convert the SI contact force into PhysiCell's native micron/min velocity.
 	double speed_um_per_min = interaction_force / translational_drag * seconds_per_minute / micron_to_meter;
+	// double speed_um_per_min = interaction_force * seconds_per_minute / micron_to_meter;
+
 	double velocity_scale = speed_um_per_min / distance;
 	// for( int i = 0 ; i < 3 ; i++ ) 
 	// {
