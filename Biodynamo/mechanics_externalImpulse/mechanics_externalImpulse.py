@@ -65,7 +65,7 @@ def generate_plots(positions_df, speeds_df, output_folder):
     fig, ax = plt.subplots(figsize=(10, 6))
     ax.plot(positions_df['time'], positions_df['position_x'], 'x', color='blue', markersize=8, markeredgewidth=2)
     ax.set_xlabel('Time (s)', fontsize=12)
-    ax.set_ylabel('Position X (μm)', fontsize=12)
+    ax.set_ylabel('Position X (nm)', fontsize=12)
     ax.set_title('Cell Position vs Time', fontsize=14, fontweight='bold')
     ax.grid(True, alpha=0.3)
     plt.tight_layout()
@@ -77,7 +77,7 @@ def generate_plots(positions_df, speeds_df, output_folder):
     fig, ax = plt.subplots(figsize=(10, 6))
     ax.plot(speeds_df['time'], speeds_df['speed_x'], 'x', color='red', markersize=8, markeredgewidth=2)
     ax.set_xlabel('Time (s)', fontsize=12)
-    ax.set_ylabel('Speed X (μm/s)', fontsize=12)
+    ax.set_ylabel('Speed X (nm/s)', fontsize=12)
     ax.set_title('Cell Speed vs Time', fontsize=14, fontweight='bold')
     ax.grid(True, alpha=0.3)
     plt.tight_layout()
@@ -97,15 +97,15 @@ def generate_pngs(positions_df, output_folder):
         fig, ax = plt.subplots(figsize=(10, 6))
         
         # Draw the cell as a circle
-        cell_radius = 5  # radius in μm
+        cell_radius = 5  # radius in nm
         circle = plt.Circle((row['position_x'], row['position_y']), cell_radius, 
                            color='blue', alpha=0.6, edgecolor='darkblue', linewidth=2)
         
         # Set the axis properties
         ax.set_aspect('equal')
         ax.add_artist(circle)
-        ax.set_xlabel('X Position (μm)', fontsize=12)
-        ax.set_ylabel('Y Position (μm)', fontsize=12)
+        ax.set_xlabel('X Position (nm)', fontsize=12)
+        ax.set_ylabel('Y Position (nm)', fontsize=12)
         ax.set_xlim([x_min, x_max])
         ax.set_ylim([-15.0, 15.0])
         ax.grid(True, alpha=0.3)

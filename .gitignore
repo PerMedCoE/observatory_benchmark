@@ -19,3 +19,7 @@ PhysiCell/code/many_diffusion*
 
 .vscodePhysiCell/results/*/summary.csv
 *.DS_Store
+
+**/build/
+
+.vscode/

@@ -33,11 +33,21 @@ class Moving_cell : public Cell {
 
   int GetId() { return id_; }
 
+  double GetInitialForceTime() { return initial_force_time_; }
+  
+  double GetFinalForceTime() { return final_force_time_; }
+  
+  void SetInitialForceTime(double init_time_force) { initial_force_time_ = init_time_force; }
+
+  void SetFinalForceTime(double fin_time_force) { final_force_time_ = fin_time_force;}
+
  private:
   Double3 speed_ = {0.0, 0.0, 0.0};
   Double3 force_ = {0.0, 0.0, 0.0};
   double mu_ = 0.0;
   int id_ = 0;
+  double initial_force_time_ = 0.0;
+  double final_force_time_ = 0.0;
 };
 
 }  // namespace bdm

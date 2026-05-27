@@ -15,12 +15,14 @@ struct Move : public Behavior {
   void Run(Agent* a) override {
 
     real_t time = bdm::Simulation::GetActive()->GetScheduler()->GetSimulatedTime();
+    real_t timestep = bdm::Simulation::GetActive()->GetParam()->simulation_time_step;
+
 
     if (auto* cell = bdm_static_cast<Moving_cell*>(a)) {
-      if ((6-epsilon) <= time && time <= (6+epsilon)) {
+      if (time >= cell->GetInitialForceTime() && time < cell->GetFinalForceTime()) {
         speed = {cell->GetForce()[0] / cell->GetFrictionCoefficient(), 0.0, 0.0}; // Constant speed due to constant force and friction
         cell->SetSpeed(speed);
-        cell->ApplyDisplacement(cell->GetSpeed());
+        cell->ApplyDisplacement(cell->GetSpeed()*timestep);
         distance_covered += cell->GetSpeed();
       }
       else {
@@ -29,7 +31,6 @@ struct Move : public Behavior {
   }
 }
   Double3 distance_covered = {0.0, 0.0, 0.0};
-  const real_t epsilon = 1e-6;
   Double3 speed = {0.0, 0.0, 0.0};
 };
 

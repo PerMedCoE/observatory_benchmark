@@ -53,6 +53,8 @@ inline int Simulate(int argc, const char** argv) {
   int number_of_cells = 1;
   double const F0 = 20.0*pow(10, -12); // External Impulse force in N
   double const mu = 7.2/60.; // Friction coefficient in kg/s. v = F/mu
+  double initial_force_time = 3;
+  double final_force_time = 9;
 
   auto* rm = simulation.GetResourceManager();
   auto* cell1 = new Moving_cell({0.0, 0.0, 0.0});  // Cells' centers 30um
@@ -63,6 +65,8 @@ inline int Simulate(int argc, const char** argv) {
   cell1->SetFrictionCoefficient(mu);
   cell1->AddBehavior(new Move());
   cell1->SetId(0);
+  cell1->SetInitialForceTime(initial_force_time);
+  cell1->SetFinalForceTime(final_force_time);
 
   rm->AddAgent(cell1);
 
@@ -100,7 +104,7 @@ inline int Simulate(int argc, const char** argv) {
 
   for (size_t j = 0; j < time_steps; j++) {
     for (size_t i = 0; i < cell_positions.size(); i++) {
-      file << j*simulation.GetParam()->simulation_time_step << "\t " << cell_positions[i][j] * pow(10,6); // Convert from m to um
+      file << j*simulation.GetParam()->simulation_time_step << "\t " << cell_positions[i][j] * pow(10,9); // Convert from m to nm
     }
     file << std::endl;
   }
@@ -114,7 +118,7 @@ inline int Simulate(int argc, const char** argv) {
 
   for (size_t j = 0; j < time_steps; j++) {
     for (size_t i = 0; i < cell_speeds.size(); i++) {
-      speed_file << j*simulation.GetParam()->simulation_time_step << "\t " << cell_speeds[i][j] * pow(10,6); // Convert from m/s to um/s
+      speed_file << j*simulation.GetParam()->simulation_time_step << "\t " << cell_speeds[i][j] * pow(10,9); // Convert from m/s to nm/s
     }
     speed_file << std::endl;
   }

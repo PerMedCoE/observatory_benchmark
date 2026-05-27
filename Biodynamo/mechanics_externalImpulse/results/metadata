@@ -7,8 +7,8 @@
 [1mGeneral[0m
 Command				: ./build/unit-test-mechanics-external-impulse  
 Simulation name			: unit-test-mechanics-external-impulse
-Total simulation runtime	: 81 ms
-Peak memory usage (MB)		: 285.621
+Total simulation runtime	: 12 ms
+Peak memory usage (MB)		: 284.25
 Number of iterations executed	: 61
 Number of agents		: 1
 Output directory		: output/unit-test-mechanics-external-impulse
@@ -19,18 +19,18 @@ BioDynaMo real type:		: double
 ***********************************************
 
 [1mTotal execution time per operation[0m
-agent ops: 14
+agent ops: 0
 behavior: 0
 bound space: 0
 continuum: 0
 discretization: 0
-load balancing: 0
+load balancing: 1
 mechanical forces: 0
-set up iteration: 21
-tear down iteration: 15
+set up iteration: 3
+tear down iteration: 3
 track_position: 0
 track_speed: 0
-update environment: 26
+update environment: 1
 update staticness: 0
 update time series: 0
 visualize: 0
