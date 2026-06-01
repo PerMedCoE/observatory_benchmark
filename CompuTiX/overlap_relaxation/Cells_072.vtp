@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<VTKFile version="1.0" type="PolyData" byte_order="LittleEndian"><PolyData><Piece NumberOfLines="0" NumberOfStrips="0" NumberOfPolys="0" NumberOfPoints="2" NumberOfVerts="1"><Points><DataArray type="Float64" Name="x" format="ascii" NumberOfComponents="3">
+-4.99316154542073e-07 0 0
+9.49931615454207e-06 0 0
+</DataArray></Points><PointData><DataArray type="Int64" Name="particle_index" format="ascii" NumberOfComponents="1">
+0
+1
+</DataArray><DataArray type="Int64" Name="parent_index" format="ascii" NumberOfComponents="1">
+0
+0
+</DataArray><DataArray type="Float64" Name="x" format="ascii" NumberOfComponents="3">
+-4.99316154542073e-07 0 0
+9.49931615454207e-06 0 0
+</DataArray><DataArray type="Float64" Name="v" format="ascii" NumberOfComponents="3">
+-2.96786054003324e-12 0 0
+2.96786054003324e-12 0 0
+</DataArray><DataArray type="Float64" Name="a" format="ascii" NumberOfComponents="3">
+1.97061006714094e-14 0 0
+-1.97061006714094e-14 0 0
+</DataArray><DataArray type="Float64" Name="r" format="ascii" NumberOfComponents="1">
+5e-06
+5e-06
+</DataArray><DataArray type="Float64" Name="m" format="ascii" NumberOfComponents="1">
+0
+0
+</DataArray><DataArray type="Float64" Name="M" format="ascii" NumberOfComponents="9">
+0.0600064450916005 0 0 0 0.0600064450916005 0 0 0 0.0600064450916005
+0.0600064450916005 0 0 0 0.0600064450916005 0 0 0 0.0600064450916005
+</DataArray><DataArray type="Float64" Name="id" format="ascii" NumberOfComponents="9">
+1 0 0 0 1 0 0 0 1
+1 0 0 0 1 0 0 0 1
+</DataArray><DataArray type="Float64" Name="F" format="ascii" NumberOfComponents="3">
+1.12269999691267e-15 0 0
+-1.12269999691267e-15 0 0
+</DataArray><DataArray type="Float64" Name="gamma" format="ascii" NumberOfComponents="9">
+0.01 0 0 0 0.01 0 0 0 0.01
+0.01 0 0 0 0.01 0 0 0 0.01
+</DataArray><DataArray type="Float64" Name="E" format="ascii" NumberOfComponents="1">
+450
+450
+</DataArray><DataArray type="Float64" Name="nu" format="ascii" NumberOfComponents="1">
+0.4
+0.4
+</DataArray><DataArray type="Float64" Name="e_adh" format="ascii" NumberOfComponents="1">
+4.28e-15
+4.28e-15
+</DataArray></PointData><Verts><DataArray type="Int64" Name="connectivity" format="ascii" NumberOfComponents="1">
+0 1 
+</DataArray><DataArray type="Int64" Name="offsets" format="ascii" NumberOfComponents="1">
+2
+</DataArray></Verts><CellData><DataArray type="Int64" Name="particle_index" format="ascii" NumberOfComponents="1">
+0
+</DataArray><DataArray type="Float64" Name="dt" format="ascii" NumberOfComponents="1">
+6
+</DataArray><DataArray type="Float64" Name="t" format="ascii" NumberOfComponents="1">
+432
+</DataArray><DataArray type="Float64" Name="t_end" format="ascii" NumberOfComponents="1">
+600
+</DataArray><DataArray type="Float64" Name="t_elapsed" format="ascii" NumberOfComponents="1">
+0.277559
+</DataArray><DataArray type="Int64" Name="current_frame" format="ascii" NumberOfComponents="1">
+72
+</DataArray><DataArray type="Float64" Name="tension" format="ascii" NumberOfComponents="1">
+0
+</DataArray><DataArray type="Float64" Name="gamma_tangential" format="ascii" NumberOfComponents="1">
+1e+08
+</DataArray><DataArray type="Float64" Name="gamma_normal" format="ascii" NumberOfComponents="1">
+1e+08
+</DataArray><DataArray type="Float64" Name="overlap" format="ascii" NumberOfComponents="1">
+1.36769e-09
+</DataArray><DataArray type="Float64" Name="r" format="ascii" NumberOfComponents="1">
+5e-06
+</DataArray></CellData></Piece></PolyData></VTKFile>
