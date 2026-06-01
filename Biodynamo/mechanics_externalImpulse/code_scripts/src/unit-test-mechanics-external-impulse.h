@@ -54,7 +54,7 @@ inline int Simulate(int argc, const char** argv) {
   double const F0 = 20.0*pow(10, -12); // External Impulse force in N
   double const mu = 7.2/60.; // Friction coefficient in kg/s. v = F/mu
   double initial_force_time = 3;
-  double final_force_time = 9;
+  double final_force_time = 6;
 
   auto* rm = simulation.GetResourceManager();
   auto* cell1 = new Moving_cell({0.0, 0.0, 0.0});  // Cells' centers 30um
