@@ -348,9 +348,9 @@ int main( int argc, char** argv )
 
     // - Global parameters:
     //Simulation duration time
-    constexpr Types::Scalar t_end = 600.; // [ s ]
+    constexpr Types::Scalar t_end = 60. * 100.; // [ s ]
     //Time-step size
-    constexpr Types::Scalar dt = 6.; // [ s ]
+    constexpr Types::Scalar dt = 60.; // [ s ]
 
     // - Physical and geometrical parameters:
     //Hepatocyte mass
@@ -365,7 +365,7 @@ int main( int argc, char** argv )
     //Poisson's ratio
     constexpr Types::Scalar nu = 0.4; // [ 1 ]
     //Friction coefficient
-    const Types::Matrix gamma = 0.01 * Types::Matrix::Identity(); // [ kg / s ]
+    const Types::Matrix gamma = 1. * Types::Matrix::Identity(); // [ kg / s ]
     //Specific adhesion energy
     constexpr Types::Scalar adhesion_energy_density = 8.56e-15 / 2; // [ J / m^2 ]
     //Contact interfacial tension
