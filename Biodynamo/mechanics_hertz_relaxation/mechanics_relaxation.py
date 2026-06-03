@@ -91,7 +91,6 @@ def generate_gif(output_folder, csv_out):
     # Open images one by one and append to frames
     frames = []
     for image in image_files:
-        print("Using the image file "+image)
         with Image.open(image) as img:
             frames.append(img.copy())  # Copy the image to store in memory
         

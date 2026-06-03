@@ -7,8 +7,8 @@
 [1mGeneral[0m
 Command				: ./build/unit-test-mechanics-two-cells-hertz-relaxation  
 Simulation name			: unit-test-mechanics-two-cells-hertz-relaxation
-Total simulation runtime	: 99 ms
-Peak memory usage (MB)		: 304.004
+Total simulation runtime	: 104 ms
+Peak memory usage (MB)		: 303.801
 Number of iterations executed	: 100
 Number of agents		: 2
 Output directory		: output/unit-test-mechanics-two-cells-hertz-relaxation
@@ -27,7 +27,7 @@ discretization: 0
 load balancing: 0
 mechanical forces: 0
 set up iteration: 0
-tear down iteration: 1
+tear down iteration: 0
 track_force: 0
 track_position: 0
 update environment: 1
