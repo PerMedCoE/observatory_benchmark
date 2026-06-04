@@ -54,21 +54,21 @@ namespace bdm {
 // cell j on cell i results from ▁F_ij=F_ij^eHertz (d_ij)(▁r_i-▁r_j)/(|▁r_i-▁r_j
 // |)
 
-Real4 ExtendedHertzForce::Calculate(const Agent* lhs, const Agent* rhs) const {
-  const auto* sparam =
+Real4 ExtendedHertzForce::Calculate(const Agent *lhs, const Agent *rhs) const {
+  const auto *sparam =
       Simulation::GetActive()
           ->GetParam()
-          ->Get<SimParam>();  // get a pointer to an instance of SimParam
+          ->Get<SimParam>(); // get a pointer to an instance of SimParam
 
-  const Real3& ref_mass_location = lhs->GetPosition();
+  const Real3 &ref_mass_location = lhs->GetPosition();
   real_t ref_diameter = lhs->GetDiameter();
-  const Real3& nb_mass_location = rhs->GetPosition();
+  const Real3 &nb_mass_location = rhs->GetPosition();
   real_t nb_diameter = rhs->GetDiameter();
 
   real_t r1 = 0.5 * ref_diameter;
   real_t r2 = 0.5 * nb_diameter;
 
-  real_t r_eff = (r1 * r2) / (r1 + r2);  // effective radius
+  real_t r_eff = (r1 * r2) / (r1 + r2); // effective radius
 
   auto c1 = ref_mass_location;
   auto c2 = nb_mass_location;
@@ -82,7 +82,7 @@ Real4 ExtendedHertzForce::Calculate(const Agent* lhs, const Agent* rhs) const {
   // the overlap distance (how much one penetrates in the other)
   real_t delta = r1 + r2 - center_distance;
   // if no overlap : no force
-  real_t epsilon = 1e-10;  // to avoid numerical issues with very small overlaps
+  real_t epsilon = 1e-10; // to avoid numerical issues with very small overlaps
   if ((delta + epsilon) < 0) {
     std::cout << "No force, no overlap. Distance between centers: "
               << center_distance << std::endl;
@@ -91,7 +91,7 @@ Real4 ExtendedHertzForce::Calculate(const Agent* lhs, const Agent* rhs) const {
   // to avoid a division by 0 if the centers are (almost) at the same
   //  location
   if (center_distance < epsilon) {
-    auto* random = Simulation::GetActive()->GetRandom();
+    auto *random = Simulation::GetActive()->GetRandom();
     auto force2on1 = random->template UniformArray<3>(-3.0, 3.0);
 
     std::cout << "No force, centers are at the same location. Force is random: "
@@ -102,7 +102,7 @@ Real4 ExtendedHertzForce::Calculate(const Agent* lhs, const Agent* rhs) const {
 
   real_t f = (4 / 3) * (sparam->composite_young_modulus * std::sqrt(r_eff) *
                         std::pow(delta, 1.5)) -
-             M_PI * sparam->specific_adhesion_energy * r_eff;  // in N
+             M_PI * sparam->specific_adhesion_energy * r_eff; // in N
 
   // std::cout << "Repulsive force: " << (4 * sparam->composite_young_modulus *
   // std::sqrt(r_eff) * std::pow(delta, 1.5)) / 3 << " N, Adhesive force: " <<
@@ -130,4 +130,4 @@ Real4 ExtendedHertzForce::Calculate(const Agent* lhs, const Agent* rhs) const {
   return {force2on1[0], force2on1[1], force2on1[2], 0};
 }
 
-}  // namespace bdm
+} // namespace bdm

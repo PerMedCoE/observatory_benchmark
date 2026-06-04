@@ -17,4 +17,4 @@
 namespace bdm {
 BDM_REGISTER_OP(TrackPosition, "track_position", kCpu);
 BDM_REGISTER_OP(TrackForce, "track_force", kCpu);
-}  // namespace bdm
+} // namespace bdm

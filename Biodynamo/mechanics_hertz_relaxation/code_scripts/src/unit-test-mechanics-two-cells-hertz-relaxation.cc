@@ -18,6 +18,6 @@ namespace bdm {
 
 const ParamGroupUid SimParam::kUid = ParamGroupUidGenerator::Get()->NewUid();
 
-}  // namespace bdm
+} // namespace bdm
 
-int main(int argc, const char** argv) { return bdm::Simulate(argc, argv); }
+int main(int argc, const char **argv) { return bdm::Simulate(argc, argv); }

@@ -21,13 +21,13 @@
 namespace bdm {
 
 class ExtendedHertzForce : public InteractionForce {
- public:
+public:
   ExtendedHertzForce() {}
   virtual ~ExtendedHertzForce() {}
 
-  virtual Real4 Calculate(const Agent* lhs, const Agent* rhs) const override;
+  virtual Real4 Calculate(const Agent *lhs, const Agent *rhs) const override;
 };
 
-}  // namespace bdm
+} // namespace bdm
 
 #endif

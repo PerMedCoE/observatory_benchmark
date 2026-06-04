@@ -15,13 +15,6 @@
 #ifndef UNIT_TEST_MECHANICS_TWO_CELLS_HERTZ_RELAXATION_H_
 #define UNIT_TEST_MECHANICS_TWO_CELLS_HERTZ_RELAXATION_H_
 
-#include <omp.h>
-#include <algorithm>
-#include <cctype>
-#include <limits>
-#include <sstream>
-#include <string>
-#include <vector>
 #include "TAxis.h"
 #include "TCanvas.h"
 #include "TGaxis.h"
@@ -39,14 +32,21 @@
 #include "extended_hertz_force.h"
 #include "moving_cell.h"
 #include "sim_param.h"
+#include <algorithm>
+#include <cctype>
+#include <limits>
+#include <omp.h>
+#include <sstream>
+#include <string>
+#include <vector>
 
 namespace bdm {
 
 using experimental::TimeSeries;
 
-inline std::vector<double> ExtractNumbersFromLine(const std::string& line) {
+inline std::vector<double> ExtractNumbersFromLine(const std::string &line) {
   std::string sanitized = line;
-  for (auto& c : sanitized) {
+  for (auto &c : sanitized) {
     if (!(std::isdigit(c) || c == '-' || c == '+' || c == '.' || c == 'e' ||
           c == 'E')) {
       c = ' ';
@@ -62,8 +62,8 @@ inline std::vector<double> ExtractNumbersFromLine(const std::string& line) {
   return values;
 }
 
-inline bool PlotDistanceAndForceFromCsv(const std::string& position_csv,
-                                        const std::string& force_csv) {
+inline bool PlotDistanceAndForceFromCsv(const std::string &position_csv,
+                                        const std::string &force_csv) {
   std::ifstream pos_in(position_csv);
   std::ifstream force_in(force_csv);
   if (!pos_in.is_open() || !force_in.is_open()) {
@@ -135,20 +135,20 @@ inline bool PlotDistanceAndForceFromCsv(const std::string& position_csv,
   const double x_min = std::min(time_distance.front(), time_force.front());
   const double x_max = std::max(time_distance.back(), time_force.back());
 
-  auto* canvas = new TCanvas("c_hertz", "Hertz Interaction", 1100, 700);
+  auto *canvas = new TCanvas("c_hertz", "Hertz Interaction", 1100, 700);
   gStyle->SetOptStat(0);
 
-  auto* pad_distance = new TPad("pad_distance", "pad_distance", 0, 0, 1, 1);
+  auto *pad_distance = new TPad("pad_distance", "pad_distance", 0, 0, 1, 1);
   pad_distance->SetGrid();
   pad_distance->SetLeftMargin(0.12);
   pad_distance->SetRightMargin(0.14);
   pad_distance->Draw();
   pad_distance->cd();
 
-  auto* distance_graph = new TGraph(static_cast<int>(time_distance.size()),
+  auto *distance_graph = new TGraph(static_cast<int>(time_distance.size()),
                                     time_distance.data(), distance.data());
   distance_graph->SetTitle(
-      "Cell Distance and Force vs Time;Time (s);Distance between centers "
+      "Cell Distance and Force vs Time;Time (min);Distance between centers "
       "[#mum]");
   distance_graph->SetLineColor(kBlue + 1);
   distance_graph->SetLineWidth(3);
@@ -158,14 +158,14 @@ inline bool PlotDistanceAndForceFromCsv(const std::string& position_csv,
   distance_graph->GetYaxis()->SetRangeUser(dist_min, dist_max);
   distance_graph->Draw("AL");
 
-  auto* touching_line = new TLine(x_min, 10.0, x_max, 10.0);
+  auto *touching_line = new TLine(x_min, 10.0, x_max, 10.0);
   touching_line->SetLineStyle(2);
   touching_line->SetLineColor(kBlue + 2);
   touching_line->SetLineWidth(2);
   touching_line->Draw("SAME");
 
   canvas->cd();
-  auto* pad_force = new TPad("pad_force", "pad_force", 0, 0, 1, 1);
+  auto *pad_force = new TPad("pad_force", "pad_force", 0, 0, 1, 1);
   pad_force->SetFillStyle(4000);
   pad_force->SetFrameFillStyle(0);
   pad_force->SetLeftMargin(pad_distance->GetLeftMargin());
@@ -176,11 +176,11 @@ inline bool PlotDistanceAndForceFromCsv(const std::string& position_csv,
   pad_force->Draw();
   pad_force->cd();
 
-  auto* force_graph = new TGraph(static_cast<int>(time_force.size()),
+  auto *force_graph = new TGraph(static_cast<int>(time_force.size()),
                                  time_force.data(), force_magnitude.data());
   force_graph->SetLineColor(kRed + 1);
   force_graph->SetLineWidth(3);
-  auto* force_frame =
+  auto *force_frame =
       pad_force->DrawFrame(x_min, force_min, x_max, force_max, "");
   force_frame->GetXaxis()->SetLabelSize(0);
   force_frame->GetXaxis()->SetTickLength(0);
@@ -191,7 +191,7 @@ inline bool PlotDistanceAndForceFromCsv(const std::string& position_csv,
   force_graph->Draw("L SAME");
 
   pad_distance->cd();
-  auto* axis_right = new TGaxis(x_max, dist_min, x_max, dist_max, force_min,
+  auto *axis_right = new TGaxis(x_max, dist_min, x_max, dist_max, force_min,
                                 force_max, 510, "+LG");
   axis_right->SetTitle("Force magnitude [pN]");
   axis_right->SetTitleOffset(1.8);
@@ -201,7 +201,7 @@ inline bool PlotDistanceAndForceFromCsv(const std::string& position_csv,
   axis_right->SetMoreLogLabels(true);
   axis_right->Draw();
 
-  auto* legend = new TLegend(0.16, 0.78, 0.55, 0.9);
+  auto *legend = new TLegend(0.16, 0.78, 0.55, 0.9);
   legend->SetBorderSize(0);
   legend->SetFillStyle(0);
   legend->AddEntry(distance_graph, "Distance between cell centers", "l");
@@ -214,7 +214,7 @@ inline bool PlotDistanceAndForceFromCsv(const std::string& position_csv,
   return true;
 }
 
-inline int Simulate(int argc, const char** argv) {
+inline int Simulate(int argc, const char **argv) {
   // Set number of threads for OpenMP to 1 to avoid non-deterministic behavior
   // due to the fact that we track the positions of the cells at every time step
   // and thus have a data race
@@ -222,7 +222,7 @@ inline int Simulate(int argc, const char** argv) {
   omp_set_num_threads(1);
 
   // Adding space edge of but to be used in larger use case.
-  auto set_param = [](Param* param) {
+  auto set_param = [](Param *param) {
     param->use_progress_bar = true;
     param->bound_space = Param::BoundSpaceMode::kOpen;
     param->min_bound = -2000;
@@ -231,8 +231,8 @@ inline int Simulate(int argc, const char** argv) {
     param->visualization_interval = 1;
     param->statistics = true;
     param->simulation_time_step = 0.0001; // seconds
-    param->simulation_max_displacement = 100;  // 3 is the default value
-    param->random_seed = 1234;  // Fixed seed for reproducible results
+    param->simulation_max_displacement = 100; // 3 is the default value
+    param->random_seed = 1234; // Fixed seed for reproducible results
   };
 
   // Before we create a simulation we have to tell BioDynaMo about
@@ -241,18 +241,18 @@ inline int Simulate(int argc, const char** argv) {
 
   // Create a new simulation
   Simulation simulation(argc, argv, set_param);
-  auto* ctxt = simulation.GetExecutionContext();  // Get the execution context
-  auto* scheduler = simulation.GetScheduler();    // Get the scheduler
-  auto* param = simulation.GetParam();            // Get the parameters
-  const auto* sparam = param->Get<SimParam>();  // Get the simulation parameters
+  auto *ctxt = simulation.GetExecutionContext(); // Get the execution context
+  auto *scheduler = simulation.GetScheduler();   // Get the scheduler
+  auto *param = simulation.GetParam();           // Get the parameters
+  const auto *sparam = param->Get<SimParam>(); // Get the simulation parameters
 
-  Moving_cell* cell1 = new Moving_cell(sparam->cell1_position);
-  Moving_cell* cell2 = new Moving_cell(sparam->cell2_position);
+  Moving_cell *cell1 = new Moving_cell(sparam->cell1_position);
+  Moving_cell *cell2 = new Moving_cell(sparam->cell2_position);
 
   real_t const cell_volume =
-      4. / 3. * M_PI * pow(sparam->cell_diam / 2., 3);  // um^3
-  real_t const cell_density = pow(10, -15);  // 1000 kg/m^3 = 10^-15kg/um^3
-  real_t const cell_mass = cell_volume * cell_density;
+      4. / 3. * M_PI * pow(sparam->cell_diam / 2., 3); // ~ 525 um^3
+  real_t const cell_density = pow(10, -15); // 1000 kg/m^3 = 10^-15 kg/um^3
+  real_t const cell_mass = cell_volume * cell_density; // ~ 5.25*10^-13 kg
   int number_of_cells = 2;
 
   cell1->SetDiameter(sparam->cell_diam);
@@ -263,13 +263,13 @@ inline int Simulate(int argc, const char** argv) {
   cell1->SetId(0);
   cell2->SetId(1);
 
-  ctxt->AddAgent(cell1);  // put the created cell in our cells structure
-  ctxt->AddAgent(cell2);  // put the created cell in our cells structure
+  ctxt->AddAgent(cell1); // put the created cell in our cells structure
+  ctxt->AddAgent(cell2); // put the created cell in our cells structure
 
   // Custom force module
-  auto* custom_force = new ExtendedHertzForce();
-  auto* mech_op = scheduler->GetOps("mechanical forces")[0];
-  auto* force_implementation = mech_op->GetImplementation<MechanicalForcesOp>();
+  auto *custom_force = new ExtendedHertzForce();
+  auto *mech_op = scheduler->GetOps("mechanical forces")[0];
+  auto *force_implementation = mech_op->GetImplementation<MechanicalForcesOp>();
   force_implementation->SetInteractionForce(custom_force);
   mech_op->frequency_ = 1;
 
@@ -286,7 +286,7 @@ inline int Simulate(int argc, const char** argv) {
   scheduler->ScheduleOp(track_pos_op);
 
   std::vector<Double4> forces;
-  auto* track_force_op = NewOperation("track_force");
+  auto *track_force_op = NewOperation("track_force");
   track_force_op->GetImplementation<TrackForce>()->forces_ = &forces;
   track_force_op->GetImplementation<TrackForce>()->agent1_uid_ =
       cell2->GetUid();
@@ -341,6 +341,6 @@ inline int Simulate(int argc, const char** argv) {
   return 0;
 }
 
-}  // namespace bdm
+} // namespace bdm
 
-#endif  // HERTZ_INTERACTION_H_
+#endif // HERTZ_INTERACTION_H_
