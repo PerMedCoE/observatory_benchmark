@@ -230,7 +230,7 @@ inline int Simulate(int argc, const char **argv) {
     param->export_visualization = false;
     param->visualization_interval = 1;
     param->statistics = true;
-    param->simulation_time_step = 0.0001; // seconds
+    param->simulation_time_step = 1;          // seconds
     param->simulation_max_displacement = 100; // 3 is the default value
     param->random_seed = 1234; // Fixed seed for reproducible results
   };
@@ -255,10 +255,17 @@ inline int Simulate(int argc, const char **argv) {
   real_t const cell_mass = cell_volume * cell_density; // ~ 5.25*10^-13 kg
   int number_of_cells = 2;
 
+  real_t const friction =
+      1e-8; // BioDynaMo uses the mass as the friction coefficient. The friction
+            // coefficient (mu or gamma) is used to compute velocity as v =
+            // F/mu. The unit is (N*s)/m = (N*s)*(1e-6)/um. Therefore, we must
+            // multiply mu = 1 by 1e-6 to get the units in um. For this unit
+            // test we use mu = 1, 0.1 and 0.01 -> 1e-6, 1e-7, 1e-8
+
   cell1->SetDiameter(sparam->cell_diam);
   cell2->SetDiameter(sparam->cell_diam);
-  cell1->SetMass(cell_mass);
-  cell2->SetMass(cell_mass);
+  cell1->SetMass(friction);
+  cell2->SetMass(friction);
 
   cell1->SetId(0);
   cell2->SetId(1);
@@ -276,13 +283,13 @@ inline int Simulate(int argc, const char **argv) {
   size_t time_steps =
       static_cast<size_t>(sparam->total_time / param->simulation_time_step);
 
+  int tracking_frequency = 60; // every minute
+
   std::vector<std::vector<Double3>> cell_positions(number_of_cells);
-  auto* track_pos_op = NewOperation("track_position");
+  auto *track_pos_op = NewOperation("track_position");
   track_pos_op->GetImplementation<TrackPosition>()->positions_ =
       &cell_positions;
-  track_pos_op->frequency_ =
-      1;  // every 1 -> timestep 0.1 min, every 10 -> timestep 0.01 min, every
-          // 100 -> timestep 0.001 min
+  track_pos_op->frequency_ = tracking_frequency;
   scheduler->ScheduleOp(track_pos_op);
 
   std::vector<Double4> forces;
@@ -294,9 +301,7 @@ inline int Simulate(int argc, const char **argv) {
       cell1->GetUid();
   track_force_op->GetImplementation<TrackForce>()->interaction_force_ =
       custom_force;
-  track_force_op->frequency_ =
-      1;  // every 1 -> timestep 0.1 min, every 10 -> timestep 0.01 min, every
-          // 100 -> timestep 0.001 min
+  track_force_op->frequency_ = tracking_frequency;
   scheduler->ScheduleOp(track_force_op);
 
   // Run simulation
@@ -312,8 +317,8 @@ inline int Simulate(int argc, const char **argv) {
   position_file << 0 << "\t " << sparam->cell1_position << "\t "
                 << sparam->cell2_position << std::endl;
 
-  for (size_t j = 0; j < cell_positions[0].size(); j++) {  // time points
-    position_file << (j + 1)*param->simulation_time_step;                       // time point
+  for (size_t j = 0; j < cell_positions[0].size(); j++) {   // time points
+    position_file << (j + 1) * param->simulation_time_step; // time point
     for (size_t i = 0; i < cell_positions.size(); i++) {
       position_file << "\t " << cell_positions[i][j];
     }
@@ -327,8 +332,8 @@ inline int Simulate(int argc, const char **argv) {
     force_file.open("forces.csv");
   }
 
-  for (size_t j = 0; j < forces.size(); j++) {  // time points
-    force_file << (j + 1)*param->simulation_time_step << "\t " << forces[j];
+  for (size_t j = 0; j < forces.size(); j++) { // time points
+    force_file << (j + 1) * param->simulation_time_step << "\t " << forces[j];
     force_file << std::endl;
   }
 
