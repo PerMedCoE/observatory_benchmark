@@ -64,10 +64,10 @@ def generate_pngs(data_folder,csv_fname):
     fig = plt.figure()
     plt.plot(indexes, distances, color='red')
     plt.axhline(y=10, color='black', linestyle='--')
-    plt.xlabel('Time (s)')
+    plt.xlabel('Time (min)')
     plt.ylabel('Cell-Cell distance (µm)')
     plt.title("Distance between the two cell centers across time")
-    plt.xlim([0, 0.01])
+    plt.xlim([0, 180])
     plt.ylim([7.5, 12.5])
     plt.savefig(data_folder+"/distances_vs_time.png")
     plt.close()
@@ -107,7 +107,7 @@ def plot_multiplot(data_folder,csv_fname):
     fig = plt.figure()
     colors = ['red','blue','green','orange','purple','brown','pink','gray','olive','cyan']
     # Sort the folders based on the numerical value after "results_" in descending order. So that should be 0.1, 0.01, 0.001, etc.
-    result_folders = sorted(result_folders, key=lambda x: float(x.replace("results_","").replace("timestep_","").replace("_",".")), reverse=True)
+    result_folders = sorted(result_folders, key=lambda x: float(x.replace("results_","").replace("drag_","").replace("_",".")), reverse=True)
     for index_folder, folder in enumerate(result_folders):
         print("Processing file: ",folder+"/"+csv_fname)
         data_biod = pd.read_csv(folder+"/" + csv_fname,header = None,sep='\t|,',engine='python',index_col=0)
@@ -128,11 +128,11 @@ def plot_multiplot(data_folder,csv_fname):
         ##################### Plot distances
         plt.plot(indexes, distances, color=colors[index_folder], label=folder.replace("results_","").replace("_"," "))
     plt.axhline(y=10, color='black', linestyle='--')
-    plt.xlabel('Time')
+    plt.xlabel('Time (min)')
     plt.ylabel('Cell-Cell distance (µm)')
     plt.title("Distance between the two cell centers across time - Multiplot")
-    plt.xlim([0, 0.01])
-    plt.ylim([7.5, 12.5])
+    plt.xlim([0, 180])
+    plt.ylim([8.8, 10.2])
     plt.legend()
     plt.savefig("distances_vs_time_multiplot.png")
     plt.close()
