@@ -5,6 +5,7 @@ This directory stores archived analytical-solution code and sampled CSV outputs 
 Current contents:
 - diffusion/Decay
 - diffusion/Cellsatcenter
+- mechanics/external_impulse_reference.ipynb
 
 Each case contains:
 - `AnalyticalSolution.py`: analytical model implementation

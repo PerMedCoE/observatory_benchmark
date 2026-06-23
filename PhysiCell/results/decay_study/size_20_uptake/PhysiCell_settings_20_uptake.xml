@@ -153,7 +153,7 @@
                     <detachment_rate units="1/min">0.0</detachment_rate>
                 </mechanics>
                 <motility>
-                    <speed units="micron/min">1</speed>
+                    <speed units="micron/min">0</speed>
                     <persistence_time units="min">1</persistence_time>
                     <migration_bias units="dimensionless">.5</migration_bias>
                     <options>
@@ -176,8 +176,8 @@
                 <secretion>
                     <substrate name="oxygen">
                         <secretion_rate units="1/min">0</secretion_rate>
-                        <secretion_target units="substrate density">1</secretion_target>
-                        <uptake_rate units="1/min">12044</uptake_rate>
+                        <secretion_target units="substrate density">0</secretion_target>
+                        <uptake_rate units="1/min">600000</uptake_rate>
 
                         <net_export_rate units="total substrate/min">0</net_export_rate>
                     </substrate>

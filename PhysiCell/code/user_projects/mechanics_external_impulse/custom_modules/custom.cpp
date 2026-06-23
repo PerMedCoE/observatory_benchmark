@@ -75,15 +75,15 @@ const double pulse_end_time = pulse_start_time + pulse_duration;
 
 // PhysiCell does not expose an external-force hook in the standard mechanics
 // pipeline, so this benchmark is implemented as the equivalent velocity pulse.
-const double target_speed_microns_per_second = 0.1777777777777778;
+const double target_speed_microns_per_second = 0.0001666666666667;
 const double seconds_per_minute = 60.0;
 const double target_speed_microns_per_minute =
     target_speed_microns_per_second * seconds_per_minute;
 
 bool pulse_is_active(double current_time)
 {
-    return current_time >= pulse_start_time - 0.5 * diffusion_dt &&
-           current_time < pulse_end_time - 0.5 * diffusion_dt;
+    return current_time >= pulse_start_time &&
+           current_time < pulse_end_time;
 }
 
 void sync_pulse_state(Cell* pCell, bool pulse_active)
