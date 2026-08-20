@@ -7,9 +7,9 @@
 		<y_max>120</y_max>
 		<z_min>-120</z_min>
 		<z_max>120</z_max>
-        <dx>5</dx>
-        <dy>5</dy>
-        <dz>5</dz>
+        <dx>40.0</dx>
+        <dy>40.0</dy>
+        <dz>40.0</dz>
         <use_2D>false</use_2D>
     </domain>
 
@@ -17,7 +17,7 @@
         <max_time units="min">10</max_time>
         <time_units>min</time_units>
         <space_units>micron</space_units>
-        <dt_diffusion units="min">0.01</dt_diffusion>
+        <dt_diffusion units="min">0.1</dt_diffusion>
         <dt_mechanics units="min">0.1</dt_mechanics>
         <dt_phenotype units="min">6</dt_phenotype>
     </overall>
@@ -27,7 +27,7 @@
     </parallel>
 
     <save>
-        <folder>../results/decay_study/size_5_uptake_tune</folder>
+        <folder>../results/diffusion_uptake_sweep/dx_40um__uptake_12044__dtdiff_0p1min__volume_1000um3</folder>
         <full_data>
             <interval units="min">0.1</interval>
             <enable>true</enable>
@@ -118,9 +118,9 @@
                     </model>
                 </death>
                 <volume>
-					<total units="micron^3">4000.0</total>
+					<total units="micron^3">1000.0</total>
                     <fluid_fraction units="dimensionless">0.75</fluid_fraction>
-					<nuclear units="micron^3">0.1</nuclear>
+					<nuclear units="micron^3">100.0</nuclear>
                     <fluid_change_rate units="1/min">0.05</fluid_change_rate>
                     <cytoplasmic_biomass_change_rate units="1/min">0.0045</cytoplasmic_biomass_change_rate>
                     <nuclear_biomass_change_rate units="1/min">0.0055</nuclear_biomass_change_rate>
@@ -170,7 +170,7 @@
                     <substrate name="oxygen">
                         <secretion_rate units="1/min">0</secretion_rate>
                         <secretion_target units="substrate density">0</secretion_target>
-                        <uptake_rate units="1/min">600000.0</uptake_rate>
+                        <uptake_rate units="1/min">12044</uptake_rate>
                         <net_export_rate units="total substrate/min">0</net_export_rate>
                     </substrate>
                 </secretion>

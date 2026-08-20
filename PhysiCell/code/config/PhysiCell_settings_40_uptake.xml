@@ -7,9 +7,9 @@
 		<y_max>120</y_max>
 		<z_min>-120</z_min>
 		<z_max>120</z_max>
-        <dx>5</dx>
-        <dy>5</dy>
-        <dz>5</dz>
+        <dx>40</dx>
+        <dy>40</dy>
+        <dz>40</dz>
         <use_2D>false</use_2D>
     </domain>
 
@@ -27,7 +27,7 @@
     </parallel>
 
     <save>
-        <folder>../results/decay_study/size_5_uptake_tune</folder>
+        <folder>../results/decay_study/size_40_uptake</folder>
         <full_data>
             <interval units="min">0.1</interval>
             <enable>true</enable>
@@ -53,7 +53,7 @@
                 <decay_rate units="1/min">0</decay_rate>
             </physical_parameter_set>
             <initial_condition units="particles/micron^3">6022</initial_condition>
-			<Dirichlet_boundary_condition units="particles/micron^3" enabled="True">6022</Dirichlet_boundary_condition> 
+			<Dirichlet_boundary_condition units="particles/micron^3" enabled="True">6022</Dirichlet_boundary_condition> <!-- era 10uM-->
             <Dirichlet_options>
 				<boundary_value ID="xmin" enabled="True">6022</boundary_value>
 				<boundary_value ID="xmax" enabled="True">6022</boundary_value>
@@ -100,9 +100,16 @@
                     </model>
                     <model code="101" name="necrosis">
 						<death_rate units="1/min">0.0</death_rate>
-						
-						 
-						
+						<!-- use phase_transition_rates OR phase_durations -->
+						<!-- necrosis uses phase_duration[0] = 0 so that it always immediately
+							 tries to transition and instead checks volume against the rupture
+							 volume --> 
+<!--						
+						<phase_transition_rates units="1/min">
+							<rate start_index="0" end_index="1" fixed_duration="false">9e9</rate>
+							<rate start_index="1" end_index="2" fixed_duration="true">1.15741e-5</rate>
+						</phase_transition_rates>
+-->						
                         <phase_durations units="min">
                             <duration index="0" fixed_duration="true">0</duration>
                             <duration index="1" fixed_duration="true">86400</duration>
@@ -118,7 +125,7 @@
                     </model>
                 </death>
                 <volume>
-					<total units="micron^3">4000.0</total>
+					<total units="micron^3">1</total>
                     <fluid_fraction units="dimensionless">0.75</fluid_fraction>
 					<nuclear units="micron^3">0.1</nuclear>
                     <fluid_change_rate units="1/min">0.05</fluid_change_rate>
@@ -169,8 +176,8 @@
                 <secretion>
                     <substrate name="oxygen">
                         <secretion_rate units="1/min">0</secretion_rate>
-                        <secretion_target units="substrate density">0</secretion_target>
-                        <uptake_rate units="1/min">600000.0</uptake_rate>
+                        <secretion_target units="substrate density">1</secretion_target>
+                        <uptake_rate units="1/min">12044</uptake_rate>
                         <net_export_rate units="total substrate/min">0</net_export_rate>
                     </substrate>
                 </secretion>
@@ -206,7 +213,7 @@
     <initial_conditions>
         <cell_positions type="csv" enabled="true">
             <folder>./config</folder>
-            <filename>cells_10_sweep.csv</filename>
+            <filename>cells_10.csv</filename>
         </cell_positions>
     </initial_conditions>
 
@@ -223,8 +230,8 @@
 
     <user_parameters>
         <random_seed type="int" units="dimensionless" description="">0</random_seed>
-        <sinks type="string" units="dimensionless" description="file where sinks are stored">./config/cells_10.csv</sinks>
-        <uptake type="double" units="dimensionless" description="uptake rate for bulk function">1204.4</uptake>  
+        <sinks type="string" units="dimensionless" description= "file where sinks are stored">./config/cells_40.csv</sinks>
+        <uptake type="double" units="dimensionless" description= "uptake rate for bulk function">1204.4</uptake>  <!-- en 40um dx tenim 8 voxels de 20um 1204.4x8 =9635.2 -->
         <number_of_cells type="int" units="none" description="initial number of cells (for each cell type)">0</number_of_cells>
     </user_parameters>
 </PhysiCell_settings>
