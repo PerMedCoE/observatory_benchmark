@@ -1,0 +1,13 @@
+layout,method,mean_absolute_error_uM
+cells_10,Gaussian-smoothed center,1.5670573599210276
+cells_10,Lower center voxel,1.5254958533604903
+cells_10,Mean of 8 surrounding voxels,2.3216355035468674
+cells_10,Spherical center neighborhood,2.3216355035468674
+cells_10,Trilinear interpolation,2.3216355035468674
+cells_10,Upper center voxel,3.393159382824572
+inner_voxels,Gaussian-smoothed center,1.47618605500798
+inner_voxels,Lower center voxel,5.632041628727275
+inner_voxels,Mean of 8 surrounding voxels,2.840772673633754
+inner_voxels,Spherical center neighborhood,2.840772673633754
+inner_voxels,Trilinear interpolation,2.840772673633754
+inner_voxels,Upper center voxel,1.5135916081660312
