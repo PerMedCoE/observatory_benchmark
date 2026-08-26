@@ -223,8 +223,6 @@
 
     <user_parameters>
         <random_seed type="int" units="dimensionless" description="">0</random_seed>
-        <sinks type="string" units="dimensionless" description="file where sinks are stored">./config/cells_10.csv</sinks>
-        <uptake type="double" units="dimensionless" description="uptake rate for bulk function">1204.4</uptake>  
         <number_of_cells type="int" units="none" description="initial number of cells (for each cell type)">0</number_of_cells>
     </user_parameters>
 </PhysiCell_settings>
