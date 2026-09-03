@@ -27,7 +27,7 @@
     </parallel>
 
     <save>
-        <folder>single_diffusion_cell_sink</folder>
+        <folder>../results/diffusion_single_cell_sink</folder>
         <full_data>
             <interval units="min">0.01</interval>
             <enable>true</enable>

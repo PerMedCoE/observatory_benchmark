@@ -1,72 +1,70 @@
-DEBUG:root:studio.py: config file is config/PhysiCell_settings.xml
+DEBUG:root:studio.py: Assume a 3D model
+DEBUG:root:studio.py: config file is config/PhysiCell_settings_40_uptake.xml
 DEBUG:root:studio.py: open_as_cb():  filePath is valid
-DEBUG:root:len(config_file) = 29
+DEBUG:root:len(config_file) = 39
 DEBUG:root:done with args.config
 DEBUG:root:exec pgm is ./project
 DEBUG:root:self.current_dir = /home/tntiniak/Work/observatory_benchmark/PhysiCell/code
 DEBUG:root:cell_def_tab.py: ------- fill_substrates_comboboxes
-DEBUG:root: --> signal
+DEBUG:root: --> oxygen
 DEBUG:root:cell_def_tab.py: ------- fill_substrate_colormap_comboboxes
 DEBUG:root:=======================  microenv populate_tree  ======================= 
-DEBUG:root:dc_ic_units =  mmHG
-DEBUG:root:dc_bc_units = mmHG
-DEBUG:root:bv = <Element 'boundary_value' at 0x7a9826d06e80>
-DEBUG:root:   -------- signal:  dirichlet_xmin = 0
-DEBUG:root:bv = <Element 'boundary_value' at 0x7a9826d06f20>
-DEBUG:root:bv = <Element 'boundary_value' at 0x7a9826d06fc0>
-DEBUG:root:bv = <Element 'boundary_value' at 0x7a9826d07060>
-DEBUG:root:bv = <Element 'boundary_value' at 0x7a9826d07100>
-DEBUG:root:bv = <Element 'boundary_value' at 0x7a9826d071a0>
-DEBUG:root:------- options: <Element 'calculate_gradients' at 0x7a9826d07290>
-DEBUG:root:------- options: <Element 'track_internalized_substrates_in_each_agent' at 0x7a9826d07330>
-DEBUG:root:------- options: <Element 'initial_condition' at 0x7a9826d07380>
-DEBUG:root:------- options: <Element 'dirichlet_nodes' at 0x7a9826d074c0>
+DEBUG:root:dc_ic_units =  particles/micron^3
+DEBUG:root:dc_bc_units = particles/micron^3
+DEBUG:root:bv = <Element 'boundary_value' at 0x71c91810cf40>
+DEBUG:root:   -------- oxygen:  dirichlet_xmin = 6022
+DEBUG:root:bv = <Element 'boundary_value' at 0x71c91810cf90>
+DEBUG:root:bv = <Element 'boundary_value' at 0x71c91810cfe0>
+DEBUG:root:bv = <Element 'boundary_value' at 0x71c91810d030>
+DEBUG:root:bv = <Element 'boundary_value' at 0x71c91810d080>
+DEBUG:root:bv = <Element 'boundary_value' at 0x71c91810d0d0>
+DEBUG:root:------- options: <Element 'calculate_gradients' at 0x71c91810d1c0>
+DEBUG:root:------- options: <Element 'track_internalized_substrates_in_each_agent' at 0x71c91810d260>
+DEBUG:root:------- options: <Element 'initial_condition' at 0x71c91810d2b0>
+DEBUG:root:------- options: <Element 'dirichlet_nodes' at 0x71c91810d3f0>
 DEBUG:root:
 
 =======================  leaving microenv populate_tree  =====================
-DEBUG:root:studio.py: first_cell_def_name= agent
+DEBUG:root:studio.py: first_cell_def_name= default
 DEBUG:root:cell_def_tab.py: ------- fill_substrates_comboboxes
-DEBUG:root: --> signal
+DEBUG:root: --> oxygen
 DEBUG:root:------ motility_substrate_changed_cb(): idx = 0
 DEBUG:root:       motility_substrate_changed_cb(): self.current_cell_def = None
 DEBUG:root:------ motility2_substrate_changed_cb(): idx = 0
-DEBUG:root:   text (subname) = signal
+DEBUG:root:   text (subname) = oxygen
 DEBUG:root:=======================  populate_tree_cell_defs(): ======================= 
 DEBUG:root:    cell_def_tab.param_d = {}
 DEBUG:root:
 
 =======================  validate_cell_defs(): ======================= 
-DEBUG:root:Checking agent
+DEBUG:root:Checking default
 DEBUG:root:=======================  end validate_cell_defs(): =======================
 
 
 DEBUG:root:----- cell_def.tag= cell_definition
 DEBUG:root:
---------new_interaction_params(): cdname_new= agent, reset_mapping= False
+--------new_interaction_params(): cdname_new= default, reset_mapping= False
 DEBUG:root:
---------new_intracellular_params(): cdname_new= agent
+--------new_intracellular_params(): cdname_new= default
 DEBUG:root:------- new_custom_data_params() -----
 DEBUG:root:
 ===== populate_tree():  cycle
 DEBUG:root: >> cycle_path= .//cell_definition[1]//phenotype//cycle
-DEBUG:root:   cycle code= 6
-DEBUG:root:<Element 'duration' at 0x7a9826d078d0>
-DEBUG:root:<Element 'duration' at 0x7a9826d07970>
-DEBUG:root:<Element 'duration' at 0x7a9826d07a10>
-DEBUG:root:<Element 'duration' at 0x7a9826d07ab0>
+DEBUG:root:   cycle code= 5
+DEBUG:root:<Element 'rate' at 0x71c91810d850>
 DEBUG:root:---- asymmetric_division_probabilities_path = .//cell_definition[1]//phenotype//cycle//standard_asymmetric_division
 DEBUG:root:
 ===== populate_tree():  death
-DEBUG:root:death_uep=<Element 'death' at 0x7a9826d07e20>
+DEBUG:root:death_uep=<Element 'death' at 0x71c91810d990>
 DEBUG:root:-------- parsing apoptosis!
-DEBUG:root: >> pd_uep =<Element 'phase_durations' at 0x7a9826d18040>
-DEBUG:root:phase_duration= <Element 'duration' at 0x7a9826d180e0>
+DEBUG:root: >> pd_uep =<Element 'phase_durations' at 0x71c91810db20>
+DEBUG:root:phase_duration= <Element 'duration' at 0x71c91810dbc0>
 DEBUG:root:index= 0
 DEBUG:root:-------- parsing necrosis!
-DEBUG:root: >> pd_uep =<Element 'phase_durations' at 0x7a9826d189f0>
-DEBUG:root:<Element 'duration' at 0x7a9826d18a90>
+DEBUG:root: >> pd_uep =<Element 'phase_durations' at 0x71c91810e480>
+DEBUG:root:<Element 'duration' at 0x71c91810e520>
 DEBUG:root:index= 0
-DEBUG:root:<Element 'duration' at 0x7a9826d18b30>
+DEBUG:root:<Element 'duration' at 0x71c91810e5c0>
 DEBUG:root:index= 1
 DEBUG:root:volume_path=.//cell_definition[1]//phenotype//volume//
 DEBUG:root:
@@ -74,45 +72,46 @@ DEBUG:root:
 DEBUG:root:mechanics_path=.//cell_definition[1]//phenotype//mechanics//
 DEBUG:root:---- cell_interactions_path= .//cell_definition[1]//phenotype//mechanics//cell_adhesion_affinities
 DEBUG:root:---- found cell_adhesion_affinities_path:
-DEBUG:root:--> {'agent': '1.0'}
+DEBUG:root:--> {'malignant epithelial': '1'}
 DEBUG:root:
 ===== populate_tree():  motility
 DEBUG:root:motility_path=.//cell_definition[1]//phenotype//motility//
 DEBUG:root:
------------ populate_tree_cell_defs.py: cell_def_name= agent,  cell_def_tab.param_d[cell_def_name]["motility_chemotaxis_substrate"] = signal
+----------- populate_tree_cell_defs.py: cell_def_name= default,  cell_def_tab.param_d[cell_def_name]["motility_chemotaxis_substrate"] = oxygen
 DEBUG:root:motility_advanced_chemotaxis_path= .//cell_definition[1]//phenotype//motility//options//advanced_chemotaxis//
-DEBUG:root:chemotactic_sensitivity= {'signal': '0.0'}
+DEBUG:root:chemotactic_sensitivity= {'oxygen': '0.0'}
 DEBUG:root:sensitivity_path= .//cell_definition[1]//phenotype//motility//options//advanced_chemotaxis//chemotactic_sensitivities
-DEBUG:root:---- found chemotactic_sensitivities: <Element 'chemotactic_sensitivities' at 0x7a9826d1aed0>
-DEBUG:root:subelm=<Element 'chemotactic_sensitivity' at 0x7a9826d1af70>
-DEBUG:root: chemotactic_sensitivity--> signal = 0.01
-DEBUG:root:{'signal': '0.01'}
+DEBUG:root:---- found chemotactic_sensitivities: <Element 'chemotactic_sensitivities' at 0x71c91811c900>
+DEBUG:root:subelm=<Element 'chemotactic_sensitivity' at 0x71c91811c9a0>
+DEBUG:root: chemotactic_sensitivity--> oxygen = 0.0
+DEBUG:root:{'oxygen': '0.0'}
 DEBUG:root:------ motility2_substrate_changed_cb(): idx = 0
-DEBUG:root:   text (subname) = signal
-DEBUG:root:    motility_advanced_chemotaxis_substrate= signal
-DEBUG:root:   chemotactic_sensitivity = {'signal': '0.01'}
-DEBUG:root:----- chemo_sensitivity_changed() = 0.01
-DEBUG:root:----- chemo_sensitivity_changed(): subname = signal
-DEBUG:root:     chemotactic_sensitivity (dict)= {'signal': '0.01'}
+DEBUG:root:   text (subname) = oxygen
+DEBUG:root:    motility_advanced_chemotaxis_substrate= oxygen
+DEBUG:root:   chemotactic_sensitivity = {'oxygen': '0.0'}
+DEBUG:root:----- chemo_sensitivity_changed() = 0.0
+DEBUG:root:----- chemo_sensitivity_changed(): subname = oxygen
+DEBUG:root:     chemotactic_sensitivity (dict)= {'oxygen': '0.0'}
 DEBUG:root:
 ===== populate_tree():  secretion
 DEBUG:root:secretion_path = .//cell_definition[1]//phenotype//secretion
-DEBUG:root:uep_secretion = <Element 'secretion' at 0x7a9826d1b150>
-DEBUG:root:0) -- secretion substrate = signal
+DEBUG:root:uep_secretion = <Element 'secretion' at 0x71c91811cb80>
+DEBUG:root:0) -- secretion substrate = oxygen
 DEBUG:root:------ done parsing secretion:
 DEBUG:root:
 ===== populate_tree():  cell_interactions
 DEBUG:root:---- cell_interactions_path= .//cell_definition[1]//phenotype//cell_interactions
 DEBUG:root:---- found cell_interactions:
-DEBUG:root:uep2= <Element 'live_phagocytosis_rates' at 0x7a9826d1bab0>
-DEBUG:root: live_phagocytosis_rate= {'agent': '0.0'}
-DEBUG:root: attack_rate= {'agent': '0.0'}
-DEBUG:root: fusion_rate= {'agent': '0.0'}
+DEBUG:root:uep2= <Element 'live_phagocytosis_rates' at 0x71c91811d300>
+DEBUG:root: live_phagocytosis_rate= {'malignant epithelial': '0', 'default': '0'}
+DEBUG:root: attack_rate= {'malignant epithelial': '0', 'default': '0'}
+DEBUG:root: fusion_rate= {'malignant epithelial': '0', 'default': '0'}
 DEBUG:root:------ done parsing cell_interactions:
 DEBUG:root:---- transformation_rates_path = .//cell_definition[1]//phenotype//cell_transformations//transformation_rates
-DEBUG:root: transformation_rate= {'agent': '0.0'}
+DEBUG:root: transformation_rate= {'malignant epithelial': '0', 'default': '0'}
 DEBUG:root:------ done parsing cell_transformations:
 DEBUG:root:---- cell_integrity_path = .//cell_definition[1]//phenotype//cell_integrity
+DEBUG:root:---- No cell_integrity found. Setting to default values
 DEBUG:root: damage_rate= 0.0
 DEBUG:root:------ done parsing cell_integrity:
 DEBUG:root:
@@ -122,10 +121,10 @@ DEBUG:root:
 DEBUG:root:------ done parsing intracellular:
 DEBUG:root:
 ===== populate_tree():  custom data
-DEBUG:root:uep_custom_data= <Element 'custom_data' at 0x7a9826d28770>
+DEBUG:root:uep_custom_data= <Element 'custom_data' at 0x71c91811dfd0>
 DEBUG:root:--------------- populate_tree: (empty)custom_data = {}
 DEBUG:root:var.attrib.keys() = dict_keys(['conserved', 'units', 'description'])
-DEBUG:root:populate: cell_def_name= agent --> custom_data: {'sample': ['1.0', False]}
+DEBUG:root:populate: cell_def_name= default --> custom_data: {'sample': ['1.0', False]}
 DEBUG:root:
   ---- apoptosis_phase_transition_cb: 
 DEBUG:root:apoptosis: ------>> duration
@@ -135,16 +134,16 @@ DEBUG:root:
 DEBUG:root:necrosis: ------>>duration
 DEBUG:root:necrosis_phase_transition_cb: --> duration
 DEBUG:root:
------ update_motility_params():  cdname= agent
-DEBUG:root:     setting motility_substrate_dropdown (for cdname= agent ) = signal
-DEBUG:root:     setting motility2_substrate_dropdown (for cdname= agent ) = signal
-DEBUG:root:    chemotactic_sensitivity= {'signal': '0.01'}
-DEBUG:root:new val = 0.01
+----- update_motility_params():  cdname= default
+DEBUG:root:     setting motility_substrate_dropdown (for cdname= default ) = oxygen
+DEBUG:root:     setting motility2_substrate_dropdown (for cdname= default ) = oxygen
+DEBUG:root:    chemotactic_sensitivity= {'oxygen': '0.0'}
+DEBUG:root:new val = 0.0
 DEBUG:root:----- leave update_motility_params()
 
-DEBUG:root:update_secretion_params(): cdname = agent
-DEBUG:root:update_secretion_params(): self.current_secretion_substrate = signal
-DEBUG:root:{'signal': {'secretion_rate': '0', 'secretion_target': '10', 'uptake_rate': '0.0', 'net_export_rate': '0'}}
+DEBUG:root:update_secretion_params(): cdname = default
+DEBUG:root:update_secretion_params(): self.current_secretion_substrate = oxygen
+DEBUG:root:{'oxygen': {'secretion_rate': '0', 'secretion_target': '1', 'uptake_rate': '12044', 'net_export_rate': '0'}}
 DEBUG:root:cell_def_tab.py: ------- fill_celltypes_comboboxes
 DEBUG:root:
 
@@ -489,7 +488,7 @@ DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/
 DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Waree-BoldOblique.ttf', name='Waree', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
 DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/padauk/Padauk-Regular.ttf', name='Padauk', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
 DEBUG:matplotlib.font_manager:findfont: Matching sans\-serif:style=normal:variant=normal:weight=normal:stretch=normal:size=10.0 to DejaVu Sans ('/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans.ttf') with score of 0.050000.
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7a9824d313f0>
+DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x71c907aa8e50>
 DEBUG:matplotlib.font_manager:findfont: Matching sans\-serif:style=normal:variant=normal:weight=normal:stretch=normal:size=9.0.
 DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/cmr10.ttf', name='cmr10', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
 DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSerif-Bold.ttf', name='DejaVu Serif', style='normal', variant='normal', weight=700, stretch='normal', size='scalable')) = 10.335
@@ -828,88 +827,32 @@ DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/
 DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/tlwg/Waree-BoldOblique.ttf', name='Waree', style='oblique', variant='normal', weight=700, stretch='normal', size='scalable')) = 11.335
 DEBUG:matplotlib.font_manager:findfont: score(FontEntry(fname='/usr/share/fonts/truetype/padauk/Padauk-Regular.ttf', name='Padauk', style='normal', variant='normal', weight=400, stretch='normal', size='scalable')) = 10.05
 DEBUG:matplotlib.font_manager:findfont: Matching sans\-serif:style=normal:variant=normal:weight=normal:stretch=normal:size=9.0 to DejaVu Sans ('/home/tntiniak/Work/studio/lib/python3.10/site-packages/matplotlib/mpl-data/fonts/ttf/DejaVuSans.ttf') with score of 0.050000.
-DEBUG:root:ics_tab.py: fill_celltype_combobox(): ['agent']
+DEBUG:root:ics_tab.py: fill_celltype_combobox(): ['default']
 DEBUG:root:ics_tab.py: ------- fill_substrate_combobox
-DEBUG:root: --> signal
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7a9824dd2ce0> <matplotlib.colors.Normalize object at 0x7a98255d3a00>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7a9824dd2e00>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7a98255d3a00> <matplotlib.colors.Normalize object at 0x7a9824dd2ce0>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7a9824dd3280>
-DEBUG:root:ics_tab.py: fill_celltype_combobox(): ['agent']
+DEBUG:root: --> oxygen
+DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x71c907acd930> <matplotlib.colors.Normalize object at 0x71c907c5a800>
+DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x71c907accf70>
+DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x71c907c5a680> <matplotlib.colors.Normalize object at 0x71c907acd930>
+DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x71c907acf460>
+DEBUG:root:ics_tab.py: fill_celltype_combobox(): ['default']
 DEBUG:root:ics_tab.py: ------- fill_substrate_combobox
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7a9824d30f70> <matplotlib.colors.Normalize object at 0x7a98255d3a00>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7a9824d5dd20>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7a98297bc610> <matplotlib.colors.Normalize object at 0x7a9824d30f70>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7a9824d5d600>
-DEBUG:root: --> signal
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7a98297bc850> <matplotlib.colors.Normalize object at 0x7a98297bc610>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7a9824d31b10>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7a98297bc610> <matplotlib.colors.Normalize object at 0x7a98297bc850>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7a9824dae050>
+DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x71c907aabac0> <matplotlib.colors.Normalize object at 0x71c907c5a680>
+DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x71c907b46260>
+DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x71c907b46920> <matplotlib.colors.Normalize object at 0x71c907aabac0>
+DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x71c907acd840>
+DEBUG:root: --> oxygen
+DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x71c907c5b4c0> <matplotlib.colors.Normalize object at 0x71c907b46920>
+DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x71c907acd960>
+DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x71c907b21f60> <matplotlib.colors.Normalize object at 0x71c907c5b4c0>
+DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x71c907b21e40>
 DEBUG:root:ics_tab.py: ------- fill_substrate_combobox
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7a98255d3940> <matplotlib.colors.Normalize object at 0x7a98297bc610>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7a9824dae8f0>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7a9849fbf7f0> <matplotlib.colors.Normalize object at 0x7a98255d3940>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7a9824d5dd50>
-DEBUG:root: --> signal
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7a98255d3a00> <matplotlib.colors.Normalize object at 0x7a9849fbf7f0>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7a9824dd3a90>
-DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x7a9824d5d7e0> <matplotlib.colors.Normalize object at 0x7a98255d3a00>
-DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x7a9824d31450>
+DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x71c907c5b4c0> <matplotlib.colors.Normalize object at 0x71c907b21f60>
+DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x71c907b466e0>
+DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x71c907c5a830> <matplotlib.colors.Normalize object at 0x71c907c5b4c0>
+DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x71c907b63250>
+DEBUG:root: --> oxygen
+DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x71c907c5a680> <matplotlib.colors.Normalize object at 0x71c907c5a830>
+DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x71c907acd150>
+DEBUG:matplotlib.colorbar:colorbar update normal <matplotlib.colors.Normalize object at 0x71c907c5a830> <matplotlib.colors.Normalize object at 0x71c907c5a680>
+DEBUG:matplotlib.colorbar:locator: <matplotlib.ticker.AutoLocator object at 0x71c907acd930>
 DEBUG:root:studio.py: calling vis_tab.substrates_cbox_changed_cb(2)
-DEBUG:root:===========  run_model_cb():  ============
-DEBUG:root:run_tab.py:  doing: mkdir ../results/monolayer/
-DEBUG:root:----------- microenv_tab.py: fill_xml(): ----------
-DEBUG:root:microenv_tab.py: fill_xml(): num subtrates = 1
-DEBUG:root:substrates_in_tree =['signal']
-DEBUG:root:microrenv_tab.py: key in param_d.keys() = signal
-DEBUG:root:matched! signal
-DEBUG:root:microrenv_tab.py: key in param_d.keys() = gradients
-DEBUG:root:microrenv_tab.py: key in param_d.keys() = track_in_agents
-DEBUG:root:
-
------------ cell_def_tab.py: fill_xml(): ----------
-DEBUG:root:num cell defs = 1
-DEBUG:root:cdefs_in_tree =['agent']
-DEBUG:root:
---- key in param_d.keys() = agent
-DEBUG:root:matched! agent
-DEBUG:root:--- cell_adhesion_affinity= {'agent': '1.0'}
-DEBUG:root:agent  --> 1.0
-DEBUG:root:
-
- ====================> fill_xml_motility(): signal = signal 
-
-
-DEBUG:root:fill_xml_motility(): {'signal': '0.01'}
-DEBUG:root:signal  --> 0.01
-DEBUG:root:
-
- ====================> fill_xml_secretion()
-
-DEBUG:root:self.substrate_list = ['signal']
-DEBUG:root:substrate = signal
-DEBUG:root:------------------- fill_xml_interactions():  cdef= agent
-DEBUG:root:--- live_phagocytosis_rate= {'agent': '0.0', '': '0.0'}
-DEBUG:root:  key in live_phagocytosis_rate= agent
-DEBUG:root:agent  --> 0.0
-DEBUG:root:  key in live_phagocytosis_rate= 
-DEBUG:root:--- attack_rate= {'agent': '0.0', '': '0.0'}
-DEBUG:root:agent  --> 0.0
-DEBUG:root:--- fusion_rate= {'agent': '0.0', '': '0.0'}
-DEBUG:root:agent  --> 0.0
-DEBUG:root:agent  --> 0.0
-DEBUG:root:------------------- cell_def_tab.py:  fill_xml_intracellular()
-DEBUG:root:------ ["intracellular"]: for agent
-DEBUG:root:None
-DEBUG:root:
-
-DEBUG:root:------ ["custom_data"]: for agent
-DEBUG:root:------ ["initial_parameter_distributions"]: for agent
-DEBUG:root:----------- end cell_def_tab.py: fill_xml(): ----------
-DEBUG:root:
---------- user_params_tab.py:  fill_xml(): self.count = 100
-DEBUG:root:--------- found //user_parameters
-DEBUG:root:random_seed
-DEBUG:root:number_of_cells
-DEBUG:root:found 2

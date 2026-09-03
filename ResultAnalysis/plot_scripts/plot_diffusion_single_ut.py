@@ -5,31 +5,41 @@ import matplotlib.gridspec as gridspec
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 import os
 import yaml
+from pathlib import Path
+
 pd.set_option('display.float_format', lambda x: '%.5f' % x)
 # diffusion_single
 
-pc_file = "./PhysiCell/results/single_diffusion_cell_sink/summary.csv"
+
+ROOT = Path('/home/tntiniak/Work/observatory_benchmark')
+if not ROOT.is_dir():
+    raise FileNotFoundError(f'Repository root does not exist: {ROOT}')
+
+PLOT_OUTPUT_DIR = ROOT / 'ResultAnalysis' / 'plots' / 'diffusion_single_ut_plots'
+pd.set_option('display.float_format', lambda x: '%.5f' % x)
+
+pc_file = ROOT / "PhysiCell/results/diffusion_single_cell_sink/physicell_diffusion_single_sink_plot_data.csv"
 pc_df= pd.read_csv(pc_file,index_col=0)
 pc_df = pc_df.loc[pc_df.index == 13]
 
 # bdm_file = "../Biodynamo/diffusion_single/data.csv"
-bdm_file = "./Biodynamo/diffusion_single/data.csv"
+bdm_file = ROOT / "Biodynamo/diffusion_single/data.csv"
 bdm_df= pd.read_csv(bdm_file,index_col=None,header=None,sep = " ",names = ['timestep','avg_diff','cen_diff'])
 
 
-tisim_file = "./Tisim/diffusion_single/results/diffusion_1_cell.csv"
+tisim_file = ROOT / "Tisim/diffusion_single/results/diffusion_1_cell.csv"
 tisim_df= pd.read_csv(tisim_file,names = ['timestep','diff'],header=0)
 tisim_df = pd.concat([pd.DataFrame({"timestep": [0],"diff":[0]}), tisim_df], ignore_index=True)
 
 
-chaste_file = "./Chaste/diffusion_single/results/TestDiffusionSmall03.dat"
+chaste_file = ROOT / "Chaste/diffusion_single/results/TestDiffusionSmall03.dat"
 ch_df= pd.read_csv(chaste_file,sep='\s+',names = ['timestep','diff'],header=0)
 timesteps = np.concatenate((np.linspace(0, 1, num=11)[:-1], np.arange(1, 11, 1)))
 timesteps_rounded = np.round(timesteps, 2)
 ch_df['timestep_rounded'] = ch_df['timestep'].round(2)
 selected_rows = ch_df[ch_df['timestep_rounded'].isin(timesteps_rounded)]
 
-with open("./CompuTiX/diffusion_single/SinglePointSink/dt-s-0-6_N-3.yaml", "r") as f:
+with open(ROOT / "CompuTiX/diffusion_single/SinglePointSink/dt-s-0-6_N-3.yaml", "r") as f:
     mf_data = yaml.safe_load(f)
     
 # ct_t = np.array( mf_data["t"]["values"] ) #[s]
@@ -49,12 +59,10 @@ ct_df = pd.DataFrame({
 # Load theoretical reference curves (CFD explicit solver & deal.II snapshots)
 # -------------------------------------------------------------------------
 cfd_csv = (
-    "./ResultAnalysis/plots/diffusion_cfd_single_sink_plots/"
-    "average_concentration_time_series.csv"
+    ROOT / "ResultAnalysis" / "plots" / "diffusion_cfd_single_sink_plots" / "average_concentration_time_series.csv"
 )
 deal_csv = (
-    "./ResultAnalysis/plots/diffusion_ground_truth_single_sink_plots/"
-    "average_concentration_time_series.csv"
+    ROOT / "ResultAnalysis" / "plots" / "diffusion_ground_truth_single_sink_plots" / "average_concentration_time_series.csv"
 )
 ct_df
 def _load_theory(csv_path: str, label: str) -> pd.DataFrame:
@@ -179,7 +187,7 @@ def _plot_entries():
     entries = [
         ('BioDynaMo', bdm_df, bdm_df['cen_diff'], slice(None)),
         ('Chaste', ch_df, ch_df['diff'], slice(None)),
-        ('PhysiCell', pc_df, pc_df['diff']/602.2, slice(None)),
+        ('PhysiCell', pc_df, pc_df['center_uM'], slice(None)),
         ('TiSim', tisim_df, tisim_df['diff'], tisim_df['timestep'] <= 10),
         ('Computix', ct_df, ct_df['c_central'], slice(None))
         # Reference curves
@@ -225,7 +233,7 @@ def create_complete_plot():
                  label='BioDynaMo', color=colors['BioDynaMo'], linestyle=linestyles['BioDynaMo'], linewidth=linewidths.get('BioDynaMo', 1.8), alpha=0.7)
     ax_full.plot(ch_df['timestep'], ch_df['diff'],
                  label='Chaste', color=colors['Chaste'], linestyle=linestyles['Chaste'], linewidth=linewidths.get('Chaste', 1.8), alpha=0.7)
-    ax_full.plot(pc_df['timestep'], pc_df['diff']/602.2, 
+    ax_full.plot(pc_df['timestep'], pc_df['center_uM'], 
                  label='PhysiCell', color=colors['PhysiCell'], linestyle=linestyles['PhysiCell'], linewidth=linewidths.get('PhysiCell', 1.8), alpha=0.7)
     ax_full.plot(tisim_df[tisim_df['timestep'] <= 10]['timestep'],
                  tisim_df[tisim_df['timestep'] <= 10]['diff'],
@@ -245,7 +253,7 @@ def create_complete_plot():
                       label='BioDynaMo', color=colors['BioDynaMo'], linestyle=linestyles['BioDynaMo'], linewidth=linewidths.get('BioDynaMo', 1.8), alpha=0.7)
     ax_zoom_start.plot(ch_df['timestep'], ch_df['diff'],
                       label='Chaste', color=colors['Chaste'], linestyle=linestyles['Chaste'], linewidth=linewidths.get('Chaste', 1.8), alpha=0.7)
-    ax_zoom_start.plot(pc_df['timestep'], pc_df['diff']/602.2, 
+    ax_zoom_start.plot(pc_df['timestep'], pc_df['center_uM'], 
                       label='PhysiCell', color=colors['PhysiCell'], linestyle=linestyles['PhysiCell'], linewidth=linewidths.get('PhysiCell', 1.8), alpha=0.7)
     ax_zoom_start.plot(tisim_df[tisim_df['timestep'] <= 10]['timestep'],
                       tisim_df[tisim_df['timestep'] <= 10]['diff'],
@@ -269,7 +277,7 @@ def create_complete_plot():
                      label='BioDynaMo', color=colors['BioDynaMo'], linestyle=linestyles['BioDynaMo'], linewidth=linewidths.get('BioDynaMo', 1.8), alpha=0.7)
     ax_zoom_end.plot(ch_df['timestep'], ch_df['diff'],
                      label='Chaste', color=colors['Chaste'], linestyle=linestyles['Chaste'], linewidth=linewidths.get('Chaste', 1.8), alpha=0.7)
-    ax_zoom_end.plot(pc_df['timestep'], pc_df['diff']/602.2, 
+    ax_zoom_end.plot(pc_df['timestep'], pc_df['center_uM'], 
                      label='PhysiCell', color=colors['PhysiCell'], linestyle=linestyles['PhysiCell'], linewidth=linewidths.get('PhysiCell', 1.8), alpha=0.7)
     ax_zoom_end.plot(tisim_df['timestep'], tisim_df['diff'],
                      label='TiSim', color=colors['TiSim'], linestyle=linestyles['TiSim'], linewidth=linewidths.get('TiSim', 1.8), alpha=0.7)
@@ -302,7 +310,7 @@ def create_complete_plot():
     # Ensure sufficient left margin so y-axis labels are fully visible
     plt.tight_layout(rect=[0.06, 0.06, 1, 0.97])  # add 6% left & bottom, 3% top margin
     plt.subplots_adjust(left=0.08, top=0.97, hspace=0.45, wspace=0.3)
-    save_dir = "./ResultAnalysis/plots/diffusion_single_ut_plots"
+    save_dir = ROOT / "ResultAnalysis" / "plots" / "diffusion_single_ut_plots"
     os.makedirs(save_dir, exist_ok=True)
     # plt.savefig(os.path.join(save_dir, "diffusion_single_ut.pdf"), format='pdf', bbox_inches='tight', pad_inches=0.2)
     plt.savefig(os.path.join(save_dir, "diffusion_single_ut.svg"), format='svg', bbox_inches='tight', pad_inches=0.2)
@@ -346,7 +354,7 @@ def create_complete_scatter_plot():
                  label='BioDynaMo', color=colors['BioDynaMo'], marker=marker_dict['BioDynaMo'], alpha=0.7, s=point_size)
     ax_full.scatter(ch_df['timestep'], ch_df['diff'],
                  label='Chaste', color=colors['Chaste'], marker=marker_dict['Chaste'], alpha=0.7, s=point_size)
-    ax_full.scatter(pc_df['timestep'], pc_df['diff']/602.2, 
+    ax_full.scatter(pc_df['timestep'], pc_df['center_uM'], 
                  label='PhysiCell', color=colors['PhysiCell'], marker=marker_dict['PhysiCell'], alpha=0.7, s=point_size)
     ax_full.scatter(tisim_df[tisim_df['timestep'] <= 10]['timestep'],
                  tisim_df[tisim_df['timestep'] <= 10]['diff'],
@@ -368,7 +376,7 @@ def create_complete_scatter_plot():
                       label='BioDynaMo', color=colors['BioDynaMo'], marker=marker_dict['BioDynaMo'], alpha=0.7, s=point_size)
     ax_zoom_start.scatter(ch_df['timestep'], ch_df['diff'],
                       label='Chaste', color=colors['Chaste'], marker=marker_dict['Chaste'], alpha=0.7, s=point_size)
-    ax_zoom_start.scatter(pc_df['timestep'], pc_df['diff']/602.2, 
+    ax_zoom_start.scatter(pc_df['timestep'], pc_df['center_uM'], 
                       label='PhysiCell', color=colors['PhysiCell'], marker=marker_dict['PhysiCell'], alpha=0.7, s=point_size)
     ax_zoom_start.scatter(tisim_df[tisim_df['timestep'] <= 10]['timestep'],
                       tisim_df[tisim_df['timestep'] <= 10]['diff'],
@@ -392,7 +400,7 @@ def create_complete_scatter_plot():
                      label='BioDynaMo', color=colors['BioDynaMo'], marker=marker_dict['BioDynaMo'], alpha=0.7, s=point_size)
     ax_zoom_end.scatter(ch_df['timestep'], ch_df['diff'],
                      label='Chaste', color=colors['Chaste'], marker=marker_dict['Chaste'], alpha=0.7, s=point_size)
-    ax_zoom_end.scatter(pc_df['timestep'], pc_df['diff']/602.2, 
+    ax_zoom_end.scatter(pc_df['timestep'], pc_df['center_uM'], 
                      label='PhysiCell', color=colors['PhysiCell'], marker=marker_dict['PhysiCell'], alpha=0.7, s=point_size)
     ax_zoom_end.scatter(tisim_df['timestep'], tisim_df['diff'],
                      label='TiSim', color=colors['TiSim'], marker=marker_dict['TiSim'], alpha=0.7, s=point_size)
