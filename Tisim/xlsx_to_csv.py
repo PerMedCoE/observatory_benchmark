@@ -1,10 +1,11 @@
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 
 
 ROOT = Path(__file__).resolve().parent
-WORKBOOK = ROOT / 'result_new.xlsx'
+WORKBOOK = ROOT / 'results0926_new.xlsx'
 
 
 def export_sheet(sheet_name: str, output_path: Path) -> None:
@@ -16,7 +17,8 @@ def export_decay_sheet() -> None:
 	output_dir = ROOT / 'diffusion_decay_test'
 	output_dir.mkdir(parents=True, exist_ok=True)
 
-	raw = pd.read_excel(WORKBOOK, sheet_name='decay', header=None)
+	average_raw = pd.read_excel(WORKBOOK, sheet_name='decay_average', header=None)
+	center_raw = pd.read_excel(WORKBOOK, sheet_name='decay_center', header=None)
 	block_specs = [
 		('10', 1),
 		('20', 3),
@@ -24,12 +26,23 @@ def export_decay_sheet() -> None:
 	]
 
 	for resolution, concentration_col in block_specs:
-		frame = raw.iloc[2:, [0, concentration_col]].copy()
-		frame.columns = ['time_min', 'average_uM']
-		frame = frame.dropna(how='all')
-		frame['time_min'] = pd.to_numeric(frame['time_min'], errors='coerce')
-		frame['average_uM'] = pd.to_numeric(frame['average_uM'], errors='coerce')
-		frame = frame.dropna(subset=['time_min', 'average_uM']).reset_index(drop=True)
+		average_frame = average_raw.iloc[2:, [0, concentration_col]].copy()
+		average_frame.columns = ['time_min', 'average_uM']
+		center_frame = center_raw.iloc[2:, [0, concentration_col]].copy()
+		center_frame.columns = ['time_min', 'center_uM']
+
+		for frame in (average_frame, center_frame):
+			frame['time_min'] = pd.to_numeric(frame['time_min'], errors='coerce')
+			concentration_column = frame.columns[1]
+			frame[concentration_column] = pd.to_numeric(frame[concentration_column], errors='coerce')
+			frame.dropna(inplace=True)
+			frame.sort_values('time_min', inplace=True)
+
+		frame = average_frame.copy()
+		frame['center_uM'] = np.interp(
+			frame['time_min'], center_frame['time_min'], center_frame['center_uM']
+		)
+		frame = frame.dropna(subset=['center_uM']).reset_index(drop=True)
 		frame.to_csv(output_dir / f'data_{resolution}.csv', index=False)
 
 
@@ -96,11 +109,11 @@ def export_2_cells_sheet() -> None:
 
 if __name__ == '__main__':
 	workbook_sheets = pd.ExcelFile(WORKBOOK).sheet_names
-	if 'diffusion 1k cells' in workbook_sheets:
-		export_sheet('diffusion 1k cells', ROOT / 'diffusion_1k_cell.csv')
-	if '1 cell' in workbook_sheets:
-		export_1_cell_sheet()
-	if '2 cells' in workbook_sheets:
-		export_2_cells_sheet()
-	# export_decay_sheet()
+	# if 'diffusion 1k cells' in workbook_sheets:
+	# 	export_sheet('diffusion 1k cells', ROOT / 'diffusion_1k_cell.csv')
+	# if '1 cell' in workbook_sheets:
+	export_1_cell_sheet()
+	# if '2 cells' in workbook_sheets:
+	export_2_cells_sheet()
+	export_decay_sheet()
 	# export_uptake_sheets()

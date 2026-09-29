@@ -1,0 +1,7 @@
+Relative time (hours)	Total time (hours)	Diameter (um)	Radius (um)
+0	336	1140	570
+50	386	1400	700
+72	408	1590	795
+145	481	2040	1020
+170	506	2250	1125
+310	646	3040	1520

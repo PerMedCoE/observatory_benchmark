@@ -70,10 +70,7 @@
 void create_cell_types( void )
 {
 	// set the random seed 
-	if (parameters.ints.find_index("random_seed") != -1)
-	{
-		SeedRandom(parameters.ints("random_seed"));
-	}
+	// SeedRandom( parameters.ints("random_seed") );  
 	
 	/* 
 	   Put any modifications to default cell definition here if you 
@@ -114,12 +111,6 @@ void create_cell_types( void )
 
 	setup_signal_behavior_dictionaries(); 	
 
-	/*
-       Cell rule definitions 
-	*/
-
-	setup_cell_rules(); 
-
 	/* 
 	   Put any modifications to individual cell definitions here. 
 	   
@@ -127,8 +118,8 @@ void create_cell_types( void )
 	*/ 
 	
 	cell_defaults.functions.update_phenotype = phenotype_function; 
-	cell_defaults.functions.custom_cell_rule = custom_function; 
-	cell_defaults.functions.contact_function = contact_function; 
+	// cell_defaults.functions.custom_cell_rule = custom_function; 
+	// cell_defaults.functions.contact_function = contact_function; 
 	
 	/*
 	   This builds the map of cell definitions and summarizes the setup. 
@@ -141,14 +132,22 @@ void create_cell_types( void )
 
 void setup_microenvironment( void )
 {
-	// set domain parameters 
-	
-	// put any custom code to set non-homogeneous initial conditions or 
-	// extra Dirichlet nodes here. 
-	
 	// initialize BioFVM 
 	
 	initialize_microenvironment(); 	
+
+    int idx_oxygen = 0;
+    double oxy_value = 6022.0;
+
+    int idx_xmax = microenvironment.mesh.x_coordinates.size() - 1; 
+    int idx_ymax = microenvironment.mesh.y_coordinates.size() - 1;
+    int idx_zmax = microenvironment.mesh.z_coordinates.size() - 1;
+
+    microenvironment.update_dirichlet_node( 
+        microenvironment.voxel_index(idx_xmax, idx_ymax, idx_zmax), 
+        idx_oxygen, oxy_value);
+    microenvironment.set_substrate_dirichlet_activation( idx_oxygen, 
+        microenvironment.voxel_index(idx_xmax, idx_ymax, idx_zmax), true);
 	
 	return; 
 }
@@ -168,6 +167,8 @@ void setup_tissue( void )
 		Zmin = 0.0; 
 		Zmax = 0.0; 
 	}
+    std::cout << "\n\n------- setup_tissue(): Xmin,Xmax= " << Xmin << ", " << Xmax<<std::endl; 
+    std::cout << "------- setup_tissue(): Ymin,Ymax= " << Ymin << ", " << Ymax<<std::endl; 
 	
 	double Xrange = Xmax - Xmin; 
 	double Yrange = Ymax - Ymin; 
@@ -195,8 +196,7 @@ void setup_tissue( void )
 	std::cout << std::endl; 
 	
 	// load cells from your CSV file (if enabled)
-	load_cells_from_pugixml();
-	set_parameters_from_distributions();
+	load_cells_from_pugixml(); 	
 	
 	return; 
 }
@@ -205,7 +205,16 @@ std::vector<std::string> my_coloring_function( Cell* pCell )
 { return paint_by_number_cell_coloring(pCell); }
 
 void phenotype_function( Cell* pCell, Phenotype& phenotype, double dt )
-{ return; }
+{ 
+    // static Cell_Definition* pCD = ... // find the cell's definition 
+    // static Cell_Definition* pCD = find_cell_definition("agent");
+
+    // if( get_single_signal( pCell, "volume" ) < 2 * pCD->phenotype.volume.total )
+    // { set_single_behavior( pCell , "exit from cycle phase 3" , 0 ); } 
+    // else 
+    // { set_single_behavior( pCell , "exit from cycle phase 3" , 9e9); } 
+    // return; 
+}
 
 void custom_function( Cell* pCell, Phenotype& phenotype , double dt )
 { return; } 

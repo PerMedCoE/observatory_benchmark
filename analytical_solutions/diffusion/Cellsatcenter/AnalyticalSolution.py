@@ -88,7 +88,7 @@ class AnalyticalSolution:
                     v_ijk = self.eigenfunction( i=i, j=j, k=k, x=x )
                     lambda_ijk = self.eigenvalue( i=i, j=j, k=k )
                     for x_cell in self.x_cells:
-                        sol -= self.rate * v_ijk * self.eigenfunction( i=i, j=j, k=k, x=x_cell ) * ( 1. - np.exp( -lambda_ijk * t ) ) / lambda_ijk
+                        sol += self.rate * v_ijk * self.eigenfunction( i=i, j=j, k=k, x=x_cell ) * ( 1. - np.exp( -lambda_ijk * t ) ) / lambda_ijk
 
         return sol
 
@@ -117,6 +117,6 @@ class AnalyticalSolution:
                     lambda_ijk = self.eigenvalue( i=i, j=j, k=k )
                     v_ijk_int = self.iiint_eigenfunction( x=x, i=i, j=j, k=k, x_first=x_first, x_second=x_second, y_first=y_first, y_second=y_second, z_first=z_first, z_second=z_second )
                     for x_cell in self.x_cells:
-                        sol -= self.rate * v_ijk_int * self.eigenfunction( i=i, j=j, k=k, x=x_cell ) * ( 1. - np.exp( -lambda_ijk * t ) ) / lambda_ijk
+                        sol += self.rate * v_ijk_int * self.eigenfunction( i=i, j=j, k=k, x=x_cell ) * ( 1. - np.exp( -lambda_ijk * t ) ) / lambda_ijk
 
         return sol
