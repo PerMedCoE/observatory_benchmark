@@ -51,7 +51,7 @@ inline int Simulate(int argc, const char** argv) {
   double const cell_density = pow(10, -15);  // 1kg/m^3 = 10^-15g/um^3
   double const cell_mass = cell_volume * cell_density;
   int number_of_cells = 1;
-  double const F0 = 20.0*pow(10, -12); // External Impulse force in N
+  double const F0 = 20.0*pow(10, -12); // External Impulse force in pN
   double const mu = 7.2/60.; // Friction coefficient in kg/s. v = F/mu
   double initial_force_time = 3;
   double final_force_time = 6;
