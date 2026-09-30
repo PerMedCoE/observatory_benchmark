@@ -67,6 +67,16 @@
 
 #include "./custom.h"
 
+#include <cmath>
+
+namespace {
+
+double base_fluid_change_rate = 0.0;
+double base_cytoplasmic_biomass_change_rate = 0.0;
+double base_nuclear_biomass_change_rate = 0.0;
+
+}
+
 void create_cell_types( void )
 {
 	// set the random seed 
@@ -117,8 +127,16 @@ void create_cell_types( void )
 	   This is a good place to set custom functions. 
 	*/ 
 	
-	cell_defaults.functions.update_phenotype = phenotype_function; 
-	// cell_defaults.functions.custom_cell_rule = custom_function; 
+	Cell_Definition* pCD = find_cell_definition( "agent" );
+	if( pCD == NULL )
+	{
+		std::cerr << "Could not find the 'agent' cell definition for crowding control." << std::endl;
+		exit( EXIT_FAILURE );
+	}
+	base_fluid_change_rate = pCD->phenotype.volume.fluid_change_rate;
+	base_cytoplasmic_biomass_change_rate = pCD->phenotype.volume.cytoplasmic_biomass_change_rate;
+	base_nuclear_biomass_change_rate = pCD->phenotype.volume.nuclear_biomass_change_rate;
+	pCD->functions.update_phenotype = phenotype_function;
 	// cell_defaults.functions.contact_function = contact_function; 
 	
 	/*
@@ -154,49 +172,43 @@ void setup_microenvironment( void )
 
 void setup_tissue( void )
 {
-	double Xmin = microenvironment.mesh.bounding_box[0]; 
-	double Ymin = microenvironment.mesh.bounding_box[1]; 
-	double Zmin = microenvironment.mesh.bounding_box[2]; 
-
-	double Xmax = microenvironment.mesh.bounding_box[3]; 
-	double Ymax = microenvironment.mesh.bounding_box[4]; 
-	double Zmax = microenvironment.mesh.bounding_box[5]; 
-	
-	if( default_microenvironment_options.simulate_2D == true )
+	Cell_Definition* pCD = find_cell_definition( "agent" );
+	if( pCD == NULL )
 	{
-		Zmin = 0.0; 
-		Zmax = 0.0; 
+		std::cerr << "Could not find the 'agent' cell definition for the monolayer seed." << std::endl;
+		exit( EXIT_FAILURE );
 	}
-    std::cout << "\n\n------- setup_tissue(): Xmin,Xmax= " << Xmin << ", " << Xmax<<std::endl; 
-    std::cout << "------- setup_tissue(): Ymin,Ymax= " << Ymin << ", " << Ymax<<std::endl; 
-	
-	double Xrange = Xmax - Xmin; 
-	double Yrange = Ymax - Ymin; 
-	double Zrange = Zmax - Zmin; 
-	
-	// create some of each type of cell 
-	
-	Cell* pC;
-	
-	for( int k=0; k < cell_definitions_by_index.size() ; k++ )
+
+	constexpr double target_diameter = 1140.0;
+	const double cell_radius = pCD->phenotype.geometry.radius;
+	const double disk_radius = target_diameter / 2.0;
+	const double cell_spacing = 2.0 * cell_radius;
+	const double row_spacing = cell_spacing * std::sqrt(3.0) / 2.0;
+
+	int cell_count = 0;
+	const int row_limit = static_cast<int>(std::floor(disk_radius / row_spacing));
+	for( int row = -row_limit; row <= row_limit; ++row )
 	{
-		Cell_Definition* pCD = cell_definitions_by_index[k]; 
-		std::cout << "Placing cells of type " << pCD->name << " ... " << std::endl; 
-		for( int n = 0 ; n < parameters.ints("number_of_cells") ; n++ )
+		const double y = row * row_spacing;
+		const double row_offset = (row % 2 == 0) ? 0.0 : cell_spacing / 2.0;
+		const double x_limit = std::sqrt(disk_radius * disk_radius - y * y);
+		const int column_min = static_cast<int>(std::ceil((-x_limit - row_offset) / cell_spacing));
+		const int column_max = static_cast<int>(std::floor((x_limit - row_offset) / cell_spacing));
+
+		for( int column = column_min; column <= column_max; ++column )
 		{
-			std::vector<double> position = {0,0,0}; 
-			position[0] = Xmin + UniformRandom()*Xrange; 
-			position[1] = Ymin + UniformRandom()*Yrange; 
-			position[2] = Zmin + UniformRandom()*Zrange; 
-			
-			pC = create_cell( *pCD ); 
-			pC->assign_position( position );
+			const double x = column * cell_spacing + row_offset;
+			Cell* pC = create_cell( *pCD );
+			pC->assign_position({x, y, 0.0});
+			++cell_count;
 		}
 	}
-	std::cout << std::endl; 
-	
-	// load cells from your CSV file (if enabled)
-	load_cells_from_pugixml(); 	
+
+	std::cout << "Initialized " << cell_count
+	          << " agent cells in a centered hexagonal disk."
+	          << " Target diameter: " << target_diameter << " microns."
+	          << " Lattice spacing: " << cell_spacing << " microns."
+	          << std::endl;
 	
 	return; 
 }
@@ -206,14 +218,47 @@ std::vector<std::string> my_coloring_function( Cell* pCell )
 
 void phenotype_function( Cell* pCell, Phenotype& phenotype, double dt )
 { 
-    // static Cell_Definition* pCD = ... // find the cell's definition 
-    // static Cell_Definition* pCD = find_cell_definition("agent");
+	if( phenotype.death.dead || phenotype.cycle.model().code != PhysiCell_constants::flow_cytometry_separated_cycle_model )
+	{
+		return;
+	}
 
-    // if( get_single_signal( pCell, "volume" ) < 2 * pCD->phenotype.volume.total )
-    // { set_single_behavior( pCell , "exit from cycle phase 3" , 0 ); } 
-    // else 
-    // { set_single_behavior( pCell , "exit from cycle phase 3" , 9e9); } 
-    // return; 
+	const int phase = phenotype.cycle.current_phase_index();
+	const bool growth_phase = (phase == 0 || phase == 2);
+	bool overcrowded = false;
+
+	if( growth_phase )
+	{
+		const double cell_radius = phenotype.geometry.radius;
+		for( Cell* neighbor : pCell->state.neighbors )
+		{
+			const double dx = pCell->position[0] - neighbor->position[0];
+			const double dy = pCell->position[1] - neighbor->position[1];
+			const double dz = pCell->position[2] - neighbor->position[2];
+			const double distance = std::sqrt(dx * dx + dy * dy + dz * dz);
+			const double overlap = cell_radius + neighbor->phenotype.geometry.radius - distance;
+
+			if( overlap > 0.2 * cell_radius )
+			{
+				overcrowded = true;
+				break;
+			}
+		}
+	}
+
+	if( growth_phase && overcrowded )
+	{
+		phenotype.cycle.data.elapsed_time_in_phase -= dt;
+		phenotype.volume.fluid_change_rate = 0.0;
+		phenotype.volume.cytoplasmic_biomass_change_rate = 0.0;
+		phenotype.volume.nuclear_biomass_change_rate = 0.0;
+	}
+	else
+	{
+		phenotype.volume.fluid_change_rate = base_fluid_change_rate;
+		phenotype.volume.cytoplasmic_biomass_change_rate = base_cytoplasmic_biomass_change_rate;
+		phenotype.volume.nuclear_biomass_change_rate = base_nuclear_biomass_change_rate;
+	}
 }
 
 void custom_function( Cell* pCell, Phenotype& phenotype , double dt )
