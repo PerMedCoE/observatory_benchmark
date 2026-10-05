@@ -28,6 +28,8 @@ def main() -> None:
     with open( files[0], "r" ) as f:
         data = yaml.safe_load( f )
     t = data["t"]["values"] #[s]
+    radius = data["r"]["value"] #[m]
+    overlap_eq = data["overlap_eq"]["value"] #[m]
     x = data['Cells']['values']['x']['values'] #[m]
 
     #Parse all files
@@ -42,20 +44,23 @@ def main() -> None:
 
         #Compute absolute distance between spheres' centers
         d = np.abs(x[:, 0] - x[:, 1])
+        overlap = 2. * radius - d
 
-        #Plot distance over time
-        plt.plot( t / 60., d / 1e-6, linestyle='None', marker='x', color='red' )
+        #Plot overlap over time
+        plt.plot( t / 60., overlap / 1e-6, linestyle='None', marker='x', color='red' )
+
+    plt.axhline( overlap_eq / 1e-6, linestyle=':', color='black' )
         
     #Finalize figures
     plt.xlabel( 't [min]' )
-    plt.ylabel( 'distance [µm]' )
+    plt.ylabel( 'overlap [µm]' )
     ax = plt.gca()
     ax.xaxis.set_major_formatter(ticker.ScalarFormatter(useOffset=False))
     ax.yaxis.set_major_formatter(ticker.ScalarFormatter(useOffset=False))
     fig = plt.gcf()
     fig.tight_layout()
     fig.set_size_inches(8, 6)
-    plt.savefig( f'{prefix}abs_distance.png', bbox_inches='tight', dpi = 600 )
+    plt.savefig( f'{prefix}overlap.png', bbox_inches='tight', dpi = 600 )
     plt.close()
 
 if __name__ == '__main__':

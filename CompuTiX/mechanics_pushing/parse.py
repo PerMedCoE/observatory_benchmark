@@ -19,7 +19,7 @@ def parse_data( input_dir: Path ) -> dict :
     print( f'Current_dir: {input_dir}' )
 
     #The files with the time series
-    files = sorted( input_dir.glob( 'Universes_*.xml' ) )
+    files = sorted( input_dir.glob( 'Simulation_*.xml' ) )
 
     #Parse the initial one to get indexes corresponding to the cell
     #Load tree using first file in list
@@ -36,6 +36,8 @@ def parse_data( input_dir: Path ) -> dict :
 
     #Get relevant data
     spheres = universe["Spheres"]
+    radius = float( universe["r"].values[0] )
+    overlap_eq = float( universe["Contacts"]["overlap_eq"].values[0] )
 
     #Get spheres indices
     spheres_idx = spheres.indices
@@ -70,6 +72,8 @@ def parse_data( input_dir: Path ) -> dict :
  
     return {    
         "t" : { "description" : "Time", "unit": universe["t"].unit, "values" : t.tolist() },
+        "r" : { "description" : "Sphere radius", "unit" : universe["r"].unit, "value" : radius },
+        "overlap_eq" : { "description" : "Expected overlap", "unit" : universe["Contacts"]["overlap_eq"].unit, "value" : overlap_eq },
         "Cells" : { "description" : "Data related to cells", "values" : 
                    { "x" : { "description" : "Cells' positions", "unit" : spheres["x"].unit, "values": x.tolist() }, } }
          }

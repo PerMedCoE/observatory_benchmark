@@ -1,5 +1,5 @@
 //! \example Collisions/PushingCells/main.cpp
-//! \section collisions_pushing_cells Two cells pusing each other
+//! \section collisions_pushing_cells Two cells pushing each other
 //!
 //! \subsection collisions_pushing_cells_problem_statement Problem statement
 //! This simulation illustrates the dynamics of two cells, identical in radius and properties, pushed towards each other with an external force
@@ -272,7 +272,7 @@
 #include <CompuTiX/Components/DegreesOfFreedom/DegreeOfFreedom.h>
 #include <CompuTiX/Components/Parameters/Values/ComponentList.h>
 #include <CompuTiX/Components/Parameters/Values/String.h>
-#include <CompuTiX/Components/Parameters/Values/absolute_path.h>
+#include <CompuTiX/Components/Parameters/Values/path_from_root.h>
 #include <CompuTiX/Components/Random/MersenneTwister.h>
 #include <CompuTiX/Components/tree_to_yaml.h>
 #include <CompuTiX/Math/constants.h>
@@ -383,6 +383,8 @@ int main( int argc, char** argv )
     //Prepare DoFs for Contacts
     // - mass tensor
     contacts->add( DegreesOfFreedom::DegreeOfFreedom< Types::Matrix >::create( "M", SIUnits::kilogram ) );
+    contacts->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "overlap_eq", SIUnits::meter ) );
+    contacts->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "tau", SIUnits::second ) );
 
     // ---------------------------------------
     // Set particles' data
@@ -418,7 +420,7 @@ int main( int argc, char** argv )
     //Friction coefficient
     const Types::Matrix gamma = 10. * Types::Matrix::Identity(); // [ kg / min ]
     //Adhesion energy density
-    constexpr Types::Scalar adhesion_energy_density = 1e-8; // [ J / m^2 ]
+    constexpr Types::Scalar adhesion_energy_density = 1e-4; // [ J / m^2 ]
 
     // - Collision parameters:
     //Tangential friction coefficient
@@ -428,10 +430,22 @@ int main( int argc, char** argv )
     //Contact interfacial tension
     constexpr Types::Scalar tau = 1e-4; // [ N / m ]
 
+    //Prepare equilibrium overlap
+    //Compute adhesion energy density
+    const Types::Scalar gamma_star = 2. * adhesion_energy_density - tau;
+    //Compute inverse of curvature
+    const Types::Scalar R = 0.5 * r;
+    //Compute inverse of effective Young's modulus
+    const Types::Scalar E_star = 0.5 * E / ( 1. - Math::pow< 2 >( nu ) );
+    //Compute expected contact radius at equilibrium
+    const Types::Scalar a_eq = std::cbrt( 4.5 * Math::pi * gamma_star * Math::pow< 2 >( R ) / E_star );
+    //Compute JKR equilibrium overlap
+    Types::Scalar overlap_equilibrium = Math::pow< 2 >( a_eq ) / R - std::sqrt( 2 * Math::pi * gamma_star * a_eq / E_star ); // [ m ]
+
     // - IO
     const std::string output_dir = result["output-dir"].as< std::string >();
 
-    //Create unverse and sphere
+    //Create universe and sphere
     auto universe = [&]() {
         // View for universe
         auto u_view = Particles::make_particles_view( Access::Modes::read_write, universes );
@@ -480,6 +494,7 @@ int main( int argc, char** argv )
         auto c_view = Particles::make_particles_view( Access::Modes::read_write, contacts );
         auto c = c_view.add( Types::PairIndex{ 0, 1 }, u );
 
+        c.set< Types::Scalar >( Access::Modes::read_write, "overlap_eq", SIUnits::meter, overlap_equilibrium );
         return u;
     }();
 
@@ -506,8 +521,8 @@ int main( int argc, char** argv )
         // - condition for termination (simulation time)
         {
             auto action = loop->add( create_executable( "OnActions::Triggers::ExecuteWhileLess", "Check simulation time" ) );
-            action->set_parameter_value( "a", absolute_path( "Universes/t" ) );
-            action->set_parameter_value( "b", absolute_path( "Universes/t_end" ) );
+            action->set_parameter_value( "a", path_from_root( "Universes/t" ) );
+            action->set_parameter_value( "b", path_from_root( "Universes/t_end" ) );
         }
 
         // - geometry pipeline
@@ -517,13 +532,13 @@ int main( int argc, char** argv )
             // -- reset overlap
             {
                 auto action = geom_pipeline->add( create_executable( "Elementary::Reset", "Zero overlap" ) );
-                action->set_parameter_value( "dof", absolute_path( "Universes/overlap" ) );
+                action->set_parameter_value( "dof", path_from_root( "Universes/overlap" ) );
             }
             // -- get the overlap
             {
                 auto action = geom_pipeline->add( create_executable( "Contact::Models::Geometry::Overlap::SphereSphere", "Get Sphere-Sphere contact overlap" ) );
-                action->set_parameter_value( "collection", absolute_path( "Universes/Contacts" ) );
-                action->set_parameter_value( "overlap", absolute_path( "Universes/overlap" ) );
+                action->set_parameter_value( "collection", path_from_root( "Universes/Contacts" ) );
+                action->set_parameter_value( "overlap", path_from_root( "Universes/overlap" ) );
             }
         }
 
@@ -534,29 +549,29 @@ int main( int argc, char** argv )
             // -- reset total force
             {
                 auto action = forces->add( create_executable( "Elementary::Reset", "Zero total Sphere force" ) );
-                action->set_parameter_value( "dof", absolute_path( "Universes/Spheres/F" ) );
+                action->set_parameter_value( "dof", path_from_root( "Universes/Spheres/F" ) );
             }
 
             // -- reset the mass tensor in spheres
             {
                 auto action = forces->add( create_executable( "Elementary::Reset", "Reset spheres mass tensor" ) );
-                action->set_parameter_value( "collection", absolute_path( "Universes/Spheres" ) );
-                action->set_parameter_value( "dof", absolute_path( "Universes/Spheres/M" ) );
+                action->set_parameter_value( "collection", path_from_root( "Universes/Spheres" ) );
+                action->set_parameter_value( "dof", path_from_root( "Universes/Spheres/M" ) );
             }
 
             // -- reset the mass tensor in contacts
             {
                 auto action = forces->add( create_executable( "Elementary::Reset", "Reset contacts mass tensor" ) );
-                action->set_parameter_value( "collection", absolute_path( "Universes/Contacts" ) );
-                action->set_parameter_value( "dof", absolute_path( "Universes/Contacts/M" ) );
+                action->set_parameter_value( "collection", path_from_root( "Universes/Contacts" ) );
+                action->set_parameter_value( "dof", path_from_root( "Universes/Contacts/M" ) );
             }
 
             // -- set mass tensor
             /*{
                 auto action = forces->add( create_executable( "Elementary::Algebraic::Multiply", "Set mass tensor" ) );
-                action->set_parameter_value( "result", absolute_path( "Universes/Spheres/M" ) );
-                action->set_parameter_value( "a", absolute_path( "Universes/Spheres/id" ) );
-                action->set_parameter_value( "b", absolute_path( "Universes/Spheres/m" ) );
+                action->set_parameter_value( "result", path_from_root( "Universes/Spheres/M" ) );
+                action->set_parameter_value( "a", path_from_root( "Universes/Spheres/id" ) );
+                action->set_parameter_value( "b", path_from_root( "Universes/Spheres/m" ) );
             }*/
 
             // -- external force reset
@@ -565,40 +580,40 @@ int main( int argc, char** argv )
                 // --- execution condition
                 {
                     auto action = external_force->add( create_executable( "OnActions::Triggers::ExecuteWhileLess", "Execute when overlap is higher than 10% of sphere diameter" ) );
-                    action->set_parameter_value( "a", absolute_path( "Universes/d_limit" ) );
-                    action->set_parameter_value( "b", absolute_path( "Universes/overlap" ) );
+                    action->set_parameter_value( "a", path_from_root( "Universes/d_limit" ) );
+                    action->set_parameter_value( "b", path_from_root( "Universes/overlap" ) );
                 }
                 // --- clears force (forever)
                 {
                     auto action = external_force->add( create_executable( "Elementary::Reset", "Clear local force" ) );
-                    action->set_parameter_value( "dof", absolute_path( "Universes/Spheres/F_loc" ) );
+                    action->set_parameter_value( "dof", path_from_root( "Universes/Spheres/F_loc" ) );
                 }
             }
 
             // -- apply external force
             {
                 auto action = forces->add( create_executable( "Elementary::Algebraic::Add", "Apply local force" ) );
-                action->set_parameter_value( "result", absolute_path( "Universes/Spheres/F" ) );
-                action->set_parameter_value( "b", absolute_path( "Universes/Spheres/F_loc" ) );
+                action->set_parameter_value( "result", path_from_root( "Universes/Spheres/F" ) );
+                action->set_parameter_value( "b", path_from_root( "Universes/Spheres/F_loc" ) );
             }
 
             // -- compute JKR interaction force and set mass matrix
             {
                 auto action = forces->add( create_executable( "Contact::Models::Collisions::JKR::Damped::SphereSphere::Overdamped", "Sphere-Sphere JKR contact model" ) );
-                action->set_parameter_value( "collection", absolute_path( "Universes/Contacts" ) );
-                action->set_parameter_value( "r_contact", absolute_path( "Universes/r_contact" ) );
-                action->set_parameter_value( "M", absolute_path( "Universes/Contacts/M" ) );
-                action->set_parameter_value( "dt", absolute_path( "Universes/dt" ) );
+                action->set_parameter_value( "collection", path_from_root( "Universes/Contacts" ) );
+                action->set_parameter_value( "r_contact", path_from_root( "Universes/r_contact" ) );
+                action->set_parameter_value( "M", path_from_root( "Universes/Contacts/M" ) );
+                action->set_parameter_value( "dt", path_from_root( "Universes/dt" ) );
             }
 
             // -- compute Stokes drag force and set mass matrix
             {
                 auto stokes = forces->add( create_executable( "Forces::StokesDrag", "Compute Stokes drag force" ) );
-                stokes->set_parameter_value( "F", absolute_path( "Universes/Spheres/F" ) );
-                stokes->set_parameter_value( "gamma", absolute_path( "Universes/Spheres/gamma" ) );
-                stokes->set_parameter_value( "v_rel", absolute_path( "Universes/Spheres/v" ) );
-                stokes->set_parameter_value( "M", absolute_path( "Universes/Spheres/M" ) );
-                stokes->set_parameter_value( "dt", absolute_path( "Universes/dt" ) );
+                stokes->set_parameter_value( "F", path_from_root( "Universes/Spheres/F" ) );
+                stokes->set_parameter_value( "gamma", path_from_root( "Universes/Spheres/gamma" ) );
+                stokes->set_parameter_value( "v_rel", path_from_root( "Universes/Spheres/v" ) );
+                stokes->set_parameter_value( "M", path_from_root( "Universes/Spheres/M" ) );
+                stokes->set_parameter_value( "dt", path_from_root( "Universes/dt" ) );
             }
         }
 
@@ -609,23 +624,21 @@ int main( int argc, char** argv )
             // -- write cells data
             {
                 auto action = io_pipeline->add( create_executable( "IO::SimpleVTKWriter", "Write VTK files for cells" ) );
-                action->set_parameter_value( "collection", absolute_path( "Universes/Spheres" ) );
-                action->set_parameter_value( "file_index", absolute_path( "Universes/current_frame" ) );
+                action->set_parameter_value( "collection", path_from_root( "Universes/Spheres" ) );
+                action->set_parameter_value( "file_index", path_from_root( "Universes/current_frame" ) );
                 action->set_parameter_value( "filename", std::make_unique< String >( output_dir + "/Cells_{:03}.vtp" ) );
             }
 
             // -- write the whole data to XML file
             {
                 auto action = io_pipeline->add( create_executable( "IO::Save", "Write VTK files for faces" ) );
-                action->set_parameter_value( "root", absolute_path( "Universes" ) );
-                action->set_parameter_value( "file_index", absolute_path( "Universes/current_frame" ) );
-                action->set_parameter_value( "filename", std::make_unique< String >( output_dir + "/Universes_{:03}.xml" ) );
+                action->set_parameter_value( "file_index", path_from_root( "Universes/current_frame" ) );
             }
 
             // -- increment frame counter
             {
                 auto action = io_pipeline->add( create_executable( "Elementary::Algebraic::Increment", "Increment frame counter" ) );
-                action->set_parameter_value( "result", absolute_path( "Universes/current_frame" ) );
+                action->set_parameter_value( "result", path_from_root( "Universes/current_frame" ) );
             }
         }
 
@@ -635,41 +648,41 @@ int main( int argc, char** argv )
             // -- compute acceleration
             {
                 auto action = integration_pipeline->add( create_executable( "Solvers::ConjugateGradient", "Compute acceleration" ) );
-                action->set_parameter_value( "x", std::make_unique< ComponentList >( absolute_path( "Universes/Spheres/a" ) ) );
-                action->set_parameter_value( "y", std::make_unique< ComponentList >( absolute_path( "Universes/Spheres/F" ) ) );
-                action->set_parameter_value( "D", std::make_unique< ComponentList >( absolute_path( "Universes/Spheres/M" ) ) );
-                action->set_parameter_value( "S", std::make_unique< ComponentList >( absolute_path( "Universes/Contacts/M" ) ) );
+                action->set_parameter_value( "x", std::make_unique< ComponentList >( path_from_root( "Universes/Spheres/a" ) ) );
+                action->set_parameter_value( "y", std::make_unique< ComponentList >( path_from_root( "Universes/Spheres/F" ) ) );
+                action->set_parameter_value( "D", std::make_unique< ComponentList >( path_from_root( "Universes/Spheres/M" ) ) );
+                action->set_parameter_value( "S", std::make_unique< ComponentList >( path_from_root( "Universes/Contacts/M" ) ) );
             }
 
             // -- velocity integration
             {
                 auto action = integration_pipeline->add( create_executable( "Integration::ForwardEuler", "Integrate velocity" ) );
-                action->set_parameter_value( "y", absolute_path( "Universes/Spheres/v" ) );
-                action->set_parameter_value( "dy_dt", absolute_path( "Universes/Spheres/a" ) );
-                action->set_parameter_value( "dt", absolute_path( "Universes/dt" ) );
+                action->set_parameter_value( "y", path_from_root( "Universes/Spheres/v" ) );
+                action->set_parameter_value( "dy_dt", path_from_root( "Universes/Spheres/a" ) );
+                action->set_parameter_value( "dt", path_from_root( "Universes/dt" ) );
             }
 
             // -- position integration
             {
                 auto action = integration_pipeline->add( create_executable( "Integration::ForwardEuler", "Integrate position" ) );
-                action->set_parameter_value( "y", absolute_path( "Universes/Spheres/x" ) );
-                action->set_parameter_value( "dy_dt", absolute_path( "Universes/Spheres/v" ) );
-                action->set_parameter_value( "dt", absolute_path( "Universes/dt" ) );
+                action->set_parameter_value( "y", path_from_root( "Universes/Spheres/x" ) );
+                action->set_parameter_value( "dy_dt", path_from_root( "Universes/Spheres/v" ) );
+                action->set_parameter_value( "dt", path_from_root( "Universes/dt" ) );
             }
         }
 
         // - time advance
         {
             auto action = loop->add( create_executable( "Elementary::Algebraic::Add", "Advance time" ) );
-            action->set_parameter_value( "result", absolute_path( "Universes/t" ) );
-            action->set_parameter_value( "b", absolute_path( "Universes/dt" ) );
+            action->set_parameter_value( "result", path_from_root( "Universes/t" ) );
+            action->set_parameter_value( "b", path_from_root( "Universes/dt" ) );
         }
 
         // - store elapsed time of simulation
         {
             auto action = loop->add( create_executable( "OnActions::StoreElapsedTime", "Store simulation runtime" ) );
-            action->set_parameter_value( "elapsed_time", absolute_path( "Universes/t_elapsed" ) );
-            action->set_parameter_value( "executable", absolute_path( "Loop" ) );
+            action->set_parameter_value( "elapsed_time", path_from_root( "Universes/t_elapsed" ) );
+            action->set_parameter_value( "executable", path_from_root( "Loop" ) );
         }
     }
 
