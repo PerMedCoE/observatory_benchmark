@@ -1,14 +1,4 @@
 <PhysiCell_settings version="devel-version">
-
-    <cell_rules>
-        <rulesets>
-            <ruleset protocol="CBHG" version="3.0" format="csv" enabled="false">
-                <folder>config</folder>
-                <filename>rules.csv</filename>
-            </ruleset>
-        </rulesets>
-    </cell_rules>
-
     <domain>
         <x_min>-1600</x_min>
         <x_max>1600</x_max>
@@ -23,7 +13,7 @@
     </domain>
 
     <overall>
-        <max_time units="min">40320</max_time>
+        <max_time units="min">20160</max_time>
         <time_units>min</time_units>
         <space_units>micron</space_units>
         <dt_diffusion units="min">0.01</dt_diffusion>
@@ -32,18 +22,18 @@
     </overall>
 
     <parallel>
-        <omp_num_threads>112</omp_num_threads>
+        <omp_num_threads>4</omp_num_threads>
     </parallel>
 
     <save>
-        <folder>../results/monolayer/</folder>
+        <folder>../results/monolayer_14b/</folder>
         <full_data>
             <interval units="min">60</interval>
             <enable>true</enable>
         </full_data>
         <SVG>
-            <interval units="min">60</interval>
-            <enable>false</enable>
+            <interval units="min">720</interval>
+            <enable>true</enable>
             <plot_substrate enabled="false" limits="false">
                 <substrate>signal</substrate>
                 <min_conc />
@@ -58,7 +48,6 @@
     <options>
         <legacy_random_points_on_sphere_in_divide>false</legacy_random_points_on_sphere_in_divide>
         <virtual_wall_at_domain_edge>true</virtual_wall_at_domain_edge>
-        <random_seed>0</random_seed>
     </options>
 
     <microenvironment_setup>
@@ -100,9 +89,6 @@
                         <duration index="2" fixed_duration="true">180</duration>
                         <duration index="3" fixed_duration="true">120</duration>
                     </phase_durations>
-                    <standard_asymmetric_division enabled="False">
-                        <asymmetric_division_probability name="agent" units="dimensionless">1.0</asymmetric_division_probability>
-                    </standard_asymmetric_division>
                 </cycle>
                 <death>
                     <model code="100" name="apoptosis">
@@ -160,7 +146,6 @@
                     <attachment_elastic_constant units="1/min">0.01</attachment_elastic_constant>
                     <attachment_rate units="1/min">0.0</attachment_rate>
                     <detachment_rate units="1/min">0.0</detachment_rate>
-                    <maximum_number_of_attachments>12</maximum_number_of_attachments>
                 </mechanics>
                 <motility>
                     <speed units="micron/min">0.1</speed>
@@ -192,17 +177,14 @@
                     </substrate>
                 </secretion>
                 <cell_interactions>
-                    <apoptotic_phagocytosis_rate units="1/min">0.0</apoptotic_phagocytosis_rate>
-                    <necrotic_phagocytosis_rate units="1/min">0.0</necrotic_phagocytosis_rate>
-                    <other_dead_phagocytosis_rate units="1/min">0.0</other_dead_phagocytosis_rate>
+                    <dead_phagocytosis_rate units="1/min">0.0</dead_phagocytosis_rate>
                     <live_phagocytosis_rates>
                         <phagocytosis_rate name="agent" units="1/min">0.0</phagocytosis_rate>
                     </live_phagocytosis_rates>
                     <attack_rates>
                         <attack_rate name="agent" units="1/min">0.0</attack_rate>
                     </attack_rates>
-                    <attack_damage_rate units="1/min">1.0</attack_damage_rate>
-                    <attack_duration units="min">0.1</attack_duration>
+                    <damage_rate units="1/min">1.0</damage_rate>
                     <fusion_rates>
                         <fusion_rate name="agent" units="1/min">0.0</fusion_rate>
                     </fusion_rates>
@@ -212,23 +194,17 @@
                         <transformation_rate name="agent" units="1/min">0.0</transformation_rate>
                     </transformation_rates>
                 </cell_transformations>
-                <cell_integrity>
-                    <damage_rate units="1/min">0.0</damage_rate>
-                    <damage_repair_rate units="1/min">0.0</damage_repair_rate>
-                </cell_integrity>
             </phenotype>
             <custom_data>
                 <sample conserved="false" units="dimensionless" description="">1.0</sample>
             </custom_data>
-            <initial_parameter_distributions enabled="false">
-          </initial_parameter_distributions>
         </cell_definition>
     </cell_definitions>
 
     <initial_conditions>
         <cell_positions type="csv" enabled="true">
             <folder>./config</folder>
-            <filename>cells.csv</filename>
+            <filename>cell000.csv</filename>
         </cell_positions>
     </initial_conditions>
 
