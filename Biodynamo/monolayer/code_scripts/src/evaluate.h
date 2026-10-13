@@ -121,7 +121,7 @@ inline void ExportResults(const bool plot_legend = true,
   }
 
   // Save plot
-  lg.SaveAs(Concat(folder, "/", filename), {".svg", ".png"});
+  lg.SaveAs(Concat(folder, "/", filename), {".pdf", ".png"});
 
   // Save data
   ts->SaveJson(Concat(folder, "/monolayer_growth.json"));
