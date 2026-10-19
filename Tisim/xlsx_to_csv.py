@@ -114,6 +114,6 @@ if __name__ == '__main__':
 	# if '1 cell' in workbook_sheets:
 	export_1_cell_sheet()
 	# if '2 cells' in workbook_sheets:
-	export_2_cells_sheet()
-	export_decay_sheet()
+	# export_2_cells_sheet()
+	# export_decay_sheet()
 	# export_uptake_sheets()
