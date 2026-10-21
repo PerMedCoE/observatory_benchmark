@@ -17,7 +17,8 @@ PhysiCell/code/many_diffusion*
 # Ignore compiled object files
 *.o
 
-.vscodePhysiCell/results/*/summary.csv
+.vscode
+PhysiCell/results/*/*.txt
 *.DS_Store
 
 **/build/
