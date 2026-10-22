@@ -7,32 +7,32 @@
 [1mGeneral[0m
 Command				: ./build/unit-test-mechanics-two-cells-hertz-relaxation  
 Simulation name			: unit-test-mechanics-two-cells-hertz-relaxation
-Total simulation runtime	: 461 ms
-Peak memory usage (MB)		: 305.52
+Total simulation runtime	: 511 ms
+Peak memory usage (MB)		: 306.262
 Number of iterations executed	: 10800
 Number of agents		: 2
 Output directory		: output/unit-test-mechanics-two-cells-hertz-relaxation
   size				: 4.0K
-BioDynaMo version:		: v1.05.148-b8aa2280
+BioDynaMo version:		: v1.05.158-c4704305
 BioDynaMo real type:		: double
 
 ***********************************************
 
 [1mTotal execution time per operation[0m
-agent ops: 59
+agent ops: 64
 behavior: 0
-bound space: 0
-continuum: 4
+bound space: 2
+continuum: 5
 discretization: 1
 load balancing: 0
-mechanical forces: 1
-set up iteration: 41
-tear down iteration: 36
-track_force: 0
+mechanical forces: 0
+set up iteration: 39
+tear down iteration: 38
+track_force: 1
 track_position: 0
-update environment: 76
-update staticness: 0
-update time series: 2
+update environment: 74
+update staticness: 2
+update time series: 4
 visualize: 3
 
 ***********************************************
