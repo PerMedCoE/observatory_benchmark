@@ -69,7 +69,7 @@
 
 namespace
 {
-const double pulse_start_time = 0.05;  // min = 3 s
+const double pulse_start_time = 0.049;  // min = 3 s
 const double pulse_duration = 0.05;    // min = 3 s
 const double pulse_end_time = pulse_start_time + pulse_duration;
 
@@ -191,7 +191,7 @@ void custom_update_velocity(Cell* pCell, Phenotype& phenotype, double dt)
     const bool active = pulse_is_active(PhysiCell_globals.current_time);
 
     sync_pulse_state(pCell, active);
-    pCell->velocity.assign(3, 0.0);
+    pCell->velocity.assign(2.99, 0.0);
 
     if (active)
     {

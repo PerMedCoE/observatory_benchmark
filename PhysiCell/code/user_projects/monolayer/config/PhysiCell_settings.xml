@@ -13,7 +13,7 @@
     </domain>
 
     <overall>
-        <max_time units="min">20160</max_time>
+        <max_time units="min">40320</max_time>
         <time_units>min</time_units>
         <space_units>micron</space_units>
         <dt_diffusion units="min">0.01</dt_diffusion>
@@ -26,7 +26,7 @@
     </parallel>
 
     <save>
-        <folder>../results/monolayer_14b/</folder>
+        <folder>../results/monolayer_pres/</folder>
         <full_data>
             <interval units="min">60</interval>
             <enable>true</enable>
@@ -204,7 +204,7 @@
     <initial_conditions>
         <cell_positions type="csv" enabled="true">
             <folder>./config</folder>
-            <filename>cell000.csv</filename>
+            <filename>cells.csv</filename>
         </cell_positions>
     </initial_conditions>
 

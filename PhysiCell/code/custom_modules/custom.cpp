@@ -67,157 +67,145 @@
 
 #include "./custom.h"
 
-void create_cell_types( void )
+namespace
 {
-	// set the random seed 
-	// SeedRandom( parameters.ints("random_seed") );  
-	
-	/* 
-	   Put any modifications to default cell definition here if you 
-	   want to have "inherited" by other cell types. 
-	   
-	   This is a good place to set default functions. 
-	*/ 
-	
-	initialize_default_cell_definition(); 
-	cell_defaults.phenotype.secretion.sync_to_microenvironment( &microenvironment ); 
-	
-	cell_defaults.functions.volume_update_function = standard_volume_update_function;
-	cell_defaults.functions.update_velocity = standard_update_cell_velocity;
+const double pulse_start_time = 0.049;  // min = 3 s
+const double pulse_duration = 0.05;    // min = 3 s
+const double pulse_end_time = pulse_start_time + pulse_duration;
 
-	cell_defaults.functions.update_migration_bias = NULL; 
-	cell_defaults.functions.update_phenotype = NULL; // update_cell_and_death_parameters_O2_based; 
-	cell_defaults.functions.custom_cell_rule = NULL; 
-	cell_defaults.functions.contact_function = NULL; 
-	
-	cell_defaults.functions.add_cell_basement_membrane_interactions = NULL; 
-	cell_defaults.functions.calculate_distance_to_membrane = NULL; 
-	
-	/*
-	   This parses the cell definitions in the XML config file. 
-	*/
-	
-	initialize_cell_definitions_from_pugixml(); 
+// PhysiCell does not expose an external-force hook in the standard mechanics
+// pipeline, so this benchmark is implemented as the equivalent velocity pulse.
+const double target_speed_microns_per_second = 0.0001666666666667;
+const double seconds_per_minute = 60.0;
+const double target_speed_microns_per_minute =
+    target_speed_microns_per_second * seconds_per_minute;
 
-	/*
-	   This builds the map of cell definitions and summarizes the setup. 
-	*/
-		
-	build_cell_definitions_maps(); 
-
-	/*
-	   This intializes cell signal and response dictionaries 
-	*/
-
-	setup_signal_behavior_dictionaries(); 	
-
-	/* 
-	   Put any modifications to individual cell definitions here. 
-	   
-	   This is a good place to set custom functions. 
-	*/ 
-	
-	cell_defaults.functions.update_phenotype = phenotype_function; 
-	// cell_defaults.functions.custom_cell_rule = custom_function; 
-	// cell_defaults.functions.contact_function = contact_function; 
-	
-	/*
-	   This builds the map of cell definitions and summarizes the setup. 
-	*/
-		
-	display_cell_definitions( std::cout ); 
-	
-	return; 
+bool pulse_is_active(double current_time)
+{
+    return current_time >= pulse_start_time &&
+           current_time < pulse_end_time;
 }
 
-void setup_microenvironment( void )
+void sync_pulse_state(Cell* pCell, bool pulse_active)
 {
-	// initialize BioFVM 
-	
-	initialize_microenvironment(); 	
+    pCell->phenotype.motility.is_motile = pulse_active;
+    pCell->phenotype.motility.migration_speed =
+        pulse_active ? target_speed_microns_per_minute : 0.0;
 
-    int idx_oxygen = 0;
-    double oxy_value = 6022.0;
-
-    int idx_xmax = microenvironment.mesh.x_coordinates.size() - 1; 
-    int idx_ymax = microenvironment.mesh.y_coordinates.size() - 1;
-    int idx_zmax = microenvironment.mesh.z_coordinates.size() - 1;
-
-    microenvironment.update_dirichlet_node( 
-        microenvironment.voxel_index(idx_xmax, idx_ymax, idx_zmax), 
-        idx_oxygen, oxy_value);
-    microenvironment.set_substrate_dirichlet_activation( idx_oxygen, 
-        microenvironment.voxel_index(idx_xmax, idx_ymax, idx_zmax), true);
-	
-	return; 
+    pCell->phenotype.motility.motility_vector.assign(3, 0.0);
+    if (pulse_active)
+    {
+        pCell->phenotype.motility.motility_vector[0] =
+            target_speed_microns_per_minute;
+    }
+}
 }
 
-void setup_tissue( void )
+void create_cell_types(void)
 {
-	double Xmin = microenvironment.mesh.bounding_box[0]; 
-	double Ymin = microenvironment.mesh.bounding_box[1]; 
-	double Zmin = microenvironment.mesh.bounding_box[2]; 
+    // set the random seed 
+    SeedRandom(parameters.ints("random_seed"));  
 
-	double Xmax = microenvironment.mesh.bounding_box[3]; 
-	double Ymax = microenvironment.mesh.bounding_box[4]; 
-	double Zmax = microenvironment.mesh.bounding_box[5]; 
-	
-	if( default_microenvironment_options.simulate_2D == true )
-	{
-		Zmin = 0.0; 
-		Zmax = 0.0; 
-	}
-    std::cout << "\n\n------- setup_tissue(): Xmin,Xmax= " << Xmin << ", " << Xmax<<std::endl; 
-    std::cout << "------- setup_tissue(): Ymin,Ymax= " << Ymin << ", " << Ymax<<std::endl; 
-	
-	double Xrange = Xmax - Xmin; 
-	double Yrange = Ymax - Ymin; 
-	double Zrange = Zmax - Zmin; 
-	
-	// create some of each type of cell 
-	
-	Cell* pC;
-	
-	for( int k=0; k < cell_definitions_by_index.size() ; k++ )
-	{
-		Cell_Definition* pCD = cell_definitions_by_index[k]; 
-		std::cout << "Placing cells of type " << pCD->name << " ... " << std::endl; 
-		for( int n = 0 ; n < parameters.ints("number_of_cells") ; n++ )
-		{
-			std::vector<double> position = {0,0,0}; 
-			position[0] = Xmin + UniformRandom()*Xrange; 
-			position[1] = Ymin + UniformRandom()*Yrange; 
-			position[2] = Zmin + UniformRandom()*Zrange; 
-			
-			pC = create_cell( *pCD ); 
-			pC->assign_position( position );
-		}
-	}
-	std::cout << std::endl; 
-	
-	// load cells from your CSV file (if enabled)
-	load_cells_from_pugixml(); 	
-	
-	return; 
+    initialize_default_cell_definition(); 
+    cell_defaults.phenotype.secretion.sync_to_microenvironment(&microenvironment); 
+
+    cell_defaults.functions.volume_update_function = NULL;
+    cell_defaults.functions.update_velocity = custom_update_velocity;
+
+    cell_defaults.functions.update_migration_bias = NULL; 
+    cell_defaults.functions.update_phenotype = phenotype_function; 
+    cell_defaults.functions.custom_cell_rule = custom_function;
+    cell_defaults.functions.contact_function = NULL; 
+
+    cell_defaults.functions.add_cell_basement_membrane_interactions = NULL; 
+    cell_defaults.functions.calculate_distance_to_membrane = NULL; 
+
+    initialize_cell_definitions_from_pugixml(); 
+    build_cell_definitions_maps(); 
+    setup_signal_behavior_dictionaries();     
+
+    display_cell_definitions(std::cout); 
+
+    return; 
 }
 
-std::vector<std::string> my_coloring_function( Cell* pCell )
-{ return paint_by_number_cell_coloring(pCell); }
+void setup_microenvironment(void)
+{
+    // initialize BioFVM 
+    initialize_microenvironment();     
+    return; 
+}
 
-void phenotype_function( Cell* pCell, Phenotype& phenotype, double dt )
+void setup_tissue(void)
+{
+    // load cells from your CSV file (if enabled)
+    load_cells_from_pugixml();     
+
+    for(int idx = 0; idx < all_cells->size(); idx++)
+    {
+        PhysiCell::Cell* pCell = (*all_cells)[idx];
+
+        // Start with zero motion; the benchmark pulse is imposed later.
+        pCell->phenotype.motility.is_motile = false;
+        pCell->phenotype.motility.migration_speed = 0.0;
+
+        // Constrain motility to x-direction
+        pCell->phenotype.motility.migration_bias_direction[0] = 1.0;
+        pCell->phenotype.motility.migration_bias_direction[1] = 0.0;
+        pCell->phenotype.motility.migration_bias_direction[2] = 0.0;
+
+        pCell->phenotype.motility.motility_vector.assign(3, 0.0);
+        pCell->set_previous_velocity(0.0, 0.0, 0.0);
+        
+    }
+    
+    return; 
+}
+
+std::vector<std::string> my_coloring_function(Cell* pCell)
 { 
-    // static Cell_Definition* pCD = ... // find the cell's definition 
-    // static Cell_Definition* pCD = find_cell_definition("agent");
-
-    // if( get_single_signal( pCell, "volume" ) < 2 * pCD->phenotype.volume.total )
-    // { set_single_behavior( pCell , "exit from cycle phase 3" , 0 ); } 
-    // else 
-    // { set_single_behavior( pCell , "exit from cycle phase 3" , 9e9); } 
-    // return; 
+    return paint_by_number_cell_coloring(pCell); 
 }
 
-void custom_function( Cell* pCell, Phenotype& phenotype , double dt )
-{ return; } 
+void phenotype_function(Cell* pCell, Phenotype& phenotype, double dt)
+{ 
 
-void contact_function( Cell* pMe, Phenotype& phenoMe , Cell* pOther, Phenotype& phenoOther , double dt )
-{ return; } 
+    return; 
+}
+
+void custom_function(Cell* pCell, Phenotype& phenotype , double dt)
+
+{ 
+    sync_pulse_state(pCell, pulse_is_active(PhysiCell_globals.current_time));
+    return; 
+} 
+
+void contact_function(Cell* pMe, Phenotype& phenoMe , Cell* pOther, Phenotype& phenoOther , double dt)
+{ 
+    return; 
+} 
+
+
+void custom_update_velocity(Cell* pCell, Phenotype& phenotype, double dt)
+{
+    const bool active = pulse_is_active(PhysiCell_globals.current_time);
+
+    sync_pulse_state(pCell, active);
+    pCell->velocity.assign(2.99, 0.0);
+
+    if (active)
+    {
+        pCell->velocity[0] = target_speed_microns_per_minute;
+
+        const bool pulse_just_started =
+            PhysiCell_globals.current_time < pulse_start_time + dt;
+        if (pulse_just_started)
+        {
+            pCell->set_previous_velocity(target_speed_microns_per_minute, 0.0, 0.0);
+        }
+        return;
+    }
+
+    pCell->set_previous_velocity(0.0, 0.0, 0.0);
+    return;
+}
