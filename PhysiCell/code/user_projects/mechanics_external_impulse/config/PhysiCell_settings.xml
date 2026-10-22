@@ -18,7 +18,7 @@
         <time_units>min</time_units>
         <space_units>micron</space_units>
         <dt_diffusion units="min">0.001</dt_diffusion>
-        <dt_mechanics units="min">0.01</dt_mechanics>
+        <dt_mechanics units="min">0.001</dt_mechanics>
         <dt_phenotype units="min">0.01</dt_phenotype>
     </overall>
 
@@ -27,7 +27,7 @@
     </parallel>
 
     <save>
-        <folder>../results/mechanics_external_impulse/dt_0.01/</folder>
+        <folder>../results/mechanics_external_impulse/</folder>
         <full_data>
             <interval units="min">0.001</interval>
             <enable>true</enable>

@@ -70,6 +70,7 @@
 #include <iostream>
 #include <ctime>
 #include <cmath>
+#include <iomanip>
 #include <omp.h>
 #include <fstream>
 
@@ -82,6 +83,31 @@
 	
 using namespace BioFVM;
 using namespace PhysiCell;
+
+namespace
+{
+void write_external_impulse_trace_row(std::ofstream& trace_file, double time_min)
+{
+	if( all_cells->empty() )
+	{ return; }
+
+	Cell* pCell = (*all_cells)[0];
+	const std::vector<double>& previous_velocity = pCell->get_previous_velocity();
+
+	trace_file << std::fixed << std::setprecision(6)
+		<< time_min << ","
+		<< time_min * 60.0 << ","
+		<< pCell->position[0] << ","
+		<< pCell->position[1] << ","
+		<< pCell->position[2] << ","
+		<< previous_velocity[0] << ","
+		<< previous_velocity[1] << ","
+		<< previous_velocity[2] << ","
+		<< previous_velocity[0] / 60.0 << ","
+		<< previous_velocity[1] / 60.0 << ","
+		<< previous_velocity[2] / 60.0 << std::endl;
+}
+}
 
 int main( int argc, char* argv[] )
 {
@@ -166,6 +192,7 @@ int main( int argc, char* argv[] )
 	BioFVM::TIC();
 	
 	std::ofstream report_file;
+	std::ofstream external_impulse_trace;
 	if( PhysiCell_settings.enable_legacy_saves == true )
 	{	
 		sprintf( filename , "%s/simulation_report.txt" , PhysiCell_settings.folder.c_str() ); 
@@ -173,6 +200,13 @@ int main( int argc, char* argv[] )
 		report_file.open(filename); 	// create the data log file 
 		report_file<<"simulated time\tnum cells\tnum division\tnum death\twall time"<<std::endl;
 	}
+
+	sprintf( filename , "%s/external_impulse_trace.csv" , PhysiCell_settings.folder.c_str() );
+	external_impulse_trace.open( filename );
+	external_impulse_trace
+		<< "time_min,time_s,x_um,y_um,z_um,vx_um_per_min,vy_um_per_min,vz_um_per_min,vx_um_per_s,vy_um_per_s,vz_um_per_s"
+		<< std::endl;
+	write_external_impulse_trace_row( external_impulse_trace , PhysiCell_globals.current_time );
 	
 	// main loop 
 	
@@ -218,6 +252,7 @@ int main( int argc, char* argv[] )
 			
 			// run PhysiCell 
 			((Cell_Container *)microenvironment.agent_container)->update_all_cells( PhysiCell_globals.current_time );
+			write_external_impulse_trace_row( external_impulse_trace , PhysiCell_globals.current_time + diffusion_dt );
 			
 			/*
 			  Custom add-ons could potentially go here. 
@@ -231,6 +266,7 @@ int main( int argc, char* argv[] )
 			log_output(PhysiCell_globals.current_time, PhysiCell_globals.full_output_index, microenvironment, report_file);
 			report_file.close();
 		}
+		external_impulse_trace.close();
 	}
 	catch( const std::exception& e )
 	{ // reference to the base of a polymorphic object
