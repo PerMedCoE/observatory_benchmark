@@ -4,14 +4,14 @@ The files are split into two types. The number at the end of the file name shows
 
 
 - data files
-Column 1 = Time (seconds)
+Column 1 = Time (minutes)
 Column 2 = Average concentration across the domain (uM)
 column 3 = Concentration of central voxel in domain (uM)
-All files contain a 10000 rows, so each timestep represents 0.0001 seconds.
+All files contain 10000 rows, so each timestep represents 0.001 minutes (10 minutes in total)
 
 
 - Contour files
-Array of concentration values (uM) in each voxel across the x-y plane centered at z=0. Generated at the end of the simulation (T = 10 seconds).
+Array of concentration values (uM) in each voxel across the x-y plane centered at z=0. Generated at the end of the simulation (T = 10 minutes).
 
 Concentration value at position (0,0) (top left) in the array represents concentration at x = -120 um and y = -120 um in the domain.
 
