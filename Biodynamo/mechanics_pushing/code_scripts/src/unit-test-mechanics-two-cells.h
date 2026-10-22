@@ -74,37 +74,39 @@ inline int Simulate(int argc, const char** argv) {
   rm->AddAgent(cell2);
 
   // Track positions
-  const int time_steps = 100;
+  const int time_steps = 10/(simulation.GetParam()->simulation_time_step); // Number of simulation steps for 10 minutes
+  const size_t ops_frequency = 0.1/simulation.GetParam()->simulation_time_step;   // 1 (every timestep) for 0.1 min, 10 (every 10 timesteps) for 0.01 min, 100 (every 100 timesteps) for 0.001 min
 
   std::vector<std::vector<Double3>> cell_positions(number_of_cells);
   auto* track_pos_op = NewOperation("track_position");
   track_pos_op->GetImplementation<TrackPosition>()->positions_ =
       &cell_positions;
-  track_pos_op->frequency_ = 1;  // 0.1 min
+  track_pos_op->frequency_ = ops_frequency;
   scheduler->ScheduleOp(track_pos_op);
 
   // Move behaviour
   auto* behavior_op = scheduler->GetOps("behavior")[0];
-  behavior_op->frequency_ = 1;  // Set behaviors' frequency
+  behavior_op->frequency_ = ops_frequency;  // Set behaviors' frequency
 
   // Custom force module
   auto* custom_force = new CellCellForce();
   auto* mech_op = scheduler->GetOps("mechanical forces")[0];
   auto* force_implementation = mech_op->GetImplementation<MechanicalForcesOp>();
   force_implementation->SetInteractionForce(custom_force);
-  mech_op->frequency_ = 1;
+  mech_op->frequency_ = 1;  // We don't change this because the force is multiplied by the timestep so force will be applied with the same frequency, but lower magnitude
 
   // Run simulation for 10 minutes (100 steps, 1 step = 0.1 min )
   scheduler->Simulate(time_steps);
 
   std::cout << "Simulation completed successfully!" << std::endl;
 
-  std::ofstream file;
+  std::ofstream file("positions.csv");
   if (!file.is_open()) {
-    file.open("positions.csv");
+    std::cerr << "Failed to open positions.csv for writing." << std::endl;
+    return 1;
   }
 
-  for (size_t j = 0; j < time_steps; j++) {
+  for (size_t j = 0; j < cell_positions[0].size(); j++) {
     for (size_t i = 0; i < cell_positions.size(); i++) {
       file << j << "\t " << cell_positions[i][j];
     }
