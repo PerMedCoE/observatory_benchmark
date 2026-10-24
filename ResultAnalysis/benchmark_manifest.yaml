@@ -1,0 +1,22 @@
+root: /home/tntiniak/Work/observatory_benchmark
+tools:
+  BioDynaMo:
+    tests:
+      diffusion_decay_test:
+        results_file: results.csv
+  Chaste:
+    tests:
+      DiffusionNoCells:
+        results_file: results.csv
+  CompuTiX:
+    tests:
+      diffusion_single:
+        results_file: results.yaml
+  PhysiCell:
+    tests:
+      decay_study:
+        results_file: physicell_decay_plot_data.csv
+  TiSim:
+    tests:
+      diffusion_decay_test:
+        results_file: results.csv

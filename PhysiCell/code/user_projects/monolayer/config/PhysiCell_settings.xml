@@ -26,14 +26,14 @@
     </parallel>
 
     <save>
-        <folder>../results/monolayer/</folder>
+        <folder>../results/monolayer_pres/</folder>
         <full_data>
             <interval units="min">60</interval>
             <enable>true</enable>
         </full_data>
         <SVG>
             <interval units="min">720</interval>
-            <enable>false</enable>
+            <enable>true</enable>
             <plot_substrate enabled="false" limits="false">
                 <substrate>signal</substrate>
                 <min_conc />
@@ -204,7 +204,7 @@
     <initial_conditions>
         <cell_positions type="csv" enabled="true">
             <folder>./config</folder>
-            <filename>cell000.csv</filename>
+            <filename>cells.csv</filename>
         </cell_positions>
     </initial_conditions>
 

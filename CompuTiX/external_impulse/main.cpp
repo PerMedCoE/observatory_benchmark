@@ -52,17 +52,9 @@
 //! \subsubsection impulse_theoretical_prediction Theoretical predictions
 //! Given the system follows overdamped dynamics we expect the sphere to stop right after the second time-step, based on the prescribed ratio of force and friction coefficient. Positions and velocities expected at meaningful time-steps hold the following expected values:
 //! \f{align*}
-//!   \vec{v}(\Delta t) &= \frac{\vec{F}_\text{loc}(t=0)}{\gamma} = \begin{pmatrix} 10 & 0 & 0 \end{pmatrix} \, \unit{\micro\meter\per\minute}
-//!   \\ \vec{x}(\Delta t) &= \vec{v}(\Delta t) \Delta t = \begin{pmatrix} 1 & 0 & 0 \end{pmatrix} \, \unit{\micro\meter}
-//!   \\ \vec{v}(2\Delta t) &= \frac{\vec{F}_\text{loc}(t=\Delta t)}{\gamma} = \begin{pmatrix} 0 & 0 & 0 \end{pmatrix}\,
-//!      \unit{\micro\meter\per\minute}
-//!   \\ \vec{x}(2\Delta t) &= \vec{x}(\Delta t) + \vec{v}(2\Delta t) \Delta t = \begin{pmatrix} 1 & 0 & 0 \end{pmatrix} \, \unit{\micro\meter}.
+//!   \vec{v}(\Delta t) &= \frac{\vec{F}_\text{loc}(t=0)}{\gamma} = \begin{pmatrix} 0.001 & 0 & 0 \end{pmatrix} \, \unit{\micro\meter\per\minute}
+//!   \\ \vec{x}(t + \Delta t) &= \vec{v}(\Delta t) \Delta t = \begin{pmatrix} 0.5 & 0 & 0 \end{pmatrix} \, \unit{\nano\meter}
 //! \f}
-//! At \f$t=0.2\, \unit{\minute}\f$ system reaches equilibrium and the sphere is not moving any more.
-//!
-//! \subsection impulse_integration_scheme Integration schemes
-//! Purpose of this example is to compare implicit and explicit integration schemes, showing their differences implementation-wise
-//! and subsequently in terms of relaxation time for the sphere velocity.
 //!
 //! \subsubsection impulse_integration_scheme_explicit Explicit underdamped
 //! Set of equations we are going to integrate for the explicit underdamped case is the following:
@@ -206,7 +198,7 @@
 //!
 //! | Parameter                | Symbol               | Value      	          | Unit         	 | Derivation          	   |
 //! |--------------------------|----------------------|-----------------------|------------------|-------------------------|
-//! | Target time 	           | \f$t_\text{end}\f$   | \f$10\f$	          | \f$\unit{second}\f$        | \f$\text{prescribed}\f$ |
+//! | Target time 	           | \f$t_\text{end}\f$   | \f$12\f$	          | \f$\unit{second}\f$        | \f$\text{prescribed}\f$ |
 //! | Time step 	           | \f$\Delta t\f$       | \f$10^{-4}\f$	          | \f$\unit{second}\f$        | \f$\text{prescribed}\f$ |
 //! | Cell's radius            | \f$r\f$		      | \f$5\f$               | \f$\unit{\micro\meter}\f$      | \f$\text{prescribed}\f$ |
 //! | Initial force            | \f$F_\text{loc}\f$   | \f$\begin{pmatrix} 20 & 0 & 0 \end{pmatrix}\f$   | \f$\unit{\pico\newton}\f$   | \f$\text{free}\f$  |
@@ -220,7 +212,7 @@
 #include <CompuTiX/Components/DegreesOfFreedom/DegreeOfFreedom.h>
 #include <CompuTiX/Components/Parameters/Values/ComponentList.h>
 #include <CompuTiX/Components/Parameters/Values/String.h>
-#include <CompuTiX/Components/Parameters/Values/absolute_path.h>
+#include <CompuTiX/Components/Parameters/Values/path_from_root.h>
 #include <CompuTiX/Components/Random/MersenneTwister.h>
 #include <CompuTiX/Components/tree_to_yaml.h>
 #include <CompuTiX/Math/constants.h>
@@ -362,8 +354,7 @@ int main( int argc, char** argv )
         auto s = s_view.add( u );
 
         // Set values for spheres
-        s.set< Types::Scalar >( Access::Modes::read_write, "m", SIUnits::kilogram, 0.01 );
-        //s.set< Types::Scalar >( Access::Modes::read_write, "m", SIUnits::kilogram, sphere_density * sphere_volume );
+        s.set< Types::Scalar >( Access::Modes::read_write, "m", SIUnits::kilogram, 1. );
         s.set< Types::Matrix >( Access::Modes::read_write, "M", SIUnits::kilogram, 1. * Types::Matrix::Identity() );
         s.set< Types::Scalar >( Access::Modes::read_write, "gamma", SIUnits::kilogram / SIUnits::minute, gamma );
         s.set< Types::Vector >( Access::Modes::read_write, "F_loc", SIUnits::newton, F_loc );
@@ -394,8 +385,8 @@ int main( int argc, char** argv )
         // - condition for termination (simulation time)
         {
             auto action = loop->add( create_executable( "OnActions::Triggers::ExecuteWhileLess", "Check simulation time" ) );
-            action->set_parameter_value( "a", absolute_path( "Universes/t" ) );
-            action->set_parameter_value( "b", absolute_path( "Universes/t_end" ) );
+            action->set_parameter_value( "a", path_from_root( "Universes/t" ) );
+            action->set_parameter_value( "b", path_from_root( "Universes/t_end" ) );
         }
 
         // - explicit forces pipeline
@@ -405,8 +396,8 @@ int main( int argc, char** argv )
             // -- reset the sum of forces
             {
                 auto action = forces_explicit->add( create_executable( "Elementary::Reset", "Explicit: reset total force" ) );
-                action->set_parameter_value( "collection", absolute_path( "Universes/Spheres" ) );
-                action->set_parameter_value( "dof", absolute_path( "Universes/Spheres/F_explicit" ) );
+                action->set_parameter_value( "collection", path_from_root( "Universes/Spheres" ) );
+                action->set_parameter_value( "dof", path_from_root( "Universes/Spheres/F_explicit" ) );
             }
 
             // -- apply the Heaviside impulse
@@ -416,29 +407,29 @@ int main( int argc, char** argv )
                 // --- start condition
                 {
                     auto action = impulse->add( create_executable( "OnActions::Triggers::ExecuteWhileLess", "Explicit: Heaviside start" ) );
-                    action->set_parameter_value( "a", absolute_path( "Universes/impulse_start" ) );
-                    action->set_parameter_value( "b", absolute_path( "Universes/t" ) );
+                    action->set_parameter_value( "a", path_from_root( "Universes/impulse_start" ) );
+                    action->set_parameter_value( "b", path_from_root( "Universes/t" ) );
                 }
                 // --- end condition
                 {
                     auto action = impulse->add( create_executable( "OnActions::Triggers::ExecuteWhileLess", "Explicit: Heaviside end" ) );
-                    action->set_parameter_value( "a", absolute_path( "Universes/t" ) );
-                    action->set_parameter_value( "b", absolute_path( "Universes/impulse_end" ) );
+                    action->set_parameter_value( "a", path_from_root( "Universes/t" ) );
+                    action->set_parameter_value( "b", path_from_root( "Universes/impulse_end" ) );
                 }
                 // --- add the initial force
                 {
                     auto action = impulse->add( create_executable( "Elementary::Algebraic::Add", "Explicit: apply explicit local force" ) );
-                    action->set_parameter_value( "result", absolute_path( "Universes/Spheres/F_explicit" ) );
-                    action->set_parameter_value( "b", absolute_path( "Universes/Spheres/F_loc" ) );
+                    action->set_parameter_value( "result", path_from_root( "Universes/Spheres/F_explicit" ) );
+                    action->set_parameter_value( "b", path_from_root( "Universes/Spheres/F_loc" ) );
                 }
             }
 
             // -- compute Stokes drag force and sets mass matrix
             {
                 auto stokes = forces_explicit->add( create_executable( "Forces::StokesDrag", "Explicit: compute Stokes drag force" ) );
-                stokes->set_parameter_value( "F", absolute_path( "Universes/Spheres/F_explicit" ) );
-                stokes->set_parameter_value( "gamma", absolute_path( "Universes/Spheres/gamma" ) );
-                stokes->set_parameter_value( "v_rel", absolute_path( "Universes/Spheres/v_explicit" ) );
+                stokes->set_parameter_value( "F", path_from_root( "Universes/Spheres/F_explicit" ) );
+                stokes->set_parameter_value( "gamma", path_from_root( "Universes/Spheres/gamma" ) );
+                stokes->set_parameter_value( "v_rel", path_from_root( "Universes/Spheres/v_explicit" ) );
             }
         }
 
@@ -449,15 +440,15 @@ int main( int argc, char** argv )
             // -- reset the sum of forces
             {
                 auto action = forces_implicit->add( create_executable( "Elementary::Reset", "Implicit: reset total force" ) );
-                action->set_parameter_value( "collection", absolute_path( "Universes/Spheres" ) );
-                action->set_parameter_value( "dof", absolute_path( "Universes/Spheres/F_implicit" ) );
+                action->set_parameter_value( "collection", path_from_root( "Universes/Spheres" ) );
+                action->set_parameter_value( "dof", path_from_root( "Universes/Spheres/F_implicit" ) );
             }
 
             // -- reset the mass matrix
             {
                 auto action = forces_implicit->add( create_executable( "Elementary::Reset", "Implicit: reset mass matrix" ) );
-                action->set_parameter_value( "collection", absolute_path( "Universes/Spheres" ) );
-                action->set_parameter_value( "dof", absolute_path( "Universes/Spheres/M" ) );
+                action->set_parameter_value( "collection", path_from_root( "Universes/Spheres" ) );
+                action->set_parameter_value( "dof", path_from_root( "Universes/Spheres/M" ) );
             }
 
             // -- apply the Heaviside impulse
@@ -467,31 +458,31 @@ int main( int argc, char** argv )
                 // --- start condition
                 {
                     auto action = impulse->add( create_executable( "OnActions::Triggers::ExecuteWhileLess", "Implicit: Heaviside start" ) );
-                    action->set_parameter_value( "a", absolute_path( "Universes/impulse_start" ) );
-                    action->set_parameter_value( "b", absolute_path( "Universes/t" ) );
+                    action->set_parameter_value( "a", path_from_root( "Universes/impulse_start" ) );
+                    action->set_parameter_value( "b", path_from_root( "Universes/t" ) );
                 }
                 // --- end condition
                 {
                     auto action = impulse->add( create_executable( "OnActions::Triggers::ExecuteWhileLess", "Implicit: Heaviside end" ) );
-                    action->set_parameter_value( "a", absolute_path( "Universes/t" ) );
-                    action->set_parameter_value( "b", absolute_path( "Universes/impulse_end" ) );
+                    action->set_parameter_value( "a", path_from_root( "Universes/t" ) );
+                    action->set_parameter_value( "b", path_from_root( "Universes/impulse_end" ) );
                 }
                 // --- add the initial force
                 {
                     auto action = impulse->add( create_executable( "Elementary::Algebraic::Add", "Implicit: apply explicit local force" ) );
-                    action->set_parameter_value( "result", absolute_path( "Universes/Spheres/F_implicit" ) );
-                    action->set_parameter_value( "b", absolute_path( "Universes/Spheres/F_loc" ) );
+                    action->set_parameter_value( "result", path_from_root( "Universes/Spheres/F_implicit" ) );
+                    action->set_parameter_value( "b", path_from_root( "Universes/Spheres/F_loc" ) );
                 }
             }
 
             // -- compute Stokes drag force and sets mass matrix
             {
                 auto stokes = forces_implicit->add( create_executable( "Forces::StokesDrag", "Implicit: compute Stokes drag force" ) );
-                stokes->set_parameter_value( "F", absolute_path( "Universes/Spheres/F_implicit" ) );
-                stokes->set_parameter_value( "gamma", absolute_path( "Universes/Spheres/gamma" ) );
-                stokes->set_parameter_value( "v_rel", absolute_path( "Universes/Spheres/v_implicit" ) );
-                stokes->set_parameter_value( "M", absolute_path( "Universes/Spheres/M" ) );
-                stokes->set_parameter_value( "dt", absolute_path( "Universes/dt" ) );
+                stokes->set_parameter_value( "F", path_from_root( "Universes/Spheres/F_implicit" ) );
+                stokes->set_parameter_value( "gamma", path_from_root( "Universes/Spheres/gamma" ) );
+                stokes->set_parameter_value( "v_rel", path_from_root( "Universes/Spheres/v_implicit" ) );
+                stokes->set_parameter_value( "M", path_from_root( "Universes/Spheres/M" ) );
+                stokes->set_parameter_value( "dt", path_from_root( "Universes/dt" ) );
             }
         }
 
@@ -502,37 +493,37 @@ int main( int argc, char** argv )
             // - check simulation time
             {
                 auto action = io_pipeline->add( create_executable( "OnActions::Triggers::ExecuteUntilLess", "Check simulation time" ) );
-                action->set_parameter_value( "a", absolute_path( "Universes/t" ) );
-                action->set_parameter_value( "b", absolute_path( "Universes/next_output" ) );
+                action->set_parameter_value( "a", path_from_root( "Universes/t" ) );
+                action->set_parameter_value( "b", path_from_root( "Universes/next_output" ) );
             }
 
             // -- write cells data
             {
                 auto action = io_pipeline->add( create_executable( "IO::SimpleVTKWriter", "Write VTK files for cells" ) );
-                action->set_parameter_value( "collection", absolute_path( "Universes/Spheres" ) );
-                action->set_parameter_value( "file_index", absolute_path( "Universes/current_frame" ) );
+                action->set_parameter_value( "collection", path_from_root( "Universes/Spheres" ) );
+                action->set_parameter_value( "file_index", path_from_root( "Universes/current_frame" ) );
                 action->set_parameter_value( "filename", std::make_unique< String >( output_dir + "/Cells_{:03}.vtp" ) );
             }
 
             // -- write the whole data to XML file
             {
                 auto action = io_pipeline->add( create_executable( "IO::Save", "Write VTK files for faces" ) );
-                action->set_parameter_value( "root", std::make_unique< ComponentList >( absolute_path( "Universes" ) ) );
-                action->set_parameter_value( "file_index", absolute_path( "Universes/current_frame" ) );
+                action->set_parameter_value( "root", std::make_unique< ComponentList >( path_from_root( "Universes" ) ) );
+                action->set_parameter_value( "file_index", path_from_root( "Universes/current_frame" ) );
                 action->set_parameter_value( "filename", std::make_unique< String >( output_dir + "/Universes_{:03}.xml" ) );
             }
 
             // -- increment frame counter
             {
                 auto action = io_pipeline->add( create_executable( "Elementary::Algebraic::Increment", "Increment frame counter" ) );
-                action->set_parameter_value( "result", absolute_path( "Universes/current_frame" ) );
+                action->set_parameter_value( "result", path_from_root( "Universes/current_frame" ) );
             }
 
             // -- advance time checkpoint
             {
                 auto action = io_pipeline->add( create_executable( "Elementary::Algebraic::Add", "Advance time checkpoint" ) );
-                action->set_parameter_value( "result", absolute_path( "Universes/next_output" ) );
-                action->set_parameter_value( "b", absolute_path( "Universes/output_interval" ) );
+                action->set_parameter_value( "result", path_from_root( "Universes/next_output" ) );
+                action->set_parameter_value( "b", path_from_root( "Universes/output_interval" ) );
             }
         }
 
@@ -542,18 +533,18 @@ int main( int argc, char** argv )
             // -- position integration
             {
                 auto action = explicit_integration_pipeline->add( create_executable( "Integration::ForwardEuler", "Explicit: integrate position" ) );
-                action->set_parameter_value( "y", absolute_path( "Universes/Spheres/x_explicit" ) );
-                action->set_parameter_value( "dy_dt", absolute_path( "Universes/Spheres/v_explicit" ) );
-                action->set_parameter_value( "dt", absolute_path( "Universes/dt" ) );
+                action->set_parameter_value( "y", path_from_root( "Universes/Spheres/x_explicit" ) );
+                action->set_parameter_value( "dy_dt", path_from_root( "Universes/Spheres/v_explicit" ) );
+                action->set_parameter_value( "dt", path_from_root( "Universes/dt" ) );
             }
 
             // -- velocity integration
             {
                 auto action = explicit_integration_pipeline->add( create_executable( "Integration::WeightedForwardEuler", "Explicit: integrate velocity" ) );
-                action->set_parameter_value( "y", absolute_path( "Universes/Spheres/v_explicit" ) );
-                action->set_parameter_value( "w", absolute_path( "Universes/Spheres/m" ) );
-                action->set_parameter_value( "dy_dt", absolute_path( "Universes/Spheres/F_explicit" ) );
-                action->set_parameter_value( "dt", absolute_path( "Universes/dt" ) );
+                action->set_parameter_value( "y", path_from_root( "Universes/Spheres/v_explicit" ) );
+                action->set_parameter_value( "w", path_from_root( "Universes/Spheres/m" ) );
+                action->set_parameter_value( "dy_dt", path_from_root( "Universes/Spheres/F_explicit" ) );
+                action->set_parameter_value( "dt", path_from_root( "Universes/dt" ) );
             }
         }
 
@@ -563,33 +554,33 @@ int main( int argc, char** argv )
             // -- velocity integration
             {
                 auto action = implicit_integration_pipeline->add( create_executable( "Integration::WeightedForwardEuler", "Implicit: integrate velocity" ) );
-                action->set_parameter_value( "y", absolute_path( "Universes/Spheres/v_implicit" ) );
-                action->set_parameter_value( "w", absolute_path( "Universes/Spheres/M" ) );
-                action->set_parameter_value( "dy_dt", absolute_path( "Universes/Spheres/F_implicit" ) );
-                action->set_parameter_value( "dt", absolute_path( "Universes/dt" ) );
+                action->set_parameter_value( "y", path_from_root( "Universes/Spheres/v_implicit" ) );
+                action->set_parameter_value( "w", path_from_root( "Universes/Spheres/M" ) );
+                action->set_parameter_value( "dy_dt", path_from_root( "Universes/Spheres/F_implicit" ) );
+                action->set_parameter_value( "dt", path_from_root( "Universes/dt" ) );
             }
 
             // -- position integration
             {
                 auto action = implicit_integration_pipeline->add( create_executable( "Integration::ForwardEuler", "Implicit: integrate position" ) );
-                action->set_parameter_value( "y", absolute_path( "Universes/Spheres/x_implicit" ) );
-                action->set_parameter_value( "dy_dt", absolute_path( "Universes/Spheres/v_implicit" ) );
-                action->set_parameter_value( "dt", absolute_path( "Universes/dt" ) );
+                action->set_parameter_value( "y", path_from_root( "Universes/Spheres/x_implicit" ) );
+                action->set_parameter_value( "dy_dt", path_from_root( "Universes/Spheres/v_implicit" ) );
+                action->set_parameter_value( "dt", path_from_root( "Universes/dt" ) );
             }
         }
 
         // - time advance
         {
             auto action = loop->add( create_executable( "Elementary::Algebraic::Add", "Advance time" ) );
-            action->set_parameter_value( "result", absolute_path( "Universes/t" ) );
-            action->set_parameter_value( "b", absolute_path( "Universes/dt" ) );
+            action->set_parameter_value( "result", path_from_root( "Universes/t" ) );
+            action->set_parameter_value( "b", path_from_root( "Universes/dt" ) );
         }
 
         // - store elapsed time of simulation
         {
             auto action = loop->add( create_executable( "OnActions::StoreElapsedTime", "Store simulation runtime" ) );
-            action->set_parameter_value( "elapsed_time", absolute_path( "Universes/t_elapsed" ) );
-            action->set_parameter_value( "executable", absolute_path( "Loop" ) );
+            action->set_parameter_value( "elapsed_time", path_from_root( "Universes/t_elapsed" ) );
+            action->set_parameter_value( "executable", path_from_root( "Loop" ) );
         }
     }
 

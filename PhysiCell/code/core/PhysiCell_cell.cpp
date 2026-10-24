@@ -964,6 +964,7 @@ void Cell::add_potentials(Cell* other_agent)
 	// if( this->ID == other_agent->ID )
 	if( this == other_agent )
 	{ return; }
+	std::cout<< "Using Standard add potentials " << std::endl;
 /*
 	// new April 2022: don't interact with cells with 0 volume 
 	// does not seem to really help 

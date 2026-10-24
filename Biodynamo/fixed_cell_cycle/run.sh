@@ -27,8 +27,19 @@ if [ -d "output" ]; then
     rm -r output
 fi
 
-# Run the simulation
+# If the directory 'results' does not exist, create it
+if [ ! -d "$DIR/results" ]; then
+    mkdir $DIR/results
+else
+    # If it exists, delete its contents
+    rm -r $DIR/results/* 2>/dev/null || true
+fi
+
+
+# Run the simulation with single thread for reproducibility
+export OMP_NUM_THREADS=1
 bdm run
 
 # Move the results to the correct folder
 mv output/cellcycle1/metadata $DIR/results
+mv output/cell-*.csv $DIR/results
