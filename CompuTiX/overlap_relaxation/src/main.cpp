@@ -233,7 +233,7 @@
 #include <CompuTiX/Components/DegreesOfFreedom/DegreeOfFreedom.h>
 #include <CompuTiX/Components/Parameters/Values/ComponentList.h>
 #include <CompuTiX/Components/Parameters/Values/String.h>
-#include <CompuTiX/Components/Parameters/Values/absolute_path.h>
+#include <CompuTiX/Components/Parameters/Values/path_from_root.h>
 #include <CompuTiX/Components/Random/MersenneTwister.h>
 #include <CompuTiX/Components/tree_to_yaml.h>
 #include <CompuTiX/Math/constants.h>
@@ -252,33 +252,33 @@
 #include <random>
 #include <stdexcept>
 
-int main( int argc, char** argv )
+int main(int argc, char** argv)
 {
     using namespace CompuTiX;
     using namespace Components;
 
-    //Prepare description
-    auto options = cxxopts::Options{ "simulation",
-                                     "Collision of two spheres pushing each other." };
+    // Prepare description
+    auto options = cxxopts::Options { "simulation",
+        "Collision of two spheres pushing each other." };
 
-    //Add options
+    // Add options
     {
         using std::to_string;
 
         auto option_adder = options.add_options();
-        option_adder( "h,help", "Print usage." );
-        option_adder( "v,verbose", "Verbose print." );
-        option_adder( "without-io", "Disable IO. Disables generation of VTP and save files." );
-        option_adder( "t,run-time", "Maximal run time [s].", cxxopts::value< Types::Scalar >()->default_value( to_string( std::numeric_limits< Types::Scalar >::max() ) ) );
-        option_adder( "T,sim-time", "Target simulation time [s].", cxxopts::value< Types::Scalar >()->default_value( "10." ) );
-        option_adder( "dt", "Time step [s].", cxxopts::value< Types::Scalar >()->default_value( "0.6" ) );
-        option_adder( "output-dir", "Output directory.", cxxopts::value< std::string >()->default_value( "./" ) );
+        option_adder("h,help", "Print usage.");
+        option_adder("v,verbose", "Verbose print.");
+        option_adder("without-io", "Disable IO. Disables generation of VTP and save files.");
+        option_adder("t,run-time", "Maximal run time [s].", cxxopts::value<Types::Scalar>()->default_value(to_string(std::numeric_limits<Types::Scalar>::max())));
+        option_adder("T,sim-time", "Target simulation time [s].", cxxopts::value<Types::Scalar>()->default_value("10."));
+        option_adder("dt", "Time step [s].", cxxopts::value<Types::Scalar>()->default_value("0.6"));
+        option_adder("output-dir", "Output directory.", cxxopts::value<std::string>()->default_value("./"));
     }
 
-    //Parse arguments
-    const auto result = options.parse( argc, argv );
+    // Parse arguments
+    const auto result = options.parse(argc, argv);
 
-    if( result["h"].as< bool >() ) {
+    if (result["h"].as<bool>()) {
         std::cout << options.help();
 
         return 0;
@@ -287,141 +287,141 @@ int main( int argc, char** argv )
     // ---------------------------------------
     // Generate data layout
     // ---------------------------------------
-    //Create top level collection
-    auto universes = Collections::ParticleCollection::create( "Universes" );
-    if( !universes ) {
-        throw std::runtime_error( "Failed to initialize 'Universes'." );
+    // Create top level collection
+    auto universes = Collections::ParticleCollection::create("Universes");
+    if (!universes) {
+        throw std::runtime_error("Failed to initialize 'Universes'.");
     }
 
-    //Prepare cell collection
-    auto spheres = universes->add( Collections::ParticleCollection::create( "Spheres" ) );
-    auto contacts = universes->add( Collections::PairCollection::create( "Contacts", spheres, spheres ) );
+    // Prepare cell collection
+    auto spheres = universes->add(Collections::ParticleCollection::create("Spheres"));
+    auto contacts = universes->add(Collections::PairCollection::create("Contacts", spheres, spheres));
 
-    //Prepare DoFs for Universes
-    // - time management: current time (t), time step (dt), final time (t_end), current run time (t_elapsed)
-    universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "dt", SIUnits::second ) );
-    universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "t", SIUnits::second ) );
-    universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "t_end", SIUnits::second ) );
-    universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "t_elapsed", SIUnits::second ) );
+    // Prepare DoFs for Universes
+    //  - time management: current time (t), time step (dt), final time (t_end), current run time (t_elapsed)
+    universes->add(DegreesOfFreedom::DegreeOfFreedom<Types::Scalar>::create("dt", SIUnits::second));
+    universes->add(DegreesOfFreedom::DegreeOfFreedom<Types::Scalar>::create("t", SIUnits::second));
+    universes->add(DegreesOfFreedom::DegreeOfFreedom<Types::Scalar>::create("t_end", SIUnits::second));
+    universes->add(DegreesOfFreedom::DegreeOfFreedom<Types::Scalar>::create("t_elapsed", SIUnits::second));
 
     // - VTK printing parameters: current frame index (current_frame)
-    universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Count >::create( "current_frame", SIUnits::dimensionless ) );
+    universes->add(DegreesOfFreedom::DegreeOfFreedom<Types::Count>::create("current_frame", SIUnits::dimensionless));
 
     // - contact model DoFs: interfacial tension (tension), tangential friction coefficient (gamma_tangential), normal friction coefficient (gamma_normal), mass tensor (M), overlap, spheres' radius (r)
-    universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "tension", SIUnits::newton / SIUnits::meter ) );
-    universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "gamma_tangential", SIUnits::pascal * SIUnits::second / SIUnits::meter ) );
-    universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "gamma_normal", SIUnits::pascal * SIUnits::second / SIUnits::meter ) );
-    universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "overlap", SIUnits::meter ) );
-    universes->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "r", SIUnits::meter ) );
+    universes->add(DegreesOfFreedom::DegreeOfFreedom<Types::Scalar>::create("tension", SIUnits::newton / SIUnits::meter));
+    universes->add(DegreesOfFreedom::DegreeOfFreedom<Types::Scalar>::create("gamma_tangential", SIUnits::pascal * SIUnits::second / SIUnits::meter));
+    universes->add(DegreesOfFreedom::DegreeOfFreedom<Types::Scalar>::create("gamma_normal", SIUnits::pascal * SIUnits::second / SIUnits::meter));
+    universes->add(DegreesOfFreedom::DegreeOfFreedom<Types::Scalar>::create("overlap", SIUnits::meter));
+    universes->add(DegreesOfFreedom::DegreeOfFreedom<Types::Scalar>::create("r", SIUnits::meter));
 
-    //Prepare DoFs for Spheres
-    // - kinematic DoFs: position (x), velocity (v), acceleration (a)
-    spheres->add( DegreesOfFreedom::DegreeOfFreedom< Types::Position >::create( "x", SIUnits::meter ) );
-    spheres->add( DegreesOfFreedom::DegreeOfFreedom< Types::Vector >::create( "v", SIUnits::meter / SIUnits::second ) );
-    spheres->add( DegreesOfFreedom::DegreeOfFreedom< Types::Vector >::create( "a", SIUnits::meter / ( SIUnits::second ^ 2 ) ) );
+    // Prepare DoFs for Spheres
+    //  - kinematic DoFs: position (x), velocity (v), acceleration (a)
+    spheres->add(DegreesOfFreedom::DegreeOfFreedom<Types::Position>::create("x", SIUnits::meter));
+    spheres->add(DegreesOfFreedom::DegreeOfFreedom<Types::Vector>::create("v", SIUnits::meter / SIUnits::second));
+    spheres->add(DegreesOfFreedom::DegreeOfFreedom<Types::Vector>::create("a", SIUnits::meter / (SIUnits::second ^ 2)));
 
     // - geometric DoFs: radius (r)
-    spheres->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "r", SIUnits::meter ) );
+    spheres->add(DegreesOfFreedom::DegreeOfFreedom<Types::Scalar>::create("r", SIUnits::meter));
 
     // - dynamic DoFs: mass (m), mass tensor (M), identity matrix (id), force (F), friction coefficient (gamma)
-    spheres->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "m", SIUnits::kilogram ) );
-    spheres->add( DegreesOfFreedom::DegreeOfFreedom< Types::Matrix >::create( "M", SIUnits::kilogram ) );
-    spheres->add( DegreesOfFreedom::DegreeOfFreedom< Types::Matrix >::create( "id", SIUnits::dimensionless ) );
-    spheres->add( DegreesOfFreedom::DegreeOfFreedom< Types::Vector >::create( "F", SIUnits::newton ) );
-    spheres->add( DegreesOfFreedom::DegreeOfFreedom< Types::Matrix >::create( "gamma", SIUnits::newton * SIUnits::second / ( SIUnits::meter ) ) );
+    spheres->add(DegreesOfFreedom::DegreeOfFreedom<Types::Scalar>::create("m", SIUnits::kilogram));
+    spheres->add(DegreesOfFreedom::DegreeOfFreedom<Types::Matrix>::create("M", SIUnits::kilogram));
+    spheres->add(DegreesOfFreedom::DegreeOfFreedom<Types::Matrix>::create("id", SIUnits::dimensionless));
+    spheres->add(DegreesOfFreedom::DegreeOfFreedom<Types::Vector>::create("F", SIUnits::newton));
+    spheres->add(DegreesOfFreedom::DegreeOfFreedom<Types::Matrix>::create("gamma", SIUnits::newton * SIUnits::second / (SIUnits::meter)));
 
     // - material DoFs: sphere material Young's modulus (E), sphere Poisson's ratio (nu), adhesion energy (e_adh)
-    spheres->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "E", SIUnits::pascal ) );
-    spheres->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "nu", SIUnits::dimensionless ) );
-    spheres->add( DegreesOfFreedom::DegreeOfFreedom< Types::Scalar >::create( "e_adh", SIUnits::joule / ( SIUnits::meter ^ 2 ) ) );
+    spheres->add(DegreesOfFreedom::DegreeOfFreedom<Types::Scalar>::create("E", SIUnits::pascal));
+    spheres->add(DegreesOfFreedom::DegreeOfFreedom<Types::Scalar>::create("nu", SIUnits::dimensionless));
+    spheres->add(DegreesOfFreedom::DegreeOfFreedom<Types::Scalar>::create("e_adh", SIUnits::joule / (SIUnits::meter ^ 2)));
 
-    //Prepare DoFs for Contacts
-    // - mass tensor
-    contacts->add( DegreesOfFreedom::DegreeOfFreedom< Types::Matrix >::create( "M", SIUnits::kilogram ) );
+    // Prepare DoFs for Contacts
+    //  - mass tensor
+    contacts->add(DegreesOfFreedom::DegreeOfFreedom<Types::Matrix>::create("M", SIUnits::kilogram));
 
     // ---------------------------------------
     // Set particles' data
     // ---------------------------------------
     // - verbosity, without_io
-    const auto verbose = result["v"].as< bool >();
-    const auto without_io = result["without-io"].as< bool >();
+    const auto verbose = result["v"].as<bool>();
+    const auto without_io = result["without-io"].as<bool>();
 
     // - Global parameters:
-    //Simulation duration time
+    // Simulation duration time
     constexpr Types::Scalar t_end = 60. * 100.; // [ s ]
-    //Time-step size
+    // Time-step size
     constexpr Types::Scalar dt = 60.; // [ s ]
 
     // - Physical and geometrical parameters:
-    //Hepatocyte mass
+    // Hepatocyte mass
     constexpr Types::Scalar mass = 0.; // [ kg ]
-    //Initial positions
+    // Initial positions
     const Types::Position x_init_1 = Types::Position::Zero(); // [ m ]
     const Types::Position x_init_2 = 9e-6 * Types::Position::UnitX(); // [ m ]
-    //Spheres radius
+    // Spheres radius
     constexpr Types::Scalar r = 5e-6; // [ m ]
-    //Young's modulus
+    // Young's modulus
     constexpr Types::Scalar E = 450.; // [ Pa ]
-    //Poisson's ratio
+    // Poisson's ratio
     constexpr Types::Scalar nu = 0.4; // [ 1 ]
-    //Friction coefficient
+    // Friction coefficient
     const Types::Matrix gamma = 1. * Types::Matrix::Identity(); // [ kg / s ]
-    //Specific adhesion energy
+    // Specific adhesion energy
     constexpr Types::Scalar adhesion_energy_density = 8.56e-15 / 2; // [ J / m^2 ]
-    //Contact interfacial tension
+    // Contact interfacial tension
     constexpr Types::Scalar tau = 0.; // [ N / m ]
 
     // - Collision parameters:
-    //Tangential friction coefficient
+    // Tangential friction coefficient
     constexpr Types::Scalar gamma_tang = 1e8; // [ Pa s / m ]
-    //Normal friction coefficient
+    // Normal friction coefficient
     constexpr Types::Scalar gamma_norm = 1e8; // [ Pa s / m ]
 
     // - IO
-    const std::string output_dir = result["output-dir"].as< std::string >();
+    const std::string output_dir = result["output-dir"].as<std::string>();
 
-    //Create unverse and sphere
+    // Create unverse and sphere
     auto universe = [&]() {
         // View for universe
-        auto u_view = Particles::make_particles_view( Access::Modes::read_write, universes );
+        auto u_view = Particles::make_particles_view(Access::Modes::read_write, universes);
         auto u = u_view.add();
 
         // Set values for universe
-        u.set< Types::Scalar >( Access::Modes::read_write, "dt", SIUnits::second, dt );
-        u.set< Types::Scalar >( Access::Modes::read_write, "t_end", SIUnits::second, t_end );
-        u.set< Types::Scalar >( Access::Modes::read_write, "tension", SIUnits::newton / SIUnits::meter, tau );
-        u.set< Types::Scalar >( Access::Modes::read_write, "gamma_tangential", SIUnits::pascal * SIUnits::second / SIUnits::meter, gamma_tang );
-        u.set< Types::Scalar >( Access::Modes::read_write, "gamma_normal", SIUnits::pascal * SIUnits::second / SIUnits::meter, gamma_norm );
-        u.set< Types::Scalar >( Access::Modes::read_write, "r", SIUnits::meter, r );
+        u.set<Types::Scalar>(Access::Modes::read_write, "dt", SIUnits::second, dt);
+        u.set<Types::Scalar>(Access::Modes::read_write, "t_end", SIUnits::second, t_end);
+        u.set<Types::Scalar>(Access::Modes::read_write, "tension", SIUnits::newton / SIUnits::meter, tau);
+        u.set<Types::Scalar>(Access::Modes::read_write, "gamma_tangential", SIUnits::pascal * SIUnits::second / SIUnits::meter, gamma_tang);
+        u.set<Types::Scalar>(Access::Modes::read_write, "gamma_normal", SIUnits::pascal * SIUnits::second / SIUnits::meter, gamma_norm);
+        u.set<Types::Scalar>(Access::Modes::read_write, "r", SIUnits::meter, r);
 
         // View for spheres
-        auto s_view = Particles::make_particles_view( Access::Modes::read_write, spheres );
-        auto s1 = s_view.add( u );
-        auto s2 = s_view.add( u );
+        auto s_view = Particles::make_particles_view(Access::Modes::read_write, spheres);
+        auto s1 = s_view.add(u);
+        auto s2 = s_view.add(u);
 
         // Set values for first sphere
-        s1.set< Types::Scalar >( Access::Modes::read_write, "m", SIUnits::kilogram, mass );
-        s1.set< Types::Position >( Access::Modes::read_write, "x", SIUnits::meter, x_init_1 );
-        s1.set< Types::Scalar >( Access::Modes::read_write, "r", SIUnits::meter, r );
-        s1.set< Types::Matrix >( Access::Modes::read_write, "gamma", SIUnits::kilogram / SIUnits::second, gamma );
-        s1.set< Types::Scalar >( Access::Modes::read_write, "E", SIUnits::pascal, E );
-        s1.set< Types::Scalar >( Access::Modes::read_write, "nu", SIUnits::dimensionless, nu );
-        s1.set< Types::Scalar >( Access::Modes::read_write, "e_adh", SIUnits::joule / ( SIUnits::meter ^ 2 ), adhesion_energy_density );
-        s1.set< Types::Matrix >( Access::Modes::read_write, "id", SIUnits::dimensionless, Types::Matrix::Identity() );
+        s1.set<Types::Scalar>(Access::Modes::read_write, "m", SIUnits::kilogram, mass);
+        s1.set<Types::Position>(Access::Modes::read_write, "x", SIUnits::meter, x_init_1);
+        s1.set<Types::Scalar>(Access::Modes::read_write, "r", SIUnits::meter, r);
+        s1.set<Types::Matrix>(Access::Modes::read_write, "gamma", SIUnits::kilogram / SIUnits::second, gamma);
+        s1.set<Types::Scalar>(Access::Modes::read_write, "E", SIUnits::pascal, E);
+        s1.set<Types::Scalar>(Access::Modes::read_write, "nu", SIUnits::dimensionless, nu);
+        s1.set<Types::Scalar>(Access::Modes::read_write, "e_adh", SIUnits::joule / (SIUnits::meter ^ 2), adhesion_energy_density);
+        s1.set<Types::Matrix>(Access::Modes::read_write, "id", SIUnits::dimensionless, Types::Matrix::Identity());
 
         // Set values for second sphere
-        s2.set< Types::Scalar >( Access::Modes::read_write, "m", SIUnits::kilogram, mass );
-        s2.set< Types::Position >( Access::Modes::read_write, "x", SIUnits::meter, x_init_2 );
-        s2.set< Types::Scalar >( Access::Modes::read_write, "r", SIUnits::meter, r );
-        s2.set< Types::Matrix >( Access::Modes::read_write, "gamma", SIUnits::kilogram / SIUnits::second, gamma );
-        s2.set< Types::Scalar >( Access::Modes::read_write, "E", SIUnits::pascal, E );
-        s2.set< Types::Scalar >( Access::Modes::read_write, "nu", SIUnits::dimensionless, nu );
-        s2.set< Types::Scalar >( Access::Modes::read_write, "e_adh", SIUnits::joule / ( SIUnits::meter ^ 2 ), adhesion_energy_density );
-        s2.set< Types::Matrix >( Access::Modes::read_write, "id", SIUnits::dimensionless, Types::Matrix::Identity() );
+        s2.set<Types::Scalar>(Access::Modes::read_write, "m", SIUnits::kilogram, mass);
+        s2.set<Types::Position>(Access::Modes::read_write, "x", SIUnits::meter, x_init_2);
+        s2.set<Types::Scalar>(Access::Modes::read_write, "r", SIUnits::meter, r);
+        s2.set<Types::Matrix>(Access::Modes::read_write, "gamma", SIUnits::kilogram / SIUnits::second, gamma);
+        s2.set<Types::Scalar>(Access::Modes::read_write, "E", SIUnits::pascal, E);
+        s2.set<Types::Scalar>(Access::Modes::read_write, "nu", SIUnits::dimensionless, nu);
+        s2.set<Types::Scalar>(Access::Modes::read_write, "e_adh", SIUnits::joule / (SIUnits::meter ^ 2), adhesion_energy_density);
+        s2.set<Types::Matrix>(Access::Modes::read_write, "id", SIUnits::dimensionless, Types::Matrix::Identity());
 
         // View for the contact
-        auto c_view = Particles::make_particles_view( Access::Modes::read_write, contacts );
-        auto c = c_view.add( Types::PairIndex{ 0, 1 }, u );
+        auto c_view = Particles::make_particles_view(Access::Modes::read_write, contacts);
+        auto c = c_view.add(Types::PairIndex { 0, 1 }, u);
 
         return u;
     }();
@@ -429,179 +429,179 @@ int main( int argc, char** argv )
     // ---------------------------------------
     // Generate simulation
     // ---------------------------------------
-    //Prepare simulation
+    // Prepare simulation
     using Actions::create_executable;
     using namespace Parameters::Values;
 
     // - create simulation itself
-    auto simulation = create_executable( "OnActions::And", "Simulation" );
-    if( !simulation ) {
-        throw std::runtime_error( "Failed to initialize 'Simulation'." );
+    auto simulation = create_executable("OnActions::And", "Simulation");
+    if (!simulation) {
+        throw std::runtime_error("Failed to initialize 'Simulation'.");
     }
 
     // - add data structure
-    simulation->add( universes );
+    simulation->add(universes);
 
     // prepare main loop
     {
-        auto loop = simulation->add( create_executable( "OnActions::Loop", "Loop" ) );
+        auto loop = simulation->add(create_executable("OnActions::Loop", "Loop"));
 
         // - condition for termination (simulation time)
         {
-            auto action = loop->add( create_executable( "OnActions::Triggers::ExecuteWhileLess", "Check simulation time" ) );
-            action->set_parameter_value( "a", absolute_path( "Universes/t" ) );
-            action->set_parameter_value( "b", absolute_path( "Universes/t_end" ) );
+            auto action = loop->add(create_executable("OnActions::Triggers::ExecuteWhileLess", "Check simulation time"));
+            action->set_parameter_value("a", path_from_root("Universes/t"));
+            action->set_parameter_value("b", path_from_root("Universes/t_end"));
         }
 
         // - geometry pipeline
         {
-            auto geom_pipeline = loop->add( create_executable( "OnActions::Queue", "Geometric pipeline" ) );
+            auto geom_pipeline = loop->add(create_executable("OnActions::Queue", "Geometric pipeline"));
 
             // -- reset overlap
             {
-                auto action = geom_pipeline->add( create_executable( "Elementary::Reset", "Zero overlap" ) );
-                action->set_parameter_value( "dof", absolute_path( "Universes/overlap" ) );
+                auto action = geom_pipeline->add(create_executable("Elementary::Reset", "Zero overlap"));
+                action->set_parameter_value("dof", path_from_root("Universes/overlap"));
             }
             // -- get the overlap
             {
-                auto action = geom_pipeline->add( create_executable( "Contact::Models::Geometry::Overlap::SphereSphere", "Get Sphere-Sphere contact overlap" ) );
-                action->set_parameter_value( "collection", absolute_path( "Universes/Contacts" ) );
-                action->set_parameter_value( "overlap", absolute_path( "Universes/overlap" ) );
+                auto action = geom_pipeline->add(create_executable("Contact::Models::Geometry::Overlap::SphereSphere", "Get Sphere-Sphere contact overlap"));
+                action->set_parameter_value("collection", path_from_root("Universes/Contacts"));
+                action->set_parameter_value("overlap", path_from_root("Universes/overlap"));
             }
         }
 
         // - forces pipeline
         {
-            auto forces = loop->add( create_executable( "OnActions::And", "Forces" ) );
+            auto forces = loop->add(create_executable("OnActions::And", "Forces"));
 
             // -- reset total force
             {
-                auto action = forces->add( create_executable( "Elementary::Reset", "Zero total Sphere force" ) );
-                action->set_parameter_value( "dof", absolute_path( "Universes/Spheres/F" ) );
+                auto action = forces->add(create_executable("Elementary::Reset", "Zero total Sphere force"));
+                action->set_parameter_value("dof", path_from_root("Universes/Spheres/F"));
             }
 
             // -- reset the mass tensor in spheres
             {
-                auto action = forces->add( create_executable( "Elementary::Reset", "Reset spheres mass tensor" ) );
-                action->set_parameter_value( "collection", absolute_path( "Universes/Spheres" ) );
-                action->set_parameter_value( "dof", absolute_path( "Universes/Spheres/M" ) );
+                auto action = forces->add(create_executable("Elementary::Reset", "Reset spheres mass tensor"));
+                action->set_parameter_value("collection", path_from_root("Universes/Spheres"));
+                action->set_parameter_value("dof", path_from_root("Universes/Spheres/M"));
             }
 
             // -- reset the mass tensor in contacts
             {
-                auto action = forces->add( create_executable( "Elementary::Reset", "Reset contacts mass tensor" ) );
-                action->set_parameter_value( "collection", absolute_path( "Universes/Contacts" ) );
-                action->set_parameter_value( "dof", absolute_path( "Universes/Contacts/M" ) );
+                auto action = forces->add(create_executable("Elementary::Reset", "Reset contacts mass tensor"));
+                action->set_parameter_value("collection", path_from_root("Universes/Contacts"));
+                action->set_parameter_value("dof", path_from_root("Universes/Contacts/M"));
             }
 
             // -- compute extended Hertz interaction force and set mass matrix
             {
-                auto action = forces->add( create_executable( "Contact::Models::Collisions::Derjaguin::Damped::SphereSphere::Overdamped", "Sphere-Sphere Derjaguin contact model" ) );
-                action->set_parameter_value( "collection", absolute_path( "Universes/Contacts" ) );
-                action->set_parameter_value( "gamma_tangential", absolute_path( "Universes/gamma_tangential" ) );
-                action->set_parameter_value( "gamma_normal", absolute_path( "Universes/gamma_normal" ) );
-                action->set_parameter_value( "M", absolute_path( "Universes/Contacts/M" ) );
-                action->set_parameter_value( "dt", absolute_path( "Universes/dt" ) );
+                auto action = forces->add(create_executable("Contact::Models::Collisions::Derjaguin::Damped::SphereSphere::Overdamped", "Sphere-Sphere Derjaguin contact model"));
+                action->set_parameter_value("collection", path_from_root("Universes/Contacts"));
+                action->set_parameter_value("gamma_tangential", path_from_root("Universes/gamma_tangential"));
+                action->set_parameter_value("gamma_normal", path_from_root("Universes/gamma_normal"));
+                action->set_parameter_value("M", path_from_root("Universes/Contacts/M"));
+                action->set_parameter_value("dt", path_from_root("Universes/dt"));
             }
 
             // -- compute Stokes drag force and set mass matrix
             {
-                auto stokes = forces->add( create_executable( "Forces::StokesDrag", "Compute Stokes drag force" ) );
-                stokes->set_parameter_value( "F", absolute_path( "Universes/Spheres/F" ) );
-                stokes->set_parameter_value( "gamma", absolute_path( "Universes/Spheres/gamma" ) );
-                stokes->set_parameter_value( "v_rel", absolute_path( "Universes/Spheres/v" ) );
-                stokes->set_parameter_value( "M", absolute_path( "Universes/Spheres/M" ) );
-                stokes->set_parameter_value( "dt", absolute_path( "Universes/dt" ) );
+                auto stokes = forces->add(create_executable("Forces::StokesDrag", "Compute Stokes drag force"));
+                stokes->set_parameter_value("F", path_from_root("Universes/Spheres/F"));
+                stokes->set_parameter_value("gamma", path_from_root("Universes/Spheres/gamma"));
+                stokes->set_parameter_value("v_rel", path_from_root("Universes/Spheres/v"));
+                stokes->set_parameter_value("M", path_from_root("Universes/Spheres/M"));
+                stokes->set_parameter_value("dt", path_from_root("Universes/dt"));
             }
         }
 
         // - IO
-        if( !without_io ) {
-            auto io_pipeline = loop->add( create_executable( "OnActions::Queue", "IO" ) );
+        if (!without_io) {
+            auto io_pipeline = loop->add(create_executable("OnActions::Queue", "IO"));
 
             // -- write cells data
             {
-                auto action = io_pipeline->add( create_executable( "IO::SimpleVTKWriter", "Write VTK files for cells" ) );
-                action->set_parameter_value( "collection", absolute_path( "Universes/Spheres" ) );
-                action->set_parameter_value( "file_index", absolute_path( "Universes/current_frame" ) );
-                action->set_parameter_value( "filename", std::make_unique< String >( output_dir + "/Cells_{:03}.vtp" ) );
+                auto action = io_pipeline->add(create_executable("IO::SimpleVTKWriter", "Write VTK files for cells"));
+                action->set_parameter_value("collection", path_from_root("Universes/Spheres"));
+                action->set_parameter_value("file_index", path_from_root("Universes/current_frame"));
+                action->set_parameter_value("filename", std::make_unique<String>(output_dir + "/Cells_{:03}.vtp"));
             }
 
             // -- write the whole data to XML file
             {
-                auto action = io_pipeline->add( create_executable( "IO::Save", "Write VTK files for universes" ) );
-                action->set_parameter_value( "file_index", absolute_path( "Universes/current_frame" ) );
-                action->set_parameter_value( "filename", std::make_unique< String >( output_dir + "/Universes_{:03}.xml" ) );
+                auto action = io_pipeline->add(create_executable("IO::Save", "Write VTK files for universes"));
+                action->set_parameter_value("file_index", path_from_root("Universes/current_frame"));
+                action->set_parameter_value("filename", std::make_unique<String>(output_dir + "/Universes_{:03}.xml"));
             }
 
             // -- increment frame counter
             {
-                auto action = io_pipeline->add( create_executable( "Elementary::Algebraic::Increment", "Increment frame counter" ) );
-                action->set_parameter_value( "result", absolute_path( "Universes/current_frame" ) );
+                auto action = io_pipeline->add(create_executable("Elementary::Algebraic::Increment", "Increment frame counter"));
+                action->set_parameter_value("result", path_from_root("Universes/current_frame"));
             }
         }
 
         // - integration pipeline
-        auto integration_pipeline = loop->add( create_executable( "OnActions::And", "Integration pipeline" ) );
+        auto integration_pipeline = loop->add(create_executable("OnActions::And", "Integration pipeline"));
         {
             // -- compute acceleration
             {
-                auto action = integration_pipeline->add( create_executable( "Solvers::ConjugateGradient", "Compute acceleration" ) );
-                action->set_parameter_value( "x", std::make_unique< ComponentList >( absolute_path( "Universes/Spheres/a" ) ) );
-                action->set_parameter_value( "y", std::make_unique< ComponentList >( absolute_path( "Universes/Spheres/F" ) ) );
-                action->set_parameter_value( "D", std::make_unique< ComponentList >( absolute_path( "Universes/Spheres/M" ) ) );
-                action->set_parameter_value( "S", std::make_unique< ComponentList >( absolute_path( "Universes/Contacts/M" ) ) );
+                auto action = integration_pipeline->add(create_executable("Solvers::ConjugateGradient", "Compute acceleration"));
+                action->set_parameter_value("x", std::make_unique<ComponentList>(path_from_root("Universes/Spheres/a")));
+                action->set_parameter_value("y", std::make_unique<ComponentList>(path_from_root("Universes/Spheres/F")));
+                action->set_parameter_value("D", std::make_unique<ComponentList>(path_from_root("Universes/Spheres/M")));
+                action->set_parameter_value("S", std::make_unique<ComponentList>(path_from_root("Universes/Contacts/M")));
             }
 
             // -- velocity integration
             {
-                auto action = integration_pipeline->add( create_executable( "Integration::ForwardEuler", "Integrate velocity" ) );
-                action->set_parameter_value( "y", absolute_path( "Universes/Spheres/v" ) );
-                action->set_parameter_value( "dy_dt", absolute_path( "Universes/Spheres/a" ) );
-                action->set_parameter_value( "dt", absolute_path( "Universes/dt" ) );
+                auto action = integration_pipeline->add(create_executable("Integration::ForwardEuler", "Integrate velocity"));
+                action->set_parameter_value("y", path_from_root("Universes/Spheres/v"));
+                action->set_parameter_value("dy_dt", path_from_root("Universes/Spheres/a"));
+                action->set_parameter_value("dt", path_from_root("Universes/dt"));
             }
 
             // -- position integration
             {
-                auto action = integration_pipeline->add( create_executable( "Integration::ForwardEuler", "Integrate position" ) );
-                action->set_parameter_value( "y", absolute_path( "Universes/Spheres/x" ) );
-                action->set_parameter_value( "dy_dt", absolute_path( "Universes/Spheres/v" ) );
-                action->set_parameter_value( "dt", absolute_path( "Universes/dt" ) );
+                auto action = integration_pipeline->add(create_executable("Integration::ForwardEuler", "Integrate position"));
+                action->set_parameter_value("y", path_from_root("Universes/Spheres/x"));
+                action->set_parameter_value("dy_dt", path_from_root("Universes/Spheres/v"));
+                action->set_parameter_value("dt", path_from_root("Universes/dt"));
             }
         }
 
         // - time advance
         {
-            auto action = loop->add( create_executable( "Elementary::Algebraic::Add", "Advance time" ) );
-            action->set_parameter_value( "result", absolute_path( "Universes/t" ) );
-            action->set_parameter_value( "b", absolute_path( "Universes/dt" ) );
+            auto action = loop->add(create_executable("Elementary::Algebraic::Add", "Advance time"));
+            action->set_parameter_value("result", path_from_root("Universes/t"));
+            action->set_parameter_value("b", path_from_root("Universes/dt"));
         }
 
         // - store elapsed time of simulation
         {
-            auto action = loop->add( create_executable( "OnActions::StoreElapsedTime", "Store simulation runtime" ) );
-            action->set_parameter_value( "elapsed_time", absolute_path( "Universes/t_elapsed" ) );
-            action->set_parameter_value( "executable", absolute_path( "Loop" ) );
+            auto action = loop->add(create_executable("OnActions::StoreElapsedTime", "Store simulation runtime"));
+            action->set_parameter_value("elapsed_time", path_from_root("Universes/t_elapsed"));
+            action->set_parameter_value("executable", path_from_root("Loop"));
         }
     }
 
-    //If we are verbose print the initial tree
-    if( verbose ) {
+    // If we are verbose print the initial tree
+    if (verbose) {
         std::cout << "  Initial tree:\n"
-                  << "    " << tree_to_yaml( simulation, verbose, "    " ) << "\n";
+                  << "    " << tree_to_yaml(simulation, verbose, "    ") << "\n";
     }
 
-    //Execute simulation:
-    if( !simulation->execute() ) {
-        throw std::runtime_error( "Simulation failed." );
+    // Execute simulation:
+    if (!simulation->execute()) {
+        throw std::runtime_error("Simulation failed.");
     }
 
-    //Print the tree after execution
+    // Print the tree after execution
     std::cout << "- Final tree:\n"
-              << "    " << tree_to_yaml( simulation, verbose, "    " ) << "\n";
+              << "    " << tree_to_yaml(simulation, verbose, "    ") << "\n";
 
-    auto t_elapsed = universe.get< Types::Scalar >( Access::Modes::read_only, "t_elapsed", SIUnits::second );
-    auto t = universe.get< Types::Scalar >( Access::Modes::read_only, "t", SIUnits::second );
+    auto t_elapsed = universe.get<Types::Scalar>(Access::Modes::read_only, "t_elapsed", SIUnits::second);
+    auto t = universe.get<Types::Scalar>(Access::Modes::read_only, "t", SIUnits::second);
     std::cout << "  Timings:\n"
               << "    Target simulation time: " << t_end << "\n"
               << "    Final simulation time: " << t << "\n"
