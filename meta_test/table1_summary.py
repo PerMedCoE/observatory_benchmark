@@ -189,7 +189,7 @@ def load_diffusion_runs(repo: str, test: str) -> dict:
             runs[f"Chaste N={n} dx={BOX_UM / n:g}"] = (df.t.values, df.avg.values, df.cen.values, p)
 
     # CompuTiX: the runs with dt = 0.006 s (the notebook's choice); dt = 0.0006 s runs also exist
-    for p in sorted(glob.glob(os.path.join(repo, ctx_dir, "/results/dt-s-0-006_N-*.yaml"))):
+    for p in sorted(glob.glob(os.path.join(repo, ctx_dir, "results/dt-s-0-006_N-*.yaml"))):
         d = yaml.load(open(p), Loader=getattr(yaml, "CSafeLoader", yaml.SafeLoader))
         n = int(d["N"]["values"])
         dx = float(d["dx"]["values"]) * 1e6
