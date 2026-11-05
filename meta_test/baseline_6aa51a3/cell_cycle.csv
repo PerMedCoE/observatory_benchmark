@@ -1,0 +1,8 @@
+tool,file,note,samples,t_first_h,t_last_h,V0,Vmax,Vmax_pct_of_V0,t_Vmax_h,division_events
+BioDynaMo,Biodynamo/fixed_cell_cycle/new_results/cell-0-sim1.csv,"mother cell; time in hours, volume in um3",4800,0.01,48.0,523.599,1045.8,199.73300178189797,17.36,18.000->18.010;36.020->36.030
+Chaste,Chaste/fixed_cell_cycle/results/cellcycle_fixed.dat,first cell record; dimensionless volume,481,0.0,48.0,0.523599,1.05222,200.9591309379888,18.0,18.000->18.100;36.000->36.100
+CompuTiX,CompuTiX/fixed_cell_cycle/results/cell_volume.yaml,"volume_per_parent_cell (the simulation; the notebook plots data/cell_cycle.csv, which is the reference)",380,0.0,37.9,523.5989999999999,1047.2099999999998,200.0022918301983,16.0,18.000->18.100;36.000->36.100
+CompuTiX (volume_per_child_cell),CompuTiX/fixed_cell_cycle/results/cell_volume.yaml,"per daughter during division, hence no drop",380,0.0,37.9,523.5989999999999,1047.2099999999998,200.0022918301983,16.0,
+PhysiCell,PhysiCell/results/cell_cycle_fixed/cell_volumes.csv,cell id 0; 30 min sampling; um3,97,0.0,48.0,523.6,1038.9218265262066,198.41898902333966,17.5,17.500->18.000;35.500->36.000
+TiSim (file used in Figure 4B),Tisim/fixed_cell_cycle/cell cycle fix.csv,"relative volume; phase-resolved output (0.48 h sampling) since commit 6aa51a3, hourly export before",100,0.488889,48.0089,1.0,2.0,200.0,17.7689,17.769->18.249;35.529->36.009
+Reference data,experimental_data/Cell cycle volume dynamics.txt,reference trajectory of Figure 4B; identical to CompuTiX/fixed_cell_cycle/data/cell_cycle.csv,49,0.0,24.0,2494.0,4996.36105,200.33524659182038,17.5,17.500->18.000

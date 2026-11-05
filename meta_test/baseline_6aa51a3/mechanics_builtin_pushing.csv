@@ -1,0 +1,7 @@
+tool,file,length_unit_note,start_distance_um,min_distance_um,t_min,final_distance_um,t_final,residual_overlap_um
+BioDynaMo,Biodynamo/mechanics_pushing/results_timestep0.1/positions.csv,um,30.0,8.0,step 10,9.375,step 99 (10 min at dt = 0.1 min),0.625
+Chaste,Chaste/mechanics_pushing/results/results.viznodelocations,dimensionless; multiplied by 10 as in olderplotscripts/plot_mechanics_pushing.py,30.0,8.8308,0.0176667 time units,9.979,0.0833333 time units (5 min if hours),0.021000000000000796
+CompuTiX,CompuTiX/mechanics_pushing/benchmark_exmaple_2.yaml,m in file; overdamped JKR run matching main.cpp,30.0,7.9219016204968,72 s,9.095369025330202,594 s,0.9046309746697982
+PhysiCell,PhysiCell/results/mechanics_pushing/ (snapshots only),not computable: no derived CSV and the .mat payload is gitignored,9.0,,,,,
+TiSim,Tisim/mechanics_pushing/mechanics_pushing.csv,um; approach stopped at 9.0 um,30.0,8.97035,1.05167 min,9.87875,9.99833 min,0.12124999999999986
+"TiSim (older run, force never removed)",Tisim/mechanics_pushing/mechanical pushing.csv,um,30.0,3.216800000000001,2.5 min,3.216800000000001,10 min,6.783199999999999

@@ -1,0 +1,6 @@
+tool,file,unit_note,plateau_um_per_s,active_from_s,active_to_s,displacement_um,sampling_s,plateau_rel_error_pct,displacement_rel_error_pct
+BioDynaMo,Biodynamo/mechanics_externalImpulse/results_3s_force/speeds.csv; Biodynamo/mechanics_externalImpulse/results_3s_force/positions.csv,nm and nm/s in file,0.00016666699999999995,3.0,5.8,0.0005,0.2,0.0002000000399669211,1.99926880606367e-11
+CompuTiX,CompuTiX/external_impulse/impulse_benchmark.yaml,"SI (m, m/s); implicit overdamped series",0.00016666699999999993,3.1,6.1,0.0005166670000000001,0.1,0.00020000003995065808,3.333400000020669
+PhysiCell,PhysiCell/results/mechanics_external_impulse/dt_0.001/physicell_mechanics_external_impulse_data.csv,"dt in min, x in um, mvx in um/min",0.0001666666666667,3.0599999999999996,6.0,0.0005000000000001,0.06,5.999432721450938e-11,3.99853761212734e-11
+TiSim,Tisim/mechanics_external_impulse/mechanics_external_impulse.csv,"no units in file; velocity read as um/s, position multiplied by 0.01 (as in the notebook)",0.00017,3.0,5.8,0.0005,0.2,2.000000000040801,1.99926880606367e-11
+Chaste,Chaste/MechanicsWithFriction/node_locations.dat; Chaste/MechanicsWithFriction/cell_velocities.dat,"units not stated: position rises to 8.33333 units, velocity column 4 plateau 0.277778 units; excluded from the error comparison",,3.2,6.0,,0.2,,
