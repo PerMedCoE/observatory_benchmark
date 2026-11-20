@@ -130,17 +130,17 @@ RC = {
 
 
 def find_repo_root(start: Path | None = None) -> Path:
-    """Return the first folder, from ``start`` (default: CWD) upwards, that holds ResultAnalysis/."""
-    start = Path.cwd() if start is None else Path(start)
+    """Return the first folder, from ``start`` (default: CWD) upwards, that holds ResultAnalysis/figure_style.py."""
+    start = (Path.cwd() if start is None else Path(start)).resolve()
     for parent in (start, *start.parents):
-        if (parent / 'ResultAnalysis').is_dir():
+        if (parent / 'ResultAnalysis' / 'figure_style.py').is_file():
             return parent
-    raise FileNotFoundError(f'No folder containing ResultAnalysis/ above {start}')
+    raise FileNotFoundError(f'Run from inside the observatory_benchmark repository (no ResultAnalysis/figure_style.py above {start})')
 
 
 def figures_dir(root: Path) -> Path:
-    """Figure export folder: $FIGURES_DIR, else a 'figures' folder next to the repository."""
-    return Path(os.environ.get('FIGURES_DIR', Path(root).resolve().parent / 'figures'))
+    """Figure export folder: $FIGURES_DIR if set, else <repository>/figures."""
+    return Path(os.environ.get('FIGURES_DIR', Path(root).resolve() / 'figures'))
 
 
 def apply_style() -> None:
