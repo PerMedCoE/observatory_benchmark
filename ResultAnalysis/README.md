@@ -45,7 +45,7 @@ One run per tool is selected using the lowest whole-box-average mean absolute er
 
 ### Outputs
 
-The notebook writes pointwise and run-level metrics, including `pointwise_errors.csv`, `run_error_metrics.csv`, and `best_run_error_metrics.csv`, together with absolute-error, relative-error, full-time, and Nature-style concentration/error figures. Supplementary outputs are placed under `SuppMat/SuppMatPlots/diffusion_decay_comparison`; manuscript-oriented outputs are placed under `ResultAnalysis/plots/diffusion_decay`.
+The notebook writes pointwise and run-level metrics, including `pointwise_errors.csv`, `run_error_metrics.csv`, and `best_run_error_metrics.csv`, together with absolute-error, relative-error, full-time, and publication-style concentration/error figures. Supplementary outputs are placed under `SuppMat/SuppMatPlots/diffusion_decay_comparison`; manuscript-oriented outputs are placed under `ResultAnalysis/plots/diffusion_decay`.
 
 ## Diffusion uptake by cells
 
@@ -63,7 +63,7 @@ The best run is selected separately for each tool and concentration metric using
 
 ### Outputs
 
-Outputs include concentration time courses, relative-error curves, absolute-error curves, exact-match coverage summaries, interpolated-reference diagnostics, and Nature-style concentration/error figures. Supplementary results are written to `SuppMat/SuppMatPlots/diffusion_uptake_comparison`; manuscript-oriented results are written to `ResultAnalysis/plots/diffusion_uptake`.
+Outputs include concentration time courses, relative-error curves, absolute-error curves, exact-match coverage summaries, interpolated-reference diagnostics, and publication-style concentration/error figures. Supplementary results are written to `SuppMat/SuppMatPlots/diffusion_uptake_comparison`; manuscript-oriented results are written to `ResultAnalysis/plots/diffusion_uptake`.
 
 ## Fixed cell-cycle volume comparison
 
