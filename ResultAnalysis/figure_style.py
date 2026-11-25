@@ -46,6 +46,7 @@ SINGLE_COL_MM = 89
 DOUBLE_COL_MM = 183
 MAX_HEIGHT_MM = 170
 DPI = 300
+HIGH_DPI = 600  # for PNGs placed and scaled in a layout tool (e.g. Figma)
 
 TOOL_ORDER = ['BioDynaMo', 'Chaste', 'CompuTiX', 'PhysiCell', 'TiSim']
 
@@ -235,21 +236,21 @@ def _fix_svg_fonts(svg_path: Path) -> None:
     svg_path.write_text(text, encoding='utf-8')
 
 
-def _save_png_rgb(fig, path: Path, **save_kw) -> None:
-    """300 dpi PNG flattened onto white, RGB (no alpha channel), as journal figure specifications recommend."""
+def _save_png_rgb(fig, path: Path, dpi: int = DPI, **save_kw) -> None:
+    """PNG (default 300 dpi) flattened onto white, RGB (no alpha channel), as journal figure specifications recommend."""
     from PIL import Image
 
-    fig.savefig(path, format='png', dpi=DPI, **save_kw)
+    fig.savefig(path, format='png', dpi=dpi, **save_kw)
     with Image.open(path) as image:
         rgba = image.convert('RGBA')
     flat = Image.new('RGB', rgba.size, (255, 255, 255))
     flat.paste(rgba, mask=rgba.split()[-1])
-    flat.save(path, dpi=(DPI, DPI))
+    flat.save(path, dpi=(dpi, dpi))
 
 
 def export(fig, scenario: str, stem: str, root: Path, also: Path | None = None,
-           also_stem: str | None = None) -> dict:
-    """Save ``fig`` as 300 dpi PNG + editable SVG + source-data CSV.
+           also_stem: str | None = None, dpi: int = DPI) -> dict:
+    """Save ``fig`` as PNG (``dpi``, default 300) + editable SVG + source-data CSV.
 
     Files go to <figures_dir>/<scenario>/{png,svg,source_data}/<stem>.*; ``also`` (a folder in
     the repository, e.g. ResultAnalysis/plots/...) receives a PNG and SVG copy as well, named
@@ -265,19 +266,60 @@ def export(fig, scenario: str, stem: str, root: Path, also: Path | None = None,
     for p in paths.values():
         p.parent.mkdir(parents=True, exist_ok=True)
     save_kw = dict(bbox_inches='tight', pad_inches=0.02, facecolor='white')
-    _save_png_rgb(fig, paths['png'], **save_kw)
+    _save_png_rgb(fig, paths['png'], dpi=dpi, **save_kw)
     fig.savefig(paths['svg'], format='svg', **save_kw)
     _fix_svg_fonts(paths['svg'])
     _source_data(fig).to_csv(paths['source_data'], index=False)
     if also is not None:
         also = Path(also)
         also.mkdir(parents=True, exist_ok=True)
-        _save_png_rgb(fig, also / f'{also_stem}.png', **save_kw)
+        _save_png_rgb(fig, also / f'{also_stem}.png', dpi=dpi, **save_kw)
         fig.savefig(also / f'{also_stem}.svg', format='svg', **save_kw)
         _fix_svg_fonts(also / f'{also_stem}.svg')
     for kind, p in paths.items():
         print(f'Saved {kind}: {p}')
     return paths
+
+
+CONCENTRATION_ERROR_PANELS = (
+    ('concentration', None, 'Average concentration (µM)'),  # column = value_column
+    ('absolute_error', 'absolute_error_uM', 'Absolute error (µM)'),
+    ('relative_error', 'relative_error_percent', 'Relative error (%)'),
+)
+
+
+def _concentration_error_panels(value_column: str):
+    """(name, column, ylabel) for the three panels, with the value column filled in."""
+    return [(name, column or value_column, ylabel)
+            for name, column, ylabel in CONCENTRATION_ERROR_PANELS]
+
+
+def _draw_concentration_error_panel(axis, selected: pd.DataFrame, analytical: pd.DataFrame,
+                                    column: str, ylabel: str, *, value_column: str,
+                                    analytical_column: str, kind: str | None,
+                                    series_overrides: dict | None = None) -> None:
+    """One panel of the concentration/error figure: every tool, plus the analytical curve
+    on the concentration panel."""
+    for tool in TOOL_ORDER:
+        group = selected.loc[selected['tool'] == tool].sort_values('time_min')
+        if group.empty:
+            continue
+        axis.plot(group['time_min'], group[column],
+                  **tool_series(tool, kind, **(series_overrides or {})))
+    if column == value_column:
+        axis.plot(analytical['time_min'], analytical[analytical_column], **ANALYTICAL)
+    axis.set_ylabel(ylabel)
+    if column != value_column:
+        axis.set_ylim(bottom=0)
+    style_axes(axis)
+
+
+def _set_time_axis(axis, xlim: float | None) -> None:
+    axis.set_xlabel('Time (min)')
+    if xlim is not None:
+        axis.set_xlim(0, xlim)
+    else:
+        axis.set_xlim(left=0)
 
 
 def concentration_error_figure(selected: pd.DataFrame, analytical: pd.DataFrame, *,
@@ -290,31 +332,140 @@ def concentration_error_figure(selected: pd.DataFrame, analytical: pd.DataFrame,
     """
     fig, axes = plt.subplots(3, 1, figsize=size(SINGLE_COL_MM, 115), sharex=True,
                              gridspec_kw={'height_ratios': [1.25, 1, 1]})
-    panels = [
-        (value_column, 'Average concentration (µM)'),
-        ('absolute_error_uM', 'Absolute error (µM)'),
-        ('relative_error_percent', 'Relative error (%)'),
-    ]
-    for axis, (column, ylabel) in zip(axes, panels):
-        for tool in TOOL_ORDER:
-            group = selected.loc[selected['tool'] == tool].sort_values('time_min')
-            if group.empty:
-                continue
-            axis.plot(group['time_min'], group[column], **tool_series(tool, kind))
-        if column == value_column:
-            axis.plot(analytical['time_min'], analytical[analytical_column], **ANALYTICAL)
-        axis.set_ylabel(ylabel)
-        if column != value_column:
-            axis.set_ylim(bottom=0)
-        style_axes(axis)
-    axes[-1].set_xlabel('Time (min)')
-    if xlim is not None:
-        axes[-1].set_xlim(0, xlim)
-    else:
-        axes[-1].set_xlim(left=0)
+    for axis, (_, column, ylabel) in zip(axes, _concentration_error_panels(value_column)):
+        _draw_concentration_error_panel(axis, selected, analytical, column, ylabel,
+                                        value_column=value_column,
+                                        analytical_column=analytical_column, kind=kind)
+    _set_time_axis(axes[-1], xlim)
     fig.align_ylabels(axes)
     handles, labels = axes[0].get_legend_handles_labels()
     ordered_legend(fig, handles, labels, loc='lower center', ncol=3,
                    bbox_to_anchor=(0.55, 1.0), handlelength=2.0, columnspacing=1.2)
     fig.tight_layout(pad=0.3, h_pad=0.6)
     return fig, axes
+
+
+# Compact square panels for the final layout: a smaller canvas with every label at the
+# 7 pt maximum, so the text reads large next to the plot.
+COMPACT_RC = {'xtick.labelsize': 7, 'ytick.labelsize': 7, 'legend.fontsize': 7,
+              'legend.title_fontsize': 7, 'axes.linewidth': 0.6,
+              'xtick.major.width': 0.6, 'ytick.major.width': 0.6,
+              'xtick.major.size': 3, 'ytick.major.size': 3}
+COMPACT_SERIES = {'markersize': 3}
+SQUARE_PANEL_MM = 60
+PAIR_SIZE_MM = (125, 68)
+CONCENTRATION_ERROR_PAIRS = (('concentration', 'relative_error'),
+                             ('concentration', 'absolute_error'))
+
+
+def _compact_series(kind: str | None = None) -> dict:
+    """``tool_series`` overrides for compact panels."""
+    return {**COMPACT_SERIES, 'linewidth': 1.2 if (kind or SERIES_STYLE) == 'line' else 1.0}
+
+
+LEGEND_GAP_MM = 1.5  # between the top of the plots and a legend placed above them
+
+
+def compact_square_figure(draw, *, side_mm: float = SQUARE_PANEL_MM, kind: str | None = None,
+                          box_aspect: float = 1.0):
+    """One compact figure: ``side_mm`` wide, plotting area height/width = ``box_aspect``
+    (1 = square), all text 7 pt, legend just above the plot.
+
+    ``draw(ax, series_overrides)`` plots the series (passing ``series_overrides`` on to
+    ``tool_series``) and sets the axis labels and limits.
+    """
+    with mpl.rc_context(COMPACT_RC):
+        fig, axis = plt.subplots(figsize=size(side_mm, side_mm))
+        draw(axis, _compact_series(kind))
+        style_axes(axis)
+        axis.set_box_aspect(box_aspect)
+        fig.tight_layout(pad=0.3)
+        handles, labels = axis.get_legend_handles_labels()
+        ordered_legend(axis, handles, labels, loc='lower center', ncol=3,
+                       bbox_to_anchor=(0.5, 1.0), borderaxespad=LEGEND_GAP_MM / 25.4 * 72 / 7,
+                       handlelength=1.8, columnspacing=0.8)
+    return fig
+
+
+def compact_pair_figure(draw_left, draw_right, *, size_mm: tuple[float, float] = PAIR_SIZE_MM,
+                        kind: str | None = None, box_aspect: float = 1.0):
+    """Two compact plots side by side sharing one legend row just above them, all text 7 pt.
+
+    ``draw_left`` and ``draw_right`` follow ``compact_square_figure``'s ``draw``; the
+    legend is taken from the left plot. Space the plots do not fill is left at the
+    figure edges, where the export's tight bounding box crops it.
+    """
+    with mpl.rc_context(COMPACT_RC):
+        fig, axes = plt.subplots(1, 2, figsize=size(*size_mm))
+        for axis, draw in zip(axes, (draw_left, draw_right)):
+            draw(axis, _compact_series(kind))
+            style_axes(axis)
+            axis.set_box_aspect(box_aspect)
+            axis.set_anchor('S')
+        fig.tight_layout(pad=0.3, w_pad=0.6, rect=(0, 0, 1, 0.9))
+        top = max(axis.get_position().y1 for axis in axes)
+        handles, labels = axes[0].get_legend_handles_labels()
+        ordered_legend(fig, handles, labels, loc='lower center', ncol=6,
+                       bbox_to_anchor=(0.5, top + LEGEND_GAP_MM / size_mm[1]),
+                       borderaxespad=0, handlelength=2.0, columnspacing=1.2)
+    return fig
+
+
+def _concentration_error_drawers(selected, analytical, *, value_column, analytical_column,
+                                 xlim, kind) -> dict:
+    """{panel name: draw(ax, series_overrides)} for the concentration/error panels."""
+    def drawer(column, ylabel):
+        def draw(axis, overrides):
+            _draw_concentration_error_panel(axis, selected, analytical, column, ylabel,
+                                            value_column=value_column,
+                                            analytical_column=analytical_column, kind=kind,
+                                            series_overrides=overrides)
+            _set_time_axis(axis, xlim)
+        return draw
+    return {name: drawer(column, ylabel)
+            for name, column, ylabel in _concentration_error_panels(value_column)}
+
+
+def concentration_error_single_panels(selected: pd.DataFrame, analytical: pd.DataFrame, *,
+                                      value_column: str, analytical_column: str,
+                                      xlim: float | None, kind: str | None = None,
+                                      side_mm: float = SQUARE_PANEL_MM) -> dict:
+    """The three panels of ``concentration_error_figure`` as separate compact square
+    figures (see ``compact_square_figure``), for the final layout.
+
+    Returns {'concentration' | 'absolute_error' | 'relative_error': fig}.
+    """
+    drawers = _concentration_error_drawers(selected, analytical, value_column=value_column,
+                                           analytical_column=analytical_column, xlim=xlim,
+                                           kind=kind)
+    return {name: compact_square_figure(draw, side_mm=side_mm, kind=kind)
+            for name, draw in drawers.items()}
+
+
+def concentration_error_pairs(selected: pd.DataFrame, analytical: pd.DataFrame, *,
+                              value_column: str, analytical_column: str,
+                              xlim: float | None, kind: str | None = None,
+                              size_mm: tuple[float, float] = PAIR_SIZE_MM) -> dict:
+    """Concentration side by side with each error measure (see ``compact_pair_figure``).
+
+    Returns {'concentration_vs_relative_error' | 'concentration_vs_absolute_error': fig}.
+    """
+    drawers = _concentration_error_drawers(selected, analytical, value_column=value_column,
+                                           analytical_column=analytical_column, xlim=xlim,
+                                           kind=kind)
+    return {f'{left}_vs_{right}': compact_pair_figure(drawers[left], drawers[right],
+                                                      size_mm=size_mm, kind=kind)
+            for left, right in CONCENTRATION_ERROR_PAIRS}
+
+
+def export_panels(figs: dict, scenario: str, folder: str, stem: str, root: Path,
+                  also: Path | None = None, also_stem: str | None = None,
+                  dpi: int = DPI) -> dict:
+    """Export each figure of a {name: fig} dict with ``export``, into a sub-folder:
+    <figures_dir>/<scenario>/<folder>/{png,svg,source_data}/<stem>_<name>.*, and
+    <also>/<folder>/<also_stem>_<name>.{png,svg}."""
+    also_stem = also_stem or stem
+    return {name: export(fig, f'{scenario}/{folder}', f'{stem}_{name}', root=root,
+                         also=None if also is None else Path(also) / folder,
+                         also_stem=f'{also_stem}_{name}', dpi=dpi)
+            for name, fig in figs.items()}
