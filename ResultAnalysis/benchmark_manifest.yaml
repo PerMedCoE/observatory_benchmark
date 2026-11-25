@@ -1,4 +1,4 @@
-root: /home/tntiniak/Work/observatory_benchmark
+# Paths below are relative to the repository root.
 tools:
   BioDynaMo:
     tests:
