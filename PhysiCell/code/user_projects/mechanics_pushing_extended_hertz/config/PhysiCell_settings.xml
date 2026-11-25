@@ -36,7 +36,7 @@
     </parallel>
 
     <save>
-        <folder>../results/mechanics_pushing_extended_hertz</folder>
+        <folder>../results/mechanics_pushing_extended_hertz/drag_1</folder>
         <full_data>
             <interval units="min">0.1</interval>
             <enable>true</enable>

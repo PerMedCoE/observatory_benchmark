@@ -36,7 +36,7 @@
     </parallel>
 
     <save>
-        <folder>../results/mechanics_pushing_extended_hertz</folder>
+        <folder>../results/mechanics_pushing_extended_hertz/drag_0.01</folder>
         <full_data>
             <interval units="min">0.1</interval>
             <enable>true</enable>
@@ -234,6 +234,6 @@
         <random_seed type="int" units="dimensionless" description="">0</random_seed>
         <number_of_cells type="int" units="none" description="initial number of cells (for each cell type)">0</number_of_cells>
 		<adhesion_density type="double" units="1/m^2" description="Extended Hertz adhesion molecule surface density">1e5</adhesion_density>
-        <translational_drag type="double" units="N*s/m" description="Effective translational drag used to convert Hertz force to velocity">1</translational_drag>
+        <translational_drag type="double" units="N*s/m" description="Effective translational drag used to convert Hertz force to velocity">0.01</translational_drag>
     </user_parameters>
 </PhysiCell_settings>
