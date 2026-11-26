@@ -73,6 +73,20 @@ older file without units. Each path is resolved by trying the current location f
 30 September location second, so the script runs at both commits. A file absent at both
 locations (Chaste built-in contact results, deleted on 24 October) gives a row marked
 absent instead of stopping the run. No computation changed.
+26 November 2026 (repository commit 45468f2): (1) half-times and the time to reach 0.1 um
+overlap are now interpolated linearly between the two samples that bracket the threshold
+(tool series) or found as the root of the dense ODE solution (reference), instead of taking
+the first sample below the threshold; the first-sample values are kept in the columns
+*_first_sample_s for comparison. The reference half-time at 1 N s/m moves from 740.8 s (first
+solver step below 0.5 um) to 733.5 s. (2) Chaste impulse: lengths in um and time in s
+(confirmed by James Osborne); velocity computed from the positions, as in the notebook since
+commit 9e7aa1d; Chaste now enters the error comparison. (3) Built-in contact: PhysiCell read
+from physicell_mechanics_pushing.csv (shared approach protocol, rerun 26 November 2026);
+Chaste time column read as hours and reported in minutes. (4) Monolayer: PhysiCell read from
+monolayer_pres/monolayer_disk_summary.csv (diameter_bbox_with_radii, time in min), as in
+monolayer_comparison.ipynb; BioDynaMo reported with tumor_diameter only (the env_dims row is
+dropped, as in the notebook). (5) table1_summary.md ends with a section that lists every
+Table 1 cell.
 """
 from __future__ import annotations
 
@@ -131,6 +145,34 @@ def nearest_rows(ref_t, t):
 def first_time_below(t, y, threshold) -> float:
     idx = np.where(np.asarray(y) <= threshold)[0]
     return float(np.asarray(t)[idx[0]]) if len(idx) else float("nan")
+
+
+def time_crossing(t, y, threshold) -> float:
+    """Time at which y first falls to threshold, interpolated linearly between the two samples
+    that bracket the crossing. Returns t[0] if y starts at or below the threshold, nan if never."""
+    t = np.asarray(t, float)
+    y = np.asarray(y, float)
+    idx = np.where(y <= threshold)[0]
+    if not len(idx):
+        return float("nan")
+    i = int(idx[0])
+    if i == 0:
+        return float(t[0])
+    y0, y1, t0, t1 = y[i - 1], y[i], t[i - 1], t[i]
+    if y0 == y1:
+        return float(t1)
+    return float(t0 + (y0 - threshold) * (t1 - t0) / (y0 - y1))
+
+
+def ode_crossing(sol, threshold_m) -> float:
+    """Root of delta(t) = threshold on the dense ODE solution (exact up to the solver tolerance)."""
+    from scipy.optimize import brentq
+    y = sol.y[0]
+    idx = np.where(y <= threshold_m)[0]
+    if not len(idx) or idx[0] == 0:
+        return float("nan")
+    a, b = sol.t[idx[0] - 1], sol.t[idx[0]]
+    return float(brentq(lambda tt: sol.sol(tt)[0] - threshold_m, a, b, xtol=1e-6))
 
 
 def rel(path: str, repo: str) -> str:
@@ -301,16 +343,17 @@ def analyse_impulse(repo: str, out: str) -> tuple[pd.DataFrame, dict]:
                      plateau_um_per_s=float(ts.velocity[nz].mean()), active_from_s=float(ts.time[nz].min()),
                      active_to_s=float(ts.time[nz].max()), displacement_um=float(ts.position.iloc[-1] * pos_factor), sampling_s=0.2))
 
+    # Chaste: lengths in um and time in s (James Osborne); velocity from the positions, as in the
+    # notebook (commit 9e7aa1d), because the velocity file is written in a different convention
     p_loc = pick(repo, "Chaste/MechanicsWithFriction/results/node_locations.dat", "Chaste/MechanicsWithFriction/node_locations.dat")
-    p_vel = pick(repo, "Chaste/MechanicsWithFriction/results/cell_velocities.dat", "Chaste/MechanicsWithFriction/cell_velocities.dat")
     ch = pd.read_csv(p_loc, sep=r"\s+", header=None)
-    chv = pd.read_csv(p_vel, sep=r"\s+", header=None)
-    moving = ch[1] > 0
-    rows.append(dict(tool="Chaste", file=rel(p_loc, repo) + "; " + rel(p_vel, repo),
-                     unit_note=f"units not stated: position rises to {ch[1].max():g} units, velocity column 4 plateau "
-                               f"{chv[4][chv[4] > 0].mean():.6g} units; excluded from the error comparison",
-                     plateau_um_per_s=float("nan"), active_from_s=float(ch[0][moving].min()),
-                     active_to_s=float(ch[0][ch[1] >= ch[1].max()].min()), displacement_um=float("nan"), sampling_s=0.2))
+    tc, xc = ch[0].values.astype(float), ch[1].values.astype(float)
+    vc = np.r_[0.0, np.diff(xc) / np.diff(tc)]
+    nz = vc > 0
+    rows.append(dict(tool="Chaste", file=rel(p_loc, repo), unit_note="um and s; velocity from positions",
+                     plateau_um_per_s=float(vc[nz].mean()), active_from_s=float(tc[nz].min()),
+                     active_to_s=float(tc[nz].max()), displacement_um=float(xc[-1]),
+                     sampling_s=float(np.median(np.diff(tc)))))
 
     df = pd.DataFrame(rows)
     df["plateau_rel_error_pct"] = 100 * (df.plateau_um_per_s - ref["plateau_um_per_s"]) / ref["plateau_um_per_s"]
@@ -389,9 +432,11 @@ def analyse_hertz(repo: str, out: str) -> pd.DataFrame:
                 sampling_s=float(np.median(np.diff(t))) if len(t) > 2 else float("nan"),
                 overlap_end_um=float(ov[-1]), distance_end_um=float(10.0 - ov[-1]),
                 ode_overlap_at_t_end_um=float(sol.sol(t[-1])[0] * 1e6),
-                t_half_overlap_s=first_time_below(t, ov, 0.5), ode_t_half_overlap_s=first_time_below(ode_t, ode_ov, 0.5),
-                t_overlap_below_0p1um_s=first_time_below(t, ov, 0.1),
-                ode_t_overlap_below_0p1um_s=first_time_below(ode_t, ode_ov, 0.1),
+                t_half_overlap_s=time_crossing(t, ov, 0.5), ode_t_half_overlap_s=ode_crossing(sol, 0.5e-6),
+                t_overlap_below_0p1um_s=time_crossing(t, ov, 0.1),
+                ode_t_overlap_below_0p1um_s=ode_crossing(sol, 0.1e-6),
+                t_half_first_sample_s=first_time_below(t, ov, 0.5),
+                ode_t_half_first_sample_s=first_time_below(ode_t, ode_ov, 0.5),
                 mean_abs_dev_from_ode_um=float(np.mean(np.abs(ov[m] - sol.sol(t[m])[0] * 1e6))),
                 mean_abs_dev_from_notebook_curve_um=float(np.mean(np.abs(ov[m] - sol_nb.sol(t[m])[0] * 1e6)))))
     df = pd.DataFrame(rows)
@@ -407,7 +452,7 @@ def analyse_builtin(repo: str, out: str) -> pd.DataFrame:
     p = os.path.join(repo, "Biodynamo/mechanics_pushing/results_timestep0.1/positions.csv")
     df = pd.read_csv(p, sep=r"\t|,", header=None, engine="python")
     d = (df[4] - df[1]).values
-    rows.append(dict(tool="BioDynaMo", file=rel(p, repo), length_unit_note="um", start_distance_um=30.0,
+    rows.append(dict(tool="BioDynaMo", file=rel(p, repo), length_unit_note="um; archived run starts at 28 um (question 8.6)", start_distance_um=float(d[0]),
                      min_distance_um=float(d.min()), t_min="step %d" % int(np.argmin(d)),
                      final_distance_um=float(d[-1]), t_final="step %d (10 min at dt = 0.1 min)" % (len(d) - 1)))
 
@@ -416,10 +461,10 @@ def analyse_builtin(repo: str, out: str) -> pd.DataFrame:
         ch = pd.read_csv(p, sep=r"\t| ", header=None, engine="python")
         dch = (ch[4] - ch[1]).abs().values
         rows.append(dict(tool="Chaste", file=rel(p, repo),
-                         length_unit_note="dimensionless; multiplied by 10 as in olderplotscripts/plot_mechanics_pushing.py",
+                         length_unit_note="10 um per length unit, time in h (assumed; question 8.12)",
                          start_distance_um=float(dch[0] * 10), min_distance_um=float(dch.min() * 10),
-                         t_min="%g time units" % ch[0][np.argmin(dch)], final_distance_um=float(dch[-1] * 10),
-                         t_final="%g time units (5 min if hours)" % ch[0].iloc[-1]))
+                         t_min="%g min" % (ch[0][np.argmin(dch)] * 60.0), final_distance_um=float(dch[-1] * 10),
+                         t_final="%g min" % (ch[0].iloc[-1] * 60.0)))
     else:
         rows.append(dict(tool="Chaste", file=rel(p, repo) + " (absent)",
                          length_unit_note="not computable: results file absent at this commit (deleted on 24 October 2026)",
@@ -437,9 +482,17 @@ def analyse_builtin(repo: str, out: str) -> pd.DataFrame:
                      start_distance_um=float(d[0]), min_distance_um=float(d.min()), t_min="%g s" % t[np.argmin(d)],
                      final_distance_um=float(d[-1]), t_final="%g s" % t[-1]))
 
-    rows.append(dict(tool="PhysiCell", file="PhysiCell/results/mechanics_pushing/ (snapshots only)",
-                     length_unit_note="not computable: no derived CSV and the .mat payload is gitignored",
-                     start_distance_um=9.0, min_distance_um=float("nan"), t_min="", final_distance_um=float("nan"), t_final=""))
+    p = os.path.join(repo, "PhysiCell/results/mechanics_pushing/physicell_mechanics_pushing.csv")
+    if os.path.exists(p):
+        pc = pd.read_csv(p)
+        d, tt = pc.distance_um.values, pc.time_min.values
+        rows.append(dict(tool="PhysiCell", file=rel(p, repo), length_unit_note="um, min; motility off once centres < 10 um",
+                         start_distance_um=float(d[0]), min_distance_um=float(d.min()), t_min="%g min" % tt[np.argmin(d)],
+                         final_distance_um=float(d[-1]), t_final="%g min" % tt[-1]))
+    else:
+        rows.append(dict(tool="PhysiCell", file=rel(p, repo) + " (absent)", length_unit_note="not computable: file absent",
+                         start_distance_um=float("nan"), min_distance_um=float("nan"), t_min="",
+                         final_distance_um=float("nan"), t_final=""))
 
     p = os.path.join(repo, "Tisim/mechanics_pushing/mechanics_pushing.csv")
     tp = pd.read_csv(p)
@@ -557,10 +610,7 @@ def analyse_monolayer(repo: str, out: str) -> tuple[pd.DataFrame, dict]:
     p = os.path.join(repo, "Biodynamo/monolayer/results/monolayer_growth.json")
     bj = json.load(open(p))
     series = {d["first"]: d["second"] for d in bj["data_"]}
-    rows.append(dev("BioDynaMo (env_dims, the series plotted by plot_monolayer.py)", series["env_dims"]["x_values"],
-                    series["env_dims"]["y_values"], p, series["total_cells"]["y_values"][0], series["total_cells"]["y_values"][-1],
-                    "uniform-grid extent in 40 um steps"))
-    rows.append(dev("BioDynaMo (tumor_diameter, cell-centre extent)", series["tumor_diameter"]["x_values"],
+    rows.append(dev("BioDynaMo", series["tumor_diameter"]["x_values"],
                     series["tumor_diameter"]["y_values"], p, series["total_cells"]["y_values"][0],
                     series["total_cells"]["y_values"][-1], "max of x and y extent of cell centres"))
 
@@ -573,8 +623,11 @@ def analyse_monolayer(repo: str, out: str) -> tuple[pd.DataFrame, dict]:
     rows.append(dev("CompuTiX", np.array(cx["time"]["values"], float) / 24.0, np.array(cx["d"]["values"], float), p,
                     cx["N"]["values"][0], cx["N"]["values"][-1], "largest pairwise centre distance"))
 
-    rows.append(dict(tool="PhysiCell", file="PhysiCell/results/monolayer/monolayer_t_diam.csv (absent)",
-                     note="not computable: derived CSV absent, .mat payload gitignored, archived run stops at day 16.08"))
+    p = os.path.join(repo, "PhysiCell/results/monolayer_pres/monolayer_disk_summary.csv")
+    pc = pd.read_csv(p)
+    rows.append(dev("PhysiCell", pc.timestep.values / 1440.0, pc.diameter_bbox_with_radii.values, p,
+                    int(pc.cell_count.iloc[0]), int(pc.cell_count.iloc[-1]),
+                    "cell-centre extent plus one diameter (diameter_bbox_with_radii), as in monolayer_comparison.ipynb"))
 
     p = os.path.join(repo, "Tisim/monolayer/2D disk.csv")
     ts = pd.read_csv(p)
@@ -690,6 +743,31 @@ def write_summary(out, repo, decay, decay_fin, decay_ref, upt, upt_fin, upt_ref,
         L.append(f"| {r.tool} | {r.d_at_day14_um:.0f} | {r.d_last_um:.0f} (day {r.day_of_last_sample:.2f}) | "
                  f"{r.deviation_min_um:+.1f} to {r.deviation_max_um:+.1f} | {r.deviation_mean_abs_um:.1f} | "
                  f"{r.deviation_max_abs_um:.1f} ({r.deviation_max_abs_pct:.2f} %) | {int(r.cells_first)} to {int(r.cells_last)} | {r.note} | `{r.file}` |")
+    L.append("")
+
+    # every Table 1 cell in one place
+    L.append("## Table 1 cells\n")
+    for name, fin, ref in (("Decay", decay_fin, decay_ref), ("Point sinks", upt_fin, upt_ref)):
+        L.append(f"- {name}: average at {ref['t_end_min']:g} min, relative error "
+                 f"{fin.average_rel_error_pct.min():+.1f} % to {fin.average_rel_error_pct.max():+.1f} % "
+                 f"(" + ", ".join(f"{r.tool} {r.average_rel_error_pct:+.1f} %" for _, r in fin.iterrows()) + ")")
+    sim = imp[np.isfinite(imp.plateau_rel_error_pct)]
+    L.append(f"- External impulse: plateau {imp_ref['plateau_um_per_s'] * 60:.4g} um/min; tool plateau errors "
+             + ", ".join(f"{r.tool} {r.plateau_rel_error_pct:+.2f} %" for _, r in sim.iterrows())
+             + f"; displacement {imp_ref['displacement_um'] * 1e3:.3g} nm; tool displacements "
+             + ", ".join(f"{r.tool} {r.displacement_um * 1e3:.3g} nm" for _, r in sim.iterrows()))
+    for drag in (0.01, 0.1, 1):
+        dd = eh[eh.drag_N_s_per_m == drag]
+        L.append(f"- Common law, {drag:g} N s/m: time to halve the overlap, reference {dd.ode_t_half_overlap_s.iloc[0]:.1f} s; "
+                 + ", ".join(f"{r.tool} {r.t_half_overlap_s:.0f} s (output every {r.sampling_s:g} s)" for _, r in dd.iterrows()))
+    ok = bi[np.isfinite(bi.final_distance_um) & ~bi.tool.str.contains("older")]
+    L.append("- Built-in contact: final centre-to-centre distance "
+             + ", ".join(f"{r.final_distance_um:.2f} um ({r.tool}, {r.t_final})" for _, r in ok.sort_values("final_distance_um").iterrows()))
+    L.append(f"- Cell cycle: maximum volume {sims.Vmax_pct_of_V0.min():.1f} % to {sims.Vmax_pct_of_V0.max():.1f} % of V0")
+    mm = mono[pd.notna(mono.get("deviation_max_abs_um"))]
+    L.append(f"- Monolayer: maximum absolute deviation {mm.deviation_max_abs_um.min():.0f} to {mm.deviation_max_abs_um.max():.0f} um "
+             f"({mm.deviation_max_abs_pct.min():.1f} % to {mm.deviation_max_abs_pct.max():.1f} %); "
+             + ", ".join(f"{r.tool} {r.deviation_max_abs_um:.0f} um ({r.deviation_max_abs_pct:.1f} %)" for _, r in mm.iterrows()))
     L.append("")
     with open(os.path.join(out, "table1_summary.md"), "w") as f:
         f.write("\n".join(L) + "\n")
