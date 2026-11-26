@@ -24,3 +24,6 @@ PhysiCell/results/*/*.txt
 **/build/
 
 .vscode/
+
+# add __pycache__ folders to gitignore
+ResultAnalysis/__pycache__/
