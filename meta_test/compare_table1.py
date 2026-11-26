@@ -16,7 +16,7 @@ Usage
 
 Example
 -------
-    python compare_table1.py baseline_6aa51a3 ResultAnalysis/table1_summary --out comparison.md
+    python compare_table1.py baseline_30df0bc1d ResultAnalysis/table1_summary --out comparison.md
 
 Exit status 0 when nothing moved, 1 otherwise. Dependencies: numpy, pandas.
 Written on 2 November 2026 for the v7 rewrite of the benchmark manuscript.
