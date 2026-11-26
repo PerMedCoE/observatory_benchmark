@@ -140,7 +140,7 @@ def find_repo_root(start: Path | None = None) -> Path:
 
 def figures_dir(root: Path) -> Path:
     """Figure export folder: $FIGURES_DIR if set, else <repository>/figures."""
-    return Path(os.environ.get('FIGURES_DIR', Path(root).resolve() / 'figures'))
+    return Path(os.environ.get('FIGURES_DIR', Path(root).resolve() /'ResultAnalysis'/ 'figures'))
 
 
 def apply_style() -> None:
