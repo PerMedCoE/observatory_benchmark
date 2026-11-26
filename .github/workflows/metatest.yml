@@ -13,7 +13,7 @@ jobs:
       - name: Recompute the Table 1 values
         run: python meta_test/table1_summary.py --repo . --out /tmp/run
       - name: Compare with the frozen baseline
-        run: python meta_test/compare_table1.py meta_test/baseline_<hash> /tmp/run --out /tmp/run/comparison.md
+        run: python meta_test/compare_table1.py meta_test/baseline_30df0bc1d /tmp/run --out /tmp/run/comparison.md
       - name: Keep the report
         if: always()
         uses: actions/upload-artifact@v4
