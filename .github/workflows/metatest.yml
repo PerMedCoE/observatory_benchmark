@@ -10,6 +10,8 @@ jobs:
           python-version: "3.12"
       - name: Install dependencies
         run: pip install -r meta_test/requirements.txt
+      - name: Test the comparison
+        run: python -m unittest discover -s meta_test -p test_compare_table1.py
       - name: Recompute the Table 1 values
         run: python meta_test/table1_summary.py --repo . --out /tmp/run
       - name: Compare with the frozen baseline

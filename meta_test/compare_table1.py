@@ -6,9 +6,10 @@ that moved, every row that appeared or disappeared, and every input file that ch
 This is the regression layer of the benchmark self-test (meta-test, layer 4) in stand-alone
 form: the values of the baseline folder are the expected ones (those quoted in the v7
 manuscript, frozen at repository commit 6aa51a3 on 30 September 2026), and a value counts
-as moved when it differs by more than a relative tolerance of 1e-6 (the self-test's
-tolerance). Text columns other than the input file name (notes, division times) are
-compared as text.
+as moved when it differs by more than a relative tolerance of 1e-6 and an absolute
+tolerance of 1e-12. The two derived impulse percentage errors use an absolute
+tolerance of 1e-10 percentage points to accommodate round-off near zero. Text
+columns other than the input file name (notes, division times) are compared as text.
 
 Usage
 -----
@@ -55,6 +56,7 @@ WHERE = {
     "monolayer.csv": "Table 1 (monolayer row), Results, Figure 5",
 }
 IGNORE = {"file"}  # reported separately as an input change, not as a moved value
+IMPULSE_ERROR_COLUMNS = {"plateau_rel_error_pct", "displacement_rel_error_pct"}
 
 
 def fmt(x) -> str:
@@ -87,7 +89,8 @@ def compare_table(name: str, a: pd.DataFrame, b: pd.DataFrame, rtol: float):
                 va, vb = float(va), float(vb)
                 if np.isnan(va) and np.isnan(vb):
                     continue
-                if np.isnan(va) != np.isnan(vb) or not np.isclose(vb, va, rtol=rtol, atol=1e-12):
+                atol = 1e-10 if name == "mechanics_external_impulse.csv" and col in IMPULSE_ERROR_COLUMNS else 1e-12
+                if np.isnan(va) != np.isnan(vb) or not np.isclose(vb, va, rtol=rtol, atol=atol):
                     rel = (vb - va) / abs(va) * 100 if np.isfinite(va) and va != 0 and np.isfinite(vb) else np.nan
                     moved.append((k, col, va, vb, rel))
             elif str(va) != str(vb) and not (pd.isna(va) and pd.isna(vb)):
@@ -108,7 +111,9 @@ def main(argv=None) -> int:
     args = ap.parse_args(argv)
 
     L = [f"# Table 1 regression: `{args.new}` against `{args.baseline}`\n",
-         f"Relative tolerance {args.rtol:g}. A moved value means that the manuscript text, Table 1 or a figure "
+         f"Relative tolerance {args.rtol:g}; absolute tolerance 1e-12 "
+         f"(1e-10 percentage points for impulse percentage errors). "
+         f"A moved value means that the manuscript text, Table 1 or a figure "
          f"quoting it must be checked before the new value is accepted.\n"]
     n_moved = 0
     summary = []
