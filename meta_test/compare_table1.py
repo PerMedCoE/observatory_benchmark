@@ -12,7 +12,7 @@ compared as text.
 
 Usage
 -----
-    python compare_table1.py BASELINE_DIR NEW_DIR [--out report.md] [--rtol 1e-6]
+python compare_table1.py BASELINE_DIR NEW_DIR [--out report.md] [--rtol 1e-6] [--atol 1e-9]
 
 Example
 -------
@@ -64,8 +64,7 @@ def fmt(x) -> str:
         return f"{x:.6g}"
     return str(x)
 
-
-def compare_table(name: str, a: pd.DataFrame, b: pd.DataFrame, rtol: float):
+def compare_table(name: str, a: pd.DataFrame, b: pd.DataFrame, rtol: float, atol: float):
     keys = KEYS[name]
     a = a.set_index(keys)
     b = b.set_index(keys)
@@ -87,7 +86,7 @@ def compare_table(name: str, a: pd.DataFrame, b: pd.DataFrame, rtol: float):
                 va, vb = float(va), float(vb)
                 if np.isnan(va) and np.isnan(vb):
                     continue
-                if np.isnan(va) != np.isnan(vb) or not np.isclose(vb, va, rtol=rtol, atol=1e-12):
+                if np.isnan(va) != np.isnan(vb) or not np.isclose(vb, va, rtol=rtol, atol=atol):
                     rel = (vb - va) / abs(va) * 100 if np.isfinite(va) and va != 0 and np.isfinite(vb) else np.nan
                     moved.append((k, col, va, vb, rel))
             elif str(va) != str(vb) and not (pd.isna(va) and pd.isna(vb)):
@@ -105,10 +104,12 @@ def main(argv=None) -> int:
     ap.add_argument("new")
     ap.add_argument("--out", default=None, help="Markdown report (default: print only)")
     ap.add_argument("--rtol", type=float, default=1e-6)
+    ap.add_argument("--atol", type=float, default=1e-9,
+                    help="absolute tolerance; values in these tables are in %, um, s or nm, so 1e-9 is rounding noise")
     args = ap.parse_args(argv)
 
     L = [f"# Table 1 regression: `{args.new}` against `{args.baseline}`\n",
-         f"Relative tolerance {args.rtol:g}. A moved value means that the manuscript text, Table 1 or a figure "
+         f"Relative tolerance {args.rtol:g}, absolute tolerance {args.atol:g}. A moved value means that the manuscript text, Table 1 or a figure "
          f"quoting it must be checked before the new value is accepted.\n"]
     n_moved = 0
     summary = []
@@ -119,7 +120,7 @@ def main(argv=None) -> int:
             n_moved += 1
             summary.append((name, "missing", "", "", ""))
             continue
-        moved, files, gone, new = compare_table(name, pd.read_csv(pa), pd.read_csv(pb), args.rtol)
+        moved, files, gone, new = compare_table(name, pd.read_csv(pa), pd.read_csv(pb), args.rtol, args.atol)
         n_moved += len(moved) + len(gone) + len(new)
         summary.append((name, len(moved), len(gone) + len(new), len(files), WHERE[name]))
         if not (moved or files or gone or new):
