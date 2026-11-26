@@ -1,8 +1,6 @@
 VERSION := $(shell grep . VERSION.txt | cut -f1 -d:)
 PROGRAM_NAME := project
 
-# This project uses the extended Hertz cell mechanics implementation.
-
 CC := g++
 # CC := g++-mp-7 # typical macports compiler name
 # CC := g++-7 # typical homebrew compiler name 
@@ -76,7 +74,6 @@ all: main.cpp $(ALL_OBJECTS)
 name:
 	@echo ""
 	@echo "Executable name is" $(PROGRAM_NAME)
-	@echo "Cell model is extended_hertz"
 	@echo ""
 
 # PhysiCell core components	
@@ -87,8 +84,8 @@ PhysiCell_phenotype.o: ./core/PhysiCell_phenotype.cpp
 PhysiCell_digital_cell_line.o: ./core/PhysiCell_digital_cell_line.cpp
 	$(COMPILE_COMMAND) -c ./core/PhysiCell_digital_cell_line.cpp
 
-PhysiCell_cell.o: ./extended_Hertz/PhysiCell_cell.cpp ./extended_Hertz/PhysiCell_cell.h
-	$(COMPILE_COMMAND) -I./core -c ./extended_Hertz/PhysiCell_cell.cpp 
+PhysiCell_cell.o: ./core/PhysiCell_cell.cpp
+	$(COMPILE_COMMAND) -c ./core/PhysiCell_cell.cpp 
 
 PhysiCell_cell_container.o: ./core/PhysiCell_cell_container.cpp
 	$(COMPILE_COMMAND) -c ./core/PhysiCell_cell_container.cpp 
@@ -182,7 +179,7 @@ reset:
 	rm -f ./custom_modules/*
 	touch ./custom_modules/empty.txt 
 	touch ALL_CITATIONS.txt 
-	touch ./extended_Hertz/PhysiCell_cell.cpp
+	touch ./core/PhysiCell_cell.cpp
 	rm ALL_CITATIONS.txt 
 	cp ./config/PhysiCell_settings-backup.xml ./config/PhysiCell_settings.xml 
 	touch ./config/empty.csv
